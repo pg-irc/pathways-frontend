@@ -14,6 +14,7 @@ import * as search from './search';
 import * as feedback from './feedback';
 import * as content from './content';
 import * as userExperience from './user_experience';
+import * as reviews from './reviews';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -31,6 +32,7 @@ export interface Store {
     readonly feedback: feedback.FeedbackStore;
     readonly content: content.AlertsStore;
     readonly userExperience: userExperience.UserExperienceStore;
+    readonly reviews: reviews.ReviewsStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -49,6 +51,7 @@ export const buildDefaultStore = (): Store => ({
     feedback: feedback.buildDefaultStore(),
     content: content.buildDefaultStore(),
     userExperience: userExperience.buildDefaultStore(),
+    reviews: reviews.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -67,4 +70,5 @@ export const reducer = combineReducers<Store>({
     feedback: feedback.reducer,
     content: content.reducer,
     userExperience: userExperience.reducer,
+    reviews: reviews.reducer,
 });

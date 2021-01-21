@@ -32,6 +32,7 @@ export interface HumanServiceData {
     readonly organizationId: string;
     readonly organizationName: string;
     readonly bookmarked: boolean;
+    readonly reviewed: boolean;
     readonly lastVerifiedDate: string;
 }
 

@@ -16,6 +16,7 @@ import { toHumanServiceData } from '../validation/search/to_human_service_data';
 import { OpenOrganizationAction } from '../stores/organization/actions';
 import { selectServicesForOrganization } from '../selectors/services/select_services_for_organization';
 import { SearchServiceData } from '../validation/search/types';
+import { selectReviewedServicesIds } from '../selectors/services/select_reviewed_services_ids';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
@@ -53,7 +54,8 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
         }
 
         const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
-        const services = toServicesFromValidatedData(bookmarkedServiceIds, validatedApiResponse.validData);
+        const reviewedServicesIds = yield select(selectReviewedServicesIds);
+        const services = toServicesFromValidatedData(bookmarkedServiceIds, reviewedServicesIds, validatedApiResponse.validData);
         yield put(actions.buildServicesSuccess(topicId, services));
     } catch (error) {
         yield put(actions.buildServicesError(topicId, Errors.Exception));
@@ -74,8 +76,9 @@ export function* updateServicesForOrganization(action: OpenOrganizationAction): 
 
         const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
 
-        const services = validatedAlgoliaResponse.map((item: SearchServiceData): HumanServiceData => toHumanServiceData(item, bookmarkedServiceIds));
-
+        const reviewedServiceIds = yield select(selectReviewedServicesIds);
+        const services = validatedAlgoliaResponse.map((item: SearchServiceData): HumanServiceData =>
+            toHumanServiceData(item, bookmarkedServiceIds, reviewedServiceIds));
         yield put(actions.saveServicesForOrganization(organizationId, services));
     } catch (error) {
         console.warn(error);

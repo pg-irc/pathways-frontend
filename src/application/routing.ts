@@ -35,6 +35,7 @@ export enum Routes {
     OtherFeedback,
     ExplainFeedback,
     ContactInformation,
+    ServiceReview,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -73,6 +74,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/explainfeedback/:serviceId';
         case Routes.ContactInformation:
             return '/contact-information/:serviceId';
+        case Routes.ServiceReview:
+            return '/service-review/:serviceId';
     }
 };
 
@@ -105,20 +108,36 @@ export const goBack = (memoryHistory: MemoryHistory): void => (
     memoryHistory.goBack()
 );
 
-export const goBackToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
+export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
     popFeedbackPathsFromHistory(memoryHistory);
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);
 };
 
 export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
-    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries)) {
+    while (pathMatchesFeedbackRoute(R.last(memoryHistory.entries))) {
         memoryHistory.entries.pop();
     }
 };
 
 const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
+);
+
+export const backToServiceDetailOnServiceReviewDiscard = (memoryHistory: MemoryHistory): void => {
+    popServiceReviewPathFromHistory(memoryHistory);
+    const positionOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(positionOfCurrentPathInHistoryStack);
+};
+
+export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): void => {
+    while (pathMatchesServiceReviewRoute(R.last(memoryHistory.entries))) {
+        memoryHistory.entries.pop();
+    }
+};
+
+const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
+    pathMatchesRoute(location.pathname, Routes.ServiceReview)
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
@@ -143,4 +162,11 @@ export const getParametersFromPath = (location: Location, route: Routes): RouteP
         exact: true,
     });
     return match.params;
+};
+
+export const isServiceReviewScreen = (memoryHistory: MemoryHistory): boolean => {
+    if (!memoryHistory) {
+        return false;
+    }
+    return pathMatchesRoute(R.last(memoryHistory.entries).pathname, Routes.ServiceReview);
 };

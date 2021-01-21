@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { selectServiceById } from '../../selectors/services/select_service_by_id';
@@ -46,10 +47,15 @@ import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile'
 import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
 import { selectServiceFeedback } from '../../selectors/feedback/select_service_feedback';
 import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
+import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
+import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
+import { Rating } from '../../stores/reviews';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
+    const serviceId = ownProps.match.params.serviceId;
+    const reviewedServicesIds = selectReviewedServicesIds(store);
     return {
-        service: selectServiceById(store, ownProps.match.params.serviceId),
+        service: selectServiceById(store, serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         serviceFeedback: selectServiceFeedback(store),
@@ -58,6 +64,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),
         showLinkAlerts: selectShowLinkAlerts(store),
+        isReviewed: R.includes(serviceId, reviewedServicesIds),
     };
 };
 
@@ -81,7 +88,8 @@ type Actions =
     CancelDiscardChangesAction |
     SendFeedbackAction |
     HideLinkAlertsAction |
-    BackFromContactInformationAction;
+    BackFromContactInformationAction |
+    ChooseRatingAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
@@ -104,6 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
     openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
+    chooseRating: (rating: Rating): ChooseRatingAction => dispatch(chooseRating(rating)),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

@@ -19,6 +19,7 @@ import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
+import { SubmitServiceReviewAction } from '../reviews/actions';
 
 describe('services reducer', () => {
     const aServiceBuilder = new HumanServiceDataBuilder();
@@ -197,7 +198,7 @@ describe('services reducer', () => {
             };
             const store = reducer(theStore, action);
             const storeService = store.services[aSearchService.id];
-            expect(Object.keys(aSearchService).length).toEqual(12);
+            expect(Object.keys(aSearchService).length).toEqual(13);
             expect(storeService).toEqual(aSearchService);
         });
 
@@ -280,6 +281,23 @@ describe('services reducer', () => {
         it('it should return the bookmarked service', () => {
             const bookmarkedService = bookmarkedServiceBuilder.build();
             expect(storeState.services[bookmarkedServiceId]).toEqual(bookmarkedService);
+        });
+    });
+
+    describe('when submitting a service review', () => {
+        const store = buildNormalizedServices([], []);
+        const service = new HumanServiceDataBuilder().build();
+        const serviceId = service.id;
+        const action: SubmitServiceReviewAction = {
+            type: constants.SUBMIT_SERVICE_REVIEW,
+            payload: { serviceId },
+        };
+        const storeState = reducer(store, action);
+        it('can add a service to service map', () => {
+            expect(Object.keys(storeState.services)).toHaveLength(1);
+        });
+        it('can add a service to services map marked as reviewed', () => {
+            expect(storeState.services[service.id].reviewed).toBe(true);
         });
     });
 });

@@ -117,6 +117,7 @@ export class HumanServiceDataBuilder {
     organizationId: string = aString();
     organizationName: string = aString();
     bookmarked: boolean = false;
+    reviewed: boolean = false;
     lastVerifiedDate: string = aDate();
 
     withId(id: Id): HumanServiceDataBuilder {
@@ -179,6 +180,11 @@ export class HumanServiceDataBuilder {
         return this;
     }
 
+    withReviewed(reviewed: boolean): HumanServiceDataBuilder {
+        this.reviewed = reviewed;
+        return this;
+    }
+
     withLastVerifiedDate(lastVerifiedDate: string): HumanServiceDataBuilder {
         this.lastVerifiedDate = lastVerifiedDate;
         return this;
@@ -197,6 +203,7 @@ export class HumanServiceDataBuilder {
             email: this.email,
             organizationName: this.organizationName,
             bookmarked: this.bookmarked,
+            reviewed: this.reviewed,
             lastVerifiedDate: this.lastVerifiedDate,
         };
     }

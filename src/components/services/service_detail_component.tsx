@@ -59,6 +59,10 @@ import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_co
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 import { OpenOrganizationAction } from '../../stores/organization/actions';
+import { CardButtonComponent } from '../card_button_component';
+import { ServiceDetailRatingsComponent } from '../reviews/service_detail_ratings_component';
+import { ChooseRatingAction } from '../../stores/reviews/actions';
+import { Rating } from '../../stores/reviews';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -70,6 +74,7 @@ export interface ServiceDetailProps {
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
     readonly showLinkAlerts: boolean;
+    readonly isReviewed: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -92,6 +97,7 @@ export interface ServiceDetailActions {
     readonly hideLinkAlerts: () => void;
     readonly backFromContactInformation: () => BackFromContactInformationAction;
     readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
+    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -242,9 +248,17 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     currentPathForAnalytics={props.location.pathname}
                                 />
                                 <DividerComponent />
-                                <SuggestAnUpdateButton
+                                <SuggestAnUpdateComponent
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
+                                />
+                                <DividerComponent />
+                                <ServiceDetailRatingsComponent
+                                    isVisible={!props.isReviewed}
+                                    serviceId={serviceId}
+                                    serviceName={props.service.name}
+                                    rating={Rating.Zero}
+                                    chooseRating={props.chooseRating}
                                 />
                                 <ModalContainer
                                     serviceId={serviceId}
@@ -488,26 +502,28 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
     );
 };
 
-const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly suggestAnUpdate: () => void }): JSX.Element => {
+const SuggestAnUpdateComponent = (props: { readonly isVisible: boolean, readonly suggestAnUpdate: () => void }): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
-        <View style={{ flexDirection: 'row-reverse', marginBottom: 20 }}>
-            <TouchableOpacity
+        <View>
+            <CardButtonComponent
+                leftContent={<SuggestAnUpdateText/>}
+                rightContent={<ServiceDetailIconComponent name={'edit'}/>}
                 onPress={props.suggestAnUpdate}
-                style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20, paddingVertical: 10, paddingHorizontal: 16 }}
-            >
-                <View style={{ flexDirection: 'row' }}>
-                    <ServiceDetailIconComponent name={'edit'} />
-                    <Text style={[textStyles.paragraphBoldBlackLeft, { marginLeft: 5 }]}>
-                        <Trans>Suggest an update</Trans>
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            />
         </View>
     );
 };
+
+const SuggestAnUpdateText = (): JSX.Element => (
+    <View style={{marginHorizontal: 5}}>
+        <Text style={textStyles.paragraphStyleTeal}>
+            <Trans>Suggest an update</Trans>
+        </Text>
+    </View>
+);
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
     addresses.map((address: Address): string => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')

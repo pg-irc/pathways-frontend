@@ -55,12 +55,16 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const toServicesFromValidatedData = (bookmarkedServiceIds: ReadonlyArray<Id>, data: ReadonlyArray<ValidatedServiceAtLocationJSON>):
-    ReadonlyArray<HumanServiceData> => (
-        R.map(buildHumanService(bookmarkedServiceIds), data)
+export const toServicesFromValidatedData = (
+    bookmarkedServiceIds: ReadonlyArray<Id>,
+    reviewedServiceIds: ReadonlyArray<Id>,
+    data: ReadonlyArray<ValidatedServiceAtLocationJSON>,
+    ): ReadonlyArray<HumanServiceData> => (
+        R.map(buildHumanService(bookmarkedServiceIds, reviewedServiceIds), data)
     );
 
-const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
+const buildHumanService = R.curry(
+    (bookmarkedServiceIds: ReadonlyArray<Id>, reviewedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
     HumanServiceData => {
         return {
             id: data.service.id,
@@ -79,6 +83,7 @@ const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data
             organizationName: data.service.organization_name,
             lastVerifiedDate: data.service.last_verified_date,
             bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
+            reviewed: R.contains(data.service.id, reviewedServiceIds),
         };
 });
 

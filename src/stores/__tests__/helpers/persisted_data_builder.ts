@@ -1,7 +1,7 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
-import { ServiceMap } from '../../../validation/services/types';
+import { Id as ServiceId, ServiceMap } from '../../../validation/services/types';
 import { PersistedData } from '../../persisted_data';
 import { SearchServiceData } from '../../../validation/search/types';
 import { LatLong } from '../../../validation/latlong/types';
@@ -24,6 +24,7 @@ export class PersistedDataBuilder {
     collapseSearchInput: boolean = false;
     showPartialLocalizationMessage: boolean = true;
     alerts: ReadonlyArray<Alert> = [];
+    reviewedServices: ServiceId[] = [];
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
@@ -103,6 +104,11 @@ export class PersistedDataBuilder {
         return this;
     }
 
+    withReviewedServices(id: ServiceId): PersistedDataBuilder {
+        this.reviewedServices.push(id);
+        return this;
+    }
+
     build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
@@ -120,6 +126,7 @@ export class PersistedDataBuilder {
             searchResults: this.searchResults,
             collapseSearchInput: this.collapseSearchInput,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,
+            reviewedServices: this.reviewedServices,
         };
     }
 

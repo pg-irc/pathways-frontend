@@ -121,10 +121,20 @@ const serviceMap = {
                 },
                 "bookmarked": {
                     "type": "boolean"
+                },
+                "reviewed": {
+                    "type": "boolean"
                 }
             },
-            "required": ["id", "name", "description", "phoneNumbers", "addresses", "website", "email", "organizationName", "bookmarked"]
+            "required": ["id", "name", "description", "phoneNumbers", "addresses", "website", "email", "organizationName", "bookmarked", "reviewed"]
         }
+    }
+};
+
+const reviewedServicesIdsArray = {
+    "type": "array",
+    "items": {
+        "type": "string"
     }
 };
 
@@ -155,5 +165,6 @@ export const userData = {
         "collapseSearchInput": {
             "type": "boolean"
         },
+        "reviewedServices": reviewedServicesIdsArray,
     }
 };

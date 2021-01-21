@@ -2,7 +2,7 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { Id as AnswerId } from './questionnaire';
 import { Id as TopicId } from './topics';
-import { ServiceMap } from '../validation/services/types';
+import { Id as ServiceId, ServiceMap } from '../validation/services/types';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
 
@@ -22,6 +22,7 @@ export interface PersistedData {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
+    readonly reviewedServices: ReadonlyArray<ServiceId>;
 }
 
 export namespace DataPersistence {

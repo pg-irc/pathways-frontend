@@ -36,6 +36,7 @@ export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly reviewedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
@@ -131,6 +132,7 @@ const keyExtractor = (item: SearchServiceData): string => (
 
 interface SearchHitProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly reviewedServicesIds: ReadonlyArray<Id>;
     readonly scrollOffset: number;
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
@@ -143,7 +145,7 @@ interface SearchHitProps {
 
 const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
-    const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
+    const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds, props.reviewedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
         props.saveSearchOffset(props.scrollOffset);

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-
+import * as R from 'ramda';
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
@@ -7,6 +7,7 @@ import { DataPersistence, PersistedData } from '../stores/persisted_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 import { validateUserData } from '../validation/user_data';
+import { HumanServiceData, ServiceMap } from '../validation/services/types';
 
 export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -29,6 +30,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.DISABLE_ANALYTICS,
             constants.ENABLE_CUSTOM_LATLONG,
             constants.GET_ALERTS_SUCCESS,
+            constants.SUBMIT_SERVICE_REVIEW,
         ],
         saveUserData);
 }
@@ -95,7 +97,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         chosenAnswers: data.chosenAnswers || [],
         bookmarkedTopics: data.bookmarkedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
-        bookmarkedServices: data.bookmarkedServices || {},
+        bookmarkedServices: setDefaultReviewProperty(data.bookmarkedServices) || {},
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
         customLatLong: data.customLatLong || undefined,
         showLinkAlerts: typeof data.showLinkAlerts === 'undefined' ? true : data.showLinkAlerts,
@@ -107,5 +109,17 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         searchResults: data.searchResults || [],
         collapseSearchInput: typeof data.collapseSearchInput === 'undefined' ? false : data.collapseSearchInput,
         showPartialLocalizationMessage: typeof data.showPartialLocalizationMessage === 'undefined' ? true : data.showPartialLocalizationMessage,
+        reviewedServices: data.reviewedServices || [],
     }
+);
+
+const setDefaultReviewProperty = (servicesData: any): ServiceMap => {
+    if (!servicesData) {
+        return {};
+    }
+    return R.map(setDefaultReviewValue, servicesData);
+};
+
+const setDefaultReviewValue = (serviceData: any): HumanServiceData => (
+    R.has('reviewed', serviceData) ? serviceData : { ...serviceData, reviewed: false }
 );

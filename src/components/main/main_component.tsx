@@ -6,7 +6,7 @@ import { Container, Drawer, Root } from 'native-base';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { FooterComponent, FooterProps } from './footer_component';
 import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connected_component';
-import { RouterProps, goBack } from '../../application/routing';
+import { RouterProps, goBack, isServiceReviewScreen } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
@@ -22,6 +22,7 @@ import { ScrollContext, createScrollAnimationContext } from './scroll_animation_
 import { FeedbackScreen } from '../../stores/feedback/types';
 import { CloseAction, BackFromContactInformationAction } from '../../stores/feedback';
 import { memoryHistory } from '../../application';
+import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -35,6 +36,7 @@ export interface MainComponentActions {
     readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
     readonly backOutOfFeedbackScreen: () => CloseAction;
     readonly backFromContactInformation: () => BackFromContactInformationAction;
+    readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
 }
 
 interface MainProps {
@@ -56,6 +58,8 @@ export const MainComponent = (props: Props): JSX.Element => {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
             backFromFeedbackScreen();
+        } else if (isServiceReviewScreen(memoryHistory)) {
+            props.openDiscardChangesModal();
         } else {
             goBack(memoryHistory);
         }
