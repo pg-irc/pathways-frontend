@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { ForkEffect, takeLatest, PutEffect, put, call, CallEffect, select, SelectEffect } from 'redux-saga/effects';
-import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
+import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_SERVICES_FEEDBACK_ID } from 'react-native-dotenv';
 import buildUrl from 'build-url';
 import { SEND_FEEDBACK } from '../application/constants';
 import { SendFeedbackAction, setError, SetErrorAction, setIsSending, SetIsSendingAction, discardChanges, DiscardChangesAction } from '../stores/feedback';
@@ -44,11 +44,11 @@ const getRequestUrl = (): string => {
         throw new Error('AIRTABLE_BASE_ID is missing.');
     }
 
-    if (!AIRTABLE_TABLE_ID) {
-        throw new Error('AIRTABLE_TABLE_ID is missing.');
+    if (!AIRTABLE_TABLE_SERVICES_FEEDBACK_ID) {
+        throw new Error('AIRTABLE_TABLE_SERVICES_FEEDBACK_ID is missing.');
     }
 
-    return buildUrl('https://api.airtable.com', { path: `v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}` });
+    return buildUrl('https://api.airtable.com', { path: `v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_SERVICES_FEEDBACK_ID}` });
 };
 
 const getRequestInit = (feedbackJSON: string): RequestInit => {
