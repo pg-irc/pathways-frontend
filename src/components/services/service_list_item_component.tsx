@@ -44,7 +44,7 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                         />
                     </View>
                 </View>
-                <PromptServiceReviewButton />
+                <PromptServiceReviewButton serviceId={props.service.id}/>
             </TouchableOpacity>
         );
     };
