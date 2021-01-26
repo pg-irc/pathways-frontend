@@ -12,17 +12,19 @@ export interface ServiceReviewPostData {
     readonly serviceId: string;
     readonly userLocale: string;
     readonly rating: Rating;
-    readonly comment?: string; 
+    readonly comment?: string;
 }
 
 export interface ReviewsStore {
     readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;
+    readonly isSending: boolean;
 }
 
 export const buildDefaultStore = (): ReviewsStore => ({
     rating: Rating.Zero,
     showDiscardChangesModal: false,
+    isSending: false,
 });
 
 export const reducer = (store: ReviewsStore = buildDefaultStore(), action?: ReviewAction): ReviewsStore => {
@@ -45,6 +47,11 @@ export const reducer = (store: ReviewsStore = buildDefaultStore(), action?: Revi
             return {
                 ...store,
                 showDiscardChangesModal: false,
+            };
+        case constants.SET_IS_SENDING_REVIEW:
+            return {
+                ...store,
+                isSending: action.payload.isSending,
             };
         default:
             return store;

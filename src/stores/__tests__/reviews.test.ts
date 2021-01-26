@@ -1,6 +1,7 @@
 // tslint:disable: no-expression-statement typedef
+import { aBoolean } from '../../application/helpers/random_test_values';
 import { buildDefaultStore, Rating, reducer } from '../reviews';
-import { chooseRating, closeDiscardChangesModal, openDiscardChangesModal } from '../reviews/actions';
+import { chooseRating, closeDiscardChangesModal, openDiscardChangesModal, setIsSendingReview } from '../reviews/actions';
 
 describe('the reviews reducer', () => {
 
@@ -25,6 +26,16 @@ describe('the reviews reducer', () => {
             const oldStore = buildDefaultStore();
             const newStore = reducer(oldStore, closeDiscardChangesModal());
             expect(newStore.showDiscardChangesModal).toBe(false);
+        });
+    });
+
+    describe('the is sending state', () => {
+
+        it('is set to boolean value by the set is sending review action', () => {
+            const isSending = aBoolean();
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, setIsSendingReview(isSending));
+            expect(newStore.isSending).toBe(isSending);
         });
     });
 });
