@@ -50,6 +50,7 @@ import { openOrganization, OpenOrganizationAction } from '../../stores/organizat
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 import { Rating } from '../../stores/reviews';
+import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     const serviceId = ownProps.match.params.serviceId;
@@ -65,6 +66,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         isSendingFeedback: selectIsSendingFeedback(store),
         showLinkAlerts: selectShowLinkAlerts(store),
         isReviewed: R.includes(serviceId, reviewedServicesIds),
+        isSendingReview: selectIsSendingReview(store),
     };
 };
 

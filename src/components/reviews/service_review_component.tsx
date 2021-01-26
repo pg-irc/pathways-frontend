@@ -49,7 +49,10 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
 
     const onSubmitButtonPress = (): void => {
         props.submitServiceReview(props.serviceId, comment);
+        // TODO rename this to backToServiceDetailFromServiceReview
+        backToServiceDetailOnServiceReviewDiscard(memoryHistory);
     };
+
     return (
         <View style={{ flex: 1 }}>
             <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>

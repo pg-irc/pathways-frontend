@@ -75,6 +75,7 @@ export interface ServiceDetailProps {
     readonly isSendingFeedback: boolean;
     readonly showLinkAlerts: boolean;
     readonly isReviewed: boolean;
+    readonly isSendingReview: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -282,7 +283,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             onPress={onSubmitPress}
                         />
                         <ThankYouMessageOrEmptyComponent
-                            isSendingFeedback={props.isSendingFeedback}
+                            isSendingFeedbackOrReview={props.isSendingFeedback || props.isSendingReview}
                             i18n={i18n}
                         />
                     </View>
