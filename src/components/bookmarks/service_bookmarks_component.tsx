@@ -1,4 +1,5 @@
 // tslint:disable: no-expression-statement
+import * as R from 'ramda';
 import React, { useRef, useState, useEffect } from 'react';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
@@ -41,7 +42,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
 
     return (
         <>
-            <ServiceBanner />
+            <ServiceBanner isVisible={!R.isEmpty(props.bookmarkedServices)}/>
             <FlatList
                 ref={flatListRef}
                 onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setBookmarkedServicesOffset)}
