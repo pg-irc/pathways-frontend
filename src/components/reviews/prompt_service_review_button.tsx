@@ -6,8 +6,10 @@ import { Icon } from 'native-base';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { useHistory } from 'react-router-native';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
+    readonly isVisible: boolean;
     readonly serviceId: Id;
 }
 
@@ -17,6 +19,10 @@ export const PromptServiceReviewButton = (props: Props): JSX.Element => {
         // tslint:disable-next-line: no-expression-statement
         goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
     };
+
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
 
     return (
         <TouchableOpacity
