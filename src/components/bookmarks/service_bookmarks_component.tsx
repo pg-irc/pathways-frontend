@@ -4,7 +4,6 @@ import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { Trans } from '@lingui/react';
 import { colors } from '../../application/styles';
-import { View } from 'native-base';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { renderServiceItems } from '../services/render_service_items';
@@ -12,6 +11,8 @@ import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
 import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
+import { ServiceBanner } from './service_banner';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -39,25 +40,28 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
     }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
 
     return (
-        <FlatList
-            ref={flatListRef}
-            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setBookmarkedServicesOffset)}
-            style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
-            data={props.bookmarkedServices}
-            keyExtractor={(service: HumanServiceData): string => service.id}
-            renderItem={renderServiceItems({
-                ...props,
-                scrollOffset: bookmarkedServicesOffset,
-                saveScrollOffset: props.saveScrollOffset,
-            })}
-            ListEmptyComponent={
-                <EmptyBookmarksComponent
-                    title={<Trans>No services to show</Trans>}
-                />
-            }
-            ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={<View />}
-            initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
-        />
+        <>
+            <ServiceBanner />
+            <FlatList
+                ref={flatListRef}
+                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setBookmarkedServicesOffset)}
+                style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
+                data={props.bookmarkedServices}
+                keyExtractor={(service: HumanServiceData): string => service.id}
+                renderItem={renderServiceItems({
+                    ...props,
+                    scrollOffset: bookmarkedServicesOffset,
+                    saveScrollOffset: props.saveScrollOffset,
+                })}
+                ListEmptyComponent={
+                    <EmptyBookmarksComponent
+                        title={<Trans>No services to show</Trans>}
+                    />
+                }
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={<EmptyComponent/>}
+                initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
+            />
+        </>
     );
 };
