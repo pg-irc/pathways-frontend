@@ -124,7 +124,7 @@ const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean =>
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
-export const backToServiceDetailOnServiceReviewDiscard = (memoryHistory: MemoryHistory): void => {
+export const backFromServiceReview = (memoryHistory: MemoryHistory): void => {
     popServiceReviewPathFromHistory(memoryHistory);
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);

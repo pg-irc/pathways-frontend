@@ -14,7 +14,7 @@ import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { backToServiceDetailOnServiceReviewDiscard } from '../../application/routing';
+import { backFromServiceReview } from '../../application/routing';
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
@@ -44,13 +44,12 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const onDiscardPress = (): void => {
         props.clearReview();
         props.closeDiscardChangesModal();
-        backToServiceDetailOnServiceReviewDiscard(memoryHistory);
+        backFromServiceReview(memoryHistory);
     };
 
     const onSubmitButtonPress = (): void => {
         props.submitServiceReview(props.serviceId, comment);
-        // TODO rename this to backToServiceDetailFromServiceReview
-        backToServiceDetailOnServiceReviewDiscard(memoryHistory);
+        backFromServiceReview(memoryHistory);
     };
 
     return (
