@@ -4,12 +4,12 @@ import { ForkEffect, takeLatest, call, CallEffect, select, SelectEffect, PutEffe
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_SERVICES_REVIEWS_ID } from 'react-native-dotenv';
 import { SUBMIT_SERVICE_REVIEW } from '../application/constants';
 import { selectRating } from '../selectors/reviews/select_rating';
-import { setIsSendingReview, SetIsSendingReviewAction, SubmitServiceReviewAction } from '../stores/reviews/actions';
+import { clearReview, ClearReviewAction, setIsSendingReview, SetIsSendingReviewAction, SubmitServiceReviewAction } from '../stores/reviews/actions';
 import { Rating, ServiceReviewPostData } from '../stores/reviews';
 import { Id } from '../stores/services';
 import { selectLocaleCode } from '../selectors/locale/select_locale_code';
 
-type Effects = CallEffect| SelectEffect | PutEffect<SetIsSendingReviewAction>;
+type Effects = CallEffect| SelectEffect | PutEffect<SetIsSendingReviewAction | ClearReviewAction>;
 
 export function* watchSubmitServiceReview(): IterableIterator<ForkEffect> {
     yield takeLatest(SUBMIT_SERVICE_REVIEW, submitServiceReview);
@@ -30,6 +30,7 @@ function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterat
         console.warn(error?.message || 'Error saving review');
     } finally {
         yield put(setIsSendingReview(false));
+        yield put(clearReview());
     }
 }
 

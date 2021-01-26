@@ -7,7 +7,7 @@ import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
-import { ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
+import { ChooseRatingAction, ClearReviewAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
@@ -32,6 +32,7 @@ export interface ServiceReviewActions {
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
     readonly submitServiceReview: (serviceId: Id, comment: string) => SubmitServiceReviewAction;
+    readonly clearReview: () => ClearReviewAction;
 }
 
 type Props = ServiceReviewProps & ServiceReviewActions;
@@ -41,6 +42,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const keyboardIsVisible = useKeyboardIsVisible();
 
     const onDiscardPress = (): void => {
+        props.clearReview();
         props.closeDiscardChangesModal();
         backToServiceDetailOnServiceReviewDiscard(memoryHistory);
     };
