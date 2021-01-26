@@ -8,6 +8,13 @@ export enum Rating {
     Three,
 }
 
+export interface ServiceReviewPostData {
+    readonly serviceId: string;
+    readonly userLocale: string;
+    readonly rating: Rating;
+    readonly comment?: string; 
+}
+
 export interface ReviewsStore {
     readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;

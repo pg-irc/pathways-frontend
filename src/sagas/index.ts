@@ -10,6 +10,7 @@ import { watchRequestPushNotificationToken } from './post_push_notification_toke
 import { watchRequestGetAlerts } from './alerts';
 import { watchSendFeedback } from './feedback';
 import { watchUOpenOrganization } from './organization';
+import { watchSubmitServiceReview } from './reviews';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -37,4 +38,5 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchRequestPushNotificationToken);
     middleware.run(watchRequestGetAlerts);
     middleware.run(watchSendFeedback);
+    middleware.run(watchSubmitServiceReview);
 }
