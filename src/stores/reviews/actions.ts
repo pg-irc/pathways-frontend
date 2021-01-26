@@ -1,6 +1,7 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
 import { Rating } from '.';
+import { Id } from '../services';
 
 // tslint:disable-next-line: typedef
 export const chooseRating = (rating: Rating) => (
@@ -18,8 +19,8 @@ export const closeDiscardChangesModal = () => (
 );
 
 // tslint:disable-next-line: typedef
-export const submitServiceReview = (serviceId: string) => (
-    helpers.makeAction(constants.SUBMIT_SERVICE_REVIEW, { serviceId })
+export const submitServiceReview = (serviceId: Id, comment: string) => (
+    helpers.makeAction(constants.SUBMIT_SERVICE_REVIEW, { serviceId, comment })
 );
 
 export type ChooseRatingAction = Readonly<ReturnType<typeof chooseRating>>;

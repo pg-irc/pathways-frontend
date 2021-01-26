@@ -288,9 +288,10 @@ describe('services reducer', () => {
         const store = buildNormalizedServices([], []);
         const service = new HumanServiceDataBuilder().build();
         const serviceId = service.id;
+        const comment = aString();
         const action: SubmitServiceReviewAction = {
             type: constants.SUBMIT_SERVICE_REVIEW,
-            payload: { serviceId },
+            payload: { serviceId, comment },
         };
         const storeState = reducer(store, action);
         it('can add a service to service map', () => {

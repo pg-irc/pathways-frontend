@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceReviewActions =
     chooseRating: (rating: Rating): ChooseRatingAction => dispatch(chooseRating(rating)),
     openDiscardChangesModal: (): OpenDiscardChangesModalAction => dispatch(openDiscardChangesModal()),
     closeDiscardChangesModal: (): CloseDiscardChangesModalAction => dispatch(closeDiscardChangesModal()),
-    submitServiceReview: (serviceId: Id): SubmitServiceReviewAction => dispatch(submitServiceReview(serviceId)),
+    submitServiceReview: (serviceId: Id, comment: string): SubmitServiceReviewAction => dispatch(submitServiceReview(serviceId, comment)),
 });
 
 export const ServiceReviewConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceReviewComponent);

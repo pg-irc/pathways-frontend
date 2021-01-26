@@ -30,7 +30,7 @@ export interface ServiceReviewActions {
     readonly chooseRating: (rating: Rating) => ChooseRatingAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
-    readonly submitServiceReview: (serviceId: Id) => SubmitServiceReviewAction;
+    readonly submitServiceReview: (serviceId: Id, comment: string) => SubmitServiceReviewAction;
 }
 
 type Props = ServiceReviewProps & ServiceReviewActions;
@@ -46,7 +46,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
 
     const onSubmitButtonPress = (): void => {
         // TODO wire up airtable https://github.com/pg-irc/pathways-frontend/issues/1345
-        props.submitServiceReview(props.serviceId);
+        props.submitServiceReview(props.serviceId, comment);
     };
     return (
         <View style={{ flex: 1 }}>
