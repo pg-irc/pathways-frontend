@@ -352,6 +352,13 @@ export const textStyles = StyleSheet.create({
         color: colors.teal,
         textDecorationLine: 'underline',
     },
+    buttonTealText: {
+        fontSize: 15,
+        textAlign: 'left',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
