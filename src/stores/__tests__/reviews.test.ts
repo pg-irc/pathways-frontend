@@ -1,9 +1,22 @@
 // tslint:disable: no-expression-statement typedef
 import { aBoolean } from '../../application/helpers/random_test_values';
-import { buildDefaultStore, Rating, reducer } from '../reviews';
-import { chooseRating, closeDiscardChangesModal, openDiscardChangesModal, setIsSendingReview } from '../reviews/actions';
+import { buildDefaultStore, Rating, reducer, ReviewsStore } from '../reviews';
+import { chooseRating, clearReview, closeDiscardChangesModal, openDiscardChangesModal, setIsSendingReview } from '../reviews/actions';
 
 describe('the reviews reducer', () => {
+
+    describe('the review store', () => {
+
+        it('is cleared by the clear review action', () => {
+            const oldStore: ReviewsStore = {
+                rating: Rating.Three,
+                showDiscardChangesModal: false,
+                isSending: true,
+            };
+            const newStore = reducer(oldStore, clearReview());
+            expect(newStore).toEqual(buildDefaultStore());
+        });
+    });
 
     describe('the rating state', () => {
 
@@ -38,4 +51,5 @@ describe('the reviews reducer', () => {
             expect(newStore.isSending).toBe(isSending);
         });
     });
+
 });

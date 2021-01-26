@@ -53,6 +53,8 @@ export const reducer = (store: ReviewsStore = buildDefaultStore(), action?: Revi
                 ...store,
                 isSending: action.payload.isSending,
             };
+        case constants.CLEAR_REVIEW:
+            return buildDefaultStore();
         default:
             return store;
     }
