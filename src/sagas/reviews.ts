@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
 import buildUrl from 'build-url';
+import * as Sentry from 'sentry-expo';
 import { ForkEffect, takeLatest, call, CallEffect, select, SelectEffect, PutEffect, put } from 'redux-saga/effects';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_SERVICES_REVIEWS_ID } from 'react-native-dotenv';
 import { SUBMIT_SERVICE_REVIEW } from '../application/constants';
@@ -27,6 +28,7 @@ function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterat
         const response = yield call(sendToAirtable, serviceReviewJSON);
         yield call(handleResponse, response);
     } catch (error) {
+        Sentry.captureException(error);
         console.warn(error?.message || 'Error saving review');
     } finally {
         yield put(setIsSendingReview(false));
