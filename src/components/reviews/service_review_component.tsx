@@ -24,6 +24,7 @@ export interface ServiceReviewProps {
     readonly serviceName: string;
     readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;
+    readonly isSending: boolean;
 }
 
 export interface ServiceReviewActions {
@@ -45,7 +46,6 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     };
 
     const onSubmitButtonPress = (): void => {
-        // TODO wire up airtable https://github.com/pg-irc/pathways-frontend/issues/1345
         props.submitServiceReview(props.serviceId, comment);
     };
     return (
@@ -66,7 +66,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
-                disabled={false}
+                disabled={props.isSending}
                 onPress={onSubmitButtonPress}
             />
             <DiscardChangesModal

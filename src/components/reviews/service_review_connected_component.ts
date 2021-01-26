@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterProps } from '../../application/routing';
+import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 import { selectRating } from '../../selectors/reviews/select_rating';
 import { selectShowDiscardChangesModal } from '../../selectors/reviews/select_show_discard_changes_modal';
 import { selectServiceNameById } from '../../selectors/services/select_service_name_by_id';
@@ -19,6 +20,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceReviewProp
         serviceName: selectServiceNameById(store, serviceId),
         rating: selectRating(store),
         showDiscardChangesModal: selectShowDiscardChangesModal(store),
+        isSending: selectIsSendingReview(store),
     };
 };
 

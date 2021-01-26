@@ -1,23 +1,23 @@
 // tslint:disable:no-expression-statement
 import buildUrl from 'build-url';
-import { ForkEffect, takeLatest, call, CallEffect, select, SelectEffect } from 'redux-saga/effects';
+import { ForkEffect, takeLatest, call, CallEffect, select, SelectEffect, PutEffect, put } from 'redux-saga/effects';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_SERVICES_REVIEWS_ID } from 'react-native-dotenv';
 import { SUBMIT_SERVICE_REVIEW } from '../application/constants';
 import { selectRating } from '../selectors/reviews/select_rating';
-import { SubmitServiceReviewAction } from '../stores/reviews/actions';
+import { setIsSendingReview, SetIsSendingReviewAction, SubmitServiceReviewAction } from '../stores/reviews/actions';
 import { Rating, ServiceReviewPostData } from '../stores/reviews';
 import { Id } from '../stores/services';
 import { selectLocaleCode } from '../selectors/locale/select_locale_code';
 
-
-type Effects = CallEffect| SelectEffect;
+type Effects = CallEffect| SelectEffect | PutEffect<SetIsSendingReviewAction>;
 
 export function* watchSubmitServiceReview(): IterableIterator<ForkEffect> {
-    yield takeLatest(SUBMIT_SERVICE_REVIEW, submitServiceReview)
+    yield takeLatest(SUBMIT_SERVICE_REVIEW, submitServiceReview);
 }
 
 function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterator<Effects> {
     try {
+        yield put(setIsSendingReview(true));
         const serviceId = action.payload.serviceId;
         const comment = action.payload.comment;
         const userLocale = yield select(selectLocaleCode);
@@ -26,9 +26,10 @@ function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterat
         const serviceReviewJSON = toServiceReviewJSON(serviceReviewToPost);
         const response = yield call(sendToAirtable, serviceReviewJSON);
         yield call(handleResponse, response);
-    }
-    catch (error) {
+    } catch (error) {
         console.warn(error?.message || 'Error saving review');
+    } finally {
+        yield put(setIsSendingReview(false));
     }
 }
 
@@ -37,7 +38,7 @@ const buildServiceReviewPostData = (serviceId: Id, userLocale: string, rating: R
     userLocale,
     rating,
     comment,
-})
+});
 
 const toServiceReviewJSON = (serviceReview: ServiceReviewPostData): string => (
     JSON.stringify({ fields: serviceReview })
