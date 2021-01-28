@@ -24,8 +24,8 @@ export const submitServiceReview = (serviceId: Id, comment: string) => (
 );
 
 // tslint:disable-next-line: typedef
-export const setIsSendingReview = (isSending: boolean) => (
-    helpers.makeAction(constants.SET_IS_SENDING_REVIEW, { isSending })
+export const finishServiceReview = () => (
+    helpers.makeAction(constants.FINISH_SERVICE_REVIEW)
 );
 
 // tslint:disable-next-line: typedef
@@ -36,13 +36,13 @@ export const clearReview = () => (
 export type ChooseRatingAction = Readonly<ReturnType<typeof chooseRating>>;
 export type OpenDiscardChangesModalAction = Readonly<ReturnType<typeof openDiscardChangesModal>>;
 export type CloseDiscardChangesModalAction  = Readonly<ReturnType<typeof closeDiscardChangesModal>>;
-export type SubmitServiceReviewAction = Readonly<ReturnType<typeof submitServiceReview >>;
-export type SetIsSendingReviewAction = Readonly<ReturnType<typeof setIsSendingReview >>;
+export type SubmitServiceReviewAction = Readonly<ReturnType<typeof submitServiceReview>>;
+export type FinishServiceReviewAction = Readonly<ReturnType<typeof finishServiceReview>>;
 export type ClearReviewAction = Readonly<ReturnType<typeof clearReview>>;
 
 export type ReviewAction = ChooseRatingAction |
     OpenDiscardChangesModalAction |
     CloseDiscardChangesModalAction |
     SubmitServiceReviewAction |
-    SetIsSendingReviewAction |
-    ClearReviewAction;
+    ClearReviewAction |
+    FinishServiceReviewAction;

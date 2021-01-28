@@ -48,11 +48,13 @@ export const reducer = (store: ReviewsStore = buildDefaultStore(), action?: Revi
                 ...store,
                 showDiscardChangesModal: false,
             };
-        case constants.SET_IS_SENDING_REVIEW:
+        case constants.SUBMIT_SERVICE_REVIEW:
             return {
                 ...store,
-                isSending: action.payload.isSending,
+                isSending: true,
             };
+        case constants.FINISH_SERVICE_REVIEW:
+            return buildDefaultStore();
         case constants.CLEAR_REVIEW:
             return buildDefaultStore();
         default:

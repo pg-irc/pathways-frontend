@@ -2,15 +2,15 @@
 import buildUrl from 'build-url';
 import * as Sentry from 'sentry-expo';
 import { ForkEffect, takeLatest, call, CallEffect, select, SelectEffect, PutEffect, put } from 'redux-saga/effects';
-import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_SERVICES_REVIEWS_ID } from 'react-native-dotenv';
+import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_SERVICES_REVIEWS_TABLE_ID } from 'react-native-dotenv';
 import { SUBMIT_SERVICE_REVIEW } from '../application/constants';
 import { selectRating } from '../selectors/reviews/select_rating';
-import { clearReview, ClearReviewAction, setIsSendingReview, SetIsSendingReviewAction, SubmitServiceReviewAction } from '../stores/reviews/actions';
+import { finishServiceReview, FinishServiceReviewAction, SubmitServiceReviewAction } from '../stores/reviews/actions';
 import { Rating, ServiceReviewPostData } from '../stores/reviews';
 import { Id } from '../stores/services';
 import { selectLocaleCode } from '../selectors/locale/select_locale_code';
 
-type Effects = CallEffect| SelectEffect | PutEffect<SetIsSendingReviewAction | ClearReviewAction>;
+type Effects = CallEffect| SelectEffect | PutEffect<FinishServiceReviewAction>;
 
 export function* watchSubmitServiceReview(): IterableIterator<ForkEffect> {
     yield takeLatest(SUBMIT_SERVICE_REVIEW, submitServiceReview);
@@ -18,7 +18,6 @@ export function* watchSubmitServiceReview(): IterableIterator<ForkEffect> {
 
 function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterator<Effects> {
     try {
-        yield put(setIsSendingReview(true));
         const serviceId = action.payload.serviceId;
         const comment = action.payload.comment;
         const userLocale = yield select(selectLocaleCode);
@@ -31,8 +30,7 @@ function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterat
         Sentry.captureException(error);
         console.warn(error?.message || 'Error saving review');
     } finally {
-        yield put(setIsSendingReview(false));
-        yield put(clearReview());
+        yield put(finishServiceReview());
     }
 }
 
@@ -48,7 +46,7 @@ const toServiceReviewJSON = (serviceReview: ServiceReviewPostData): string => (
 );
 
 const sendToAirtable = async (serviceReviewJSON: string): Promise<Response> => (
-    fetch(buildRequestUrl(), buildRequestInit(serviceReviewJSON))
+    fetch(buildRequestUrl(), buildReviewPostRequest(serviceReviewJSON))
 );
 
 const buildRequestUrl = (): string => {
@@ -56,14 +54,14 @@ const buildRequestUrl = (): string => {
         throw new Error('AIRTABLE_BASE_ID is missing.');
     }
 
-    if (!AIRTABLE_TABLE_SERVICES_REVIEWS_ID) {
-        throw new Error('AIRTABLE_TABLE_SERVICES_REVIEWS_ID is missing.');
+    if (!AIRTABLE_SERVICES_REVIEWS_TABLE_ID) {
+        throw new Error('AIRTABLE_SERVICES_REVIEWS_TABLE_ID is missing.');
     }
 
-    return buildUrl('https://api.airtable.com', { path: `v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_SERVICES_REVIEWS_ID}` });
+    return buildUrl('https://api.airtable.com', { path: `v0/${AIRTABLE_BASE_ID}/${AIRTABLE_SERVICES_REVIEWS_TABLE_ID}` });
 };
 
-const buildRequestInit = (serviceReviewJSON: string): RequestInit => {
+const buildReviewPostRequest = (serviceReviewJSON: string): RequestInit => {
     if (!AIRTABLE_API_KEY) {
         throw new Error('AIRTABLE_API_KEY is missing.');
     }
