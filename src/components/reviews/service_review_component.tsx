@@ -7,14 +7,14 @@ import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
-import { ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
+import { ChooseRatingAction, ClearReviewAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { backToServiceDetailOnServiceReviewDiscard } from '../../application/routing';
+import { backFromServiceReview } from '../../application/routing';
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
@@ -24,13 +24,15 @@ export interface ServiceReviewProps {
     readonly serviceName: string;
     readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;
+    readonly isSending: boolean;
 }
 
 export interface ServiceReviewActions {
     readonly chooseRating: (rating: Rating) => ChooseRatingAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
-    readonly submitServiceReview: (serviceId: Id) => SubmitServiceReviewAction;
+    readonly submitServiceReview: (serviceId: Id, comment: string) => SubmitServiceReviewAction;
+    readonly clearReview: () => ClearReviewAction;
 }
 
 type Props = ServiceReviewProps & ServiceReviewActions;
@@ -40,14 +42,16 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const keyboardIsVisible = useKeyboardIsVisible();
 
     const onDiscardPress = (): void => {
+        props.clearReview();
         props.closeDiscardChangesModal();
-        backToServiceDetailOnServiceReviewDiscard(memoryHistory);
+        backFromServiceReview(memoryHistory);
     };
 
     const onSubmitButtonPress = (): void => {
-        // TODO wire up airtable https://github.com/pg-irc/pathways-frontend/issues/1345
-        props.submitServiceReview(props.serviceId);
+        props.submitServiceReview(props.serviceId, comment);
+        backFromServiceReview(memoryHistory);
     };
+
     return (
         <View style={{ flex: 1 }}>
             <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
@@ -66,7 +70,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
-                disabled={false}
+                disabled={props.isSending}
                 onPress={onSubmitButtonPress}
             />
             <DiscardChangesModal

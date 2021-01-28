@@ -2,7 +2,7 @@
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
-    popServiceReviewPathFromHistory, backToServiceDetailOnServiceReviewDiscard }
+    popServiceReviewPathFromHistory, backFromServiceReview }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -221,7 +221,7 @@ describe('the popServiceReviewPathFromHistory function', () => {
     });
 });
 
-describe('the backToServiceDetailOnServiceReviewDiscard function', () => {
+describe('the backFromServiceReview function', () => {
     const firstRegularPath = routePathDefinition(Routes.Services);
     const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
     const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
@@ -230,7 +230,7 @@ describe('the backToServiceDetailOnServiceReviewDiscard function', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        backToServiceDetailOnServiceReviewDiscard(history);
+        backFromServiceReview(history);
         expect(history.location.pathname).toBe(serviceDetailPath);
     });
 
@@ -238,7 +238,7 @@ describe('the backToServiceDetailOnServiceReviewDiscard function', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        backToServiceDetailOnServiceReviewDiscard(history);
+        backFromServiceReview(history);
         expect(history.entries.length).toBe(2);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(serviceDetailPath);

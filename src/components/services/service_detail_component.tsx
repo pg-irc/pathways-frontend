@@ -72,9 +72,9 @@ export interface ServiceDetailProps {
     readonly feedbackType: string;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
-    readonly isSendingFeedback: boolean;
     readonly showLinkAlerts: boolean;
     readonly isReviewed: boolean;
+    readonly isSending: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -282,7 +282,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             onPress={onSubmitPress}
                         />
                         <ThankYouMessageOrEmptyComponent
-                            isSendingFeedback={props.isSendingFeedback}
+                            isVisible={props.isSending}
                             i18n={i18n}
                         />
                     </View>

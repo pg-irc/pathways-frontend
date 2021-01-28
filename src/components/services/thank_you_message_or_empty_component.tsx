@@ -6,11 +6,11 @@ import { showToast } from '../../application/toast';
 
 interface ThankYouMessageOrEmptyProps {
     readonly i18n: I18n;
-    readonly isSendingFeedback: boolean;
+    readonly isVisible: boolean;
 }
 
-export const ThankYouMessageOrEmptyComponent = ({i18n, isSendingFeedback}: ThankYouMessageOrEmptyProps): JSX.Element => {
-    if (isSendingFeedback) {
+export const ThankYouMessageOrEmptyComponent = ({i18n, isVisible}: ThankYouMessageOrEmptyProps): JSX.Element => {
+    if (isVisible) {
         showToast(i18n._(t`Thank you for your contribution!`), 3000);
     }
     return <EmptyComponent />;

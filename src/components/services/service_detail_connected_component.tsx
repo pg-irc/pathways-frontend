@@ -41,7 +41,6 @@ import {
     ChooseExplainFeedbackAction,
     chooseExplainFeedback,
 } from '../../stores/feedback';
-import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
@@ -50,6 +49,7 @@ import { openOrganization, OpenOrganizationAction } from '../../stores/organizat
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 import { Rating } from '../../stores/reviews';
+import { selectIsSending } from '../../selectors/select_is_sending';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     const serviceId = ownProps.match.params.serviceId;
@@ -62,9 +62,9 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         feedbackType: selectFeedbackType(store),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
-        isSendingFeedback: selectIsSendingFeedback(store),
         showLinkAlerts: selectShowLinkAlerts(store),
         isReviewed: R.includes(serviceId, reviewedServicesIds),
+        isSending: selectIsSending(store),
     };
 };
 
