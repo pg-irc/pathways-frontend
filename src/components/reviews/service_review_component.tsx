@@ -14,10 +14,11 @@ import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { backFromServiceReview } from '../../application/routing';
+import { backFromServiceReview, goToRouteWithParameter, Routes } from '../../application/routing';
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
+import { History } from 'history';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
@@ -66,6 +67,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 <RatingQuestionComponent />
                 <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
                 <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
+                <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
@@ -143,3 +145,20 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
         }
     </I18n>
 );
+
+const ExplainReviewUsageComponent = ({ history, serviceId }: { readonly history: History, readonly serviceId: Id }): JSX.Element => {
+    const onPress = (): void => {
+        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, history)();
+    };
+    return (
+        <View style={{ paddingTop: 20 }}>
+            <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
+                <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
+                <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
+                        {' '}
+                        <Trans>Learn more</Trans>
+                    </Text>
+            </Text>
+        </View>
+    );
+};
