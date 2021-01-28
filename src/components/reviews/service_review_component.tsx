@@ -19,6 +19,7 @@ import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
 import { History } from 'history';
+import { DividerComponent } from '../content_layout/divider_component';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
@@ -70,6 +71,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
+            <DividerComponent />
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
                 disabled={props.isSending || props.rating === Rating.Zero}
@@ -151,7 +153,7 @@ const ExplainReviewUsageComponent = ({ history, serviceId }: { readonly history:
         goToRouteWithParameter(Routes.ExplainFeedback, serviceId, history)();
     };
     return (
-        <View style={{ paddingTop: 20 }}>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
             <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
                 <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
                 <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
