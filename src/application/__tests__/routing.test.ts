@@ -225,6 +225,7 @@ describe('the backFromServiceReview function', () => {
     const firstRegularPath = routePathDefinition(Routes.Services);
     const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
     const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
+    const feedbackExplainerPath = routePathDefinition(Routes.ExplainFeedback);
 
     it('sends the user back to the service detail page already on the history stack', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
@@ -236,6 +237,16 @@ describe('the backFromServiceReview function', () => {
 
     it('does not add a subsequent duplicate service detail path to the history stack', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        backFromServiceReview(history);
+        expect(history.entries.length).toBe(2);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(serviceDetailPath);
+    });
+
+    it('sends the user back to the service detail page when explain feedback and service review are on the history stack', () => {
+        const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath, feedbackExplainerPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
         backFromServiceReview(history);
