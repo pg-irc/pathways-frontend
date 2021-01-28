@@ -65,12 +65,12 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 <ServiceNameComponent name={props.serviceName} onPress={memoryHistory.goBack} />
                 <RatingQuestionComponent />
                 <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
-                <CommentComponent comment={comment} setComment={setComment}/>
+                <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
-                disabled={props.isSending}
+                disabled={props.isSending || props.rating === Rating.Zero}
                 onPress={onSubmitButtonPress}
             />
             <DiscardChangesModal
@@ -114,6 +114,7 @@ const RatingQuestionComponent = (): JSX.Element => (
 );
 
 export interface CommentProps {
+    readonly isFocused: boolean;
     readonly comment: string;
     readonly setComment: Dispatch<SetStateAction<string>>;
 }
@@ -133,7 +134,7 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
                             numberOfLines={5}
                             placeholder={t`Comment`}
                             style={applicationStyles.input}
-                            isFocused={true}
+                            isFocused={props.isFocused}
                             onChangeText={props.setComment}
                         />
                     </View>
