@@ -2,7 +2,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
@@ -64,7 +64,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 extraScrollHeight={100}
                 style={{ padding: 20 }}
             >
-                <ServiceNameComponent name={props.serviceName} onPress={memoryHistory.goBack} />
+                <ServiceNameComponent name={props.serviceName}/>
                 <RatingQuestionComponent />
                 <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
                 <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
@@ -96,16 +96,11 @@ const HeaderComponent = ({openDiscardChangesModal}: {readonly openDiscardChanges
     </Header>
 );
 
-const ServiceNameComponent = ({name, onPress}: {readonly name: string, readonly onPress: () => void}): JSX.Element => (
+const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => (
     <View>
-        <Text style={textStyles.contentTitle}>
-            <Trans>Looks like you used the service,</Trans>
+        <Text style={[textStyles.contentTitle, { fontSize: 20 }]}>
+            <Trans>Looks like you used the service,</Trans> {name}
         </Text>
-        <TouchableOpacity onPress={onPress}>
-            <Text style={[textStyles.contentTitle, { color: colors.teal }]}>
-                {name}
-            </Text>
-        </TouchableOpacity>
     </View>
 );
 
