@@ -66,6 +66,11 @@ export const sendRatingEvent = (serviceId: Id, rating: Rating): void => {
     analyticsHit(event);
 };
 
+export const sendSubmitReviewEvent = (serviceId: Id): void => {
+    const event = createEvent('Review', 'SubmitReview', [serviceId]);
+    analyticsHit(event);
+};
+
 export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );

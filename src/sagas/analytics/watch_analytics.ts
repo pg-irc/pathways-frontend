@@ -9,7 +9,7 @@ import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put, select, Selec
 import { BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import * as events from './events';
 import { BookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
-import { ChooseRatingAction } from '../../stores/reviews/actions';
+import { ChooseRatingAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
 
 export type WatchedAction =
     RouteChangedAction |
@@ -21,7 +21,8 @@ export type WatchedAction =
     CollapseDetailAction |
     AnalyticsLinkPressedAction |
     SearchExecutedAction |
-    ChooseRatingAction;
+    ChooseRatingAction |
+    SubmitServiceReviewAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -36,6 +37,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.ANALYTICS_LINK_PRESSED,
             constants.SEARCH_EXECUTED,
             constants.CHOOSE_RATING,
+            constants.SUBMIT_SERVICE_REVIEW,
         ],
         sendAnalyticsData);
 }
@@ -89,6 +91,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             break;
         case constants.CHOOSE_RATING:
             events.sendRatingEvent(action.payload.serviceId, action.payload.rating);
+            break;
+        case constants.SUBMIT_SERVICE_REVIEW:
+            events.sendSubmitReviewEvent(action.payload.serviceId);
             break;
         default:
             break;
