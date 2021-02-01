@@ -252,9 +252,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                <DividerComponent />
+                                {showDividerComponentOrEmpty(!props.isReviewed && !isFeedbackInputEnabled)}
                                 <ServiceDetailRatingsComponent
-                                    isVisible={!props.isReviewed}
+                                    isVisible={!props.isReviewed && !isFeedbackInputEnabled}
                                     serviceId={serviceId}
                                     serviceName={props.service.name}
                                     rating={Rating.Zero}
@@ -531,4 +531,8 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
 
 const buildPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
+);
+
+const showDividerComponentOrEmpty = (isVisible: boolean): JSX.Element => (
+    isVisible ? <DividerComponent /> : <EmptyComponent />
 );
