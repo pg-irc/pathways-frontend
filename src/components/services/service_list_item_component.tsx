@@ -16,6 +16,7 @@ export interface ServiceListItemProps {
     readonly onPress: () => void;
     readonly history: History;
     readonly isBookmarked: boolean;
+    readonly onPressServiceReview: () => void;
 }
 
 export interface ServiceListItemActions {
@@ -47,6 +48,7 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                 <PromptServiceReviewButton
                     serviceId={props.service.id}
                     isVisible={!props.service.reviewed}
+                    onPress={props.onPressServiceReview}
                 />
             </TouchableOpacity>
         );

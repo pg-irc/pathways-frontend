@@ -3,23 +3,16 @@ import { Trans } from '@lingui/react';
 import { Text, TouchableOpacity } from 'react-native';
 import { colors, textStyles, values } from '../../application/styles';
 import { Icon } from 'native-base';
-import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
-import { useHistory } from 'react-router-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly isVisible: boolean;
     readonly serviceId: Id;
+    readonly onPress: () => void;
 }
 
 export const PromptServiceReviewButton = (props: Props): JSX.Element => {
-    const history = useHistory();
-    const onPress = (): void => {
-        // tslint:disable-next-line: no-expression-statement
-        goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
-    };
-
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
@@ -40,7 +33,7 @@ export const PromptServiceReviewButton = (props: Props): JSX.Element => {
                 borderColor: colors.grey,
                 borderWidth: 1,
             }}
-            onPress={onPress}
+            onPress={props.onPress}
         >
             <Icon
                 name='smile'

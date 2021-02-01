@@ -155,6 +155,11 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
 
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+    const onPressServiceReview = (): void => {
+        props.saveService(service);
+        props.saveSearchOffset(props.scrollOffset);
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+    };
     return (
         <ServiceListItemComponent
             service={service}
@@ -163,6 +168,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
             isBookmarked={service.bookmarked}
             onBookmark={onBookmark}
             onUnbookmark={onUnbookmark}
+            onPressServiceReview={onPressServiceReview}
         />
     );
 });
