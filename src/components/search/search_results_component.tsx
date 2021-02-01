@@ -84,11 +84,13 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         if (props.searchTerm) {
             flatListRef.current.getNode().scrollToOffset({ animated: false, offset: 0 });
         }
-    }, [props.searchTerm, props.searchLocation]);
+    }, [props.searchTerm, props.searchLocation, flatListRef]);
 
     useEffect((): void => {
         if (props.searchResults.length > 0) {
-            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+            setTimeout((): void => {
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+              }, 0);
         }
     }, [props.searchOffset, flatListRef]);
 

@@ -31,6 +31,7 @@ import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
+import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -99,7 +100,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const services = getServicesIfValid(props.topicServicesOrError);
     useEffect((): void => {
         if (services.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
+            scrollToOffsetWithTimeout(flatListRef, props.topicServicesOffset);
         }
     }, [props.topicServicesOffset, services, flatListRef]);
 

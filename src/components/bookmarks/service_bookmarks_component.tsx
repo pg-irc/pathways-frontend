@@ -14,6 +14,7 @@ import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_expe
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -36,7 +37,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
 
     useEffect((): void => {
         if (props.bookmarkedServices.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.scrollOffset });
+           scrollToOffsetWithTimeout(flatListRef, props.scrollOffset);
         }
     }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
 
