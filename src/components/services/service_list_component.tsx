@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
@@ -32,6 +32,7 @@ import { hasNoResultsFromLocationQuery } from '../search/search_results_componen
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
+import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -41,6 +42,7 @@ export interface ServiceListProps {
     readonly showPartialLocalizationMessage: boolean;
     readonly topicServicesOffset: number;
     readonly customLatLong: LatLong;
+    readonly isSendingReview: boolean;
 }
 
 export interface ServiceListActions {
@@ -82,6 +84,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
             history={props.history}
+            isSendingReview={props.isSendingReview}
             dispatchServicesRequest={props.dispatchServicesRequest}
             bookmarkService={props.bookmarkService}
             unbookmarkService={props.unbookmarkService}
@@ -105,23 +108,30 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     }, [props.topicServicesOffset, services, flatListRef]);
 
     return (
-        <ServiceListWrapper {...props}>
-            <FlatList
-                ref={flatListRef}
-                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
-                style={{ backgroundColor: colors.lightGrey }}
-                data={services}
-                keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems({
-                    ...props,
-                    scrollOffset: topicServicesOffset,
-                    saveScrollOffset: props.saveTopicServicesOffset,
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={<ListHeaderComponent {...props} />}
-                initialNumToRender={props.topicServicesOffset ? services.length : 20}
-            />
-        </ServiceListWrapper>
+        <I18n>
+            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+                <ServiceListWrapper {...props}>
+                    <>
+                        <FlatList
+                            ref={flatListRef}
+                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
+                            style={{ backgroundColor: colors.lightGrey }}
+                            data={services}
+                            keyExtractor={(service: HumanServiceData): string => service.id}
+                            renderItem={renderServiceItems({
+                                ...props,
+                                scrollOffset: topicServicesOffset,
+                                saveScrollOffset: props.saveTopicServicesOffset,
+                            })}
+                            ItemSeparatorComponent={SearchListSeparator}
+                            ListHeaderComponent={<ListHeaderComponent {...props} />}
+                            initialNumToRender={props.topicServicesOffset ? services.length : 20}
+                        />
+                        <ThankYouMessageOrEmptyComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                    </>
+                </ServiceListWrapper>
+            )}
+        </I18n>
     );
 };
 

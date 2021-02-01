@@ -14,7 +14,7 @@ import { goToRouteWithParameter, Routes, RouterProps } from '../../application/r
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { OnlineStatus } from './use_online_status';
@@ -29,6 +29,7 @@ import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
+import { ThankYouMessageOrEmptyComponent } from '../services/thank_you_message_or_empty_component';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -45,6 +46,7 @@ export interface SearchResultsProps {
     readonly numberOfSearchPages: number;
     readonly onlineStatus: OnlineStatus;
     readonly searchOffset: number;
+    readonly isSendingReview: boolean;
 }
 
 export interface SearchResultsActions {
@@ -103,28 +105,33 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         setSearchOffset(e.nativeEvent.contentOffset.y);
     };
     return (
-        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen(props.isLoading)}
-            <AnimatedFlatList
-                bounces={false}
-                ref={flatListRef}
-                onScrollBeginDrag={onScrollBeginDrag}
-                onScroll={onAnimatedScrollHandler}
-                onScrollEndDrag={onScrollEndDrag}
-                initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
-                style={{ backgroundColor: colors.lightGrey, flex: 1 }}
-                data={props.searchResults}
-                keyExtractor={keyExtractor}
-                renderItem={renderSearchHit({
-                    ...props,
-                    scrollOffset: searchOffset,
-                    setScrollOffset: setSearchOffset,
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={<ListHeaderComponent />}
-                ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
-            />
-        </View>
+        <I18n>
+            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+                <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+                    {renderLoadingScreen(props.isLoading)}
+                    <AnimatedFlatList
+                        bounces={false}
+                        ref={flatListRef}
+                        onScrollBeginDrag={onScrollBeginDrag}
+                        onScroll={onAnimatedScrollHandler}
+                        onScrollEndDrag={onScrollEndDrag}
+                        initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
+                        style={{ backgroundColor: colors.lightGrey, flex: 1 }}
+                        data={props.searchResults}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderSearchHit({
+                            ...props,
+                            scrollOffset: searchOffset,
+                            setScrollOffset: setSearchOffset,
+                        })}
+                        ItemSeparatorComponent={SearchListSeparator}
+                        ListHeaderComponent={<ListHeaderComponent />}
+                        ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
+                    />
+                    <ThankYouMessageOrEmptyComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                </View>
+            )}
+        </I18n>
     );
 };
 

@@ -22,6 +22,7 @@ import { SaveSearchResultScrollOffsetAction, saveSearchResultScrollOffset } from
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
+import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -35,6 +36,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     collapseSearchInput: selectIsInputCollapsed(store),
     searchOffset: selectSearchOffset(store),
     customLatLong: selectCustomLatLong(store),
+    isSendingReview: selectIsSendingReview(store),
 });
 
 type Actions =

@@ -15,11 +15,14 @@ import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
+import { ThankYouMessageOrEmptyComponent } from '../services/thank_you_message_or_empty_component';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly history: History;
     readonly scrollOffset: number;
+    readonly i18n: I18n;
+    readonly isSendingReview: boolean;
 }
 
 export interface ServiceBookmarksActions {
@@ -64,6 +67,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
                 ListHeaderComponent={<EmptyComponent/>}
                 initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
             />
+            <ThankYouMessageOrEmptyComponent i18n={props.i18n} isVisible={props.isSendingReview}/>
         </>
     );
 };

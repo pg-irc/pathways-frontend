@@ -12,6 +12,7 @@ import { selectBookmarksTab } from '../../selectors/user_experience/select_bookm
 import { SaveBookmarkedServicesScrollOffsetAction, saveBookmarkedServicesScrollOffset, SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
 import { selectBookmarkedServicesScrollOffset } from '../../selectors/user_experience/select_bookmarked_services_scroll_offset';
 import { selectBookmarkedTopicsScrollOffset } from '../../selectors/user_experience/select_bookmarked_topics_scroll_offset';
+import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
@@ -19,6 +20,7 @@ const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarksTab: selectBookmarksTab(store),
     topicsScrollOffset: selectBookmarkedTopicsScrollOffset(store),
     servicesScrollOffset: selectBookmarkedServicesScrollOffset(store),
+    isSendingReview: selectIsSendingReview(store),
 });
 
 type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;

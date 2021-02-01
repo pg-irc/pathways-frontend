@@ -37,6 +37,7 @@ export interface SearchComponentProps {
     readonly collapseSearchInput: boolean;
     readonly searchOffset: number;
     readonly customLatLong: LatLong;
+    readonly isSendingReview: boolean;
 }
 
 export interface SearchComponentActions {
