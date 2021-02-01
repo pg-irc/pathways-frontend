@@ -19,7 +19,6 @@ import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
 import { History } from 'history';
-import { DividerComponent } from '../content_layout/divider_component';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
@@ -71,7 +70,6 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
-            <DividerComponent />
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
                 disabled={props.isSending || props.rating === Rating.Zero}
