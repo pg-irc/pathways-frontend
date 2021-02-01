@@ -60,6 +60,11 @@ export const sendServicesCountEvent = (count: number): void => {
     analyticsHit(event);
 };
 
+export const sendRatingEvent = (rating: number): void => {
+    const event = createEvent('Rating', 'RatingChosen', [String(rating)]);
+    analyticsHit(event);
+};
+
 export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
