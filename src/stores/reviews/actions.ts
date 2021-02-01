@@ -4,8 +4,8 @@ import { Rating } from '.';
 import { Id } from '../services';
 
 // tslint:disable-next-line: typedef
-export const chooseRating = (rating: Rating) => (
-    helpers.makeAction(constants.CHOOSE_RATING, { rating })
+export const chooseRating = (rating: Rating, serviceId: Id) => (
+    helpers.makeAction(constants.CHOOSE_RATING, { rating, serviceId })
 );
 
 // tslint:disable-next-line: typedef

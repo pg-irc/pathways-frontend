@@ -97,7 +97,7 @@ export interface ServiceDetailActions {
     readonly hideLinkAlerts: () => void;
     readonly backFromContactInformation: () => BackFromContactInformationAction;
     readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
-    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
+    readonly chooseRating: (rating: Rating, serviceId: Id) => ChooseRatingAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;

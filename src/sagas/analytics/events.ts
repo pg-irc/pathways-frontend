@@ -2,8 +2,9 @@
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Id } from '../../validation/services/types';
 import { AnalyticsLinkProps } from '../../stores/analytics';
+import { Rating } from '../../stores/reviews';
 
 export const sendScreenHit = (action: RouteChangedAction): void => {
     const additionalParameters = createGoogleAnalyticsLanguageParameter(action);
@@ -60,8 +61,8 @@ export const sendServicesCountEvent = (count: number): void => {
     analyticsHit(event);
 };
 
-export const sendRatingEvent = (rating: number): void => {
-    const event = createEvent('Rating', 'RatingChosen', [String(rating)]);
+export const sendRatingEvent = (serviceId: Id, rating: Rating): void => {
+    const event = createEvent('Rating', 'RatingChosen', [serviceId, String(rating)]);
     analyticsHit(event);
 };
 

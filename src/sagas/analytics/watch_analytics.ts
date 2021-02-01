@@ -88,7 +88,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             events.sendSearchExecutedEvent(action.payload.searchTerm, action.payload.searchLocation);
             break;
         case constants.CHOOSE_RATING:
-            events.sendRatingEvent(action.payload.rating);
+            events.sendRatingEvent(action.payload.serviceId, action.payload.rating);
             break;
         default:
             break;

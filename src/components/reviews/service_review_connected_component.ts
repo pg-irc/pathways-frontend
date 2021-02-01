@@ -31,7 +31,7 @@ type Actions = ChooseRatingAction |
     ClearReviewAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceReviewActions => ({
-    chooseRating: (rating: Rating): ChooseRatingAction => dispatch(chooseRating(rating)),
+    chooseRating: (rating: Rating, serviceId: Id): ChooseRatingAction => dispatch(chooseRating(rating, serviceId)),
     openDiscardChangesModal: (): OpenDiscardChangesModalAction => dispatch(openDiscardChangesModal()),
     closeDiscardChangesModal: (): CloseDiscardChangesModalAction => dispatch(closeDiscardChangesModal()),
     submitServiceReview: (serviceId: Id, comment: string): SubmitServiceReviewAction => dispatch(submitServiceReview(serviceId, comment)),
