@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Id } from '../../validation/services/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
     openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
-    chooseRating: (rating: Rating): ChooseRatingAction => dispatch(chooseRating(rating)),
+    chooseRating: (rating: Rating, serviceId: Id): ChooseRatingAction => dispatch(chooseRating(rating, serviceId)),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

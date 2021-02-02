@@ -28,7 +28,7 @@ export interface ServiceReviewProps {
 }
 
 export interface ServiceReviewActions {
-    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
+    readonly chooseRating: (rating: Rating, serviceId: Id) => ChooseRatingAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
     readonly submitServiceReview: (serviceId: Id, comment: string) => SubmitServiceReviewAction;
@@ -64,7 +64,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             >
                 <ServiceNameComponent name={props.serviceName} onPress={memoryHistory.goBack} />
                 <RatingQuestionComponent />
-                <RatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
+                <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
                 <CommentComponent comment={comment} setComment={setComment}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>

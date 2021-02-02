@@ -6,10 +6,12 @@ import { TouchableOpacity } from 'react-native';
 import { colors } from '../../application/styles';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
 import { Rating } from '../../stores/reviews';
+import { Id } from '../../stores/services';
 
 export interface RatingsProps {
     readonly rating: Rating;
-    readonly chooseRating: (rating: number) => ChooseRatingAction;
+    readonly serviceId: Id;
+    readonly chooseRating: (rating: number, serviceId: Id) => ChooseRatingAction;
 }
 
 export interface RatingIcon {
@@ -34,14 +36,20 @@ const iconsList: ReadonlyArray<RatingIcon> = [
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
-        <RatingsIconsComponent rating={props.rating} chooseRating={props.chooseRating} iconsList={iconsList}/>
+        <RatingsIconsComponent
+            rating={props.rating}
+            serviceId={props.serviceId}
+            chooseRating={props.chooseRating}
+            iconsList={iconsList}
+        />
     </View>
 );
 
 interface RatingsIconsProps {
     readonly rating: Rating;
+    readonly serviceId: Id;
     readonly iconsList: ReadonlyArray<RatingIcon>;
-    readonly chooseRating: (rating: Rating) => void;
+    readonly chooseRating: (rating: Rating, serviceId: Id) => void;
 }
 
 const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (
@@ -53,7 +61,7 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (
                         key={icon.name}
                         isChosen={icon.value === props.rating}
                         icon={icon}
-                        onPress={(): void => props.chooseRating(icon.value)}
+                        onPress={(): void => props.chooseRating(icon.value, props.serviceId)}
                     />
                 );
             }, props.iconsList)}

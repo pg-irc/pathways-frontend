@@ -8,7 +8,7 @@ import { reducer as servicesReducer } from '../../stores/services';
 import { SaveServiceAction, BuildServicesSuccessAction } from '../../stores/services/actions';
 
 // tslint:disable-next-line:no-any
-export const middleware = R.curry((store: MiddlewareAPI<Dispatch, Store>, next: Dispatch, action: any) => {
+export const middleware = R.curry((store: MiddlewareAPI<Dispatch, Store>, next: Dispatch, action: any): any => {
     const state = store.getState();
 
     if (action.type === SAVE_SERVICE || action.type === LOAD_SERVICES_SUCCESS) {

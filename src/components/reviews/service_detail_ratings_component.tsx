@@ -9,20 +9,21 @@ import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { useHistory } from 'react-router-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Rating } from '../../stores/reviews';
+import { Id } from '../../stores/services';
 
 interface Props {
     readonly isVisible: boolean;
     readonly serviceId: string;
     readonly serviceName: string;
     readonly rating: Rating;
-    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
+    readonly chooseRating: (rating: Rating, serviceId: Id) => ChooseRatingAction;
 }
 
 export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
     const history = useHistory();
     const onFinishRating = (rating: Rating): ChooseRatingAction => {
         goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
-        return props.chooseRating(rating);
+        return props.chooseRating(rating, props.serviceId);
     };
 
     if (!props.isVisible) {
@@ -34,7 +35,7 @@ export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
             <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingHorizontal: 10 }]}>
                     <Trans>How was your experience with</Trans> {props.serviceName}?
                 </Text>
-            <RatingsComponent rating={props.rating} chooseRating={onFinishRating}/>
+            <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={onFinishRating}/>
         </View>
     );
 };

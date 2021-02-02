@@ -22,7 +22,7 @@ describe('the reviews reducer', () => {
 
         it('is set to a number accepted within the rating enum by the choose rating action', () => {
             const oldStore = buildDefaultStore();
-            const newStore = reducer(oldStore, chooseRating(Rating.Three));
+            const newStore = reducer(oldStore, chooseRating(Rating.Three, aString()));
             expect(newStore.rating).toBe(Rating.Three);
         });
     });
