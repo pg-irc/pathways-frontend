@@ -9,7 +9,7 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { SaveServiceToMapAction, OpenServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -29,7 +29,7 @@ import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
-import { ThankYouMessageOrEmptyComponent } from '../services/thank_you_message_or_empty_component';
+import { ThankYouMessageComponent } from '../services/thank_you_message_or_empty_component';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -55,7 +55,7 @@ export interface SearchResultsActions {
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
     readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
@@ -128,7 +128,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                         ListHeaderComponent={<ListHeaderComponent />}
                         ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
                     />
-                    <ThankYouMessageOrEmptyComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                    <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
                 </View>
             )}
         </I18n>
@@ -148,7 +148,7 @@ interface SearchHitProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (offset: number) => void;
     readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
@@ -156,7 +156,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds, props.reviewedServicesIds);
     const onPress = (): void => {
-        props.saveService(service);
+        props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
@@ -165,7 +165,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     const onPressServiceReview = (): void => {
-        props.saveService(service);
+        props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
         goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
     };

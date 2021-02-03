@@ -55,7 +55,7 @@ import {
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/header_component';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
+import { ThankYouMessageComponent } from './thank_you_message_or_empty_component';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 import { OpenOrganizationAction } from '../../stores/organization/actions';
@@ -252,7 +252,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                {showDividerComponentOrEmpty(!props.isReviewed && !isFeedbackInputEnabled)}
+                                <DividerComponent isVisible={!props.isReviewed && !isFeedbackInputEnabled} />
                                 <ServiceDetailRatingsComponent
                                     isVisible={!props.isReviewed && !isFeedbackInputEnabled}
                                     serviceId={serviceId}
@@ -281,7 +281,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             disabled={!hasFeedbackToSend()}
                             onPress={onSubmitPress}
                         />
-                        <ThankYouMessageOrEmptyComponent
+                        <ThankYouMessageComponent
                             isVisible={props.isSending}
                             i18n={i18n}
                         />
@@ -531,8 +531,4 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
 
 const buildPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
-);
-
-const showDividerComponentOrEmpty = (isVisible: boolean): JSX.Element => (
-    isVisible ? <DividerComponent /> : <EmptyComponent />
 );

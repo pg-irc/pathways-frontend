@@ -3,22 +3,22 @@ import { Dispatch, MiddlewareAPI } from 'redux';
 import { Store } from '../../stores';
 import * as R from 'ramda';
 import { sendServicesCountEvent } from './events';
-import { SAVE_SERVICE, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../../application/constants';
+import { SAVE_SERVICE_TO_MAP, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../../application/constants';
 import { reducer as servicesReducer } from '../../stores/services';
-import { SaveServiceAction, BuildServicesSuccessAction } from '../../stores/services/actions';
+import { SaveServiceToMapAction, BuildServicesSuccessAction } from '../../stores/services/actions';
 
 // tslint:disable-next-line:no-any
 export const middleware = R.curry((store: MiddlewareAPI<Dispatch, Store>, next: Dispatch, action: any): any => {
     const state = store.getState();
 
-    if (action.type === SAVE_SERVICE || action.type === LOAD_SERVICES_SUCCESS) {
+    if (action.type === SAVE_SERVICE_TO_MAP || action.type === LOAD_SERVICES_SUCCESS) {
         sendServicesCountReport(state, action);
     }
 
     return next(action);
 });
 
-type UpdateServicesActions = SaveServiceAction | BuildServicesSuccessAction;
+type UpdateServicesActions = SaveServiceToMapAction | BuildServicesSuccessAction;
 
 const sendServicesCountReport = (store: Store, action: UpdateServicesActions): void => {
     const oldStore = store.services;

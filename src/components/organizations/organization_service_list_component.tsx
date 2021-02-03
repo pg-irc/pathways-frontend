@@ -10,7 +10,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
-import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
+import { scrollToOffset } from '../scroll_to_offset_with_timeout';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
@@ -34,7 +34,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
 
     useEffect((): void => {
         if (props.services.length > 0) {
-            scrollToOffsetWithTimeout(flatListRef, props.organizationServicesOffset)
+            scrollToOffset(flatListRef, props.organizationServicesOffset)
         }
     }, [props.organizationServicesOffset, props.services, flatListRef]);
 

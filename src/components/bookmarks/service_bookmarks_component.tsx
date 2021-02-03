@@ -14,8 +14,8 @@ import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_expe
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
-import { ThankYouMessageOrEmptyComponent } from '../services/thank_you_message_or_empty_component';
+import { scrollToOffset } from '../scroll_to_offset_with_timeout';
+import { ThankYouMessageComponent } from '../services/thank_you_message_or_empty_component';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -40,7 +40,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
 
     useEffect((): void => {
         if (props.bookmarkedServices.length > 0) {
-           scrollToOffsetWithTimeout(flatListRef, props.scrollOffset);
+           scrollToOffset(flatListRef, props.scrollOffset);
         }
     }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
 
@@ -67,7 +67,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
                 ListHeaderComponent={<EmptyComponent/>}
                 initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
             />
-            <ThankYouMessageOrEmptyComponent i18n={props.i18n} isVisible={props.isSendingReview}/>
+            <ThankYouMessageComponent i18n={props.i18n} isVisible={props.isSendingReview}/>
         </>
     );
 };

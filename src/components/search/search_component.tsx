@@ -6,7 +6,7 @@ import { View, Text, Header, Left, Right } from 'native-base';
 import { useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { SaveServiceToMapAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, EnableCustomLatLongAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
@@ -41,7 +41,7 @@ export interface SearchComponentProps {
 }
 
 export interface SearchComponentActions {
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
     readonly enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction;

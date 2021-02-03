@@ -31,8 +31,8 @@ import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
-import { scrollToOffsetWithTimeout } from '../scroll_to_offset_with_timeout';
-import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
+import { scrollToOffset } from '../scroll_to_offset_with_timeout';
+import { ThankYouMessageComponent } from './thank_you_message_or_empty_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -103,7 +103,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const services = getServicesIfValid(props.topicServicesOrError);
     useEffect((): void => {
         if (services.length > 0) {
-            scrollToOffsetWithTimeout(flatListRef, props.topicServicesOffset);
+            scrollToOffset(flatListRef, props.topicServicesOffset);
         }
     }, [props.topicServicesOffset, services, flatListRef]);
 
@@ -127,7 +127,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                             ListHeaderComponent={<ListHeaderComponent {...props} />}
                             initialNumToRender={props.topicServicesOffset ? services.length : 20}
                         />
-                        <ThankYouMessageOrEmptyComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                        <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
                     </>
                 </ServiceListWrapper>
             )}

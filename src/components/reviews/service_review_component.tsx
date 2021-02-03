@@ -42,6 +42,8 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     const keyboardIsVisible = useKeyboardIsVisible();
 
+    const hasNoRating = props.rating === Rating.Zero;
+
     const onDiscardPress = (): void => {
         props.clearReview();
         props.closeDiscardChangesModal();
@@ -72,7 +74,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
-                disabled={props.isSending || props.rating === Rating.Zero}
+                disabled={props.isSending || hasNoRating}
                 onPress={onSubmitButtonPress}
             />
             <DiscardChangesModal

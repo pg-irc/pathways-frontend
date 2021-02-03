@@ -18,7 +18,7 @@ export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesE
 
 export type SaveServicesForOrganizationAction = Readonly<ReturnType<typeof saveServicesForOrganization>>;
 
-export type SaveServiceAction = Readonly<ReturnType<typeof saveService>>;
+export type SaveServiceToMapAction = Readonly<ReturnType<typeof saveServiceToMap>>;
 export type OpenServiceAction = Readonly<ReturnType<typeof openServiceDetail>>;
 
 export type BookmarkServiceAction = Readonly<ReturnType<typeof bookmarkService>>;
@@ -29,7 +29,7 @@ export type ServicesAction =
     BuildServicesSuccessAction |
     BuildServicesErrorAction |
     SaveServicesForOrganizationAction |
-    SaveServiceAction |
+    SaveServiceToMapAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
     OpenServiceAction |
@@ -62,8 +62,8 @@ export const saveServicesForOrganization = (organizationId: string, services: Re
 );
 
 // tslint:disable-next-line:typedef
-export const saveService = (service: HumanServiceData) => (
-    helpers.makeAction(constants.SAVE_SERVICE, { service })
+export const saveServiceToMap = (service: HumanServiceData) => (
+    helpers.makeAction(constants.SAVE_SERVICE_TO_MAP, { service })
 );
 
 // tslint:disable-next-line: typedef

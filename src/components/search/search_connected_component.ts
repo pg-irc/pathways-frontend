@@ -40,7 +40,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
 });
 
 type Actions =
-    serviceActions.SaveServiceAction |
+    serviceActions.SaveServiceToMapAction |
     serviceActions.OpenServiceAction |
     DisableAnalyticsAction |
     EnableCustomLatLongAction |
@@ -58,8 +58,8 @@ type Actions =
     SaveSearchResultScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
-    saveService: (service: HumanServiceData): serviceActions.SaveServiceAction => (
-        dispatch(serviceActions.saveService(service))
+    saveServiceToMap: (service: HumanServiceData): serviceActions.SaveServiceToMapAction => (
+        dispatch(serviceActions.saveServiceToMap(service))
     ),
     openServiceDetail: (service: HumanServiceData): serviceActions.OpenServiceAction => (
         dispatch(serviceActions.openServiceDetail(service))
