@@ -19,6 +19,7 @@ type Props = TopicBookmarksProps & TaskListActions;
 export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
         <TaskListComponent
+            topic={undefined}
             tasks={props.bookmarkedTopics}
             bookmarkedTopicsIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
             emptyTaskListContent={

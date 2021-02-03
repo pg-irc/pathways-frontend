@@ -53,6 +53,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
         <Header {...props} />
         <TaskListComponent
+            topic={props.topic}
             tasks={props.topic.relatedTopics}
             bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
             bookmarkTopic={props.bookmarkTopic}

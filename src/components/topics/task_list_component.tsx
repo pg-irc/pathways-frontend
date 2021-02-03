@@ -12,12 +12,14 @@ import { TopicListHeadingComponent } from './topic_list_heading_component';
 import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
     SaveTopicServicesScrollOffsetAction, SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import throttle from 'lodash.throttle';
+import { Topic } from '../../selectors/topics/types';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
 
 export interface TaskListProps {
     readonly history: History;
+    readonly topic: Topic;
     readonly tasks: ReadonlyArray<ListItem>;
     readonly bookmarkedTopicsIdList: ReadonlyArray<Id>;
     readonly emptyTaskListContent: JSX.Element;
@@ -74,7 +76,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             return;
         }
 
-        if (previousState.scrollOffset === this.state.scrollOffset) {
+        if (previousState.scrollOffset === this.state.scrollOffset && !hasContentChanged(previousProps, this.props)) {
             return;
         }
 
@@ -140,16 +142,9 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
     }, 10);
 };
 
-const hasContentChanged = (previousProps: Props, props: Props): boolean => {
-    return previousProps.headerContentIdentifier !== props.headerContentIdentifier || tasksHaveChanged(previousProps, props);
-};
-
-const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
-    const currentIds = R.pluck('id', props.tasks);
-    const previousIds = R.pluck('id', previousProps.tasks);
-
-    return R.not(R.equals(previousIds, currentIds));
-};
+const hasContentChanged = (previousProps: Props, props: Props): boolean => (
+    previousProps.headerContentIdentifier !== props.headerContentIdentifier || previousProps.topic !== props.topic
+);
 
 const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number): JSX.Element => {
     if (isTopicListHeading(item)) {
