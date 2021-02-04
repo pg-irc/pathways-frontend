@@ -67,7 +67,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     componentDidMount(): void {
         if (this.flatListRef) {
-           scrollToOffsetWithTimeout(this.flatListRef, this.props.scrollOffset);
+           scrollToOffset(this.flatListRef, this.props.scrollOffset);
         }
     }
 
@@ -78,7 +78,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 data: this.props.tasks,
             });
         }
-        
+
         if (this.state.isScrolling) {
             return;
         }
@@ -86,7 +86,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         if (previousState.scrollOffset === this.state.scrollOffset && !hasContentChanged(previousProps, this.props)) {
             return;
         }
-
     }
 
     render(): JSX.Element {
@@ -136,7 +135,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 }
 
-const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): void => {
+const scrollToOffset = (flatListRef: FlatListRef, offset: number): void => {
     // tslint:disable-next-line: max-line-length
     // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
     setTimeout((): void => {
