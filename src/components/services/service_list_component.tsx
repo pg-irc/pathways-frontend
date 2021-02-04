@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
@@ -31,6 +31,8 @@ import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
+import { scrollToOffset } from '../scroll_to_offset_with_timeout';
+import { ThankYouMessageComponent } from './thank_you_message_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -40,6 +42,7 @@ export interface ServiceListProps {
     readonly showPartialLocalizationMessage: boolean;
     readonly topicServicesOffset: number;
     readonly customLatLong: LatLong;
+    readonly isSendingReview: boolean;
 }
 
 export interface ServiceListActions {
@@ -81,6 +84,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
             history={props.history}
+            isSendingReview={props.isSendingReview}
             dispatchServicesRequest={props.dispatchServicesRequest}
             bookmarkService={props.bookmarkService}
             unbookmarkService={props.unbookmarkService}
@@ -99,28 +103,35 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const services = getServicesIfValid(props.topicServicesOrError);
     useEffect((): void => {
         if (services.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
+            scrollToOffset(flatListRef, props.topicServicesOffset);
         }
     }, [props.topicServicesOffset, services, flatListRef]);
 
     return (
-        <ServiceListWrapper {...props}>
-            <FlatList
-                ref={flatListRef}
-                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
-                style={{ backgroundColor: colors.lightGrey }}
-                data={services}
-                keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems({
-                    ...props,
-                    scrollOffset: topicServicesOffset,
-                    saveScrollOffset: props.saveTopicServicesOffset,
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={<ListHeaderComponent {...props} />}
-                initialNumToRender={props.topicServicesOffset ? services.length : 20}
-            />
-        </ServiceListWrapper>
+        <I18n>
+            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+                <ServiceListWrapper {...props}>
+                    <>
+                        <FlatList
+                            ref={flatListRef}
+                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
+                            style={{ backgroundColor: colors.lightGrey }}
+                            data={services}
+                            keyExtractor={(service: HumanServiceData): string => service.id}
+                            renderItem={renderServiceItems({
+                                ...props,
+                                scrollOffset: topicServicesOffset,
+                                saveScrollOffset: props.saveTopicServicesOffset,
+                            })}
+                            ItemSeparatorComponent={SearchListSeparator}
+                            ListHeaderComponent={<ListHeaderComponent {...props} />}
+                            initialNumToRender={props.topicServicesOffset ? services.length : 20}
+                        />
+                        <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                    </>
+                </ServiceListWrapper>
+            )}
+        </I18n>
     );
 };
 

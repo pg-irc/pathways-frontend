@@ -28,7 +28,7 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
             return updateServicesFailure(store, action);
-        case constants.SAVE_SERVICE:
+        case constants.SAVE_SERVICE_TO_MAP:
             return saveService(store, action);
         case constants.SAVE_SERVICES_BY_ORGANIZATION:
             return openOrganizationServices(store, action);
@@ -125,7 +125,7 @@ const openOrganizationServices = (store: types.ServiceStore, action: actions.Sav
     };
 };
 
-const saveService = (store: types.ServiceStore, action: actions.SaveServiceAction): types.ServiceStore => ({
+const saveService = (store: types.ServiceStore, action: actions.SaveServiceToMapAction): types.ServiceStore => ({
     ...store,
     services: {
         ...store.services,

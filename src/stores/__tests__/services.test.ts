@@ -5,7 +5,7 @@ import { isValidServicesForTopic } from '../services/is_valid_services_for_topic
 import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
-    SaveServiceAction,
+    SaveServiceToMapAction,
     BookmarkServiceAction,
     UnbookmarkServiceAction,
     SaveServicesForOrganizationAction,
@@ -190,8 +190,8 @@ describe('services reducer', () => {
 
         it('updates the store with the new service', () => {
             const aSearchService = new HumanServiceDataBuilder().build();
-            const action: SaveServiceAction = {
-                type: constants.SAVE_SERVICE,
+            const action: SaveServiceToMapAction = {
+                type: constants.SAVE_SERVICE_TO_MAP,
                 payload: {
                     service: aSearchService,
                 },
@@ -208,8 +208,8 @@ describe('services reducer', () => {
             const oldStore = buildNormalizedServices([oldService], []);
 
             const newService = new HumanServiceDataBuilder().withId(serviceId).build();
-            const action: SaveServiceAction = {
-                type: constants.SAVE_SERVICE,
+            const action: SaveServiceToMapAction = {
+                type: constants.SAVE_SERVICE_TO_MAP,
                 payload: {
                     service: newService,
                 },

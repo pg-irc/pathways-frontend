@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { textStyles, colors, values } from '../../application/styles';
 import { Text } from 'native-base';
 import { Trans } from '@lingui/react';
+import { View } from 'react-native';
 
 export const SubmitFeedbackButton = (props: {
     readonly isVisible: boolean, readonly disabled: boolean, readonly onPress: () => void,
@@ -12,6 +13,7 @@ export const SubmitFeedbackButton = (props: {
         return <EmptyComponent />;
     }
     return (
+        <View style={{ borderTopWidth: 1, borderColor: colors.greyBorder }}>
         <TouchableOpacity
             style={{
                 backgroundColor: props.disabled ? colors.fadedGrey : colors.teal,
@@ -28,5 +30,6 @@ export const SubmitFeedbackButton = (props: {
                 <Trans>Submit</Trans>
             </Text>
         </TouchableOpacity>
+        </View>
     );
 };

@@ -2,7 +2,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
@@ -14,10 +14,11 @@ import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { backFromServiceReview } from '../../application/routing';
+import { backFromServiceReview, goToRouteWithParameter, Routes } from '../../application/routing';
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
+import { History } from 'history';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
@@ -41,6 +42,8 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     const keyboardIsVisible = useKeyboardIsVisible();
 
+    const hasNoRating = props.rating === Rating.Zero;
+
     const onDiscardPress = (): void => {
         props.clearReview();
         props.closeDiscardChangesModal();
@@ -62,15 +65,16 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 extraScrollHeight={100}
                 style={{ padding: 20 }}
             >
-                <ServiceNameComponent name={props.serviceName} onPress={memoryHistory.goBack} />
+                <ServiceNameComponent name={props.serviceName}/>
                 <RatingQuestionComponent />
                 <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
-                <CommentComponent comment={comment} setComment={setComment}/>
+                <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
+                <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
-                disabled={props.isSending}
+                disabled={props.isSending || hasNoRating}
                 onPress={onSubmitButtonPress}
             />
             <DiscardChangesModal
@@ -92,16 +96,11 @@ const HeaderComponent = ({openDiscardChangesModal}: {readonly openDiscardChanges
     </Header>
 );
 
-const ServiceNameComponent = ({name, onPress}: {readonly name: string, readonly onPress: () => void}): JSX.Element => (
+const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => (
     <View>
-        <Text style={textStyles.contentTitle}>
-            <Trans>Looks like you used the service,</Trans>
+        <Text style={[textStyles.contentTitle, { fontSize: 20 }]}>
+            <Trans>Looks like you used the service,</Trans> {name}
         </Text>
-        <TouchableOpacity onPress={onPress}>
-            <Text style={[textStyles.contentTitle, { color: colors.teal }]}>
-                {name}
-            </Text>
-        </TouchableOpacity>
     </View>
 );
 
@@ -114,6 +113,7 @@ const RatingQuestionComponent = (): JSX.Element => (
 );
 
 export interface CommentProps {
+    readonly isFocused: boolean;
     readonly comment: string;
     readonly setComment: Dispatch<SetStateAction<string>>;
 }
@@ -133,7 +133,7 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
                             numberOfLines={5}
                             placeholder={t`Comment`}
                             style={applicationStyles.input}
-                            isFocused={true}
+                            isFocused={props.isFocused}
                             onChangeText={props.setComment}
                         />
                     </View>
@@ -142,3 +142,20 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
         }
     </I18n>
 );
+
+const ExplainReviewUsageComponent = ({ history, serviceId }: { readonly history: History, readonly serviceId: Id }): JSX.Element => {
+    const onPress = (): void => {
+        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, history)();
+    };
+    return (
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
+                <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
+                <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
+                        {' '}
+                        <Trans>Learn more</Trans>
+                    </Text>
+            </Text>
+        </View>
+    );
+};

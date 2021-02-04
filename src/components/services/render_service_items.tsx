@@ -36,6 +36,10 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
+    const onPressServiceReview = (): void => {
+        props.saveScrollOffset(props.scrollOffset);
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+    };
     return (
         <ServiceListItemComponent
             history={props.history}
@@ -44,6 +48,7 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
             isBookmarked={service.bookmarked}
             onBookmark={onBookmark}
             onUnbookmark={onUnbookmark}
+            onPressServiceReview={onPressServiceReview}
         />
     );
 });

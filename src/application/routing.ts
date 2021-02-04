@@ -137,7 +137,7 @@ export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): v
 };
 
 const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
-    pathMatchesRoute(location.pathname, Routes.ServiceReview)
+    pathMatchesAnyRoute(location.pathname, [Routes.ServiceReview, Routes.ExplainFeedback])
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {

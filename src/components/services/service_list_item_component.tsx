@@ -9,12 +9,14 @@ import { History } from 'history';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { buildServiceName } from './build_service_name';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { PromptServiceReviewButton } from '../reviews/prompt_service_review_button';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
     readonly onPress: () => void;
     readonly history: History;
     readonly isBookmarked: boolean;
+    readonly onPressServiceReview: () => void;
 }
 
 export interface ServiceListItemActions {
@@ -27,8 +29,8 @@ type Props = ServiceListItemProps & ServiceListItemActions;
 export const ServiceListItemComponent = (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         return (
-            <TouchableOpacity onPress={props.onPress}>
-                 <View style={{ backgroundColor: colors.white, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+            <TouchableOpacity style={{ backgroundColor: colors.white }} onPress={props.onPress}>
+                 <View style={{ paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                     <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName)}
                     {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
@@ -43,6 +45,11 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                         />
                     </View>
                 </View>
+                <PromptServiceReviewButton
+                    serviceId={props.service.id}
+                    isVisible={!props.service.reviewed}
+                    onPress={props.onPressServiceReview}
+                />
             </TouchableOpacity>
         );
     };

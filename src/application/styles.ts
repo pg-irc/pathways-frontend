@@ -7,6 +7,7 @@ export const colors = {
     pale: '#ffebcb',
     lightTeal: '#4fb3bf',
     teal: '#00838f',
+    lightBlue: '#f1fcfa',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
     grey: '#DEDEDE',
@@ -125,6 +126,13 @@ export const textStyles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'left',
         color: colors.black,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
+    headlineH3StyleBrownLeft: {
+        fontSize: 16,
+        textAlign: 'left',
+        color: colors.greyishBrown,
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
@@ -343,6 +351,13 @@ export const textStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         color: colors.teal,
         textDecorationLine: 'underline',
+    },
+    buttonTealText: {
+        fontSize: 15,
+        textAlign: 'left',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
     },
 });
 

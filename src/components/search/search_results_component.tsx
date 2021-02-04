@@ -9,12 +9,12 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { SaveServiceToMapAction, OpenServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { OnlineStatus } from './use_online_status';
@@ -29,6 +29,7 @@ import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
+import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -45,6 +46,7 @@ export interface SearchResultsProps {
     readonly numberOfSearchPages: number;
     readonly onlineStatus: OnlineStatus;
     readonly searchOffset: number;
+    readonly isSendingReview: boolean;
 }
 
 export interface SearchResultsActions {
@@ -53,7 +55,7 @@ export interface SearchResultsActions {
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
     readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
@@ -84,11 +86,13 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         if (props.searchTerm) {
             flatListRef.current.getNode().scrollToOffset({ animated: false, offset: 0 });
         }
-    }, [props.searchTerm, props.searchLocation]);
+    }, [props.searchTerm, props.searchLocation, flatListRef]);
 
     useEffect((): void => {
         if (props.searchResults.length > 0) {
-            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+            setTimeout((): void => {
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+              }, 0);
         }
     }, [props.searchOffset, flatListRef]);
 
@@ -101,28 +105,33 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         setSearchOffset(e.nativeEvent.contentOffset.y);
     };
     return (
-        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen(props.isLoading)}
-            <AnimatedFlatList
-                bounces={false}
-                ref={flatListRef}
-                onScrollBeginDrag={onScrollBeginDrag}
-                onScroll={onAnimatedScrollHandler}
-                onScrollEndDrag={onScrollEndDrag}
-                initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
-                style={{ backgroundColor: colors.lightGrey, flex: 1 }}
-                data={props.searchResults}
-                keyExtractor={keyExtractor}
-                renderItem={renderSearchHit({
-                    ...props,
-                    scrollOffset: searchOffset,
-                    setScrollOffset: setSearchOffset,
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={<ListHeaderComponent />}
-                ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
-            />
-        </View>
+        <I18n>
+            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+                <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+                    {renderLoadingScreen(props.isLoading)}
+                    <AnimatedFlatList
+                        bounces={false}
+                        ref={flatListRef}
+                        onScrollBeginDrag={onScrollBeginDrag}
+                        onScroll={onAnimatedScrollHandler}
+                        onScrollEndDrag={onScrollEndDrag}
+                        initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
+                        style={{ backgroundColor: colors.lightGrey, flex: 1 }}
+                        data={props.searchResults}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderSearchHit({
+                            ...props,
+                            scrollOffset: searchOffset,
+                            setScrollOffset: setSearchOffset,
+                        })}
+                        ItemSeparatorComponent={SearchListSeparator}
+                        ListHeaderComponent={<ListHeaderComponent />}
+                        ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
+                    />
+                    <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                </View>
+            )}
+        </I18n>
     );
 };
 
@@ -139,7 +148,7 @@ interface SearchHitProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (offset: number) => void;
     readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
@@ -147,7 +156,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds, props.reviewedServicesIds);
     const onPress = (): void => {
-        props.saveService(service);
+        props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
@@ -155,6 +164,11 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
 
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+    const onPressServiceReview = (): void => {
+        props.saveServiceToMap(service);
+        props.saveSearchOffset(props.scrollOffset);
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+    };
     return (
         <ServiceListItemComponent
             service={service}
@@ -163,6 +177,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
             isBookmarked={service.bookmarked}
             onBookmark={onBookmark}
             onUnbookmark={onUnbookmark}
+            onPressServiceReview={onPressServiceReview}
         />
     );
 });
