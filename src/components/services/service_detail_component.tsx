@@ -55,7 +55,7 @@ import {
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/header_component';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { ThankYouMessageComponent } from './thank_you_message_or_empty_component';
+import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 import { OpenOrganizationAction } from '../../stores/organization/actions';

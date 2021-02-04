@@ -15,7 +15,7 @@ import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { scrollToOffset } from '../scroll_to_offset_with_timeout';
-import { ThankYouMessageComponent } from '../services/thank_you_message_or_empty_component';
+import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;

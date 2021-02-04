@@ -29,7 +29,7 @@ import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
-import { ThankYouMessageComponent } from '../services/thank_you_message_or_empty_component';
+import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
