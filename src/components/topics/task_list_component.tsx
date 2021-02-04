@@ -72,6 +72,13 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(previousProps: Props, previousState: State): void {
+        if (previousProps.bookmarkedTopicsIdList !== this.props.bookmarkedTopicsIdList) {
+            return this.setState({
+                ...this.state,
+                data: this.props.tasks,
+            });
+        }
+        
         if (this.state.isScrolling) {
             return;
         }
@@ -80,11 +87,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             return;
         }
 
-        if (this.flatListRef) {
-            const contentHasChanged = hasContentChanged(previousProps, this.props);
-            const offset = contentHasChanged ? 0 : this.state.scrollOffset;
-            scrollToOffsetWithTimeout(this.flatListRef, offset);
-        }
     }
 
     render(): JSX.Element {
@@ -144,6 +146,7 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
 
 const hasContentChanged = (previousProps: Props, props: Props): boolean => (
     previousProps.headerContentIdentifier !== props.headerContentIdentifier || previousProps.topic !== props.topic
+    || previousProps.bookmarkedTopicsIdList.length !== props.bookmarkedTopicsIdList.length
 );
 
 const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number): JSX.Element => {
