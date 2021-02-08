@@ -11,7 +11,6 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../application/helpers/is_android';
 import { openURL } from '../link/link_component';
-import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
@@ -39,7 +38,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const searchTermInputRef = useRef<TextInput>();
     const searchLocationInputRef = useRef<TextInput>();
-
+    askPermission();
     if (props.collapseSearchInput) {
         const clearSearchInputs = (): void => {
             setShowMyLocationButton(true);
@@ -49,7 +48,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             setSearchLocationInput('');
         };
         return (
-            <View style = {{paddingTop: 7}}>
+            <View style={{ paddingTop: 7 }}>
                 <CollapsedInput
                     searchTermInput={searchTermInput}
                     searchLocationInput={searchLocationInput}
@@ -61,7 +60,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <View style = {{paddingTop: 7}}>
+        <View style={{ paddingTop: 7 }}>
             <ExpandedInput
                 searchTermInput={searchTermInput}
                 searchLocationInput={searchLocationInput}
@@ -296,9 +295,6 @@ const myLocationOnPress = async (setSearchLocationInput: (location: string) => v
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
             break;
-        case Permissions.PermissionStatus.UNDETERMINED:
-            askPermission(setSearchLocationInput);
-            break;
         default:
             break;
     }
@@ -321,11 +317,6 @@ const openAppSettings = (): void => {
     }
 };
 
-const askPermission = async (setSearchLocationInput: (location: string) => void): Promise<void> => {
-    Permissions.askAsync(Permissions.LOCATION).
-        then((permissionResponse: Permissions.PermissionResponse): void => {
-            if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-                setSearchLocationInput(MY_LOCATION);
-            }
-        });
+const askPermission = async (): Promise<void> => {
+    Permissions.askAsync(Permissions.LOCATION);
 };
