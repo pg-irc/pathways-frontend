@@ -93,7 +93,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     render(): JSX.Element {
         return (
             <FlatList
-                bounces={false}
                 ref={this.setFlatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
