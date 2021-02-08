@@ -70,13 +70,23 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(previousProps: Props): void {
-        if (this.flatListRef && hasContentChanged(previousProps, this.props)) {
+        console.log(this.props.scrollOffset)
+        if (this.flatListRef && hasTopicDetailPageChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
                 scrollOffset: 0,
                 }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset),
             );
+        }
+
+        if (this.flatListRef && hasTopicListDataChanged(previousProps, this.props)) {
+            console.log(this.state.scrollOffset);
+            return this.setState({
+                ...this.state,
+                data: this.props.tasks,
+                scrollOffset: this.state.scrollOffset,
+            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
     }
 
@@ -135,9 +145,13 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
     }, 10);
 };
 
-const hasContentChanged = (previousProps: Props, props: Props): boolean => {
-    return previousProps.headerContentIdentifier !== props.headerContentIdentifier || tasksHaveChanged(previousProps, props);
-};
+const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean => (
+    previousProps.headerContentIdentifier !== props.headerContentIdentifier
+);
+
+const hasTopicListDataChanged = (previousProps: Props, props: Props): boolean => (
+    tasksHaveChanged(previousProps, props)
+)
 
 const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
     const currentIds = R.pluck('id', props.tasks);
