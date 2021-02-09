@@ -70,14 +70,18 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(previousProps: Props): void {
-        if (this.flatListRef && hasTopicDetailPageChanged(previousProps, this.props)) {
+        if (!this.flatListRef) {
+            return;
+        }
+
+        if (hasTopicDetailPageChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
                 scrollOffset: 0,
                 }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
 
-        if (this.flatListRef && hasTopicListDataChanged(previousProps, this.props)) {
+        if (tasksHaveChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
@@ -141,10 +145,6 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
 
 const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean => (
     previousProps.headerContentIdentifier !== props.headerContentIdentifier
-);
-
-const hasTopicListDataChanged = (previousProps: Props, props: Props): boolean => (
-    tasksHaveChanged(previousProps, props)
 );
 
 const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
