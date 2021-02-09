@@ -188,6 +188,7 @@ interface SearchInputProps {
 }
 
 const SearchInput = (props: SearchInputProps): JSX.Element => {
+    const value = props.locationInputValue === MY_LOCATION ? props.i18n._(t`My Location`) : props.locationInputValue;
     const clearOnPress = (): void => {
         props.setLocationInputValue('');
     };
@@ -201,7 +202,7 @@ const SearchInput = (props: SearchInputProps): JSX.Element => {
                 <TextInput
                     style={applicationStyles.searchInput}
                     onChangeText={props.setLocationInputValue}
-                    value={props.locationInputValue}
+                    value={value}
                     placeholder={props.i18n._(t`Enter city, address, or postal code`)}
                     placeholderTextColor={colors.greyishBrown}
                     selectionColor={colors.black}
