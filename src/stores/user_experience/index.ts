@@ -90,6 +90,8 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return updateBookmarksTab(store, action.payload.index);
         case constants.SAVE_ORGANIZATION_TAB:
             return { ...store, organizationTab: action.payload.index };
+        case constants.LOAD_SERVICES_REQUEST:
+            return { ...store, topicServicesScrollOffset: 0 };
         case constants.OPEN_HEADER_MENU:
         case constants.CLOSE_HEADER_MENU:
         case constants.CLOSE_ABOUT_MODAL:

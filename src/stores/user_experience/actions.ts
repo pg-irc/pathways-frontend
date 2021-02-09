@@ -1,6 +1,7 @@
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { SaveLocaleRequestAction } from '../locale/actions';
+import { BuildServicesRequestAction } from '../services/actions';
 
 export type SaveHomePageScrollOffsetAction = Readonly<ReturnType<typeof saveHomePageScrollOffset>>;
 export type SaveTopicDetailScrollOffsetAction = Readonly<ReturnType<typeof saveTopicDetailScrollOffset>>;
@@ -37,7 +38,8 @@ OpenAboutModalAction |
 CloseDisclaimerModalAction |
 OpenDisclaimerModalAction |
 SaveLocaleRequestAction |
-SaveTopicDetailScrollOffsetAction;
+SaveTopicDetailScrollOffsetAction |
+BuildServicesRequestAction;
 
 // tslint:disable-next-line:typedef
 export const saveHomePageScrollOffset = (offset: number) => (
