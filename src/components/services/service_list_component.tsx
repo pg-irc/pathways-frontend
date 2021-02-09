@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useRef, useState } from 'react';
+import React, { EffectCallback, useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -31,7 +31,6 @@ import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
-import { scrollToOffset } from '../scroll_to_offset_with_timeout';
 import { ThankYouMessageComponent } from './thank_you_message_component';
 
 export interface ServiceListProps {
@@ -101,10 +100,15 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
-    useEffect((): void => {
-        if (services.length > 0) {
-            scrollToOffset(flatListRef, props.topicServicesOffset);
+
+    useEffect((): EffectCallback | void => {
+        if (services.length <= 0) {
+            return;
         }
+        const timer = setTimeout((): void => {
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
+        }, 0);
+        return (): void => clearTimeout(timer);
     }, [props.topicServicesOffset, services, flatListRef]);
 
     return (
