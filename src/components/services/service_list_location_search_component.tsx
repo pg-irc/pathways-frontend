@@ -25,9 +25,9 @@ interface Props {
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
-    const input = props.manualUserLocation.humanReadableLocation || 'My Location';
-    const isSearchInitiallyCollapsed = !!input;
-    const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(input);
+    const initialLocationInput = props.manualUserLocation.humanReadableLocation || 'My Location';
+    const isSearchInitiallyCollapsed = !!initialLocationInput;
+    const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(initialLocationInput);
     const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
     const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, (b: boolean) => void] = useState<boolean>(isSearchInitiallyCollapsed);
 
