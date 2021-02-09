@@ -69,26 +69,29 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         }
     }
 
-    componentDidUpdate(previousProps: Props, previousState: State): void {
-        if (this.state.isScrolling) {
+    componentDidUpdate(previousProps: Props): void {
+        if (!this.flatListRef) {
             return;
         }
 
-        if (previousState.scrollOffset === this.state.scrollOffset) {
-            return;
+        if (hasTopicDetailPageChanged(previousProps, this.props)) {
+            return this.setState({
+                ...this.state,
+                scrollOffset: 0,
+                }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
 
-        if (this.flatListRef) {
-            const contentHasChanged = hasContentChanged(previousProps, this.props);
-            const offset = contentHasChanged ? 0 : this.state.scrollOffset;
-            scrollToOffsetWithTimeout(this.flatListRef, offset);
+        if (tasksHaveChanged(previousProps, this.props)) {
+            return this.setState({
+                ...this.state,
+                data: this.props.tasks,
+            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
     }
 
     render(): JSX.Element {
         return (
             <FlatList
-                bounces={false}
                 ref={this.setFlatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
@@ -140,9 +143,9 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
     }, 10);
 };
 
-const hasContentChanged = (previousProps: Props, props: Props): boolean => {
-    return previousProps.headerContentIdentifier !== props.headerContentIdentifier || tasksHaveChanged(previousProps, props);
-};
+const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean => (
+    previousProps.headerContentIdentifier !== props.headerContentIdentifier
+);
 
 const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
     const currentIds = R.pluck('id', props.tasks);
