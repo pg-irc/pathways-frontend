@@ -38,7 +38,6 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const searchTermInputRef = useRef<TextInput>();
     const searchLocationInputRef = useRef<TextInput>();
-    askPermission();
     if (props.collapseSearchInput) {
         const clearSearchInputs = (): void => {
             setShowMyLocationButton(true);
@@ -64,6 +63,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             <ExpandedInput
                 searchTermInput={searchTermInput}
                 searchLocationInput={searchLocationInput}
+                searchLocation={props.searchLocation}
                 showMyLocationButton={showMyLocationButton}
                 setShowMyLocationButton={setShowMyLocationButton}
                 setSearchTermInput={setSearchTermInput}
@@ -123,6 +123,7 @@ const isSearchLocationEmpty = (searchLocationInput: string): boolean => (
 export interface ExpandedInputProps {
     readonly searchTermInput: string;
     readonly searchLocationInput: string;
+    readonly searchLocation: string;
     readonly showMyLocationButton: boolean;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
@@ -161,8 +162,9 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
     return (
         <I18n>
             {
-                (({ i18n }: I18nProps): JSX.Element =>
-                    <View style={{ padding: 4, backgroundColor: colors.teal }}>
+                (({ i18n }: I18nProps): JSX.Element => {
+                    askPermission(props.searchLocation, props.setSearchLocationInput, i18n);
+                    return <View style={{ padding: 4, backgroundColor: colors.teal }}>
                         <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                             <InputIcon name='search' />
                             <TextInput
@@ -213,8 +215,8 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                 setSearchLocationInput={props.setSearchLocationInput}
                             />
                         </View>
-                    </View >
-                )
+                    </View >;
+                })
             }
         </I18n>
     );
@@ -317,6 +319,11 @@ const openAppSettings = (): void => {
     }
 };
 
-const askPermission = async (): Promise<void> => {
-    Permissions.askAsync(Permissions.LOCATION);
+const askPermission = async (searchLocation: string, setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
+    Permissions.askAsync(Permissions.LOCATION).
+        then((permissionResponse: Permissions.PermissionResponse): void => {
+            if (permissionResponse.status === Permissions.PermissionStatus.GRANTED && searchLocation === '') {
+                setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+            }
+        });
 };
