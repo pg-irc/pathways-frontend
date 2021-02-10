@@ -68,6 +68,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                 setShowMyLocationButton={setShowMyLocationButton}
                 setSearchTermInput={setSearchTermInput}
                 setSearchLocationInput={setSearchLocationInput}
+                saveSearchLocation={props.saveSearchLocation}
                 searchTermInputRef={searchTermInputRef}
                 searchLocationInputRef={searchLocationInputRef}
                 onSearchRequest={props.onSearchRequest}
@@ -128,6 +129,7 @@ export interface ExpandedInputProps {
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
+    readonly saveSearchLocation: (s: string) => void;
     readonly searchTermInputRef: MutableRefObject<TextInput>;
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
@@ -163,7 +165,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
         <I18n>
             {
                 (({ i18n }: I18nProps): JSX.Element => {
-                    askLocationPermission(props.setSearchLocationInput, i18n);
+                    askLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, i18n);
                     return <View style={{ padding: 4, backgroundColor: colors.teal }}>
                         <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                             <InputIcon name='search' />
@@ -319,13 +321,15 @@ const openAppSettings = (): void => {
     }
 };
 
-const askLocationPermission = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
+const askLocationPermission = async (setSearchLocationInput: (location: string) => void,
+    saveSearchLocation: (location: string) => void, i18n: I18n): Promise<void> => {
     const status = await getPermission();
     if (status === Permissions.PermissionStatus.UNDETERMINED) {
         Permissions.askAsync(Permissions.LOCATION).
             then((permissionResponse: Permissions.PermissionResponse): void => {
                 if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
                     setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+                    saveSearchLocation(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
                 }
             });
     }
