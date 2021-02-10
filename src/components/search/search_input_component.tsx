@@ -163,7 +163,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
         <I18n>
             {
                 (({ i18n }: I18nProps): JSX.Element => {
-                    askPermission(props.searchLocation, props.setSearchLocationInput, i18n);
+                    askLocationPermission(props.setSearchLocationInput, i18n);
                     return <View style={{ padding: 4, backgroundColor: colors.teal }}>
                         <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                             <InputIcon name='search' />
@@ -319,11 +319,14 @@ const openAppSettings = (): void => {
     }
 };
 
-const askPermission = async (searchLocation: string, setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
-    Permissions.askAsync(Permissions.LOCATION).
-        then((permissionResponse: Permissions.PermissionResponse): void => {
-            if (permissionResponse.status === Permissions.PermissionStatus.GRANTED && searchLocation === '') {
-                setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            }
-        });
+const askLocationPermission = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
+    const status = await getPermission();
+    if (status === Permissions.PermissionStatus.UNDETERMINED) {
+        Permissions.askAsync(Permissions.LOCATION).
+            then((permissionResponse: Permissions.PermissionResponse): void => {
+                if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
+                    setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+                }
+            });
+    }
 };
