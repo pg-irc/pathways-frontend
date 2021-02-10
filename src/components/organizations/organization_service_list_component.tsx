@@ -10,7 +10,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
-import { useServicesScrollToOffset } from '../use_scroll_to_offset';
+import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;

@@ -32,7 +32,7 @@ import { hasNoResultsFromLocationQuery } from '../search/search_results_componen
 import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ThankYouMessageComponent } from './thank_you_message_component';
-import { useServicesScrollToOffset } from '../use_scroll_to_offset';
+import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 
 export interface ServiceListProps {
     readonly topic: Topic;
