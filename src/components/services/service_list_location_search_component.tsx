@@ -15,6 +15,7 @@ import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery, isLocalizedMyLocati
 import { isMyLocation } from '../../api/fetch_lat_long_from_location';
 import { Topic } from '../../selectors/topics/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
+import { BooleanSetterFunction, StringSetterFunction } from '../search/search_component';
 
 interface Props {
     readonly topic: Topic;
@@ -25,9 +26,11 @@ interface Props {
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
-    const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.humanReadableLocation);
+    const [locationInputValue, setLocationInputValue]: readonly [string, StringSetterFunction] =
+        useState(props.manualUserLocation.humanReadableLocation);
     const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
-    const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, (b: boolean) => void] = useState<boolean>(!!props.manualUserLocation.humanReadableLocation);
+    const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, BooleanSetterFunction] =
+        useState<boolean>(!!props.manualUserLocation.humanReadableLocation);
 
     if (searchIsCollapsed) {
         return (
@@ -119,7 +122,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             props.i18n,
             props.topic,
             props.dispatchServicesRequest,
-            props.customLatLong
+            props.customLatLong,
         );
     };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
@@ -281,7 +284,7 @@ const getSearchOnPress = async (
     i18n: I18n,
     topic: Topic,
     dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction,
-    customLatLong: LatLong
+    customLatLong: LatLong,
 ): Promise<void> => {
     const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
