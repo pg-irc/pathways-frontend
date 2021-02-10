@@ -31,3 +31,6 @@ yarn-error.log*
 src/fixtures/newcomers_guide
 
 google-services.json
+
+# mix of different .po files from ui-strings submodule
+messages.po
