@@ -17,6 +17,7 @@ import { OpenOrganizationAction } from '../stores/organization/actions';
 import { selectServicesForOrganization } from '../selectors/services/select_services_for_organization';
 import { SearchServiceData } from '../validation/search/types';
 import { selectReviewedServicesIds } from '../selectors/services/select_reviewed_services_ids';
+import { setManualUserLocation, SetManualUserLocationAction } from '../stores/manual_user_location';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
@@ -33,7 +34,6 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
         if (!isOnline) {
             return yield put(actions.buildServicesError(topicId, Errors.Offline));
         }
-
         const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation.latLong);
         if (errors.isNoLocationPermissionError(deviceLocationResponse)) {
             return yield put(actions.buildServicesError(topicId, deviceLocationResponse.type));
@@ -41,6 +41,12 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
 
         if (errors.isLocationFetchTimeoutError(deviceLocationResponse)) {
             return yield put(actions.buildServicesError(topicId, deviceLocationResponse.type));
+        }
+        if (!action.payload.manualUserLocation.humanReadableLocation) {
+            yield put(setManualUserLocation({
+                humanReadableLocation: constants.MY_LOCATION,
+                latLong: { lat: deviceLocationResponse.coords.latitude, lng: deviceLocationResponse.coords.longitude }
+            }));
         }
 
         const apiResponse: APIResponse = yield call(searchServices, topicId, deviceLocationResponse);
@@ -87,7 +93,7 @@ export function* updateServicesForOrganization(action: OpenOrganizationAction): 
 
 type SuccessOrFailureResult = actions.BuildServicesSuccessAction | actions.BuildServicesErrorAction;
 
-type UpdateResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect | PutEffect<SuccessOrFailureResult>>;
+type UpdateResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect | PutEffect<SuccessOrFailureResult | SetManualUserLocationAction>>;
 
 type UpdateServicesForOrganizationResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect |
  PutEffect<actions.SaveServicesForOrganizationAction>>;
