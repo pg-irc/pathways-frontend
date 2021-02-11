@@ -126,6 +126,8 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         props.closeWithFeedback();
     };
 
+    const isButtonDisabled = isOtherFeedback && !feedback;
+
     return (
         <Container>
             <HeaderComponent
@@ -141,7 +143,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 onPress={submitFeedback}
-                disabled={!feedback}
+                disabled={isButtonDisabled}
                 isVisible={!keyboardIsVisible}
             />
             <DiscardChangesModal
