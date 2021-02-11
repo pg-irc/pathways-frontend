@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import * as R from 'ramda';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { Trans } from '@lingui/react';
@@ -14,8 +14,8 @@ import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_expe
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { scrollToOffset } from '../scroll_to_offset_with_timeout';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
+import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -37,13 +37,7 @@ type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
     const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(props.scrollOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-
-    useEffect((): void => {
-        if (props.bookmarkedServices.length > 0) {
-           scrollToOffset(flatListRef, props.scrollOffset);
-        }
-    }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
-
+    useServicesScrollToOffset(flatListRef, props.scrollOffset, props.bookmarkedServices);
     return (
         <>
             <ServiceBanner isVisible={!R.isEmpty(props.bookmarkedServices)}/>

@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View } from 'native-base';
 import { History } from 'history';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -10,7 +10,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
-import { scrollToOffset } from '../scroll_to_offset_with_timeout';
+import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
@@ -31,12 +31,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
     const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
         useState(props.organizationServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-
-    useEffect((): void => {
-        if (props.services.length > 0) {
-            scrollToOffset(flatListRef, props.organizationServicesOffset)
-        }
-    }, [props.organizationServicesOffset, props.services, flatListRef]);
+    useServicesScrollToOffset(flatListRef, props.organizationServicesOffset, props.services)
 
     return (
         <FlatList
