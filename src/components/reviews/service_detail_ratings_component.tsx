@@ -33,7 +33,7 @@ export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ paddingVertical: values.backgroundTextPadding}}>
             <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingHorizontal: 10 }]}>
-                    <Trans>How was your experience with</Trans> {props.serviceName}?
+                    <Trans>How was your experience with {props.serviceName}?</Trans>
                 </Text>
             <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={onFinishRating}/>
         </View>
