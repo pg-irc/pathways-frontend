@@ -63,13 +63,14 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 extraHeight={100}
                 enableOnAndroid={true}
                 extraScrollHeight={100}
-                style={{ padding: 20 }}
             >
-                <ServiceNameComponent name={props.serviceName}/>
-                <RatingQuestionComponent />
-                <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
-                <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
-                <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
+                <View style={{ padding: 20 }}>
+                    <ServiceNameComponent name={props.serviceName}/>
+                    <RatingQuestionComponent />
+                    <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
+                    <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
+                    <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
+                </View>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
