@@ -115,7 +115,6 @@ const buildBriefSearchString = (searchTermInput: string, searchLocationInput: st
     if (isSearchLocationEmpty(searchLocationInput)) {
         return searchTermInput;
     }
-    // TO DO Translate String
     return <Trans>{searchTermInput} near {searchLocationInput}</Trans>;
 };
 
