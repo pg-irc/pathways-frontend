@@ -164,9 +164,8 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
     return (
         <I18n>
             {
-                (({ i18n }: I18nProps): JSX.Element => {
-                    askLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, i18n);
-                    return <View style={{ padding: 4, backgroundColor: colors.teal }}>
+                (({ i18n }: I18nProps): JSX.Element =>
+                    <View style={{ padding: 4, backgroundColor: colors.teal }}>
                         <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                             <InputIcon name='search' />
                             <TextInput
@@ -207,6 +206,8 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                             <SearchButton
                                 searchTermInput={props.searchTermInput}
                                 searchLocationInput={props.searchLocationInput}
+                                setSearchLocationInput={props.setSearchLocationInput}
+                                saveSearchLocation={props.saveSearchLocation}
                                 i18n={i18n}
                                 onSearchRequest={props.onSearchRequest}
                             />
@@ -217,8 +218,8 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                 setSearchLocationInput={props.setSearchLocationInput}
                             />
                         </View>
-                    </View >;
-                })
+                    </View >
+                )
             }
         </I18n>
     );
@@ -239,9 +240,12 @@ const SearchButton = (props: {
     readonly searchTermInput: string,
     readonly searchLocationInput: string,
     readonly i18n: I18n,
+    readonly setSearchLocationInput: (s: string) => void;
+    readonly saveSearchLocation: (s: string) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
     const location = toLocationForQuery(props.searchLocationInput, props.i18n);
+    askLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, props.i18n);
     return (
         <TouchableOpacity
             style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
