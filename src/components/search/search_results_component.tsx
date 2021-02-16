@@ -17,7 +17,7 @@ import { View, Text, Button } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
-import { OnlineStatus } from './use_online_status';
+import { OnlineStatus, useOnlineStatus } from './use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -44,7 +44,6 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly onlineStatus: OnlineStatus;
     readonly searchOffset: number;
     readonly isSendingReview: boolean;
 }
@@ -62,17 +61,6 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    if (searchTermIsEmpty(props)) {
-        return renderEmptyComponent();
-    }
-
-    if (isSearchErrorType(props)) {
-        return renderErrorComponent(props);
-    }
-    return renderComponentWithResults(props);
-};
-
-const renderComponentWithResults = (props: Props): JSX.Element => {
     const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
@@ -96,6 +84,8 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         }
     }, [props.searchOffset, flatListRef]);
 
+    const onlineStatus = useOnlineStatus();
+
     const onScrollBeginDrag = (): void => {
         runInterpolations();
     };
@@ -104,6 +94,15 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         pauseInterpolations();
         setSearchOffset(e.nativeEvent.contentOffset.y);
     };
+
+    if (searchTermIsEmpty(props, onlineStatus)) {
+        return renderEmptyComponent();
+    }
+
+    if (isSearchErrorType(props, onlineStatus)) {
+        return renderErrorComponent(props, onlineStatus);
+    }
+
     return (
         <I18n>
             {({i18n}: { readonly i18n: I18n }): JSX.Element => (
@@ -193,21 +192,21 @@ const renderLoadingScreen = (isLoading: boolean): JSX.Element => {
     );
 };
 
-const searchTermIsEmpty = (props: Props): boolean => (
-    !props.searchTerm && props.onlineStatus !== OnlineStatus.Offline && props.searchResults.length === 0
+const searchTermIsEmpty = (props: Props, onlineStatus: OnlineStatus): boolean => (
+    !props.searchTerm && onlineStatus !== OnlineStatus.Offline && props.searchResults.length === 0
 );
 
-const isSearchErrorType = (props: Props): boolean => {
+const isSearchErrorType = (props: Props, onlineStatus: OnlineStatus): boolean => {
     if (props.isLoading) {
         return false;
     }
     return (
-        isOffline(props.onlineStatus) || hasNoResultsFromSearchTermQuery(props.searchResults) || hasNoResultsFromLocationQuery(props.searchLatLong)
+        isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(props.searchResults) || hasNoResultsFromLocationQuery(props.searchLatLong)
     );
 };
 
-const renderErrorComponent = (props: Props): JSX.Element => {
-    if (isOffline(props.onlineStatus)) {
+const renderErrorComponent = (props: Props, onlineStatus: OnlineStatus): JSX.Element => {
+    if (isOffline(onlineStatus)) {
         return renderComponentByErrorType(props, Errors.Offline);
     }
     if (hasNoResultsFromLocationQuery(props.searchLatLong)) {

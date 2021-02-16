@@ -15,7 +15,6 @@ import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
-import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -68,7 +67,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const onlineStatus = useOnlineStatus();
     useEasterEgg(props.searchLocation, props.disableAnalytics, props.enableCustomLatLong);
 
     useEffect((): EffectCallback => {
@@ -121,8 +119,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         return searchTerm + ' ' + location;
     };
 
-    // tslint:disable-next-line: max-line-length
-    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, isLoading, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
