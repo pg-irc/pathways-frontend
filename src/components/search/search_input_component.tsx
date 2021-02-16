@@ -250,14 +250,7 @@ const SearchButton = (props: {
         <TouchableOpacity
             style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
             disabled={props.searchTermInput.length === 0}
-            onPress={(): void => {
-                if (location === '') {
-                    const defaultLocation = 'Vancouver';
-                    props.setSearchLocationInput(defaultLocation);
-                    props.saveSearchLocation(defaultLocation);
-                    props.onSearchRequest(props.searchTermInput, defaultLocation);
-                } else props.onSearchRequest(props.searchTermInput, location);
-            }}
+            onPress={(): void => { props.onSearchRequest(props.searchTermInput, location); }}
         >
             <Text style={[textStyles.button, { fontSize: 16 }]}>
                 <Trans>
