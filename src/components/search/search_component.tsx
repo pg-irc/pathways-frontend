@@ -85,7 +85,11 @@ export const SearchComponent = (props: Props): JSX.Element => {
         // tslint:disable-next-line: no-let
         let geocoderLatLong = props.searchLatLong;
         try {
-            if (props.searchLocation !== location) {
+            if (location === '') {
+                const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+                geocoderLatLong = vancouverLatLong;
+                props.saveSearchLatLong(geocoderLatLong);
+            } else if (props.searchLocation !== location) {
                 geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong);
                 props.saveSearchLatLong(geocoderLatLong);
             }
@@ -136,7 +140,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
 };
 
-const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, 
+const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction,
     enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
     const effect = (): void => {
         if (location === DISABLE_ANALYTICS_STRING) {
