@@ -14,9 +14,12 @@ type SetOnlineStatus = Dispatch<SetStateAction<OnlineStatus>>;
 
 export const useOnlineStatus = (): OnlineStatus => {
     const [onlineStatus, setOnlineStatus]: readonly [OnlineStatus, SetOnlineStatus] = useState(OnlineStatus.Loading);
-    useEffect((): () => Promise<void> => {
-        const unsubscribe = isDeviceOnline().then((isOnline: boolean): void => setOnlineStatus(toStatus(isOnline)));
-        return (): Promise<void> => unsubscribe;
+    useEffect((): void => {
+        const deviceOnlineAsync = async (): Promise<void> => {
+            const isOnline = await isDeviceOnline();
+            setOnlineStatus(toStatus(isOnline));
+        };
+        deviceOnlineAsync();
     }, []);
     return onlineStatus;
 };
