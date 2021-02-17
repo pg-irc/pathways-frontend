@@ -15,6 +15,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
+import { useAskLocationPermission } from './use_ask_location_permission';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -245,7 +246,7 @@ const SearchButton = (props: {
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
     const location = toLocationForQuery(props.searchLocationInput, props.i18n);
-    askLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, props.i18n);
+    useAskLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, props.i18n);
     return (
         <TouchableOpacity
             style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
@@ -306,7 +307,7 @@ const myLocationOnPress = async (setSearchLocationInput: (location: string) => v
     }
 };
 
-const getPermission = (): Promise<Permissions.PermissionStatus> => {
+export const getPermission = (): Promise<Permissions.PermissionStatus> => {
     return Permissions.getAsync(Permissions.LOCATION).
         then((permissionResponse: Permissions.PermissionResponse): Permissions.PermissionStatus => {
             return permissionResponse.status;
@@ -320,19 +321,5 @@ const openAppSettings = (): void => {
         );
     } else {
         openURL('app-settings:');
-    }
-};
-
-const askLocationPermission = async (setSearchLocationInput: (location: string) => void,
-    saveSearchLocation: (location: string) => void, i18n: I18n): Promise<void> => {
-    const status = await getPermission();
-    if (status === Permissions.PermissionStatus.UNDETERMINED) {
-        Permissions.askAsync(Permissions.LOCATION).
-            then((permissionResponse: Permissions.PermissionResponse): void => {
-                if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-                    setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-                    saveSearchLocation(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-                }
-            });
     }
 };
