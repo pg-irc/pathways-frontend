@@ -82,6 +82,8 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                 searchTermInputRef={searchTermInputRef}
                 searchLocationInputRef={searchLocationInputRef}
                 onSearchRequest={props.onSearchRequest}
+                saveSearchTerm={props.saveSearchTerm}
+                saveSearchLocation={props.saveSearchLocation}
             />
         </View>
     );
@@ -123,7 +125,6 @@ const buildBriefSearchString = (searchTermInput: string, searchLocationInput: st
     if (isSearchLocationEmpty(searchLocationInput)) {
         return searchTermInput;
     }
-    // TO DO Translate String
     return <Trans>{searchTermInput} near {searchLocationInput}</Trans>;
 };
 
@@ -144,6 +145,8 @@ export interface ExpandedInputProps {
     readonly searchTermInputRef: MutableRefObject<TextInput>;
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
+    readonly saveSearchTerm: (searchTerm: string) => void;
+    readonly saveSearchLocation: (searchLocation: string) => void;
 }
 
 const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
@@ -153,11 +156,13 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
     const searchLocationPlaceholder = t`Enter city, address, or postal code`;
     const clearTermInput = (): void => {
         props.setSearchTermInput('');
+        props.saveSearchTerm('');
         props.searchTermInputRef.current.focus();
     };
 
     const clearLocationInput = (): void => {
         props.setSearchLocationInput('');
+        props.saveSearchLocation('');
         props.setShowMyLocationButton(true);
         props.searchLocationInputRef.current.focus();
     };
