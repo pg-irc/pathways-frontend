@@ -3,6 +3,7 @@ import * as helpers from './helpers/make_action';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
 import { ClearAllUserDataAction } from './questionnaire/actions';
+import { DataPersistence } from './persisted_data';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
@@ -55,7 +56,8 @@ export type SearchAction =
     SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
-    ClearAllUserDataAction;
+    ClearAllUserDataAction |
+    DataPersistence.LoadSuccessAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
@@ -116,6 +118,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 collapseSearchInput: action.payload.collapseSearchInput,
+            });
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return ({
+                ...store,
+                searchLocation: action.payload.searchLocation,
             });
         case constants.CLEAR_ALL_USER_DATA:
             return buildDefaultStore();
