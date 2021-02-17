@@ -237,16 +237,22 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
     />
 );
 
+export type LocationSetter = (location: string) => void;
+
 const SearchButton = (props: {
     readonly searchTermInput: string,
     readonly searchLocationInput: string,
     readonly i18n: I18n,
-    readonly setSearchLocationInput: (s: string) => void;
-    readonly saveSearchLocation: (s: string) => void;
+    readonly setSearchLocationInput: LocationSetter;
+    readonly saveSearchLocation: LocationSetter;
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
     const location = toLocationForQuery(props.searchLocationInput, props.i18n);
-    useAskLocationPermission(props.setSearchLocationInput, props.saveSearchLocation, props.i18n);
+    const setToMyLocation = (): void => {
+        props.setSearchLocationInput(props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+        props.saveSearchLocation(props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+    };
+    useAskLocationPermission(setToMyLocation);
     return (
         <TouchableOpacity
             style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
@@ -307,7 +313,7 @@ const myLocationOnPress = async (setSearchLocationInput: (location: string) => v
     }
 };
 
-export const getPermission = (): Promise<Permissions.PermissionStatus> => {
+const getPermission = (): Promise<Permissions.PermissionStatus> => {
     return Permissions.getAsync(Permissions.LOCATION).
         then((permissionResponse: Permissions.PermissionResponse): Permissions.PermissionStatus => {
             return permissionResponse.status;

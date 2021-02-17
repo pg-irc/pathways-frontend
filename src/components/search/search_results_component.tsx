@@ -71,6 +71,9 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     useEffect((): void => {
+        if (!flatListRef.current) {
+            return;
+        }
         if (props.searchTerm) {
             flatListRef.current.getNode().scrollToOffset({ animated: false, offset: 0 });
         }
