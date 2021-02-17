@@ -16,11 +16,13 @@ import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
 import { useAskLocationPermission } from './use_ask_location_permission';
+import { MY_LOCATION } from '../../application/constants';
 
 export interface SearchProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly collapseSearchInput: boolean;
+    readonly i18n: I18n;
 }
 
 export interface SearchActions {
@@ -33,8 +35,9 @@ export interface SearchActions {
 type Props = SearchProps & SearchActions;
 
 export const SearchInputComponent = (props: Props): JSX.Element => {
+    const initialSearchLocation = props.searchLocation === MY_LOCATION ? props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR) : props.searchLocation;
     useTraceUpdate('SearchInputComponent', props);
-    const [searchLocationInput, setSearchLocationInput]: readonly [string, StringSetterFunction] = useState(props.searchLocation);
+    const [searchLocationInput, setSearchLocationInput]: readonly [string, StringSetterFunction] = useState(initialSearchLocation);
     const [searchTermInput, setSearchTermInput]: readonly [string, StringSetterFunction] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const searchTermInputRef = useRef<TextInput>();

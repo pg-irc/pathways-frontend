@@ -18,7 +18,7 @@ import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
@@ -116,19 +116,26 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const searchResultsProps = { ...props, isLoading, onSearchRequest, onLoadMore };
     return (
-        <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-            <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
-            <SearchInputComponent
-                searchTerm={props.searchTerm}
-                searchLocation={props.searchLocation}
-                saveSearchTerm={props.saveSearchTerm}
-                saveSearchLocation={props.saveSearchLocation}
-                collapseSearchInput={props.collapseSearchInput}
-                setCollapseSearchInput={props.setCollapseSearchInput}
-                onSearchRequest={onSearchRequest}
-            />
-            <SearchResultsComponent {...searchResultsProps} />
-        </View>
+        <I18n>
+            {
+                (({ i18n }: I18nProps): JSX.Element =>
+                <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+                    <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
+                    <SearchInputComponent
+                        searchTerm={props.searchTerm}
+                        searchLocation={props.searchLocation}
+                        saveSearchTerm={props.saveSearchTerm}
+                        saveSearchLocation={props.saveSearchLocation}
+                        collapseSearchInput={props.collapseSearchInput}
+                        setCollapseSearchInput={props.setCollapseSearchInput}
+                        onSearchRequest={onSearchRequest}
+                        i18n={i18n}
+                    />
+                    <SearchResultsComponent {...searchResultsProps} />
+                </View>
+                )
+            }
+        </I18n>
     );
 };
 
