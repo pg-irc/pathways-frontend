@@ -2,7 +2,7 @@
 import React, { MutableRefObject, useContext, useRef, useState } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
-import { Trans, I18n } from '@lingui/react';
+import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
 import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
@@ -11,16 +11,18 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../application/helpers/is_android';
 import { openURL } from '../link/link_component';
-import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
+import { useAskLocationPermission } from './use_ask_location_permission';
+import { MY_LOCATION } from '../../application/constants';
 
 export interface SearchProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly collapseSearchInput: boolean;
+    readonly i18n: I18n;
 }
 
 export interface SearchActions {
@@ -33,13 +35,18 @@ export interface SearchActions {
 type Props = SearchProps & SearchActions;
 
 export const SearchInputComponent = (props: Props): JSX.Element => {
+    const initialSearchLocation = props.searchLocation === MY_LOCATION ? props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR) : props.searchLocation;
     useTraceUpdate('SearchInputComponent', props);
-    const [searchLocationInput, setSearchLocationInput]: readonly [string, StringSetterFunction] = useState(props.searchLocation);
+    const [searchLocationInput, setSearchLocationInput]: readonly [string, StringSetterFunction] = useState(initialSearchLocation);
     const [searchTermInput, setSearchTermInput]: readonly [string, StringSetterFunction] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const searchTermInputRef = useRef<TextInput>();
     const searchLocationInputRef = useRef<TextInput>();
-
+    const setToMyLocation = (): void => {
+        setSearchLocationInput(props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+        props.saveSearchLocation(props.i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+    };
+    useAskLocationPermission(setToMyLocation);
     if (props.collapseSearchInput) {
         const clearSearchInputs = (): void => {
             setShowMyLocationButton(true);
@@ -49,7 +56,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             setSearchLocationInput('');
         };
         return (
-            <View style = {{paddingTop: 7}}>
+            <View style={{ paddingTop: 7 }}>
                 <CollapsedInput
                     searchTermInput={searchTermInput}
                     searchLocationInput={searchLocationInput}
@@ -61,14 +68,17 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <View style = {{paddingTop: 7}}>
+        <View style={{ paddingTop: 7 }}>
             <ExpandedInput
                 searchTermInput={searchTermInput}
                 searchLocationInput={searchLocationInput}
+                searchLocation={props.searchLocation}
                 showMyLocationButton={showMyLocationButton}
+                i18n={props.i18n}
                 setShowMyLocationButton={setShowMyLocationButton}
                 setSearchTermInput={setSearchTermInput}
                 setSearchLocationInput={setSearchLocationInput}
+                saveSearchLocation={props.saveSearchLocation}
                 searchTermInputRef={searchTermInputRef}
                 searchLocationInputRef={searchLocationInputRef}
                 onSearchRequest={props.onSearchRequest}
@@ -124,10 +134,13 @@ const isSearchLocationEmpty = (searchLocationInput: string): boolean => (
 export interface ExpandedInputProps {
     readonly searchTermInput: string;
     readonly searchLocationInput: string;
+    readonly searchLocation: string;
     readonly showMyLocationButton: boolean;
+    readonly i18n: I18n;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
+    readonly saveSearchLocation: (s: string) => void;
     readonly searchTermInputRef: MutableRefObject<TextInput>;
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
@@ -160,64 +173,60 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
     return (
-        <I18n>
-            {
-                (({ i18n }: I18nProps): JSX.Element =>
-                    <View style={{ padding: 4, backgroundColor: colors.teal }}>
-                        <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
-                            <InputIcon name='search' />
-                            <TextInput
-                                ref={props.searchTermInputRef}
-                                style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchTermInput) }]}
-                                onChangeText={(text: string): void => {
-                                    debug(`SearchInputComponent search text changed to '${text}'`);
-                                    props.setSearchTermInput(text);
-                                }}
-                                onFocus={onSearchTermInputFocus}
-                                value={props.searchTermInput}
-                                placeholder={i18n._(searchTermPlaceholder)}
-                                placeholderTextColor={colors.greyishBrown}
-                                selectionColor={colors.black}
-                                returnKeyType={'done'}
-                            />
-                            <ClearInputButton visible={props.searchTermInput !== ''} onPress={clearTermInput} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
-                            <InputIcon name='location-on' />
-                            <TextInput
-                                ref={props.searchLocationInputRef}
-                                style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchLocationInput) }]}
-                                onChangeText={(text: string): void => {
-                                    debug(`SearchInputComponent location text changed to '${text}'`);
-                                    props.setSearchLocationInput(text);
-                                }}
-                                onFocus={onLocationInputFocus}
-                                value={props.searchLocationInput}
-                                placeholder={i18n._(searchLocationPlaceholder)}
-                                placeholderTextColor={colors.greyishBrown}
-                                selectionColor={colors.black}
-                                returnKeyType={'done'}
-                            />
-                            <ClearInputButton visible={props.searchLocationInput !== ''} onPress={clearLocationInput} />
-                        </TouchableOpacity>
-                        <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
-                            <SearchButton
-                                searchTermInput={props.searchTermInput}
-                                searchLocationInput={props.searchLocationInput}
-                                i18n={i18n}
-                                onSearchRequest={props.onSearchRequest}
-                            />
-                            <MyLocationButton
-                                isVisible={props.showMyLocationButton}
-                                i18n={i18n}
-                                setIsVisible={props.setShowMyLocationButton}
-                                setSearchLocationInput={props.setSearchLocationInput}
-                            />
-                        </View>
-                    </View >
-                )
-            }
-        </I18n>
+        <View style={{ padding: 4, backgroundColor: colors.teal }}>
+            <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
+                <InputIcon name='search' />
+                <TextInput
+                    ref={props.searchTermInputRef}
+                    style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchTermInput) }]}
+                    onChangeText={(text: string): void => {
+                        debug(`SearchInputComponent search text changed to '${text}'`);
+                        props.setSearchTermInput(text);
+                    }}
+                    onFocus={onSearchTermInputFocus}
+                    value={props.searchTermInput}
+                    placeholder={props.i18n._(searchTermPlaceholder)}
+                    placeholderTextColor={colors.greyishBrown}
+                    selectionColor={colors.black}
+                    returnKeyType={'done'}
+                />
+                <ClearInputButton visible={props.searchTermInput !== ''} onPress={clearTermInput} />
+            </TouchableOpacity>
+            <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
+                <InputIcon name='location-on' />
+                <TextInput
+                    ref={props.searchLocationInputRef}
+                    style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchLocationInput) }]}
+                    onChangeText={(text: string): void => {
+                        debug(`SearchInputComponent location text changed to '${text}'`);
+                        props.setSearchLocationInput(text);
+                    }}
+                    onFocus={onLocationInputFocus}
+                    value={props.searchLocationInput}
+                    placeholder={props.i18n._(searchLocationPlaceholder)}
+                    placeholderTextColor={colors.greyishBrown}
+                    selectionColor={colors.black}
+                    returnKeyType={'done'}
+                />
+                <ClearInputButton visible={props.searchLocationInput !== ''} onPress={clearLocationInput} />
+            </TouchableOpacity>
+            <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
+                <SearchButton
+                    searchTermInput={props.searchTermInput}
+                    searchLocationInput={props.searchLocationInput}
+                    setSearchLocationInput={props.setSearchLocationInput}
+                    saveSearchLocation={props.saveSearchLocation}
+                    i18n={props.i18n}
+                    onSearchRequest={props.onSearchRequest}
+                />
+                <MyLocationButton
+                    isVisible={props.showMyLocationButton}
+                    i18n={props.i18n}
+                    setIsVisible={props.setShowMyLocationButton}
+                    setSearchLocationInput={props.setSearchLocationInput}
+                />
+            </View>
+        </View >
     );
 };
 
@@ -232,10 +241,14 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
     />
 );
 
+export type LocationSetter = (location: string) => void;
+
 const SearchButton = (props: {
     readonly searchTermInput: string,
     readonly searchLocationInput: string,
     readonly i18n: I18n,
+    readonly setSearchLocationInput: LocationSetter;
+    readonly saveSearchLocation: LocationSetter;
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
     const location = toLocationForQuery(props.searchLocationInput, props.i18n);
@@ -243,9 +256,7 @@ const SearchButton = (props: {
         <TouchableOpacity
             style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
             disabled={props.searchTermInput.length === 0}
-            onPress={(): void => {
-                props.onSearchRequest(props.searchTermInput, location);
-            }}
+            onPress={(): void => { props.onSearchRequest(props.searchTermInput, location); }}
         >
             <Text style={[textStyles.button, { fontSize: 16 }]}>
                 <Trans>
@@ -296,9 +307,6 @@ const myLocationOnPress = async (setSearchLocationInput: (location: string) => v
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
             break;
-        case Permissions.PermissionStatus.UNDETERMINED:
-            askPermission(setSearchLocationInput);
-            break;
         default:
             break;
     }
@@ -319,13 +327,4 @@ const openAppSettings = (): void => {
     } else {
         openURL('app-settings:');
     }
-};
-
-const askPermission = async (setSearchLocationInput: (location: string) => void): Promise<void> => {
-    Permissions.askAsync(Permissions.LOCATION).
-        then((permissionResponse: Permissions.PermissionResponse): void => {
-            if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-                setSearchLocationInput(MY_LOCATION);
-            }
-        });
 };

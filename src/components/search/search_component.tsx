@@ -15,11 +15,10 @@ import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
-import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
@@ -68,7 +67,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const onlineStatus = useOnlineStatus();
     useEasterEgg(props.searchLocation, props.disableAnalytics, props.enableCustomLatLong);
 
     useEffect((): EffectCallback => {
@@ -85,10 +83,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
         // tslint:disable-next-line: no-let
         let geocoderLatLong = props.searchLatLong;
         try {
-            if (props.searchLocation !== location) {
-                geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong);
-                props.saveSearchLatLong(geocoderLatLong);
-            }
+            const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+            geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong);
+            props.saveSearchLatLong(geocoderLatLong);
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
             const searchResults = await fetchSearchResultsFromQuery(
                 searchTermWithCity, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
@@ -117,26 +114,32 @@ export const SearchComponent = (props: Props): JSX.Element => {
         return searchTerm + ' ' + location;
     };
 
-    // tslint:disable-next-line: max-line-length
-    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, isLoading, onSearchRequest, onLoadMore };
     return (
-        <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-            <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
-            <SearchInputComponent
-                searchTerm={props.searchTerm}
-                searchLocation={props.searchLocation}
-                saveSearchTerm={props.saveSearchTerm}
-                saveSearchLocation={props.saveSearchLocation}
-                collapseSearchInput={props.collapseSearchInput}
-                setCollapseSearchInput={props.setCollapseSearchInput}
-                onSearchRequest={onSearchRequest}
-            />
-            <SearchResultsComponent {...searchResultsProps} />
-        </View>
+        <I18n>
+            {
+                (({ i18n }: I18nProps): JSX.Element =>
+                <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+                    <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
+                    <SearchInputComponent
+                        searchTerm={props.searchTerm}
+                        searchLocation={props.searchLocation}
+                        saveSearchTerm={props.saveSearchTerm}
+                        saveSearchLocation={props.saveSearchLocation}
+                        collapseSearchInput={props.collapseSearchInput}
+                        setCollapseSearchInput={props.setCollapseSearchInput}
+                        onSearchRequest={onSearchRequest}
+                        i18n={i18n}
+                    />
+                    <SearchResultsComponent {...searchResultsProps} />
+                </View>
+                )
+            }
+        </I18n>
     );
 };
 
-const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, 
+const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction,
     enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
     const effect = (): void => {
         if (location === DISABLE_ANALYTICS_STRING) {
