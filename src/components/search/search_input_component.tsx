@@ -83,7 +83,6 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                 searchLocationInputRef={searchLocationInputRef}
                 onSearchRequest={props.onSearchRequest}
                 saveSearchTerm={props.saveSearchTerm}
-                saveSearchLocation={props.saveSearchLocation}
             />
         </View>
     );
@@ -146,7 +145,6 @@ export interface ExpandedInputProps {
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
     readonly saveSearchTerm: (searchTerm: string) => void;
-    readonly saveSearchLocation: (searchLocation: string) => void;
 }
 
 const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
