@@ -114,7 +114,7 @@ const renderValidOrganizationPage = (props: Props): JSX.Element => (
             <View style={{ flex: 1 }}>
                 <View style={{ marginLeft: 10 }}>
                     <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                    <TitleComponent title={props.organization.name.toUpperCase()} />
+                    <TitleComponent title={props.organization.name} />
                 </View>
                 <OrganizationTabSwitcher
                     i18n={i18n}
