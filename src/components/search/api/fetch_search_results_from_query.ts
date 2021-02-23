@@ -50,6 +50,7 @@ export const fetchServicesForOrganization = async (
     }
     const algoliaQuery = JSON.stringify({
         query: organizationId,
+        typoTolerance: false,
     });
 
     const url = buildAlgoliaSearchUrl();
