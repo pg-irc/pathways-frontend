@@ -320,7 +320,7 @@ const Organization = (props: {
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
             <TouchableOpacity onPress={onOrganizationPress}>
-                <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+                <Text style={textStyles.URL}>{props.name}</Text>
             </TouchableOpacity>
         </View >
     </View >;
@@ -509,8 +509,8 @@ const SuggestAnUpdateComponent = (props: { readonly isVisible: boolean, readonly
     return (
         <View>
             <CardButtonComponent
-                leftContent={<SuggestAnUpdateText/>}
-                rightContent={<ServiceDetailIconComponent name={'edit'}/>}
+                leftContent={<SuggestAnUpdateText />}
+                rightContent={<ServiceDetailIconComponent name={'edit'} />}
                 onPress={props.suggestAnUpdate}
             />
         </View>
@@ -518,7 +518,7 @@ const SuggestAnUpdateComponent = (props: { readonly isVisible: boolean, readonly
 };
 
 const SuggestAnUpdateText = (): JSX.Element => (
-    <View style={{marginHorizontal: 5}}>
+    <View style={{ marginHorizontal: 5 }}>
         <Text style={textStyles.paragraphStyleTeal}>
             <Trans>Suggest an update</Trans>
         </Text>
