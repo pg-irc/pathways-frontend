@@ -519,7 +519,7 @@ const SuggestAnUpdateComponent = (props: { readonly isVisible: boolean, readonly
 
 const SuggestAnUpdateText = (): JSX.Element => (
     <View style={{ marginHorizontal: 5 }}>
-        <Text style={textStyles.paragraphStyleTeal}>
+        <Text style={textStyles.paragraphStyle}>
             <Trans>Suggest an update</Trans>
         </Text>
     </View>
