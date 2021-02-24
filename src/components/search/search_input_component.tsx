@@ -83,6 +83,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                 setSearchTermInput={setSearchTermInput}
                 setSearchLocationInput={setSearchLocationInput}
                 saveSearchLocation={props.saveSearchLocation}
+                saveSearchResults={props.saveSearchResults}
                 searchTermInputRef={searchTermInputRef}
                 searchLocationInputRef={searchLocationInputRef}
                 onSearchRequest={props.onSearchRequest}
@@ -145,6 +146,7 @@ export interface ExpandedInputProps {
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
     readonly saveSearchLocation: (s: string) => void;
+    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly searchTermInputRef: MutableRefObject<TextInput>;
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
@@ -157,8 +159,9 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
     const searchTermPlaceholder = t`Search for services`;
     const searchLocationPlaceholder = t`Enter city, address, or postal code`;
     const clearTermInput = (): void => {
-        props.setSearchTermInput('');
         props.saveSearchTerm('');
+        props.saveSearchResults([]);
+        props.setSearchTermInput('');
         props.searchTermInputRef.current.focus();
     };
 
