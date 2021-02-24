@@ -17,6 +17,8 @@ import { BooleanSetterFunction, StringSetterFunction } from './search_component'
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
 import { useAskLocationPermission } from './use_ask_location_permission';
 import { MY_LOCATION } from '../../application/constants';
+import { SearchServiceData } from '../../validation/search/types';
+import { SaveSearchResultsAction } from '../../stores/search';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -28,6 +30,7 @@ export interface SearchProps {
 export interface SearchActions {
     readonly saveSearchTerm: (searchTerm: string) => void;
     readonly saveSearchLocation: (location: string) => void;
+    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
 }
@@ -52,6 +55,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             setShowMyLocationButton(true);
             props.saveSearchTerm('');
             props.saveSearchLocation('');
+            props.saveSearchResults([]);
             setSearchTermInput('');
             setSearchLocationInput('');
         };

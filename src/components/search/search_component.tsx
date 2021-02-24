@@ -119,20 +119,21 @@ export const SearchComponent = (props: Props): JSX.Element => {
         <I18n>
             {
                 (({ i18n }: I18nProps): JSX.Element =>
-                <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-                    <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
-                    <SearchInputComponent
-                        searchTerm={props.searchTerm}
-                        searchLocation={props.searchLocation}
-                        saveSearchTerm={props.saveSearchTerm}
-                        saveSearchLocation={props.saveSearchLocation}
-                        collapseSearchInput={props.collapseSearchInput}
-                        setCollapseSearchInput={props.setCollapseSearchInput}
-                        onSearchRequest={onSearchRequest}
-                        i18n={i18n}
-                    />
-                    <SearchResultsComponent {...searchResultsProps} />
-                </View>
+                    <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+                        <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
+                        <SearchInputComponent
+                            searchTerm={props.searchTerm}
+                            searchLocation={props.searchLocation}
+                            saveSearchTerm={props.saveSearchTerm}
+                            saveSearchLocation={props.saveSearchLocation}
+                            saveSearchResults={props.saveSearchResults}
+                            collapseSearchInput={props.collapseSearchInput}
+                            setCollapseSearchInput={props.setCollapseSearchInput}
+                            onSearchRequest={onSearchRequest}
+                            i18n={i18n}
+                        />
+                        <SearchResultsComponent {...searchResultsProps} />
+                    </View>
                 )
             }
         </I18n>
