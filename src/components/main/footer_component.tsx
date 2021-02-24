@@ -35,7 +35,7 @@ export interface FooterStyles {
 }
 
 const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
-    const  { animatedFooterIconVerticalTranslate }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const { animatedFooterIconVerticalTranslate }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     return (
         <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
@@ -54,7 +54,7 @@ const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
 };
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
-    const  { animatedFooterHeight, animatedFooterBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const { animatedFooterHeight, animatedFooterBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const keyboardIsVisible = useKeyboardIsVisible();
 
     if (isFooterHidden(props, keyboardIsVisible)) {
@@ -63,7 +63,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
     return (
         <AnimatedFooter style={{ height: animatedFooterHeight, paddingBottom: animatedFooterBottomPadding }}>
-            <FooterTab style={[{ backgroundColor: colors.lightTeal}, applicationStyles.boxShadowAbove ]}>
+            <FooterTab style={[{ backgroundColor: colors.lightTeal }, applicationStyles.boxShadowAbove]}>
                 <NavigationButton
                     icon='home'
                     isActive={isOnRecommendedTopicsPage(props)}
@@ -79,7 +79,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
                     isActive={isOnBookmarksPage(props)}
                     onPress={goToRouteWithoutParameter(Routes.Bookmarks, props.history)}
                 />
-                 <NavigationButton
+                <NavigationButton
                     icon='search'
                     isActive={isOnSearchPage(props)}
                     onPress={goToRouteWithoutParameter(Routes.Search, props.history)}
@@ -95,6 +95,9 @@ const isFooterHidden = (props: FooterProps, keyboardIsVisible: boolean): boolean
 
     const isOnFeedbackScreen = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     if (pathMatchesRoute(props.location.pathname, Routes.ServiceDetail) && isOnFeedbackScreen)
+        return true;
+
+    if (pathMatchesRoute(props.location.pathname, Routes.ServiceReview))
         return true;
 
     return pathMatchesAnyRoute(
