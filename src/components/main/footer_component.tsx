@@ -97,7 +97,7 @@ const isFooterHidden = (props: FooterProps, keyboardIsVisible: boolean): boolean
     if (pathMatchesRoute(props.location.pathname, Routes.ServiceDetail) && isOnFeedbackScreen)
         return true;
 
-    if (pathMatchesRoute(props.location.pathname, Routes.ServiceReview))
+    if (pathMatchesAnyRoute(props.location.pathname, [Routes.ServiceReview, Routes.ExplainFeedback]))
         return true;
 
     return pathMatchesAnyRoute(
