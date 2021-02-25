@@ -66,10 +66,12 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ flex: 1 }}>
-            <CloseButtonComponent
-                onPress={closeQuestionnaireWithOptionalModal}
-                color={colors.black}
-            />
+            <View style={{paddingTop: 20, paddingBottom: 0, paddingLeft: 0, paddingRight: 10}}>
+                <CloseButtonComponent
+                    onPress={closeQuestionnaireWithOptionalModal}
+                    color={colors.black}
+                />
+            </View>
             <Content padder>
                 <HeadingComponent />
                 <ProgressComponent
