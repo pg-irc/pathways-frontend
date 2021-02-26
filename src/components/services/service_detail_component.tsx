@@ -252,7 +252,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                <DividerComponent isVisible={!props.isReviewed && !isFeedbackInputEnabled} />
+                                <DividerComponent />
                                 <ServiceDetailRatingsComponent
                                     isVisible={!props.isReviewed && !isFeedbackInputEnabled}
                                     serviceId={serviceId}
