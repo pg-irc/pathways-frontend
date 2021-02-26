@@ -56,7 +56,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginBottom: 12 }}>
             <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}

@@ -102,6 +102,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
 
     contactInformationContainer: {
         flex: 1,
+        marginBottom: 12,
     },
 
     contactInformationInnerContainer: {
