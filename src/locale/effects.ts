@@ -9,8 +9,14 @@ export function needsTextDirectionChange(localeCode: string): boolean {
 }
 
 export function setTextDirection(localeCode: string): void {
-    I18nManager.forceRTL(isRTL(localeCode));
-    reload();
+    const forceRTLAsync = new Promise((resolve: (value: unknown) => void): void => {
+        setTimeout((): void => {
+            resolve(I18nManager.forceRTL(isRTL(localeCode)));
+        }, 1000);
+      });
+    forceRTLAsync.then((): void => {
+        reload();
+    });
 }
 
 export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
