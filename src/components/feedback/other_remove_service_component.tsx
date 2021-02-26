@@ -129,7 +129,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     const isButtonDisabled = isOtherFeedback && !feedback;
 
     return (
-        <Container>
+        <Container style={{ marginBottom: 12 }}>
             <HeaderComponent
                 headerLabel={content.header}
                 close={onClosePress}

@@ -177,7 +177,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         <I18n>
             {
                 (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, marginBottom: isFeedbackInputEnabled ? 12 : 0 }}>
                         <ServiceDetailHeaderComponent
                             location={props.location}
                             history={props.history}
