@@ -1,61 +1,61 @@
 {
   "expo": {
-    "name": "Arrival Advisor", 
-    "version": "1.63.0", 
-    "slug": "arrival_advisor", 
-    "orientation": "portrait", 
-    "primaryColor": "#3A818D", 
+    "name": "Arrival Advisor",
+    "version": "1.64.0",
+    "slug": "arrival_advisor",
+    "orientation": "portrait",
+    "primaryColor": "#3A818D",
     "splash": {
-      "backgroundColor": "#000000", 
+      "backgroundColor": "#000000",
       "image": "./assets/images/splash_screen.png"
-    }, 
+    },
     "ios": {
-      "icon": "./assets/images/phone_icon_ios.png", 
-      "bundleIdentifier": "org.peacegeeks.ArrivalAdvisor", 
+      "icon": "./assets/images/phone_icon_ios.png",
+      "bundleIdentifier": "org.peacegeeks.ArrivalAdvisor",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "comgooglemaps"
-        ], 
+        ],
         "NSLocationWhenInUseUsageDescription": "Arrival Advisor needs to access your location to find services near you."
       }
-    }, 
+    },
     "android": {
-      "icon": "./assets/images/phone_icon_android.png", 
-      "package": "org.peacegeeks.ArrivalAdvisor", 
-      "googleServicesFile": "./google-services.json", 
-      "versionCode": 163000, 
+      "icon": "./assets/images/phone_icon_android.png",
+      "package": "org.peacegeeks.ArrivalAdvisor",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 164000,
       "permissions": [
         "ACCESS_FINE_LOCATION"
       ],
       "useNextNotificationsApi": true
-    }, 
+    },
     "notification": {
-      "icon": "./assets/images/aa_notification_icon.png", 
+      "icon": "./assets/images/aa_notification_icon.png",
       "color": "#00838f"
-    }, 
+    },
     "assetBundlePatterns": [
-      "assets/images/*", 
-      "assets/fonts/*", 
+      "assets/images/*",
+      "assets/fonts/*",
       "node_modules/native-base/Fonts"
-    ], 
+    ],
     "hooks": {
       "postPublish": [
         {
-          "file": "sentry-expo/upload-sourcemaps", 
+          "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "peacegeeks", 
-            "project": "pathways", 
+            "organization": "peacegeeks",
+            "project": "pathways",
             "authToken": "get the sentry auth token from the web site"
           }
         }
       ]
-    }, 
+    },
     "updates": {
-      "enabled": false, 
+      "enabled": false,
       "checkAutomatically": "ON_ERROR_RECOVERY"
-    }, 
+    },
     "platforms": [
-      "android", 
+      "android",
       "ios"
     ]
   }
