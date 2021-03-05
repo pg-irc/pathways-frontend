@@ -2,7 +2,7 @@
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
-    popServiceReviewPathFromHistory, backFromServiceReview }
+    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameterFOO }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -253,5 +253,34 @@ describe('the backFromServiceReview function', () => {
         expect(history.entries.length).toBe(2);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(serviceDetailPath);
+    });
+});
+
+describe('goToRouteWithParameter', () => {
+    const firstPath = routePathDefinition(Routes.Services);
+    it('sends the user to the route', () => {
+        const serviceParameter = aString();
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameterFOO(Routes.ServiceDetail, serviceParameter, history);
+        expect(history.location.pathname).toBe(`/service/${serviceParameter}`);
+    });
+
+    it('sends an offset with the parameter', () => {
+        const offset = 200;
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameterFOO(Routes.ServiceDetail, aString(), history, offset);
+        expect(history.location.state).toEqual({ previousOffset: offset });
+    });
+
+    it('sends a default offset with the parameter if it is not populated', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameterFOO(Routes.ServiceDetail, aString(), history);
+        expect(history.location.state).toEqual({ previousOffset: 0 });
     });
 });

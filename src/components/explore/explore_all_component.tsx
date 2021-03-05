@@ -4,11 +4,12 @@ import { View, Content, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
-import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
+import { RouterProps, Routes, goToRouteWithParameterFOO } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
+import { memoryHistory } from '../../application';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -31,8 +32,9 @@ export const ExploreAllComponent = (props: Props): JSX.Element => (
                 {mapWithIndex((section: ExploreSection, index: number) => (
                     buildButton(
                         getLearnButtonContent(section),
-                        goToRouteWithParameter(Routes.LearnDetail, section.id, props.history),
                         index,
+                        section.id,
+                        300,
                     )
                 ), props.sections)}
             </View>
@@ -40,8 +42,12 @@ export const ExploreAllComponent = (props: Props): JSX.Element => (
     </View>
 );
 
-const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void, index: number): JSX.Element => (
-    <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]} key={index}>
+const buildButton = (buttonContent: JSX.Element, index: number, sectionId: string, offset: number): JSX.Element => (
+    <TouchableOpacity
+        onPress={(): void => goToRouteWithParameterFOO(Routes.LearnDetail, sectionId, memoryHistory, offset)}
+        style={[applicationStyles.boxShadowBelow, styles.button]}
+        key={index}
+    >
         {buttonContent}
     </TouchableOpacity>
 );

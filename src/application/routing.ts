@@ -104,6 +104,10 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     (): void => history.push(routePathWithParameter(route, parameter))
 );
 
+export const goToRouteWithParameterFOO = (route: Routes, parameter: string, memoryHistory: MemoryHistory, offset: number = 0): void => (
+    memoryHistory.push(routePathWithParameter(route, parameter), { previousOffset: offset })
+);
+
 export const goBack = (memoryHistory: MemoryHistory): void => (
     memoryHistory.goBack()
 );
