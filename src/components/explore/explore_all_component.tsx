@@ -4,7 +4,7 @@ import { View, Content, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
-import { RouterProps, Routes, goToRouteWithParameterFOO } from '../../application/routing';
+import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
@@ -44,7 +44,7 @@ export const ExploreAllComponent = (props: Props): JSX.Element => (
 
 const buildButton = (buttonContent: JSX.Element, index: number, sectionId: string, offset: number): JSX.Element => (
     <TouchableOpacity
-        onPress={(): void => goToRouteWithParameterFOO(Routes.LearnDetail, sectionId, memoryHistory, offset)}
+        onPress={(): void => goToRouteWithParameter(Routes.LearnDetail, sectionId, memoryHistory, offset)}
         style={[applicationStyles.boxShadowBelow, styles.button]}
         key={index}
     >

@@ -130,5 +130,5 @@ const onServicesTextPress = (props: Props): void => {
         linkValue: 'Find related services near me'
     }
     props.analyticsLinkPressed(analyticsLinkProps);
-    goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history);
 };

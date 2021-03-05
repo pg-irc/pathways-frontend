@@ -100,12 +100,8 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => (
-    (): void => history.push(routePathWithParameter(route, parameter))
-);
-
-export const goToRouteWithParameterFOO = (route: Routes, parameter: string, memoryHistory: MemoryHistory, offset: number = 0): void => (
-    memoryHistory.push(routePathWithParameter(route, parameter), { previousOffset: offset })
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, offset: number = 0): void => (
+    history.push(routePathWithParameter(route, parameter), { previousOffset: offset })
 );
 
 export const goBack = (memoryHistory: MemoryHistory): void => (

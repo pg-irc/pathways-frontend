@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
@@ -134,7 +135,7 @@ const onFindSettlementAgencyPress = (props: Props): void => {
     } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
-    goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history);
 };
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {

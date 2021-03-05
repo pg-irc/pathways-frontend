@@ -2,7 +2,7 @@
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
-    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameterFOO }
+    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameter }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -263,7 +263,7 @@ describe('goToRouteWithParameter', () => {
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goToRouteWithParameterFOO(Routes.ServiceDetail, serviceParameter, history);
+        goToRouteWithParameter(Routes.ServiceDetail, serviceParameter, history);
         expect(history.location.pathname).toBe(`/service/${serviceParameter}`);
     });
 
@@ -272,7 +272,7 @@ describe('goToRouteWithParameter', () => {
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goToRouteWithParameterFOO(Routes.ServiceDetail, aString(), history, offset);
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history, offset);
         expect(history.location.state).toEqual({ previousOffset: offset });
     });
 
@@ -280,7 +280,7 @@ describe('goToRouteWithParameter', () => {
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goToRouteWithParameterFOO(Routes.ServiceDetail, aString(), history);
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
         expect(history.location.state).toEqual({ previousOffset: 0 });
     });
 });

@@ -126,19 +126,19 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const chooseRemoveService = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
         resetInputs();
         props.chooseRemoveService();
     };
 
     const chooseOtherChanges = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
         resetInputs();
         props.chooseOtherChanges();
     };
 
     const chooseExplainFeedback = (): void => {
-        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history)();
+        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history);
         resetInputs();
         props.chooseExplainFeedback();
     }
@@ -148,7 +148,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const onSubmitPress = (): void => {
-        goToRouteWithParameter(Routes.ContactInformation, serviceId, props.history)();
+        goToRouteWithParameter(Routes.ContactInformation, serviceId, props.history);
         props.submitFeedback(feedbackInput);
     };
 
@@ -161,7 +161,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const onBackButtonPress = (): void => {
         if (isOtherRemoveServiceFeedback(props.feedbackType)) {
-            goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
+            goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
         }
         props.backFromContactInformation();
     };
@@ -313,7 +313,7 @@ const Organization = (props: {
 }): JSX.Element => {
     const onOrganizationPress = (): void => {
         props.openOrganization(props.organizationId);
-        goToRouteWithParameter(Routes.Organization, props.organizationId, props.history)();
+        goToRouteWithParameter(Routes.Organization, props.organizationId, props.history);
     };
 
     return <View style={{ paddingHorizontal: values.backgroundTextPadding }}>

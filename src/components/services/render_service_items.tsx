@@ -34,11 +34,11 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
     const onOpenService = (): void => {
         props.saveScrollOffset(props.scrollOffset);
         props.openServiceDetail(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history);
     };
     const onPressServiceReview = (): void => {
         props.saveScrollOffset(props.scrollOffset);
-        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history);
     };
     return (
         <ServiceListItemComponent

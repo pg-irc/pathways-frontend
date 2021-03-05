@@ -171,5 +171,5 @@ const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number):
 
 const saveScrollOffsetToReduxAndGoToTopicDetail = (item: ListItem, props: Props, scrollOffset: number): void => {
     props.saveScrollOffset(scrollOffset);
-    goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)();
+    goToRouteWithParameter(Routes.TopicDetail, item.id, props.history);
 };

@@ -161,7 +161,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
         props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history);
     };
 
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
@@ -169,7 +169,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const onPressServiceReview = (): void => {
         props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
-        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history);
     };
     return (
         <ServiceListItemComponent
