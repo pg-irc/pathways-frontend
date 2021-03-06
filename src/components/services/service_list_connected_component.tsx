@@ -18,7 +18,6 @@ import { SetManualUserLocationAction, setManualUserLocation } from '../../stores
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { SaveTopicServicesScrollOffsetAction, saveTopicServicesScrollOffset } from '../../stores/user_experience/actions';
-import { selectTopicServicesScrollOffset } from '../../selectors/user_experience/select_topic_services_scroll_offset';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
@@ -31,7 +30,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         customLatLong: selectCustomLatLong(store),
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
-        topicServicesOffset: selectTopicServicesScrollOffset(store),
         isSendingReview: selectIsSendingReview(store),
     };
 };
