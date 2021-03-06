@@ -4,7 +4,7 @@ import {
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
     popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameter }
 from '../routing';
-import { aString } from '../helpers/random_test_values';
+import { aNumber, aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
 
 describe('the routePathDefinition function', () => {
@@ -103,6 +103,16 @@ describe('the goBack function', () => {
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         goBack(history);
         expect(history.location.pathname).toBe(learnPath);
+    });
+
+    it('sends the previousOffset to the previous path', () => {
+        const previousOffset = aNumber();
+        const initialPathEntries = [welcomePath, learnPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+        goToRouteWithParameter(Routes.LearnDetail, aString(), history, previousOffset);
+        goBack(history);
+        expect(history.location.state).toEqual({ previousOffset });
     });
 
 });

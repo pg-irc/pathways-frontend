@@ -104,9 +104,12 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     history.push(routePathWithParameter(route, parameter), { previousOffset: offset })
 );
 
-export const goBack = (memoryHistory: MemoryHistory): void => (
-    memoryHistory.goBack()
-);
+export const goBack = (memoryHistory: MemoryHistory): void => {
+    const mostRecentEntry = memoryHistory.entries.pop();
+    const positionOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(positionOfCurrentPathInHistoryStack);
+    memoryHistory.replace(R.last(memoryHistory.entries).pathname, mostRecentEntry.state);
+};
 
 export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
     popFeedbackPathsFromHistory(memoryHistory);
