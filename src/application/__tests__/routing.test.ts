@@ -97,7 +97,7 @@ describe('the goBack function', () => {
     const learnPath = routePathDefinition(Routes.Learn);
     const learnDetailPath = routePathDefinition(Routes.LearnDetail);
 
-    it('Sends users to the previous path', () => {
+    it('sends users to the previous path', () => {
         const initialPathEntries = [welcomePath, learnPath, learnDetailPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
@@ -105,7 +105,7 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(learnPath);
     });
 
-    it('sends the previousOffset for use in the previous path', () => {
+    it('provides the previousOffset state from the most recent path for use in the previous path as currentOffset', () => {
         const previousOffset = aNumber();
         const initialPathEntries = [welcomePath, learnPath];
         const indexOfLastPath = initialPathEntries.length - 1;
@@ -276,7 +276,7 @@ describe('goToRouteWithParameter', () => {
         expect(history.location.pathname).toBe(`/service/${serviceParameter}`);
     });
 
-    it('sends an offset with the parameter', () => {
+    it('sends an offset with the parameter as previousOffset', () => {
         const offset = 200;
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;

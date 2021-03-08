@@ -114,8 +114,8 @@ export const goBack = (memoryHistory: MemoryHistory): void => {
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);
     const currentEntry: Location<LocationStateOffsets> = R.last(memoryHistory.entries);
-    const state = { previousOffset: currentEntry.state?.previousOffset || 0, currentOffset: mostRecentEntry.state?.previousOffset || 0};
-    memoryHistory.replace(currentEntry.pathname, state);
+    const currentEntryState = { previousOffset: currentEntry.state?.previousOffset || 0, currentOffset: mostRecentEntry.state?.previousOffset || 0 };
+    memoryHistory.replace(currentEntry.pathname, currentEntryState);
 };
 
 export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {

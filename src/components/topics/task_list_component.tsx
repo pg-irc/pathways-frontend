@@ -54,27 +54,24 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     componentDidMount(): void {
         if (this.flatListRef) {
-            console.log('componentDidMount', this.props.headerContentIdentifier);
-           scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset);
+            scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset);
         }
     }
 
     componentDidUpdate(previousProps: Props): void {
         if (!this.flatListRef) {
-            console.log('@@@@@@@@@ flatListRef')
             return;
         }
 
         if (hasTopicDetailPageChanged(previousProps, this.props)) {
-            console.log('@@@@@@@@@ header content')
             return this.setState({
                 ...this.state,
                 scrollOffset: 0,
+                data: this.props.tasks,
                 }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
 
         if (tasksHaveChanged(previousProps, this.props)) {
-            console.log('@@@@@@@@@ TASKS HAVE CHANGED')
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
