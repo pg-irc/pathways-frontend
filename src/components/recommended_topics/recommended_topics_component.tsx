@@ -29,7 +29,6 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
-    readonly scrollOffset: number;
 }
 
 export interface RecommendedTopicsActions {
@@ -49,7 +48,6 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
             bookmarkedTopicsIdList={props.bookmarkedTopics}
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
             headerContent={<TaskListHeaderComponent {...props} />}
-            scrollOffset={props.scrollOffset}
             saveScrollOffset={props.saveScrollOffset}
         />
     </View>

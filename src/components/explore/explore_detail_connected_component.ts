@@ -14,8 +14,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProp
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
-    // TODO see https://github.com/pg-irc/pathways-frontend/issues/1296
-    scrollOffset: 0,
 });
 
 type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | SaveExploreDetailScrollOffsetAction;

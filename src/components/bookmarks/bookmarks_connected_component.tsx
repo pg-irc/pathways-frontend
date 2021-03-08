@@ -10,14 +10,12 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbook
 import { HumanServiceData } from '../../validation/services/types';
 import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
 import { SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
-import { selectBookmarkedTopicsScrollOffset } from '../../selectors/user_experience/select_bookmarked_topics_scroll_offset';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
     bookmarkedTopics: selectBookmarkedTopics(store),
     bookmarksTab: selectBookmarksTab(store),
-    topicsScrollOffset: selectBookmarkedTopicsScrollOffset(store),
     isSendingReview: selectIsSendingReview(store),
 });
 

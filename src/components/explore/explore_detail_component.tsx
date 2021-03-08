@@ -18,7 +18,6 @@ export interface ExploreDetailProps {
     readonly section: ExploreSection;
     readonly topics: ReadonlyArray<TopicListItem>;
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
-    readonly scrollOffset: number;
 }
 
 export interface ExploreDetailActions {
@@ -41,7 +40,6 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => (
             history={props.history}
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
             headerContent={<TaskListHeaderComponent {...props} />}
-            scrollOffset={props.scrollOffset}
             saveScrollOffset={props.saveScrollOffset}
         />
     </View>

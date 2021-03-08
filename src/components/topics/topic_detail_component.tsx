@@ -32,7 +32,6 @@ export interface TopicDetailsProps {
     readonly showLinkAlert: boolean;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
-    readonly scrollOffset: number;
 }
 
 export interface TopicDetailActions {
@@ -61,7 +60,6 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
             headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
-            scrollOffset={props.scrollOffset}
             saveScrollOffset={props.saveScrollOffset}
         />
     </View>

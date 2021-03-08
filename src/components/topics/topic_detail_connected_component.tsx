@@ -22,7 +22,6 @@ import { Topic } from '../../selectors/topics/types';
 import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { SaveTaskListScrollOffsetActions } from './task_list_component';
-import { selectTopicDetailScrollOffset } from '../../selectors/user_experience/select_topic_detail_scroll_offset';
 
 type OwnProps = {
     readonly history: History;
@@ -40,7 +39,6 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         location: ownProps.location,
         manualUserLocation: selectManualUserLocation(store),
         customLatLong: selectCustomLatLong(store),
-        scrollOffset: selectTopicDetailScrollOffset(store),
     };
 };
 

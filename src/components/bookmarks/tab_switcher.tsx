@@ -35,7 +35,6 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                         history={props.history}
                         bookmarkTopic={props.bookmarkTopic}
                         unbookmarkTopic={props.unbookmarkTopic}
-                        scrollOffset={props.topicsScrollOffset}
                         saveScrollOffset={props.saveTopicsScrollOffset}
                     />
                 );

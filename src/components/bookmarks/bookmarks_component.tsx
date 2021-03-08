@@ -17,7 +17,6 @@ export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
-    readonly topicsScrollOffset: number;
     readonly isSendingReview: boolean;
 }
 
@@ -60,7 +59,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
-                    topicsScrollOffset={props.topicsScrollOffset}
                     saveTopicsScrollOffset={props.saveTopicsScrollOffset}
                     isSendingReview={props.isSendingReview}
                 />

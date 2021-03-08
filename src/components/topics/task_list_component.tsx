@@ -23,7 +23,6 @@ export interface TaskListProps {
     readonly emptyTaskListContent: JSX.Element;
     readonly headerContent: JSX.Element;
     readonly headerContentIdentifier?: string;
-    readonly scrollOffset: number;
 }
 
 export type SaveTaskListScrollOffsetActions =
@@ -52,10 +51,11 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     private flatListRef: FlatListRef;
     private readonly numberOfItemsPerSection: number = 1000;
     private readonly throttleWaitTime: number = 300;
+    private offset: number = 0;
 
     constructor(props: Props) {
         super(props);
-        this.state = this.initialState(props.scrollOffset);
+        this.state = this.initialState(this.offset);
         this.setFlatListRef = this.setFlatListRef.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
@@ -64,29 +64,29 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     componentDidMount(): void {
         if (this.flatListRef) {
-           scrollToOffsetWithTimeout(this.flatListRef, this.props.scrollOffset);
+           scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset);
         }
     }
 
-    componentDidUpdate(previousProps: Props): void {
-        if (!this.flatListRef) {
-            return;
-        }
+    // componentDidUpdate(previousProps: Props): void {
+    //     if (!this.flatListRef) {
+    //         return;
+    //     }
 
-        if (hasTopicDetailPageChanged(previousProps, this.props)) {
-            return this.setState({
-                ...this.state,
-                scrollOffset: 0,
-                }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
-        }
+    //     if (hasTopicDetailPageChanged(previousProps, this.props)) {
+    //         return this.setState({
+    //             ...this.state,
+    //             scrollOffset: 0,
+    //             }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+    //     }
 
-        if (tasksHaveChanged(previousProps, this.props)) {
-            return this.setState({
-                ...this.state,
-                data: this.props.tasks,
-            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
-        }
-    }
+    //     if (tasksHaveChanged(previousProps, this.props)) {
+    //         return this.setState({
+    //             ...this.state,
+    //             data: this.props.tasks,
+    //         }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+    //     }
+    // }
 
     render(): JSX.Element {
         return (
@@ -142,16 +142,16 @@ const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): vo
     }, 10);
 };
 
-const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean => (
-    previousProps.headerContentIdentifier !== props.headerContentIdentifier
-);
+// const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean => (
+//     previousProps.headerContentIdentifier !== props.headerContentIdentifier
+// );
 
-const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
-    const currentIds = R.pluck('id', props.tasks);
-    const previousIds = R.pluck('id', previousProps.tasks);
+// const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
+//     const currentIds = R.pluck('id', props.tasks);
+//     const previousIds = R.pluck('id', previousProps.tasks);
 
-    return R.not(R.equals(previousIds, currentIds));
-};
+//     return R.not(R.equals(previousIds, currentIds));
+// };
 
 const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number): JSX.Element => {
     if (isTopicListHeading(item)) {
