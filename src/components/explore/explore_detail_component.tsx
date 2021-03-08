@@ -7,7 +7,7 @@ import { Id as TaskId, BookmarkTopicAction, UnbookmarkTopicAction } from '../../
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TopicListItem } from '../../selectors/topics/types';
 import { textStyles, values, colors } from '../../application/styles';
-import { TaskListComponent, SaveTaskListScrollOffsetActions } from '../topics/task_list_component';
+import { TaskListComponent } from '../topics/task_list_component';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -25,7 +25,6 @@ export interface ExploreDetailActions {
     readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
@@ -43,7 +42,6 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => {
                 history={props.history}
                 emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
                 headerContent={<TaskListHeaderComponent {...props} />}
-                saveScrollOffset={props.saveScrollOffset}
                 scrollOffset={location.state?.currentOffset || 0}
             />
         </View>

@@ -5,7 +5,7 @@ import { BookmarksComponent, BookmarksProps, BookmarkActions } from './bookmarks
 import { Id, UnbookmarkTopicAction, unbookmarkTopic, BookmarkTopicAction, bookmarkTopic } from '../../stores/topics';
 import { selectBookmarkedTopics } from '../../selectors/topics/select_bookmarked_topics';
 import { selectBookmarkedServices } from '../../selectors/services/select_bookmarked_services';
-import { OpenHeaderMenuAction, openHeaderMenu, SaveBookmarkedTopicsScrollOffsetAction, saveBookmarkedTopicsScrollOffset } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
@@ -26,8 +26,7 @@ type Actions =
     TopicDispatchActions |
     OpenHeaderMenuAction |
     OpenServiceAction |
-    SaveBookmarksTabAction |
-    SaveBookmarkedTopicsScrollOffsetAction;
+    SaveBookmarksTabAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -37,7 +36,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     setBookmarksTab: (index: number): SaveBookmarksTabAction => dispatch(saveBookmarksTab(index)),
-    saveTopicsScrollOffset: (offset: number): SaveBookmarkedTopicsScrollOffsetAction => dispatch(saveBookmarkedTopicsScrollOffset(offset)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

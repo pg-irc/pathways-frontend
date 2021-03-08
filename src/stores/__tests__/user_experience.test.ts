@@ -1,48 +1,10 @@
 // tslint:disable:no-expression-statement typedef
 import { buildDefaultStore, reducer, BookmarksTab, HeaderMenu } from '../user_experience';
 import * as Actions from '../user_experience/actions';
-import { aNumber, aString, aBoolean } from '../../application/helpers/random_test_values';
+import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { saveLocaleRequest } from '../locale/actions';
 
 describe('the user experience reducer', () => {
-
-    describe('the home page offset', () => {
-
-        it('is set to the offset by the set home page offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveHomePageScrollOffset(offset));
-            expect(newStore.homepageScrollOffset).toBe(offset);
-        });
-    });
-
-    describe('the topic detail page offset', () => {
-
-        it('is set to the offset by the action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveTopicDetailScrollOffset(offset));
-            expect(newStore.topicDetailScrollOffset).toBe(offset);
-        });
-    });
-
-    describe('the bookmarked offset state', () => {
-        it('is set', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveBookmarkedTopicsScrollOffset(offset));
-            expect(newStore.bookmarkedTopicsScrollOffset).toBe(offset);
-        });
-    });
-
-    describe('the explore detail offset state', () => {
-        it('is set to an offset number value by the save explore detail offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveExploreDetailScrollOffset(offset));
-            expect(newStore.exploreDetailScrollOffset).toBe(offset);
-        });
-    });
 
     describe('the bookmarks tab state', () => {
 

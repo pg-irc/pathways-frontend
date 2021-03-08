@@ -2,10 +2,6 @@ import * as constants from '../../application/constants';
 import { UserExperienceAction } from './actions';
 
 export interface UserExperienceStore {
-    readonly topicDetailScrollOffset: number;
-    readonly homepageScrollOffset: number;
-    readonly bookmarkedTopicsScrollOffset: number;
-    readonly exploreDetailScrollOffset: number;
     readonly bookmarksTab: BookmarksTab;
     readonly organizationTab: number;
     readonly headerMenu: HeaderMenu;
@@ -24,10 +20,6 @@ export enum HeaderMenu {
 }
 
 export const buildDefaultStore = (): UserExperienceStore => ({
-    homepageScrollOffset: 0,
-    topicDetailScrollOffset: 0,
-    bookmarkedTopicsScrollOffset: 0,
-    exploreDetailScrollOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
     organizationTab: 0,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
@@ -39,25 +31,6 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
     }
 
     switch (action.type) {
-        case constants.SAVE_HOMEPAGE_SCROLL_OFFSET:
-            return { ...store,
-                homepageScrollOffset: action.payload.offset,
-            };
-        case constants.SAVE_TOPIC_DETAIL_SCROLL_OFFSET:
-            return {
-                ...store,
-                topicDetailScrollOffset: action.payload.offset,
-            };
-        case constants.SAVE_BOOKMARKED_TOPICS_SCROLL_OFFSET:
-            return {
-                ...store,
-                bookmarkedTopicsScrollOffset: action.payload.offset,
-            };
-        case constants.SAVE_EXPLORE_DETAIL_SCROLL_OFFSET:
-            return ({
-                ...store,
-                exploreDetailScrollOffset: action.payload.offset,
-            });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);
         case constants.SAVE_ORGANIZATION_TAB:

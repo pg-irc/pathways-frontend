@@ -9,8 +9,6 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
-import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
-    SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import throttle from 'lodash.throttle';
 
 // tslint:disable-next-line:no-var-requires
@@ -25,17 +23,9 @@ export interface TaskListProps {
     readonly headerContentIdentifier?: string;
     readonly scrollOffset: number;
 }
-
-export type SaveTaskListScrollOffsetActions =
-    SaveBookmarkedTopicsScrollOffsetAction |
-    SaveHomePageScrollOffsetAction |
-    SaveTopicDetailScrollOffsetAction |
-    SaveExploreDetailScrollOffsetAction;
-
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TaskListProps & TaskListActions;
@@ -119,7 +109,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             scrollOffset: e.nativeEvent.contentOffset.y,
             isScrolling: true,
         });
-        this.props.saveScrollOffset(e.nativeEvent.contentOffset.y);
     }
 
     private onScrollEndDrag(): void {

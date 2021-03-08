@@ -51,7 +51,6 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
                 bookmarkedTopicsIdList={props.bookmarkedTopics}
                 emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
                 headerContent={<TaskListHeaderComponent {...props} />}
-                saveScrollOffset={props.saveScrollOffset}
                 scrollOffset={location.state?.currentOffset || 0}
             />
         </View>
