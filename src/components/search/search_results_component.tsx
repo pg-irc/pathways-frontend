@@ -44,7 +44,6 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly searchOffset: number;
     readonly isSendingReview: boolean;
 }
 
@@ -61,7 +60,8 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
+    const offset: number = props.history.location.state ? props.history.location.state.previousOffset : 0;
+    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(offset);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
@@ -82,10 +82,10 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     useEffect((): void => {
         if (props.searchResults.length > 0) {
             setTimeout((): void => {
-                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: searchOffset });
               }, 0);
         }
-    }, [props.searchOffset, flatListRef]);
+    }, [searchOffset, flatListRef]);
 
     const onlineStatus = useOnlineStatus();
 
@@ -117,7 +117,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                         onScrollBeginDrag={onScrollBeginDrag}
                         onScroll={onAnimatedScrollHandler}
                         onScrollEndDrag={onScrollEndDrag}
-                        initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
+                        initialNumToRender={searchOffset ? props.searchResults.length : 20}
                         style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                         data={props.searchResults}
                         keyExtractor={keyExtractor}
@@ -161,7 +161,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
         props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history);
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history, props.scrollOffset);
     };
 
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
@@ -169,7 +169,7 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const onPressServiceReview = (): void => {
         props.saveServiceToMap(service);
         props.saveSearchOffset(props.scrollOffset);
-        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history);
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history, props.scrollOffset);
     };
     return (
         <ServiceListItemComponent

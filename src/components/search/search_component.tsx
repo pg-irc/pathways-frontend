@@ -34,7 +34,6 @@ export interface SearchComponentProps {
     readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
-    readonly searchOffset: number;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
 }

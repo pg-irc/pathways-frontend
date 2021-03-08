@@ -19,7 +19,6 @@ import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveSearchResultScrollOffsetAction, saveSearchResultScrollOffset } from '../../stores/user_experience/actions';
-import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
@@ -34,7 +33,6 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
-    searchOffset: selectSearchOffset(store),
     customLatLong: selectCustomLatLong(store),
     isSendingReview: selectIsSendingReview(store),
 });
