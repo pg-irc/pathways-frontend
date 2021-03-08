@@ -60,7 +60,7 @@ type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
     const location = useLocation();
-    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(location.state?.previousOffset || 0);
+    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(location.state?.currentOffset || 0);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {

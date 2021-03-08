@@ -28,7 +28,7 @@ type Props = ServicesTabProps & ServiceTabActions;
 export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
     const location = useLocation();
     const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] = useState(
-        location.state?.previousOffset || 0,
+        location.state?.currentOffset || 0,
     );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     useServicesScrollToOffset(flatListRef, organizationServicesOffset, props.services);

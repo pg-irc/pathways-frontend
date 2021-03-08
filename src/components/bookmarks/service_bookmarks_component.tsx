@@ -34,7 +34,7 @@ type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
     const location = useLocation();
     const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(
-        location.state?.previousOffset || 0,
+        location.state?.currentOffset || 0,
     );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     useServicesScrollToOffset(flatListRef, bookmarkedServicesOffset, props.bookmarkedServices);

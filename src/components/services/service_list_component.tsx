@@ -90,7 +90,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 const ValidServiceListComponent = (props: Props): JSX.Element => {
     const history = useHistory();
     const location = useLocation();
-    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(location.state?.previousOffset || 0);
+    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(location.state?.currentOffset || 0);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
     useServicesScrollToOffset(flatListRef, topicServicesOffset, services);
