@@ -51,7 +51,10 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     private flatListRef: FlatListRef;
     private readonly numberOfItemsPerSection: number = 1000;
     private readonly throttleWaitTime: number = 300;
-    private offset: number = 0;
+    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/41674
+    // tslint:disable-next-line: no-any
+    private locationState: any  = this.props.history.location.state;
+    private offset: number = this.locationState?.previousOffset || 0;
 
     constructor(props: Props) {
         super(props);
@@ -163,12 +166,7 @@ const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number):
             taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
-            goToTaskDetail={(): void => saveScrollOffsetToReduxAndGoToTopicDetail(item, props, scrollOffset)}
+            goToTaskDetail={(): void => goToRouteWithParameter(Routes.TopicDetail, item.id, props.history, scrollOffset)}
         />
     );
-};
-
-const saveScrollOffsetToReduxAndGoToTopicDetail = (item: ListItem, props: Props, scrollOffset: number): void => {
-    props.saveScrollOffset(scrollOffset);
-    goToRouteWithParameter(Routes.TopicDetail, item.id, props.history);
 };
