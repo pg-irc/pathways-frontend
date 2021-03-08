@@ -15,11 +15,11 @@ import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
+import { useLocation } from 'react-router-native';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly history: History;
-    readonly scrollOffset: number;
     readonly i18n: I18n;
     readonly isSendingReview: boolean;
 }
@@ -34,9 +34,12 @@ export interface ServiceBookmarksActions {
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
-    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(props.scrollOffset);
+    const location = useLocation();
+    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(
+        location.state?.previousOffset || 0,
+    );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-    useServicesScrollToOffset(flatListRef, props.scrollOffset, props.bookmarkedServices);
+    useServicesScrollToOffset(flatListRef, bookmarkedServicesOffset, props.bookmarkedServices);
     return (
         <>
             <FlatList

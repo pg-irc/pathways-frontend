@@ -18,7 +18,6 @@ export interface BookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
     readonly topicsScrollOffset: number;
-    readonly servicesScrollOffset: number;
     readonly isSendingReview: boolean;
 }
 
@@ -64,7 +63,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     setBookmarksTab={props.setBookmarksTab}
                     topicsScrollOffset={props.topicsScrollOffset}
                     saveTopicsScrollOffset={props.saveTopicsScrollOffset}
-                    servicesScrollOffset={props.servicesScrollOffset}
                     saveServicesScrollOffset={props.saveServicesScrollOffset}
                     isSendingReview={props.isSendingReview}
                 />
