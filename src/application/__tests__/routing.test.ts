@@ -105,16 +105,15 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(learnPath);
     });
 
-    it('sends the previousOffset to the previous path', () => {
+    it('sends the previousOffset for use in the previous path', () => {
         const previousOffset = aNumber();
         const initialPathEntries = [welcomePath, learnPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         goToRouteWithParameter(Routes.LearnDetail, aString(), history, previousOffset);
         goBack(history);
-        expect(history.location.state).toEqual({ previousOffset });
+        expect(history.location.state).toEqual({ previousOffset: 0, currentOffset: previousOffset });
     });
-
 });
 
 describe('the popFeedbackPathsFromHistory function', () => {

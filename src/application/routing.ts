@@ -16,6 +16,11 @@ export type RouteParameters = Partial<{
     readonly serviceId: string;
 }>;
 
+export interface LocationStateOffsets {
+    readonly previousOffset?: number;
+    readonly currentOffset?: number;
+}
+
 export type RouterProps = RouteComponentProps<RouteParameters>;
 
 export enum Routes {
@@ -105,10 +110,12 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
 );
 
 export const goBack = (memoryHistory: MemoryHistory): void => {
-    const mostRecentEntry = memoryHistory.entries.pop();
+    const mostRecentEntry: Location<LocationStateOffsets> = memoryHistory.entries.pop();
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);
-    memoryHistory.replace(R.last(memoryHistory.entries).pathname, mostRecentEntry.state);
+    const currentEntry: Location<LocationStateOffsets> = R.last(memoryHistory.entries);
+    const state = { previousOffset: currentEntry.state?.previousOffset || 0, currentOffset: mostRecentEntry.state?.previousOffset || 0};
+    memoryHistory.replace(currentEntry.pathname, state);
 };
 
 export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
