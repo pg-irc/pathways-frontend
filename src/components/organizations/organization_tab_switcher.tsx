@@ -48,7 +48,6 @@ export const OrganizationTabSwitcher = (props: Props): JSX.Element => {
                         bookmarkService={props.bookmarkService}
                         unbookmarkService={props.unbookmarkService}
                         openServiceDetail={props.openServiceDetail}
-                        saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
                     />
                 );
             default:

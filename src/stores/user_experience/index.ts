@@ -3,12 +3,8 @@ import { UserExperienceAction } from './actions';
 
 export interface UserExperienceStore {
     readonly topicDetailScrollOffset: number;
-    readonly organizationServicesScrollOffset: number;
     readonly homepageScrollOffset: number;
-    readonly searchResultScrollOffset: number;
-    readonly topicServicesScrollOffset: number;
     readonly bookmarkedTopicsScrollOffset: number;
-    readonly bookmarkedServicesScrollOffset: number;
     readonly exploreDetailScrollOffset: number;
     readonly bookmarksTab: BookmarksTab;
     readonly organizationTab: number;
@@ -28,13 +24,9 @@ export enum HeaderMenu {
 }
 
 export const buildDefaultStore = (): UserExperienceStore => ({
-    organizationServicesScrollOffset: 0,
     homepageScrollOffset: 0,
-    searchResultScrollOffset: 0,
-    topicServicesScrollOffset: 0,
     topicDetailScrollOffset: 0,
     bookmarkedTopicsScrollOffset: 0,
-    bookmarkedServicesScrollOffset: 0,
     exploreDetailScrollOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
     organizationTab: 0,
@@ -51,36 +43,16 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return { ...store,
                 homepageScrollOffset: action.payload.offset,
             };
-        case constants.SAVE_SEARCH_RESULT_SCROLL_OFFSET:
-            return {
-                ...store,
-                searchResultScrollOffset: action.payload.offset,
-            };
         case constants.SAVE_TOPIC_DETAIL_SCROLL_OFFSET:
             return {
                 ...store,
                 topicDetailScrollOffset: action.payload.offset,
-            };
-        case constants.SAVE_TOPIC_SERVICES_SCROLL_OFFSET:
-            return {
-                ...store,
-                topicServicesScrollOffset: action.payload.offset,
             };
         case constants.SAVE_BOOKMARKED_TOPICS_SCROLL_OFFSET:
             return {
                 ...store,
                 bookmarkedTopicsScrollOffset: action.payload.offset,
             };
-        case constants.SAVE_BOOKMARKED_SERVICES_SCROLL_OFFSET:
-            return {
-                ...store,
-                bookmarkedServicesScrollOffset: action.payload.offset,
-            };
-        case constants.SAVE_ORGANIZATION_SERVICES_SCROLL_OFFSET:
-            return ({
-                ...store,
-                organizationServicesScrollOffset: action.payload.offset,
-            });
         case constants.SAVE_EXPLORE_DETAIL_SCROLL_OFFSET:
             return ({
                 ...store,
@@ -90,8 +62,6 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return updateBookmarksTab(store, action.payload.index);
         case constants.SAVE_ORGANIZATION_TAB:
             return { ...store, organizationTab: action.payload.index };
-        case constants.LOAD_SERVICES_REQUEST:
-            return { ...store, topicServicesScrollOffset: 0 };
         case constants.OPEN_HEADER_MENU:
         case constants.CLOSE_HEADER_MENU:
         case constants.CLOSE_ABOUT_MODAL:

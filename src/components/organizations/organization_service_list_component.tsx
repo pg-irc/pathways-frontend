@@ -5,7 +5,6 @@ import { History } from 'history';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { colors } from '../../application/styles';
 import { BookmarkServiceAction, OpenServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { SaveOrganizationServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
@@ -22,7 +21,6 @@ export interface ServiceTabActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
 type Props = ServicesTabProps & ServiceTabActions;
@@ -48,7 +46,6 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
                 bookmarkService: props.bookmarkService,
                 unbookmarkService: props.unbookmarkService,
                 openServiceDetail: props.openServiceDetail,
-                saveScrollOffset: props.saveOrganizationServicesOffset,
             })}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}

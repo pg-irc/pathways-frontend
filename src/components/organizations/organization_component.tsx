@@ -4,7 +4,7 @@ import { colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction, SaveOrganizationTabAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, SaveOrganizationTabAction } from '../../stores/user_experience/actions';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
@@ -39,7 +39,6 @@ export interface OrganizationActions {
     readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly saveOrganizationTab: (index: number) => SaveOrganizationTabAction;
-    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
 type Props = OrganizationProps & OrganizationActions & RouterProps;
@@ -124,7 +123,6 @@ const renderValidOrganizationPage = (props: Props): JSX.Element => (
                     bookmarkedServicesIds={props.bookmarkedServicesIds}
                     analyticsLinkPressed={analyticsLinkPressed}
                     history={props.history}
-                    saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}

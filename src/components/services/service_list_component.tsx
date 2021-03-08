@@ -28,7 +28,6 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
-import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
@@ -52,7 +51,6 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesScrollOffsetAction;
 }
 
 type Props = ServiceListProps & ServiceListActions;
@@ -85,7 +83,6 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             openHeaderMenu={props.openHeaderMenu}
             hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
             setManualUserLocation={props.setManualUserLocation}
-            saveTopicServicesOffset={props.saveTopicServicesOffset}
         />
     );
 };
@@ -113,7 +110,6 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                                 ...props,
                                 history: history,
                                 scrollOffset: topicServicesOffset,
-                                saveScrollOffset: props.saveTopicServicesOffset,
                             })}
                             ItemSeparatorComponent={SearchListSeparator}
                             ListHeaderComponent={<ListHeaderComponent {...props} />}

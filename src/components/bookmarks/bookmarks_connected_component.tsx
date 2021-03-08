@@ -9,7 +9,7 @@ import { OpenHeaderMenuAction, openHeaderMenu, SaveBookmarkedTopicsScrollOffsetA
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
-import { SaveBookmarkedServicesScrollOffsetAction, saveBookmarkedServicesScrollOffset, SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
+import { SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
 import { selectBookmarkedTopicsScrollOffset } from '../../selectors/user_experience/select_bookmarked_topics_scroll_offset';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
@@ -24,13 +24,12 @@ const mapStateToProps = (store: Store): BookmarksProps => ({
 type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
 type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
 type Actions =
-    ServiceDispatchActions
-    | TopicDispatchActions
-    | OpenHeaderMenuAction
-    | OpenServiceAction
-    | SaveBookmarksTabAction
-    | SaveBookmarkedTopicsScrollOffsetAction
-    | SaveBookmarkedServicesScrollOffsetAction;
+    ServiceDispatchActions |
+    TopicDispatchActions |
+    OpenHeaderMenuAction |
+    OpenServiceAction |
+    SaveBookmarksTabAction |
+    SaveBookmarkedTopicsScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -41,7 +40,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     setBookmarksTab: (index: number): SaveBookmarksTabAction => dispatch(saveBookmarksTab(index)),
     saveTopicsScrollOffset: (offset: number): SaveBookmarkedTopicsScrollOffsetAction => dispatch(saveBookmarkedTopicsScrollOffset(offset)),
-    saveServicesScrollOffset: (offset: number): SaveBookmarkedServicesScrollOffsetAction => dispatch(saveBookmarkedServicesScrollOffset(offset)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

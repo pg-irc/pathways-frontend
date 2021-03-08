@@ -10,7 +10,7 @@ import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header
 import { OpenServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
 import { BookmarksTab } from '../../stores/user_experience';
-import { SaveBookmarksTabAction, SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarksTabAction } from '../../stores/user_experience/actions';
 import { BookmarkTopicAction, Id, UnbookmarkTopicAction } from '../../stores/topics';
 
 export interface BookmarksProps {
@@ -30,7 +30,6 @@ export interface BookmarkActions {
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
     readonly saveTopicsScrollOffset: (offset: number) => SaveBookmarkedTopicsScrollOffsetAction;
-    readonly saveServicesScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 interface OwnProps {
@@ -63,7 +62,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     setBookmarksTab={props.setBookmarksTab}
                     topicsScrollOffset={props.topicsScrollOffset}
                     saveTopicsScrollOffset={props.saveTopicsScrollOffset}
-                    saveServicesScrollOffset={props.saveServicesScrollOffset}
                     isSendingReview={props.isSendingReview}
                 />
             )}

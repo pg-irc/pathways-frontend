@@ -10,7 +10,6 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } fro
 import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
-import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
@@ -28,7 +27,6 @@ export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly saveScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
@@ -51,7 +49,6 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
                 renderItem={renderServiceItems({
                     ...props,
                     scrollOffset: bookmarkedServicesOffset,
-                    saveScrollOffset: props.saveScrollOffset,
                 })}
                 ListEmptyComponent={
                     <EmptyBookmarksComponent
@@ -60,7 +57,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
                 }
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ServiceBanner isVisible={!R.isEmpty(props.bookmarkedServices)} />}
-                initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
+                initialNumToRender={bookmarkedServicesOffset ? props.bookmarkedServices.length : 20}
             />
             <ThankYouMessageComponent i18n={props.i18n} isVisible={props.isSendingReview} />
         </>

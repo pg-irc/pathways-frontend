@@ -28,7 +28,6 @@ import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
-import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { useLocation } from 'react-router-native';
 
@@ -53,7 +52,6 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
-    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
@@ -150,7 +148,6 @@ interface SearchHitProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (offset: number) => void;
-    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
@@ -160,7 +157,6 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds, props.reviewedServicesIds);
     const onPress = (): void => {
         props.saveServiceToMap(service);
-        props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history, props.scrollOffset);
     };
@@ -169,7 +165,6 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     const onPressServiceReview = (): void => {
         props.saveServiceToMap(service);
-        props.saveSearchOffset(props.scrollOffset);
         goToRouteWithParameter(Routes.ServiceReview, service.id, props.history, props.scrollOffset);
     };
     return (

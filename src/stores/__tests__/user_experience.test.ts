@@ -6,26 +6,6 @@ import { saveLocaleRequest } from '../locale/actions';
 
 describe('the user experience reducer', () => {
 
-    describe('the search offset state', () => {
-
-        it('is set to an offset number value by the save search offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveSearchResultScrollOffset(offset));
-            expect(newStore.searchResultScrollOffset).toBe(offset);
-        });
-    });
-
-    describe('the topic services offset state', () => {
-
-        it('is set to an offset number value by the save topic services offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveTopicServicesScrollOffset(offset));
-            expect(newStore.topicServicesScrollOffset).toBe(offset);
-        });
-    });
-
     describe('the home page offset', () => {
 
         it('is set to the offset by the set home page offset action', () => {
@@ -47,29 +27,11 @@ describe('the user experience reducer', () => {
     });
 
     describe('the bookmarked offset state', () => {
-
-        it('is set to an offset number value by the save bookmarked services offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveBookmarkedServicesScrollOffset(offset));
-            expect(newStore.bookmarkedServicesScrollOffset).toBe(offset);
-        });
-
         it('is set', () => {
             const oldStore = buildDefaultStore();
             const offset = aNumber();
             const newStore = reducer(oldStore, Actions.saveBookmarkedTopicsScrollOffset(offset));
             expect(newStore.bookmarkedTopicsScrollOffset).toBe(offset);
-        });
-    });
-
-    describe('the organization detail offset state', () => {
-
-        it('is set to an offset number value by the save bookmarked services offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveOrganizationServicesScrollOffset(offset));
-            expect(newStore.organizationServicesScrollOffset).toBe(offset);
         });
     });
 
