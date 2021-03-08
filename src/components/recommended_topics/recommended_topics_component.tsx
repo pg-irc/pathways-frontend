@@ -22,6 +22,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { recommendedTopicsStyles } from './styles';
 import { Alert } from '../../validation/content/types';
+import { useLocation } from 'react-router-native';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -39,19 +40,23 @@ export interface RecommendedTopicsActions {
 
 type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListProps & TaskListActions & RouterProps;
 
-export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        <HelpAndMenuButtonHeaderComponent {...props} />
-        <TaskListComponent
-            {...props}
-            tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
-            bookmarkedTopicsIdList={props.bookmarkedTopics}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
-            headerContent={<TaskListHeaderComponent {...props} />}
-            saveScrollOffset={props.saveScrollOffset}
-        />
-    </View>
-);
+export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const location = useLocation();
+    return (
+        <View style={{ flex: 1 }}>
+            <HelpAndMenuButtonHeaderComponent {...props} />
+            <TaskListComponent
+                {...props}
+                tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
+                bookmarkedTopicsIdList={props.bookmarkedTopics}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
+                headerContent={<TaskListHeaderComponent {...props} />}
+                saveScrollOffset={props.saveScrollOffset}
+                scrollOffset={location.state?.currentOffset || 0}
+            />
+        </View>
+    );
+};
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>

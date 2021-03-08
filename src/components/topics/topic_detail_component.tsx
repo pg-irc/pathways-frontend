@@ -22,6 +22,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
 import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
+import { useLocation } from 'react-router-native';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
@@ -48,23 +49,26 @@ export interface TopicDetailActions {
 
 type Props = TopicDetailsProps & TopicDetailActions;
 
-export const TopicDetailComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        <Header {...props} />
-        <TaskListComponent
-            tasks={props.topic.relatedTopics}
-            bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
-            bookmarkTopic={props.bookmarkTopic}
-            unbookmarkTopic={props.unbookmarkTopic}
-            history={props.history}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
-            headerContent={<ListHeaderComponent {...props} />}
-            headerContentIdentifier={props.topic.id}
-            saveScrollOffset={props.saveScrollOffset}
-            scrollOffset={0}
-        />
-    </View>
-);
+export const TopicDetailComponent = (props: Props): JSX.Element => {
+    const location = useLocation();
+    return (
+        <View style={{ flex: 1 }}>
+            <Header {...props} />
+            <TaskListComponent
+                tasks={props.topic.relatedTopics}
+                bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
+                history={props.history}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
+                headerContent={<ListHeaderComponent {...props} />}
+                headerContentIdentifier={props.topic.id}
+                saveScrollOffset={props.saveScrollOffset}
+                scrollOffset={location.state?.currentOffset || 0}
+            />
+        </View>
+    );
+};
 
 const Header = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TopicDetail);

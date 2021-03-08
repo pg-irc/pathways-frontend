@@ -13,6 +13,7 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
+import { useLocation } from 'react-router-native';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;
@@ -29,22 +30,25 @@ export interface ExploreDetailActions {
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
 
-export const ExploreDetailComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1}}>
-        <Header {...props} />
-        <TaskListComponent
-            tasks={props.topics}
-            bookmarkedTopicsIdList={props.bookmarkedTopics}
-            bookmarkTopic={props.bookmarkTopic}
-            unbookmarkTopic={props.unbookmarkTopic}
-            history={props.history}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
-            headerContent={<TaskListHeaderComponent {...props} />}
-            saveScrollOffset={props.saveScrollOffset}
-            scrollOffset={0}
-        />
-    </View>
-);
+export const ExploreDetailComponent = (props: Props): JSX.Element => {
+    const location = useLocation();
+    return (
+        <View style={{ flex: 1}}>
+            <Header {...props} />
+            <TaskListComponent
+                tasks={props.topics}
+                bookmarkedTopicsIdList={props.bookmarkedTopics}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
+                history={props.history}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
+                headerContent={<TaskListHeaderComponent {...props} />}
+                saveScrollOffset={props.saveScrollOffset}
+                scrollOffset={location.state?.currentOffset || 0}
+            />
+        </View>
+    );
+};
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
