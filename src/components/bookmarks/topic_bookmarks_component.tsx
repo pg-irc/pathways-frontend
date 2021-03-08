@@ -30,6 +30,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
             saveScrollOffset={props.saveScrollOffset}
+            scrollOffset={0}
         />
     </View>
 );

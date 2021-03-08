@@ -61,6 +61,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
             headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
             saveScrollOffset={props.saveScrollOffset}
+            scrollOffset={0}
         />
     </View>
 );

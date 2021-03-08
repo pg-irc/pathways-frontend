@@ -41,6 +41,7 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => (
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
             headerContent={<TaskListHeaderComponent {...props} />}
             saveScrollOffset={props.saveScrollOffset}
+            scrollOffset={0}
         />
     </View>
 );
