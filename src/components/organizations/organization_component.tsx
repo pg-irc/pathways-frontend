@@ -28,7 +28,6 @@ export interface OrganizationProps {
     readonly organizationStatus: OrganizationStatus;
     readonly organizationTab: number;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
-    readonly organizationServicesOffset: number;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
@@ -125,7 +124,6 @@ const renderValidOrganizationPage = (props: Props): JSX.Element => (
                     bookmarkedServicesIds={props.bookmarkedServicesIds}
                     analyticsLinkPressed={analyticsLinkPressed}
                     history={props.history}
-                    organizationServicesOffset={props.organizationServicesOffset}
                     saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}

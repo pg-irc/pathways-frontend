@@ -8,7 +8,6 @@ import {
 } from '../../stores/user_experience/actions';
 import { OrganizationComponent, OrganizationActions, OrganizationProps } from './organization_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
 import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
@@ -24,7 +23,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps
     organizationStatus: selectOrganizationStatus(store),
     organizationTab: selectOrganizationTab(store),
     servicesForOrganization: selectServicesForOrganization(store, ownProps.match.params.organizationId),
-    organizationServicesOffset: selectOrganizationServicesOffset(store),
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
 });
 

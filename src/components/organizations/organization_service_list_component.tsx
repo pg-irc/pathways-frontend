@@ -11,11 +11,11 @@ import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
+import { useLocation } from 'react-router-native';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
     readonly history: History;
-    readonly organizationServicesOffset: number;
 }
 
 export interface ServiceTabActions {
@@ -28,10 +28,12 @@ export interface ServiceTabActions {
 type Props = ServicesTabProps & ServiceTabActions;
 
 export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
-    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
-        useState(props.organizationServicesOffset);
+    const location = useLocation();
+    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] = useState(
+        location.state?.previousOffset || 0,
+    );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-    useServicesScrollToOffset(flatListRef, props.organizationServicesOffset, props.services)
+    useServicesScrollToOffset(flatListRef, organizationServicesOffset, props.services);
 
     return (
         <FlatList
@@ -50,7 +52,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
             })}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
-            initialNumToRender={props.organizationServicesOffset ? props.services.length : 20}
+            initialNumToRender={organizationServicesOffset ? props.services.length : 20}
         />
     );
 };
