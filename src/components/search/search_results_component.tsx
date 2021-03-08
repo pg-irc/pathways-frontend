@@ -30,6 +30,7 @@ import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
+import { useLocation } from 'react-router-native';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -60,8 +61,8 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    const offset: number = props.history.location.state ? props.history.location.state.previousOffset : 0;
-    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(offset);
+    const location = useLocation();
+    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(location.state?.previousOffset || 0);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
