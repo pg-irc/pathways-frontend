@@ -11,6 +11,7 @@ import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 import { useLocation } from 'react-router-native';
+import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
@@ -31,6 +32,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
         location.state?.currentOffset || 0,
     );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
+    useCurrentOffsetFromLocationForScroll(location, setOrganizationServicesOffset);
     useServicesScrollToOffset(flatListRef, organizationServicesOffset, props.services);
 
     return (

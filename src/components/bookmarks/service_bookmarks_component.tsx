@@ -15,6 +15,7 @@ import { ServiceBanner } from './service_banner';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 import { useLocation } from 'react-router-native';
+import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -37,6 +38,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
         location.state?.currentOffset || 0,
     );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
+    useCurrentOffsetFromLocationForScroll(location, setBookmarkedServicesOffset);
     useServicesScrollToOffset(flatListRef, bookmarkedServicesOffset, props.bookmarkedServices);
     return (
         <>

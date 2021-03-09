@@ -30,6 +30,7 @@ import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { useLocation } from 'react-router-native';
+import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -68,6 +69,8 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
         runInterpolations,
         pauseInterpolations,
     }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
+    useCurrentOffsetFromLocationForScroll(location, setSearchOffset);
 
     useEffect((): void => {
         if (!flatListRef.current) {

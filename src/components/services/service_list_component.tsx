@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -32,6 +32,7 @@ import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 import { useHistory, useLocation } from 'react-router-native';
+import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -93,6 +94,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(location.state?.currentOffset || 0);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
+    useCurrentOffsetFromLocationForScroll(location, setTopicServicesOffset);
     useServicesScrollToOffset(flatListRef, topicServicesOffset, services);
 
     return (
