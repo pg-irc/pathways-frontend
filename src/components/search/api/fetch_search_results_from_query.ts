@@ -5,6 +5,7 @@ import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
 import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
+import { searchDictionary } from '../search_dictionary';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -18,10 +19,6 @@ export interface AlgoliaResponse {
     readonly processingTimesMs: number;
     readonly query: string;
 }
-
-const searchDictionary = new Map([
-    ['library', 'public-access-computers-tools public-internet-access-sites libraries'],
-]);
 
 const convertSearchTerm = (searchTerm: string): string => {
     const needConvert = searchDictionary.has(searchTerm);
