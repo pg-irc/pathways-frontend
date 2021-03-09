@@ -20,7 +20,7 @@ export interface AlgoliaResponse {
     readonly query: string;
 }
 
-const convertSearchTerm = (searchTerm: string): string => {
+export const convertSearchTerm = (searchTerm: string): string => {
     const needConvert = searchDictionary.has(searchTerm);
     if (needConvert) {
         return searchDictionary.get(searchTerm);
