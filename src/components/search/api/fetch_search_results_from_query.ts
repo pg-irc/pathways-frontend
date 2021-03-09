@@ -20,14 +20,6 @@ export interface AlgoliaResponse {
     readonly query: string;
 }
 
-export const convertSearchTerm = (searchTerm: string): string => {
-    const needConvert = searchDictionary.has(searchTerm);
-    if (needConvert) {
-        return searchDictionary.get(searchTerm);
-    }
-    return searchTerm;
-};
-
 export const fetchSearchResultsFromQuery = async (
     searchTerm: string, searchPage: number, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
@@ -50,6 +42,14 @@ export const fetchSearchResultsFromQuery = async (
     } catch (Error) {
         return [];
     }
+};
+
+export const convertSearchTerm = (searchTerm: string): string => {
+    const needConvert = searchDictionary.has(searchTerm);
+    if (needConvert) {
+        return searchDictionary.get(searchTerm);
+    }
+    return searchTerm;
 };
 
 export const fetchServicesForOrganization = async (
