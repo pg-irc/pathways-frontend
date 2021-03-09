@@ -77,6 +77,13 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 data: this.props.tasks,
             }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
         }
+
+        if (previousProps.scrollOffset !== this.props.scrollOffset) {
+            return this.setState({
+                ...this.state,
+                scrollOffset: this.props.scrollOffset,
+            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+        }
     }
 
     render(): JSX.Element {

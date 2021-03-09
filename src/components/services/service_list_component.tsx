@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
