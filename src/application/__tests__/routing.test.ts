@@ -276,7 +276,7 @@ describe('goToRouteWithParameter', () => {
         expect(history.location.pathname).toBe(`/service/${serviceParameter}`);
     });
 
-    it('sends an offset with the parameter as previousOffset', () => {
+    it('sends a previousOffset state with the parameter', () => {
         const offset = aNumber();
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;
@@ -293,6 +293,15 @@ describe('goToRouteWithParameter', () => {
         goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
         const { previousOffset }: RouteLocationStateOffsets = history.location.state as any;
         expect(previousOffset).toEqual(0);
+    });
+
+    it('sends a currentOffset state with the parameter of 0', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
+        const { currentOffset }: RouteLocationStateOffsets = history.location.state as any;
+        expect(currentOffset).toEqual(0);
     });
 });
 
