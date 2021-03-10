@@ -13,7 +13,7 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
-import { useLocation } from 'react-router-native';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;
@@ -30,7 +30,7 @@ export interface ExploreDetailActions {
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
 
 export const ExploreDetailComponent = (props: Props): JSX.Element => {
-    const location = useLocation();
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
     return (
         <View style={{ flex: 1}}>
             <Header {...props} />
@@ -42,7 +42,7 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => {
                 history={props.history}
                 emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
                 headerContent={<TaskListHeaderComponent {...props} />}
-                scrollOffset={location.state?.currentOffset || 0}
+                scrollOffset={offsetFromRouteLocation}
             />
         </View>
     );

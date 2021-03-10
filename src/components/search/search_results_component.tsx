@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
@@ -29,8 +29,7 @@ import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
-import { useLocation } from 'react-router-native';
-import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
+import { OffsetHook, useOffset } from '../use_offset';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -60,8 +59,6 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    const location = useLocation();
-    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(location.state?.currentOffset || 0);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
@@ -69,8 +66,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
         runInterpolations,
         pauseInterpolations,
     }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
-
-    useCurrentOffsetFromLocationForScroll(location, setSearchOffset);
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
 
     useEffect((): void => {
         if (!flatListRef.current) {
@@ -84,10 +80,10 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     useEffect((): void => {
         if (props.searchResults.length > 0) {
             setTimeout((): void => {
-                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: location.state?.currentOffset });
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: offsetFromRouteLocation });
               }, 0);
         }
-    }, [location.state?.currentOffset, flatListRef]);
+    }, [offsetFromRouteLocation, flatListRef]);
 
     const onlineStatus = useOnlineStatus();
 
@@ -97,7 +93,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 
     const onScrollEndDrag = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         pauseInterpolations();
-        setSearchOffset(e.nativeEvent.contentOffset.y);
+        setOffset(e.nativeEvent.contentOffset.y);
     };
 
     if (searchTermIsEmpty(props, onlineStatus)) {
@@ -119,14 +115,14 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                         onScrollBeginDrag={onScrollBeginDrag}
                         onScroll={onAnimatedScrollHandler}
                         onScrollEndDrag={onScrollEndDrag}
-                        initialNumToRender={location.state?.currentOffset ? props.searchResults.length : 20}
+                        initialNumToRender={offsetFromRouteLocation ? props.searchResults.length : 20}
                         style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                         data={props.searchResults}
                         keyExtractor={keyExtractor}
                         renderItem={renderSearchHit({
                             ...props,
-                            scrollOffset: searchOffset,
-                            setScrollOffset: setSearchOffset,
+                            scrollOffset: offset,
+                            setScrollOffset: setOffset,
                         })}
                         ItemSeparatorComponent={SearchListSeparator}
                         ListHeaderComponent={<ListHeaderComponent />}

@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import * as R from 'ramda';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { Trans } from '@lingui/react';
@@ -14,8 +14,7 @@ import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ServiceBanner } from './service_banner';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
-import { useLocation } from 'react-router-native';
-import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -33,24 +32,20 @@ export interface ServiceBookmarksActions {
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
-    const location = useLocation();
-    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(
-        location.state?.currentOffset || 0,
-    );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-    useCurrentOffsetFromLocationForScroll(location, setBookmarkedServicesOffset);
-    useServicesScrollToOffset(flatListRef, bookmarkedServicesOffset, props.bookmarkedServices);
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
+    useServicesScrollToOffset(flatListRef, offsetFromRouteLocation, props.bookmarkedServices);
     return (
         <>
             <FlatList
                 ref={flatListRef}
-                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setBookmarkedServicesOffset)}
+                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOffset)}
                 style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
                 data={props.bookmarkedServices}
                 keyExtractor={(service: HumanServiceData): string => service.id}
                 renderItem={renderServiceItems({
                     ...props,
-                    scrollOffset: bookmarkedServicesOffset,
+                    scrollOffset: offset,
                 })}
                 ListEmptyComponent={
                     <EmptyBookmarksComponent
@@ -59,7 +54,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
                 }
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ServiceBanner isVisible={!R.isEmpty(props.bookmarkedServices)} />}
-                initialNumToRender={bookmarkedServicesOffset ? props.bookmarkedServices.length : 20}
+                initialNumToRender={offsetFromRouteLocation ? props.bookmarkedServices.length : 20}
             />
             <ThankYouMessageComponent i18n={props.i18n} isVisible={props.isSendingReview} />
         </>

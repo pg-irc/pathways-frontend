@@ -22,7 +22,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
 import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
-import { useLocation } from 'react-router-native';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
@@ -49,7 +49,7 @@ export interface TopicDetailActions {
 type Props = TopicDetailsProps & TopicDetailActions;
 
 export const TopicDetailComponent = (props: Props): JSX.Element => {
-    const location = useLocation();
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
     return (
         <View style={{ flex: 1 }}>
             <Header {...props} />
@@ -62,7 +62,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => {
                 emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
                 headerContent={<ListHeaderComponent {...props} />}
                 headerContentIdentifier={props.topic.id}
-                scrollOffset={location.state?.currentOffset || 0}
+                scrollOffset={offsetFromRouteLocation}
             />
         </View>
     );

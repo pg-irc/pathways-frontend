@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -31,8 +31,8 @@ import { hasNoResultsFromLocationQuery } from '../search/search_results_componen
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
-import { useHistory, useLocation } from 'react-router-native';
-import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
+import { useHistory } from 'react-router-native';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -90,12 +90,10 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
     const history = useHistory();
-    const location = useLocation();
-    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(location.state?.currentOffset || 0);
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
-    useCurrentOffsetFromLocationForScroll(location, setTopicServicesOffset);
-    useServicesScrollToOffset(flatListRef, location.state?.currentOffset, services);
+    useServicesScrollToOffset(flatListRef, offsetFromRouteLocation, services);
 
     return (
         <I18n>
@@ -104,18 +102,18 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                     <>
                         <FlatList
                             ref={flatListRef}
-                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
+                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOffset)}
                             style={{ backgroundColor: colors.lightGrey }}
                             data={services}
                             keyExtractor={(service: HumanServiceData): string => service.id}
                             renderItem={renderServiceItems({
                                 ...props,
                                 history: history,
-                                scrollOffset: topicServicesOffset,
+                                scrollOffset: offset,
                             })}
                             ItemSeparatorComponent={SearchListSeparator}
                             ListHeaderComponent={<ListHeaderComponent {...props} />}
-                            initialNumToRender={location.state?.currentOffset ? services.length : 20}
+                            initialNumToRender={offsetFromRouteLocation ? services.length : 20}
                         />
                         <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
                     </>

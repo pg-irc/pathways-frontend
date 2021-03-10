@@ -7,7 +7,7 @@ import { colors } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 import { History } from 'history';
-import { useLocation } from 'react-router-native';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
@@ -17,7 +17,7 @@ export interface TopicBookmarksProps {
 type Props = TopicBookmarksProps & TaskListActions;
 
 export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const location = useLocation();
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
     return (
         <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
             <TaskListComponent
@@ -32,7 +32,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
                 history={props.history}
                 bookmarkTopic={props.bookmarkTopic}
                 unbookmarkTopic={props.unbookmarkTopic}
-                scrollOffset={location.state?.currentOffset || 0}
+                scrollOffset={offsetFromRouteLocation}
             />
         </View>
     );

@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { View } from 'native-base';
 import { History } from 'history';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -10,8 +10,7 @@ import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
-import { useLocation } from 'react-router-native';
-import { useCurrentOffsetFromLocationForScroll } from '../use_current_offset_from_location_for_scroll';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
@@ -27,31 +26,27 @@ export interface ServiceTabActions {
 type Props = ServicesTabProps & ServiceTabActions;
 
 export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
-    const location = useLocation();
-    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] = useState(
-        location.state?.currentOffset || 0,
-    );
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-    useCurrentOffsetFromLocationForScroll(location, setOrganizationServicesOffset);
-    useServicesScrollToOffset(flatListRef, location.state?.currentOffset, props.services);
+    useServicesScrollToOffset(flatListRef, offsetFromRouteLocation, props.services);
 
     return (
         <FlatList
             ref={flatListRef}
-            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOrganizationServicesOffset)}
+            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOffset)}
             style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
             data={props.services}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceItems({
                 history: props.history,
-                scrollOffset: organizationServicesOffset,
+                scrollOffset: offset,
                 bookmarkService: props.bookmarkService,
                 unbookmarkService: props.unbookmarkService,
                 openServiceDetail: props.openServiceDetail,
             })}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
-            initialNumToRender={organizationServicesOffset ? props.services.length : 20}
+            initialNumToRender={offsetFromRouteLocation ? props.services.length : 20}
         />
     );
 };
