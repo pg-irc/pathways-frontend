@@ -95,7 +95,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
     useCurrentOffsetFromLocationForScroll(location, setTopicServicesOffset);
-    useServicesScrollToOffset(flatListRef, topicServicesOffset, services);
+    useServicesScrollToOffset(flatListRef, location.state?.currentOffset, services);
 
     return (
         <I18n>
@@ -115,7 +115,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                             })}
                             ItemSeparatorComponent={SearchListSeparator}
                             ListHeaderComponent={<ListHeaderComponent {...props} />}
-                            initialNumToRender={topicServicesOffset ? services.length : 20}
+                            initialNumToRender={location.state?.currentOffset ? services.length : 20}
                         />
                         <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
                     </>

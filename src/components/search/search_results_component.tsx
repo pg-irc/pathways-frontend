@@ -84,10 +84,10 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     useEffect((): void => {
         if (props.searchResults.length > 0) {
             setTimeout((): void => {
-                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: searchOffset });
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: location.state?.currentOffset });
               }, 0);
         }
-    }, [searchOffset, flatListRef]);
+    }, [location.state?.currentOffset, flatListRef]);
 
     const onlineStatus = useOnlineStatus();
 
@@ -119,7 +119,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                         onScrollBeginDrag={onScrollBeginDrag}
                         onScroll={onAnimatedScrollHandler}
                         onScrollEndDrag={onScrollEndDrag}
-                        initialNumToRender={searchOffset ? props.searchResults.length : 20}
+                        initialNumToRender={location.state?.currentOffset ? props.searchResults.length : 20}
                         style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                         data={props.searchResults}
                         keyExtractor={keyExtractor}

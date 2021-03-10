@@ -33,7 +33,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
     );
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     useCurrentOffsetFromLocationForScroll(location, setOrganizationServicesOffset);
-    useServicesScrollToOffset(flatListRef, organizationServicesOffset, props.services);
+    useServicesScrollToOffset(flatListRef, location.state?.currentOffset, props.services);
 
     return (
         <FlatList
