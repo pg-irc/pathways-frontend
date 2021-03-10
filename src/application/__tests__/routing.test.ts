@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement readonly-array no-any
+// tslint:disable:no-expression-statement readonly-array no-any typedef
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
@@ -305,7 +305,7 @@ describe('goToRouteWithParameter', () => {
     });
 });
 
-describe('the route location state changes when', () => {
+describe('an example of how the route location state changes when', () => {
     const firstPath = routePathDefinition(Routes.TopicDetail);
     const initialPathEntries = [firstPath];
     const indexOfLastPath = initialPathEntries.length - 1;
@@ -313,12 +313,12 @@ describe('the route location state changes when', () => {
     const topicDetailOffset = aNumber();
     goToRouteWithParameter(Routes.Services, aString(), history, topicDetailOffset);
 
-    describe('navigating to the service list screen', () => {
+    describe('navigating to a service list screen', () => {
         const routeLocationState = history.location.state as any;
         it ('sends the currentOffset containing 0', () => {
             expect(routeLocationState.currentOffset).toBe(0);
         });
-        it ('sends the previousOffset containing the topic detail\'s offset', () => {
+        it ('sends the previousOffset containing the previous topic detail screen\'s offset', () => {
             expect(routeLocationState.previousOffset).toBe(topicDetailOffset);
         });
     });
@@ -326,12 +326,12 @@ describe('the route location state changes when', () => {
     const serviceListOffset = aNumber();
     goToRouteWithParameter(Routes.ServiceDetail, aString(), history, serviceListOffset);
 
-    describe('navigating to the service detail screen', () => {
+    describe('navigating to a service detail screen', () => {
         const routeLocationState = history.location.state as any;
         it('sends the currentOffset containing 0', () => {
             expect(routeLocationState.currentOffset).toBe(0);
         });
-        it('sends the previousOffset containing the value of the services list\'s offset', () => {
+        it('sends the previousOffset containing the previous service list screen\'s offset', () => {
             expect(routeLocationState.previousOffset).toBe(serviceListOffset);
         });
     });

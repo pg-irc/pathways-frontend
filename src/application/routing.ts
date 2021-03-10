@@ -167,7 +167,7 @@ const routeHasParameter = (route: Routes): boolean => (
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
 // For more details see: https://github.com/ReactTraining/react-router/issues/5870.
-export const getParametersFromPath = (location: Location, route: Routes): RouteParameters => {
+export const getParametersFromPath = (location: RouteLocation, route: Routes): RouteParameters => {
     const match = matchPath(location.pathname, {
         path: routePathDefinition(route),
         exact: true,
