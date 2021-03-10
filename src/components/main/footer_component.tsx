@@ -67,22 +67,22 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
                 <NavigationButton
                     icon='home'
                     isActive={isOnRecommendedTopicsPage(props)}
-                    onPress={goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)}
+                    onPress={(): void => goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)}
                 />
                 <NavigationButton
                     icon='book'
                     isActive={isOnLearnPage(props)}
-                    onPress={goToRouteWithoutParameter(Routes.Learn, props.history)}
+                    onPress={(): void => goToRouteWithoutParameter(Routes.Learn, props.history)}
                 />
                 <NavigationButton
                     icon='bookmark'
                     isActive={isOnBookmarksPage(props)}
-                    onPress={goToRouteWithoutParameter(Routes.Bookmarks, props.history)}
+                    onPress={(): void => goToRouteWithoutParameter(Routes.Bookmarks, props.history)}
                 />
                 <NavigationButton
                     icon='search'
                     isActive={isOnSearchPage(props)}
-                    onPress={goToRouteWithoutParameter(Routes.Search, props.history)}
+                    onPress={(): void => goToRouteWithoutParameter(Routes.Search, props.history)}
                 />
             </FooterTab>
         </AnimatedFooter>
