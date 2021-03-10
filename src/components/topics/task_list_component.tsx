@@ -54,7 +54,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     componentDidMount(): void {
         if (this.flatListRef) {
-            scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset);
+            scrollToOffset(this.flatListRef, this.state.scrollOffset);
         }
     }
 
@@ -68,21 +68,21 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ...this.state,
                 scrollOffset: 0,
                 data: this.props.tasks,
-                }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+                }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
 
-        if (tasksHaveChanged(previousProps, this.props)) {
+        if (hasTasksChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
-            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+            }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
 
         if (previousProps.scrollOffset !== this.props.scrollOffset) {
             return this.setState({
                 ...this.state,
                 scrollOffset: this.props.scrollOffset,
-            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+            }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
     }
 
@@ -131,7 +131,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 }
 
-const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): void => {
+const scrollToOffset = (flatListRef: FlatListRef, offset: number): void => {
     // tslint:disable-next-line: max-line-length
     // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
     setTimeout((): void => {
@@ -143,7 +143,7 @@ const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean 
     previousProps.headerContentIdentifier !== props.headerContentIdentifier
 );
 
-const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
+const hasTasksChanged = (previousProps: Props, props: Props): boolean => {
     const currentIds = R.pluck('id', props.tasks);
     const previousIds = R.pluck('id', previousProps.tasks);
 
