@@ -110,12 +110,13 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
 );
 
 export const goBack = (memoryHistory: MemoryHistory): void => {
-    const mostRecentEntry: Location<LocationStateOffsets> = memoryHistory.entries.pop();
-    const positionOfCurrentPathInHistoryStack = 0;
-    memoryHistory.go(positionOfCurrentPathInHistoryStack);
-    const currentEntry: Location<LocationStateOffsets> = R.last(memoryHistory.entries);
-    const currentEntryState = { previousOffset: currentEntry.state?.previousOffset || 0, currentOffset: mostRecentEntry.state?.previousOffset || 0 };
-    memoryHistory.replace(currentEntry.pathname, currentEntryState);
+    const oldTop: Location<LocationStateOffsets> = memoryHistory.entries.pop();
+    memoryHistory.go(0);
+    const newTop: Location<LocationStateOffsets> = R.last(memoryHistory.entries);
+    const previousOffset = newTop.state?.previousOffset || 0;
+    const currentOffset = oldTop.state?.previousOffset || 0;
+    const newTopState = { previousOffset, currentOffset };
+    memoryHistory.replace(newTop.pathname, newTopState);
 };
 
 export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
