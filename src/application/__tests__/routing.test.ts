@@ -1,8 +1,8 @@
-// tslint:disable:no-expression-statement readonly-array
+// tslint:disable:no-expression-statement readonly-array no-any
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
-    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameter }
+    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameter, RouteLocationStateOffsets }
 from '../routing';
 import { aNumber, aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -277,12 +277,13 @@ describe('goToRouteWithParameter', () => {
     });
 
     it('sends an offset with the parameter as previousOffset', () => {
-        const offset = 200;
+        const offset = aNumber();
         const initialPathEntries = [firstPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
         goToRouteWithParameter(Routes.ServiceDetail, aString(), history, offset);
-        expect(history.location.state).toEqual({ previousOffset: offset });
+        const { previousOffset }: Partial<RouteLocationStateOffsets> = history.location.state as any;
+        expect(previousOffset).toEqual(offset);
     });
 
     it('sends a default offset with the parameter if it is not populated', () => {
@@ -290,6 +291,51 @@ describe('goToRouteWithParameter', () => {
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
         goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
-        expect(history.location.state).toEqual({ previousOffset: 0 });
+        const { previousOffset }: RouteLocationStateOffsets = history.location.state as any;
+        expect(previousOffset).toEqual(0);
+    });
+});
+
+describe('the route location state changes when', () => {
+    const firstPath = routePathDefinition(Routes.TopicDetail);
+    const initialPathEntries = [firstPath];
+    const indexOfLastPath = initialPathEntries.length - 1;
+    const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+    const topicDetailOffset = aNumber();
+    goToRouteWithParameter(Routes.Services, aString(), history, topicDetailOffset);
+
+    describe('navigating to the service list screen', () => {
+        const routeLocationState = history.location.state as any;
+        it ('sends the currentOffset containing 0', () => {
+            expect(routeLocationState.currentOffset).toBe(0);
+        });
+        it ('sends the previousOffset containing the topic detail\'s offset', () => {
+            expect(routeLocationState.previousOffset).toBe(topicDetailOffset);
+        });
+    });
+
+    const serviceListOffset = aNumber();
+    goToRouteWithParameter(Routes.ServiceDetail, aString(), history, serviceListOffset);
+
+    describe('navigating to the service detail screen', () => {
+        const routeLocationState = history.location.state as any;
+        it('sends the currentOffset containing 0', () => {
+            expect(routeLocationState.currentOffset).toBe(0);
+        });
+        it('sends the previousOffset containing the value of the services list\'s offset', () => {
+            expect(routeLocationState.previousOffset).toBe(serviceListOffset);
+        });
+    });
+
+    goBack(history);
+
+    describe('navigating back to the service list screen', () => {
+        const routeLocationState = history.location.state as any;
+        it('uses the previousOffset state provided to the service detail page for the currentOffset', () => {
+            expect(routeLocationState.currentOffset).toBe(serviceListOffset);
+        });
+        it('maintains the topic detail\'s offset in previousOffset', () => {
+            expect(routeLocationState.previousOffset).toBe(topicDetailOffset);
+        });
     });
 });

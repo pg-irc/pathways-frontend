@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
-import { History, Location, MemoryHistory, LocationState } from 'history';
+import { History, Location as RouteLocation, MemoryHistory, LocationState as RouteLocationState } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
@@ -16,7 +16,7 @@ export type RouteParameters = Partial<{
     readonly serviceId: string;
 }>;
 
-export interface LocationStateOffsets {
+export interface RouteLocationStateOffsets {
     readonly previousOffset?: number;
     readonly currentOffset?: number;
 }
@@ -106,13 +106,13 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
 };
 
 export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, offset: number = 0): void => (
-    history.push(routePathWithParameter(route, parameter), { previousOffset: offset })
+    history.push(routePathWithParameter(route, parameter), { previousOffset: offset, currentOffset: 0 })
 );
 
 export const goBack = (memoryHistory: MemoryHistory): void => {
-    const oldTop: Location<LocationStateOffsets> = memoryHistory.entries.pop();
+    const oldTop: RouteLocation<RouteLocationStateOffsets> = memoryHistory.entries.pop();
     memoryHistory.go(0);
-    const newTop: Location<LocationStateOffsets> = R.last(memoryHistory.entries);
+    const newTop: RouteLocation<RouteLocationStateOffsets> = R.last(memoryHistory.entries);
     const previousOffset = newTop.state?.previousOffset || 0;
     const currentOffset = oldTop.state?.previousOffset || 0;
     const newTopState = { previousOffset, currentOffset };
@@ -131,7 +131,7 @@ export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void 
     }
 };
 
-const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
+const pathMatchesFeedbackRoute = (location: RouteLocation<RouteLocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
@@ -147,7 +147,7 @@ export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): v
     }
 };
 
-const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
+const pathMatchesServiceReviewRoute = (location: RouteLocation<RouteLocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.ServiceReview, Routes.ExplainFeedback])
 );
 
