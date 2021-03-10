@@ -5,6 +5,7 @@ import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
 import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
+import { searchDictionary } from '../search_dictionary';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -26,7 +27,7 @@ export const fetchSearchResultsFromQuery = async (
     }
     const url = buildAlgoliaSearchUrl();
     const algoliaQuery = JSON.stringify({
-        query: searchTerm,
+        query: convertSearchTerm(searchTerm.toLowerCase().trim()),
         page: searchPage,
         hitsPerPage: '20',
         aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
@@ -41,6 +42,14 @@ export const fetchSearchResultsFromQuery = async (
     } catch (Error) {
         return [];
     }
+};
+
+export const convertSearchTerm = (searchTerm: string): string => {
+    const needConvert = searchDictionary.has(searchTerm);
+    if (needConvert) {
+        return searchDictionary.get(searchTerm);
+    }
+    return searchTerm;
 };
 
 export const fetchServicesForOrganization = async (
