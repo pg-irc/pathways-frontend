@@ -1,6 +1,7 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { View, Content, Icon, Text } from 'native-base';
+// tslint:disable: no-expression-statement
+import React, { EffectCallback, useEffect, useRef } from 'react';
+import { TouchableOpacity, StyleSheet, NativeSyntheticEvent, ScrollViewProps, ScrollView } from 'react-native';
+import { View, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
@@ -10,6 +11,7 @@ import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { memoryHistory } from '../../application';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -21,26 +23,48 @@ export interface ExploreAllActions {
 
 type Props = ExploreAllProps & ExploreAllActions & RouterProps;
 
-export const ExploreAllComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        <HelpAndMenuButtonHeaderComponent {...props} />
-        <Content padder style={{ backgroundColor: colors.white }}>
-            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
-                <Trans>Learn all about B.C.</Trans>
-            </Text>
-            <View style={styles.buttonsWrapper}>
-                {mapWithIndex((section: ExploreSection, index: number) => (
-                    buildButton(
-                        getLearnButtonContent(section),
-                        index,
-                        section.id,
-                        300,
-                    )
-                ), props.sections)}
-            </View>
-        </Content>
-    </View>
-);
+export const ExploreAllComponent = (props: Props): JSX.Element => {
+    const scrollViewRef = useRef<ScrollView>();
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
+
+    useEffect((): EffectCallback | void => {
+        if (!scrollViewRef.current) {
+            return;
+        }
+        const timer = setTimeout((): void => {
+            scrollViewRef.current.scrollTo({ y: offsetFromRouteLocation, animated: false });
+        }, 0);
+
+        return (): void => clearTimeout(timer);
+    }, [scrollViewRef, offsetFromRouteLocation]);
+    const scrollViewThrottle = 8;
+    return (
+        <View style={{ flex: 1 }}
+        >
+            <HelpAndMenuButtonHeaderComponent {...props} />
+            <ScrollView
+                ref={scrollViewRef}
+                style={{ backgroundColor: colors.white, padding: 10 }}
+                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setOffset(e.nativeEvent.contentOffset.y)}
+                scrollEventThrottle={scrollViewThrottle}
+            >
+                <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
+                    <Trans>Learn all about B.C.</Trans>
+                </Text>
+                <View style={styles.buttonsWrapper}>
+                    {mapWithIndex((section: ExploreSection, index: number) => (
+                        buildButton(
+                            getLearnButtonContent(section),
+                            index,
+                            section.id,
+                            offset,
+                        )
+                    ), props.sections)}
+                </View>
+            </ScrollView>
+        </View>
+    );
+};
 
 const buildButton = (buttonContent: JSX.Element, index: number, sectionId: string, offset: number): JSX.Element => (
     <TouchableOpacity
