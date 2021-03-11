@@ -50,6 +50,7 @@ type Props = TopicDetailsProps & TopicDetailActions;
 
 export const TopicDetailComponent = (props: Props): JSX.Element => {
     const { offsetFromRouteLocation }: OffsetHook = useOffset();
+    console.log(offsetFromRouteLocation);
     return (
         <View style={{ flex: 1 }}>
             <Header {...props} />

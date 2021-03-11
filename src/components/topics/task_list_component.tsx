@@ -66,7 +66,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         if (hasTopicDetailPageChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
-                scrollOffset: 0,
+                scrollOffset: this.props.scrollOffset,
                 data: this.props.tasks,
                 }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
@@ -75,13 +75,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
-            }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
-        }
-
-        if (previousProps.scrollOffset !== this.props.scrollOffset) {
-            return this.setState({
-                ...this.state,
-                scrollOffset: this.props.scrollOffset,
             }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
     }
