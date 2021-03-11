@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
-import React, { Dispatch, SetStateAction, useState, useRef, MutableRefObject } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { Dispatch, SetStateAction, useState, useRef, MutableRefObject, useEffect, EffectCallback } from 'react';
+import { NativeSyntheticEvent, ScrollViewProps, TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
 import { t } from '@lingui/macro';
@@ -63,6 +63,7 @@ import { CardButtonComponent } from '../card_button_component';
 import { ServiceDetailRatingsComponent } from '../reviews/service_detail_ratings_component';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
 import { Rating } from '../../stores/reviews';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -106,9 +107,21 @@ type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
-    const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
+    const keyboardAwareScrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(props.serviceFeedback);
     const keyboardIsVisible = useKeyboardIsVisible();
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
+
+    useEffect((): EffectCallback | void => {
+        if (!keyboardAwareScrollViewRef.current) {
+            return;
+        }
+        const timer = setTimeout((): void => {
+            keyboardAwareScrollViewRef.current.scrollToPosition(0, offsetFromRouteLocation, false);
+        }, 0);
+
+        return (): void => clearTimeout(timer);
+    }, [keyboardAwareScrollViewRef, offsetFromRouteLocation]);
 
     const setTextForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField, value: string): void => (
         setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, value } })
@@ -120,25 +133,25 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     });
 
     const chooseChangeNameOrDetail = (): void => {
-        scrollToTop(scrollViewRef);
+        scrollToTop(keyboardAwareScrollViewRef);
         resetInputs();
         props.chooseChangeNameOrDetail();
     };
 
     const chooseRemoveService = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history, offset);
         resetInputs();
         props.chooseRemoveService();
     };
 
     const chooseOtherChanges = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history, offset);
         resetInputs();
         props.chooseOtherChanges();
     };
 
     const chooseExplainFeedback = (): void => {
-        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history);
+        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history, offset);
         resetInputs();
         props.chooseExplainFeedback();
     }
@@ -148,7 +161,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const onSubmitPress = (): void => {
-        goToRouteWithParameter(Routes.ContactInformation, serviceId, props.history);
+        goToRouteWithParameter(Routes.ContactInformation, serviceId, props.history, offset);
         props.submitFeedback(feedbackInput);
     };
 
@@ -161,7 +174,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const onBackButtonPress = (): void => {
         if (isOtherRemoveServiceFeedback(props.feedbackType)) {
-            goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history);
+            goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history, offset);
         }
         props.backFromContactInformation();
     };
@@ -194,7 +207,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             extraHeight={100}
                             extraScrollHeight={isAndroid() ? 100 : 0}
                             enableOnAndroid={true}
-                            ref={scrollViewRef}
+                            ref={keyboardAwareScrollViewRef}
+                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setOffset(e.nativeEvent.contentOffset.y)}
+                            scrollEventThrottle={10}
                         >
                             <View padder>
                                 <FeedbackComponent
@@ -219,7 +234,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                             name={props.service.organizationName}
                                             organizationId={props.service.organizationId}
                                             openOrganization={props.openOrganization}
-                                            history={props.history} />}
+                                            history={props.history}
+                                            offset={offset}
+                                        />
+                                    }
                                 />
                                 <DividerComponent />
                                 <FeedbackComponent
@@ -309,21 +327,27 @@ const Name = (props: NameProps): JSX.Element => (
 );
 
 const Organization = (props: {
-    readonly history: History, readonly name: string, readonly organizationId: string, readonly openOrganization: (organizationId: string) => void,
+    readonly history: History,
+    readonly name: string,
+    readonly organizationId: string,
+    readonly openOrganization: (organizationId: string) => void,
+    readonly offset: number,
 }): JSX.Element => {
     const onOrganizationPress = (): void => {
         props.openOrganization(props.organizationId);
-        goToRouteWithParameter(Routes.Organization, props.organizationId, props.history);
+        goToRouteWithParameter(Routes.Organization, props.organizationId, props.history, props.offset);
     };
 
-    return <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
-        <View>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
-            <TouchableOpacity onPress={onOrganizationPress}>
-                <Text style={textStyles.URL}>{props.name}</Text>
-            </TouchableOpacity>
+    return (
+        <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
+            <View>
+                <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
+                <TouchableOpacity onPress={onOrganizationPress}>
+                    <Text style={textStyles.URL}>{props.name}</Text>
+                </TouchableOpacity>
+            </View >
         </View >
-    </View >;
+    );
 };
 
 interface HeaderProps {
