@@ -50,7 +50,6 @@ type Props = TopicDetailsProps & TopicDetailActions;
 
 export const TopicDetailComponent = (props: Props): JSX.Element => {
     const { offsetFromRouteLocation }: OffsetHook = useOffset();
-    console.log(offsetFromRouteLocation);
     return (
         <View style={{ flex: 1 }}>
             <Header {...props} />
@@ -129,8 +128,8 @@ const onServicesTextPress = (props: Props): void => {
         currentPath: props.location.pathname,
         linkContext: buildAnalyticsLinkContext('Topic', props.topic.title),
         linkType: 'Button',
-        linkValue: 'Find related services near me'
-    }
+        linkValue: 'Find related services near me',
+    };
     props.analyticsLinkPressed(analyticsLinkProps);
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history);
 };

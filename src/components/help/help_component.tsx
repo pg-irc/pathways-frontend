@@ -76,7 +76,7 @@ export interface HelpComponentActions {
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation)=> BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
