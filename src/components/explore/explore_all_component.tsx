@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { EffectCallback, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { TouchableOpacity, StyleSheet, NativeSyntheticEvent, ScrollViewProps, ScrollView } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
@@ -12,6 +12,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { memoryHistory } from '../../application';
 import { OffsetHook, useOffset } from '../use_offset';
+import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -26,17 +27,7 @@ type Props = ExploreAllProps & ExploreAllActions & RouterProps;
 export const ExploreAllComponent = (props: Props): JSX.Element => {
     const scrollViewRef = useRef<ScrollView>();
     const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
-
-    useEffect((): EffectCallback | void => {
-        if (!scrollViewRef.current) {
-            return;
-        }
-        const timer = setTimeout((): void => {
-            scrollViewRef.current.scrollTo({ y: offsetFromRouteLocation, animated: false });
-        }, 0);
-
-        return (): void => clearTimeout(timer);
-    }, [scrollViewRef, offsetFromRouteLocation]);
+    useScrollViewToOffset(scrollViewRef, offsetFromRouteLocation);
     const scrollViewThrottle = 8;
     return (
         <View style={{ flex: 1 }}

@@ -1,9 +1,9 @@
 // tslint:disable: no-expression-statement
-import React from 'react';
+import React, { useRef } from 'react';
 import { History } from 'history';
-import { Text, View, Icon, Content } from 'native-base';
+import { Text, View, Icon } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { I18nManager, Alert, TouchableOpacity, AlertButton } from 'react-native';
+import { I18nManager, Alert, TouchableOpacity, AlertButton, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { applicationStyles, colors, textStyles, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
@@ -19,6 +19,9 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { Topic } from '../../selectors/topics/types';
+import { ScrollView } from 'react-native-gesture-handler';
+import { OffsetHook, useOffset } from '../use_offset';
+import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -78,18 +81,28 @@ export interface HelpComponentActions {
 
 type Props = HelpComponentProps & HelpComponentActions;
 
-export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
+export const HelpComponent = (props: Props): JSX.Element => {
+    const scrollViewRef = useRef<ScrollView>();
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
+    useScrollViewToOffset(scrollViewRef, offsetFromRouteLocation);
+    const scrollViewThrottle = 8;
+    return (
+        <View style={{ flex: 1 }}>
         <MenuAndBackButtonHeaderComponent
             {...props}
             {...{ textColor: colors.teal, backgroundColor: colors.white }}
         />
-        <Content padder style={applicationStyles.body}>
+        <ScrollView
+            style={applicationStyles.body}
+            ref={scrollViewRef}
+            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setOffset(e.nativeEvent.contentOffset.y)}
+            scrollEventThrottle={scrollViewThrottle}
+        >
             <View
                 style={{
                     backgroundColor: colors.white,
-                    marginTop: -10,
-                    marginHorizontal: -10,
+                    marginTop: 0,
+                    marginHorizontal: 0,
                     padding: 10,
                     marginBottom: 10,
                 }}
@@ -104,10 +117,17 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                     marginTop: 15,
                     marginBottom: 20,
                 }}>
-                    <FindSettlementAgencyButton {...props} />
+                    <FindSettlementAgencyButton
+                        topic={props.topic}
+                        history={props.history}
+                        manualUserLocation={props.manualUserLocation}
+                        customLatLong={props.customLatLong}
+                        offset={offset}
+                        dispatchServicesRequest={props.dispatchServicesRequest}
+                    />
                 </View>
             </View>
-            <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+            <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: 10 }]}>
                 <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
             </Text>
             {mapWithIndex(renderContactComponent, fixture)}
@@ -117,11 +137,21 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
             }}>
                 <ClearAppMemoryButton {...props} />
             </View>
-        </Content>
+        </ScrollView>
     </View>
-);
+    );
+};
 
-const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+export interface FindSettlementAgencyButtonProps {
+    readonly topic: Topic;
+    readonly history: History;
+    readonly manualUserLocation: UserLocation;
+    readonly customLatLong: LatLong;
+    readonly offset: number;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+}
+
+const FindSettlementAgencyButton = (props: FindSettlementAgencyButtonProps): JSX.Element => (
     <MultiLineButtonComponent onPress={(): void => onFindSettlementAgencyPress(props)}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
@@ -129,16 +159,16 @@ const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Prop
     </MultiLineButtonComponent>
 );
 
-const onFindSettlementAgencyPress = (props: Props): void => {
+const onFindSettlementAgencyPress = (props: FindSettlementAgencyButtonProps): void => {
     if (props.customLatLong) {
         props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
     } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
-    goToRouteWithParameter(Routes.Services, props.topic.id, props.history);
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history, props.offset);
 };
 
-const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+const ClearAppMemoryButton = (props: Props): JSX.Element => {
     const alertToClearAllUserData = (i18n: ReactI18n): void => {
         const _ = i18n._.bind(i18n);
         // These strings are being extracted by Lingui using the function extractAlertStrings below
@@ -181,7 +211,8 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: 15,
+            paddingVertical: 15,
+            paddingHorizontal: 20,
         }}
         onPress={(): void => openURL(contact.url)}
     >
@@ -206,4 +237,4 @@ export const extractAlertStrings = (): JSX.Element => (
             <Trans>Cancel</Trans>
         </Text>
     </div>
-)
+);
