@@ -100,9 +100,9 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
     return routePathDefinition(route).replace(/:.*/, parameter);
 };
 
-export const goToRouteWithoutParameter = (route: Routes, history: History): void => {
+export const goToRouteWithoutParameter = (route: Routes, history: History, offset: number = 0): void => {
     const path = routePathWithoutParameter(route);
-    history.push(path);
+    history.push(path, { previousOffset: offset, currentOffset: 0 });
 };
 
 export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, offset: number = 0): void => (
