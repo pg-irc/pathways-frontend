@@ -65,6 +65,20 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Text style={[textStyles.paragraphBoldWhiteLeft, { marginBottom: 10 }]}>
                         <Trans>Select your language</Trans>
                     </Text>
+                    <Item style={{ marginLeft: 0, marginVertical: 10, borderColor: 'transparent' }}>
+                        <Picker
+                            mode='dropdown'
+                            placeholder='Select Province'
+                            placeholderStyle={{ color: colors.teal, fontWeight: 'bold' }}
+                            onValueChange={handleChange}
+                            style={{ justifyContent: 'center', backgroundColor: colors.white }}
+
+                        >
+                            <Picker.Item key='' label='Select province' value='Select Province' />
+                            <Picker.Item key='bc' label='British Columbia' value='bc' />
+                            <Picker.Item key='mb' label='Manitoba' value='mb' />
+                        </Picker>
+                    </Item>
                     <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center', backgroundColor: colors.white }}>
                         <Picker
                             mode='dropdown'
