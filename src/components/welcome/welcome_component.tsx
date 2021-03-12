@@ -1,12 +1,12 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
-import { Text, Form, Button, Picker, Item } from 'native-base';
+import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { applicationStyles, colors, textStyles } from '../../application/styles';
+import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
@@ -58,32 +58,32 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         marginBottom: 20,
                     }}
                 />
-                <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 30 }]}>
+                <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 20 }]}>
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <Text style={[textStyles.paragraphBoldWhiteLeft, { marginBottom: 10 }]}>
-                        <Trans>Select your language</Trans>
-                    </Text>
-                    <Item style={{ marginLeft: 0, marginVertical: 10, borderColor: 'transparent' }}>
+                    <Item style={applicationStyles.item}>
                         <Picker
                             mode='dropdown'
-                            placeholder='Select Province'
-                            placeholderStyle={{ color: colors.teal, fontWeight: 'bold' }}
+                            placeholder='Select province'
+                            placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleChange}
-                            style={{ justifyContent: 'center', backgroundColor: colors.white }}
-
+                            style={applicationStyles.picker}
+                            iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             <Picker.Item key='' label='Select province' value='Select Province' />
                             <Picker.Item key='bc' label='British Columbia' value='bc' />
                             <Picker.Item key='mb' label='Manitoba' value='mb' />
                         </Picker>
                     </Item>
-                    <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center', backgroundColor: colors.white }}>
+                    <Item style={applicationStyles.item}>
                         <Picker
                             mode='dropdown'
-                            selectedValue={props.currentLocale.code}
+                            placeholder='Select language'
+                            placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleChange}
+                            style={applicationStyles.picker}
+                            iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
                                 <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
