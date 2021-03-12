@@ -17,12 +17,14 @@ export interface ServiceReviewPostData {
 
 export interface ReviewsStore {
     readonly rating: Rating;
+    readonly comment: string;
     readonly showDiscardChangesModal: boolean;
     readonly isSending: boolean;
 }
 
 export const buildDefaultStore = (): ReviewsStore => ({
     rating: Rating.Zero,
+    comment: undefined,
     showDiscardChangesModal: false,
     isSending: false,
 });
@@ -52,6 +54,11 @@ export const reducer = (store: ReviewsStore = buildDefaultStore(), action?: Revi
             return {
                 ...store,
                 isSending: true,
+            };
+        case constants.SAVE_COMMENT:
+            return {
+                ...store,
+                comment: action.payload.comment,
             };
         case constants.FINISH_SERVICE_REVIEW:
             return buildDefaultStore();

@@ -7,7 +7,9 @@ import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
-import { ChooseRatingAction, ClearReviewAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
+import { ChooseRatingAction, ClearReviewAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction,
+    SaveCommentAction, SubmitServiceReviewAction,
+} from '../../stores/reviews/actions';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
@@ -18,18 +20,19 @@ import { backFromServiceReview, goToRouteWithParameter, Routes } from '../../app
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
-import { History } from 'history';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
     readonly serviceName: string;
     readonly rating: Rating;
+    readonly comment: string;
     readonly showDiscardChangesModal: boolean;
     readonly isSending: boolean;
 }
 
 export interface ServiceReviewActions {
     readonly chooseRating: (rating: Rating, serviceId: Id) => ChooseRatingAction;
+    readonly saveComment: (comment: string) => SaveCommentAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
     readonly submitServiceReview: (serviceId: Id, comment: string) => SubmitServiceReviewAction;
@@ -39,7 +42,7 @@ export interface ServiceReviewActions {
 type Props = ServiceReviewProps & ServiceReviewActions;
 
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
-    const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
+    const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.comment);
     const keyboardIsVisible = useKeyboardIsVisible();
 
     const hasNoRating = props.rating === Rating.Zero;
@@ -53,6 +56,11 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const onSubmitButtonPress = (): void => {
         props.submitServiceReview(props.serviceId, comment);
         backFromServiceReview(memoryHistory);
+    };
+
+    const onExplainReviewPress = (): void => {
+        props.saveComment(comment);
+        goToRouteWithParameter(Routes.ExplainFeedback, props.serviceId, memoryHistory)();
     };
 
     return (
@@ -69,7 +77,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                     <RatingQuestionComponent />
                     <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
                     <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
-                    <ExplainReviewUsageComponent history={memoryHistory} serviceId={props.serviceId}/>
+                    <ExplainReviewUsageComponent onPress={onExplainReviewPress}/>
                 </View>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
@@ -144,19 +152,14 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
     </I18n>
 );
 
-const ExplainReviewUsageComponent = ({ history, serviceId }: { readonly history: History, readonly serviceId: Id }): JSX.Element => {
-    const onPress = (): void => {
-        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, history)();
-    };
-    return (
-        <View style={{ marginTop: 20, marginBottom: 20 }}>
-            <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
-                <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
-                <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
-                        {' '}
-                        <Trans>Learn more</Trans>
-                    </Text>
-            </Text>
-        </View>
-    );
-};
+const ExplainReviewUsageComponent = ({ onPress }: { readonly onPress: () => void }): JSX.Element => (
+    <View style={{ marginTop: 20, marginBottom: 20 }}>
+        <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
+            <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
+            <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
+                    {' '}
+                    <Trans>Learn more</Trans>
+                </Text>
+        </Text>
+    </View>
+);

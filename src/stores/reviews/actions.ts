@@ -33,16 +33,23 @@ export const clearReview = () => (
     helpers.makeAction(constants.CLEAR_REVIEW)
 );
 
+// tslint:disable-next-line: typedef
+export const saveComment = (comment: string) => (
+    helpers.makeAction(constants.SAVE_COMMENT, { comment })
+);
+
 export type ChooseRatingAction = Readonly<ReturnType<typeof chooseRating>>;
 export type OpenDiscardChangesModalAction = Readonly<ReturnType<typeof openDiscardChangesModal>>;
 export type CloseDiscardChangesModalAction  = Readonly<ReturnType<typeof closeDiscardChangesModal>>;
 export type SubmitServiceReviewAction = Readonly<ReturnType<typeof submitServiceReview>>;
 export type FinishServiceReviewAction = Readonly<ReturnType<typeof finishServiceReview>>;
 export type ClearReviewAction = Readonly<ReturnType<typeof clearReview>>;
+export type SaveCommentAction = Readonly<ReturnType<typeof saveComment>>;
 
 export type ReviewAction = ChooseRatingAction |
     OpenDiscardChangesModalAction |
     CloseDiscardChangesModalAction |
     SubmitServiceReviewAction |
     ClearReviewAction |
-    FinishServiceReviewAction;
+    FinishServiceReviewAction |
+    SaveCommentAction;

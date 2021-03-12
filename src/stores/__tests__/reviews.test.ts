@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement typedef
 import { aBoolean, aString } from '../../application/helpers/random_test_values';
 import { buildDefaultStore, Rating, reducer, ReviewsStore } from '../reviews';
-import { chooseRating, clearReview, closeDiscardChangesModal, finishServiceReview, openDiscardChangesModal, submitServiceReview } from '../reviews/actions';
+import { chooseRating, clearReview, closeDiscardChangesModal, finishServiceReview, openDiscardChangesModal, saveComment, submitServiceReview } from '../reviews/actions';
 
 describe('the reviews reducer', () => {
 
@@ -10,6 +10,7 @@ describe('the reviews reducer', () => {
         it('is cleared by the clear review action', () => {
             const oldStore: ReviewsStore = {
                 rating: Rating.Three,
+                comment: undefined,
                 showDiscardChangesModal: false,
                 isSending: true,
             };
@@ -24,6 +25,16 @@ describe('the reviews reducer', () => {
             const oldStore = buildDefaultStore();
             const newStore = reducer(oldStore, chooseRating(Rating.Three, aString()));
             expect(newStore.rating).toBe(Rating.Three);
+        });
+    });
+
+    describe('the comment state', () => {
+
+        it('is set to a string by the save comment action', () => {
+            const comment = aString();
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, saveComment(comment));
+            expect(newStore.comment).toBe(comment);
         });
     });
 
@@ -53,6 +64,7 @@ describe('the reviews reducer', () => {
         it('is set to false by the submit service review action', () => {
             const oldStore: ReviewsStore = {
                 rating: Rating.Zero,
+                comment: undefined,
                 showDiscardChangesModal: aBoolean(),
                 isSending: true,
             };
@@ -60,5 +72,4 @@ describe('the reviews reducer', () => {
             expect(newStore.isSending).toBe(false);
         });
     });
-
 });
