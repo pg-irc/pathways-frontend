@@ -26,10 +26,14 @@ export function* watchLocaleSuccess(): IterableIterator<ForkEffect> {
 }
 
 export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {
+    console.log('running enforceRTLChange');
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
     if (flipOrientation) {
+        console.log('calls setTextDirection to see if the app needs to change the direction of text');
         yield call(setTextDirection, localeCode);
+    } else {
+        console.log('does not change direction of text');
     }
 }
 export function* watchLoadLocale(): IterableIterator<ForkEffect> {
@@ -40,8 +44,10 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
         const RTL = I18nManager.isRTL;
-
+        console.log(I18nManager);
+        console.log('loadingCurrentLocale', retrievedCode);
         if (retrievedCode === null) {
+            console.log('getting fallbackLocale');
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
@@ -51,9 +57,11 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
             const flipOrientation = RTL !== isRTL(locale.code);
+            console.log(`loadLocaleSuccess locale.code: ${locale.code} isSaved: ${isSaved}, flipOrientation: ${flipOrientation}`);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
         }
     } catch (e) {
+        console.log('loadLocaleError');
         console.error(`Failed to load current locale (${e.message})`);
         yield put(actions.loadLocaleFailure(e.message));
     }
