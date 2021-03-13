@@ -3,17 +3,8 @@ import * as helpers from '../helpers/make_action';
 import { SaveLocaleRequestAction } from '../locale/actions';
 import { BuildServicesRequestAction } from '../services/actions';
 
-export type SaveHomePageScrollOffsetAction = Readonly<ReturnType<typeof saveHomePageScrollOffset>>;
-export type SaveTopicDetailScrollOffsetAction = Readonly<ReturnType<typeof saveTopicDetailScrollOffset>>;
-export type SaveOrganizationServicesScrollOffsetAction = Readonly<ReturnType<typeof saveOrganizationServicesScrollOffset>>;
-export type SaveSearchResultScrollOffsetAction = Readonly<ReturnType<typeof saveSearchResultScrollOffset>>;
-export type SaveTopicServicesScrollOffsetAction = Readonly<ReturnType<typeof saveTopicServicesScrollOffset>>;
-export type SaveBookmarkedTopicsScrollOffsetAction = Readonly<ReturnType<typeof saveBookmarkedTopicsScrollOffset>>;
-export type SaveBookmarkedServicesScrollOffsetAction = Readonly<ReturnType<typeof saveBookmarkedServicesScrollOffset>>;
-export type SaveExploreDetailScrollOffsetAction = Readonly<ReturnType<typeof saveExploreDetailScrollOffset>>;
 export type SaveBookmarksTabAction = Readonly<ReturnType<typeof saveBookmarksTab>>;
 export type SaveOrganizationTabAction = Readonly<ReturnType<typeof saveOrganizationTab>>;
-
 export type CloseHeaderMenuAction = Readonly<ReturnType<typeof closeHeaderMenu>>;
 export type OpenHeaderMenuAction = Readonly<ReturnType<typeof openHeaderMenu>>;
 export type CloseAboutModalAction = Readonly<ReturnType<typeof closeAboutModal>>;
@@ -22,15 +13,8 @@ export type CloseDisclaimerModalAction = Readonly<ReturnType<typeof closeDisclai
 export type OpenDisclaimerModalAction = Readonly<ReturnType<typeof openDisclaimerModal>>;
 
 export type UserExperienceAction =
-SaveHomePageScrollOffsetAction |
-SaveSearchResultScrollOffsetAction |
-SaveTopicServicesScrollOffsetAction |
-SaveBookmarkedTopicsScrollOffsetAction |
-SaveBookmarkedServicesScrollOffsetAction |
 SaveBookmarksTabAction |
 SaveOrganizationTabAction |
-SaveOrganizationServicesScrollOffsetAction |
-SaveExploreDetailScrollOffsetAction |
 CloseHeaderMenuAction |
 OpenHeaderMenuAction |
 CloseAboutModalAction |
@@ -38,47 +22,7 @@ OpenAboutModalAction |
 CloseDisclaimerModalAction |
 OpenDisclaimerModalAction |
 SaveLocaleRequestAction |
-SaveTopicDetailScrollOffsetAction |
 BuildServicesRequestAction;
-
-// tslint:disable-next-line:typedef
-export const saveHomePageScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_HOMEPAGE_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveTopicDetailScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_TOPIC_DETAIL_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveSearchResultScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_SEARCH_RESULT_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveTopicServicesScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_TOPIC_SERVICES_SCROLL_OFFSET, { offset })
-);
-// tslint:disable-next-line:typedef
-export const saveBookmarkedTopicsScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_BOOKMARKED_TOPICS_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveBookmarkedServicesScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_BOOKMARKED_SERVICES_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveOrganizationServicesScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_ORGANIZATION_SERVICES_SCROLL_OFFSET, { offset })
-);
-
-// tslint:disable-next-line:typedef
-export const saveExploreDetailScrollOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_EXPLORE_DETAIL_SCROLL_OFFSET, { offset })
-);
 
 // tslint:disable-next-line: typedef
 export const saveBookmarksTab = (index: number) => (

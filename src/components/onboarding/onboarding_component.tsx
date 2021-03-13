@@ -146,7 +146,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
 
     const onSkipPress = (): void => {
         hideOnboarding();
-        goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, history);
     };
 
     const onIndexChange = (newIndex: number): void => {

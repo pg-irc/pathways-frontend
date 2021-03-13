@@ -9,7 +9,7 @@ import { goToRouteWithParameter, getParametersFromPath } from '../../application
 import { Topic } from '../../selectors/topics/types';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { TaskListComponent, SaveTaskListScrollOffsetActions } from './task_list_component';
+import { TaskListComponent } from './task_list_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
@@ -22,6 +22,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
 import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
@@ -32,7 +33,6 @@ export interface TopicDetailsProps {
     readonly showLinkAlert: boolean;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
-    readonly scrollOffset: number;
 }
 
 export interface TopicDetailActions {
@@ -44,28 +44,29 @@ export interface TopicDetailActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly hideLinkAlert: () => HideLinkAlertsAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TopicDetailsProps & TopicDetailActions;
 
-export const TopicDetailComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        <Header {...props} />
-        <TaskListComponent
-            tasks={props.topic.relatedTopics}
-            bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
-            bookmarkTopic={props.bookmarkTopic}
-            unbookmarkTopic={props.unbookmarkTopic}
-            history={props.history}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
-            headerContent={<ListHeaderComponent {...props} />}
-            headerContentIdentifier={props.topic.id}
-            scrollOffset={props.scrollOffset}
-            saveScrollOffset={props.saveScrollOffset}
-        />
-    </View>
-);
+export const TopicDetailComponent = (props: Props): JSX.Element => {
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
+    return (
+        <View style={{ flex: 1 }}>
+            <Header {...props} />
+            <TaskListComponent
+                tasks={props.topic.relatedTopics}
+                bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
+                history={props.history}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
+                headerContent={<ListHeaderComponent {...props} />}
+                headerContentIdentifier={props.topic.id}
+                scrollOffset={offsetFromRouteLocation}
+            />
+        </View>
+    );
+};
 
 const Header = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TopicDetail);
@@ -127,8 +128,8 @@ const onServicesTextPress = (props: Props): void => {
         currentPath: props.location.pathname,
         linkContext: buildAnalyticsLinkContext('Topic', props.topic.title),
         linkType: 'Button',
-        linkValue: 'Find related services near me'
-    }
+        linkValue: 'Find related services near me',
+    };
     props.analyticsLinkPressed(analyticsLinkProps);
-    goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history);
 };

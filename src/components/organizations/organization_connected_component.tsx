@@ -2,13 +2,9 @@ import { connect } from 'react-redux';
 import { RouterProps } from '../../application/routing';
 import { Dispatch } from 'redux';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
-import {
-    OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationServicesScrollOffsetAction, saveOrganizationServicesScrollOffset,
-    SaveOrganizationTabAction, saveOrganizationTab,
-} from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationTabAction, saveOrganizationTab } from '../../stores/user_experience/actions';
 import { OrganizationComponent, OrganizationActions, OrganizationProps } from './organization_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
 import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
@@ -24,7 +20,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps
     organizationStatus: selectOrganizationStatus(store),
     organizationTab: selectOrganizationTab(store),
     servicesForOrganization: selectServicesForOrganization(store, ownProps.match.params.organizationId),
-    organizationServicesOffset: selectOrganizationServicesOffset(store),
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
 });
 
@@ -32,7 +27,6 @@ type Actions =
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
     SaveOrganizationTabAction |
-    SaveOrganizationServicesScrollOffsetAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
     OpenServiceAction |
@@ -46,8 +40,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions =>
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     saveOrganizationTab: (index: number): SaveOrganizationTabAction => dispatch(saveOrganizationTab(index)),
-    saveOrganizationServicesOffset: (offset: number): SaveOrganizationServicesScrollOffsetAction =>
-        dispatch(saveOrganizationServicesScrollOffset(offset)),
     openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
 });
 

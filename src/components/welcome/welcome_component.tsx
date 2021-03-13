@@ -80,7 +80,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                 <View>
                     <Button
                         full
-                        onPress={onStartButtonPress(props)}
+                        onPress={(): void => onStartButtonPress(props)}
                         style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
                     >
                         <Text style={textStyles.button}>
@@ -107,7 +107,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
     );
 }
 
-const onStartButtonPress = (props: Props): () => void => {
+const onStartButtonPress = (props: Props): void => {
     if (props.showOnboarding) {
         return goToRouteWithoutParameter(Routes.Onboarding, props.history);
     }

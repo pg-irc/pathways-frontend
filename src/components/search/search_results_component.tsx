@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
@@ -28,8 +28,8 @@ import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
-import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
+import { OffsetHook, useOffset } from '../use_offset';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -44,7 +44,6 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly searchOffset: number;
     readonly isSendingReview: boolean;
 }
 
@@ -53,7 +52,6 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
-    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
@@ -61,7 +59,6 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
@@ -69,6 +66,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
         runInterpolations,
         pauseInterpolations,
     }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
 
     useEffect((): void => {
         if (!flatListRef.current) {
@@ -82,10 +80,10 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     useEffect((): void => {
         if (props.searchResults.length > 0) {
             setTimeout((): void => {
-                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
+                flatListRef.current.getNode().scrollToOffset({ animated: false, offset: offsetFromRouteLocation });
               }, 0);
         }
-    }, [props.searchOffset, flatListRef]);
+    }, [offsetFromRouteLocation, flatListRef]);
 
     const onlineStatus = useOnlineStatus();
 
@@ -95,7 +93,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 
     const onScrollEndDrag = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         pauseInterpolations();
-        setSearchOffset(e.nativeEvent.contentOffset.y);
+        setOffset(e.nativeEvent.contentOffset.y);
     };
 
     if (searchTermIsEmpty(props, onlineStatus)) {
@@ -117,14 +115,14 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                         onScrollBeginDrag={onScrollBeginDrag}
                         onScroll={onAnimatedScrollHandler}
                         onScrollEndDrag={onScrollEndDrag}
-                        initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
+                        initialNumToRender={offsetFromRouteLocation ? props.searchResults.length : 20}
                         style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                         data={props.searchResults}
                         keyExtractor={keyExtractor}
                         renderItem={renderSearchHit({
                             ...props,
-                            scrollOffset: searchOffset,
-                            setScrollOffset: setSearchOffset,
+                            scrollOffset: offset,
+                            setScrollOffset: setOffset,
                         })}
                         ItemSeparatorComponent={SearchListSeparator}
                         ListHeaderComponent={<ListHeaderComponent />}
@@ -149,7 +147,6 @@ interface SearchHitProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (offset: number) => void;
-    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveServiceToMap: (service: HumanServiceData) => SaveServiceToMapAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
@@ -159,17 +156,15 @@ const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItem
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds, props.reviewedServicesIds);
     const onPress = (): void => {
         props.saveServiceToMap(service);
-        props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history, props.scrollOffset);
     };
 
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     const onPressServiceReview = (): void => {
         props.saveServiceToMap(service);
-        props.saveSearchOffset(props.scrollOffset);
-        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history)();
+        goToRouteWithParameter(Routes.ServiceReview, service.id, props.history, props.scrollOffset);
     };
     return (
         <ServiceListItemComponent

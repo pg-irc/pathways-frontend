@@ -16,7 +16,7 @@ export const notificationListener = R.curry((history: History, notification: any
         // const playStoreUrl = 'market://details?id=org.peacegeeks.ArrivalAdvisor';
         // openURL(playStoreUrl);
     } else if (route === 'welcome') {
-        goToRouteWithoutParameter(Routes.Welcome, history)();
+        goToRouteWithoutParameter(Routes.Welcome, history);
     } else if (route.startsWith('/task')) {
         history.push(route);
     }

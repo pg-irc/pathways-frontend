@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
-import { History, Location, MemoryHistory, LocationState } from 'history';
+import { History, Location as RouteLocation, MemoryHistory, LocationState as RouteLocationState } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
@@ -15,6 +15,11 @@ export type RouteParameters = Partial<{
     readonly organizationId: string;
     readonly serviceId: string;
 }>;
+
+export interface RouteLocationStateOffsets {
+    readonly previousOffset?: number;
+    readonly currentOffset?: number;
+}
 
 export type RouterProps = RouteComponentProps<RouteParameters>;
 
@@ -95,18 +100,24 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
     return routePathDefinition(route).replace(/:.*/, parameter);
 };
 
-export const goToRouteWithoutParameter = (route: Routes, history: History): () => void => {
+export const goToRouteWithoutParameter = (route: Routes, history: History, offset: number = 0): void => {
     const path = routePathWithoutParameter(route);
-    return (): void => history.push(path);
+    history.push(path, { previousOffset: offset, currentOffset: 0 });
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => (
-    (): void => history.push(routePathWithParameter(route, parameter))
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, offset: number = 0): void => (
+    history.push(routePathWithParameter(route, parameter), { previousOffset: offset, currentOffset: 0 })
 );
 
-export const goBack = (memoryHistory: MemoryHistory): void => (
-    memoryHistory.goBack()
-);
+export const goBack = (memoryHistory: MemoryHistory): void => {
+    const oldTop: RouteLocation<RouteLocationStateOffsets> = memoryHistory.entries.pop();
+    memoryHistory.go(0);
+    const newTop: RouteLocation<RouteLocationStateOffsets> = R.last(memoryHistory.entries);
+    const previousOffset = newTop.state?.previousOffset || 0;
+    const currentOffset = oldTop.state?.previousOffset || 0;
+    const newTopState = { previousOffset, currentOffset };
+    memoryHistory.replace(newTop.pathname, newTopState);
+};
 
 export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
     popFeedbackPathsFromHistory(memoryHistory);
@@ -120,7 +131,7 @@ export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void 
     }
 };
 
-const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
+const pathMatchesFeedbackRoute = (location: RouteLocation<RouteLocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
@@ -136,7 +147,7 @@ export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): v
     }
 };
 
-const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
+const pathMatchesServiceReviewRoute = (location: RouteLocation<RouteLocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.ServiceReview, Routes.ExplainFeedback])
 );
 
@@ -156,7 +167,7 @@ const routeHasParameter = (route: Routes): boolean => (
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
 // For more details see: https://github.com/ReactTraining/react-router/issues/5870.
-export const getParametersFromPath = (location: Location, route: Routes): RouteParameters => {
+export const getParametersFromPath = (location: RouteLocation, route: Routes): RouteParameters => {
     const match = matchPath(location.pathname, {
         path: routePathDefinition(route),
         exact: true,

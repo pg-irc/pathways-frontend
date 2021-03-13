@@ -1,10 +1,10 @@
-// tslint:disable:no-expression-statement readonly-array
+// tslint:disable:no-expression-statement readonly-array no-any typedef
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
     popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
-    popServiceReviewPathFromHistory, backFromServiceReview }
+    popServiceReviewPathFromHistory, backFromServiceReview, goToRouteWithParameter, RouteLocationStateOffsets, goToRouteWithoutParameter }
 from '../routing';
-import { aString } from '../helpers/random_test_values';
+import { aNumber, aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
 
 describe('the routePathDefinition function', () => {
@@ -97,7 +97,7 @@ describe('the goBack function', () => {
     const learnPath = routePathDefinition(Routes.Learn);
     const learnDetailPath = routePathDefinition(Routes.LearnDetail);
 
-    it('Sends users to the previous path', () => {
+    it('sends users to the previous path', () => {
         const initialPathEntries = [welcomePath, learnPath, learnDetailPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
@@ -105,6 +105,15 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(learnPath);
     });
 
+    it('provides the previousOffset state from the most recent path for use in the previous path as currentOffset', () => {
+        const previousOffset = aNumber();
+        const initialPathEntries = [welcomePath, learnPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+        goToRouteWithParameter(Routes.LearnDetail, aString(), history, previousOffset);
+        goBack(history);
+        expect(history.location.state).toEqual({ previousOffset: 0, currentOffset: previousOffset });
+    });
 });
 
 describe('the popFeedbackPathsFromHistory function', () => {
@@ -253,5 +262,128 @@ describe('the backFromServiceReview function', () => {
         expect(history.entries.length).toBe(2);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(serviceDetailPath);
+    });
+});
+
+describe('goToRouteWithParameter', () => {
+    const firstPath = routePathDefinition(Routes.Services);
+    it('sends the user to the route', () => {
+        const serviceParameter = aString();
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameter(Routes.ServiceDetail, serviceParameter, history);
+        expect(history.location.pathname).toBe(`/service/${serviceParameter}`);
+    });
+
+    it('sends a previousOffset state with the parameter', () => {
+        const offset = aNumber();
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history, offset);
+        const { previousOffset }: Partial<RouteLocationStateOffsets> = history.location.state as any;
+        expect(previousOffset).toEqual(offset);
+    });
+
+    it('sends a default offset with the parameter if it is not populated', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
+        const { previousOffset }: RouteLocationStateOffsets = history.location.state as any;
+        expect(previousOffset).toEqual(0);
+    });
+
+    it('sends a currentOffset state with the parameter of 0', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithParameter(Routes.ServiceDetail, aString(), history);
+        const { currentOffset }: RouteLocationStateOffsets = history.location.state as any;
+        expect(currentOffset).toEqual(0);
+    });
+});
+
+describe('an example of how the route location state changes when', () => {
+    const firstPath = routePathDefinition(Routes.TopicDetail);
+    const initialPathEntries = [firstPath];
+    const indexOfLastPath = initialPathEntries.length - 1;
+    const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+    const topicDetailOffset = aNumber();
+    goToRouteWithParameter(Routes.Services, aString(), history, topicDetailOffset);
+
+    describe('navigating to a service list screen', () => {
+        const routeLocationState = history.location.state as any;
+        it ('sends the currentOffset containing 0', () => {
+            expect(routeLocationState.currentOffset).toBe(0);
+        });
+        it ('sends the previousOffset containing the previous topic detail screen\'s offset', () => {
+            expect(routeLocationState.previousOffset).toBe(topicDetailOffset);
+        });
+    });
+
+    const serviceListOffset = aNumber();
+    goToRouteWithParameter(Routes.ServiceDetail, aString(), history, serviceListOffset);
+
+    describe('navigating to a service detail screen', () => {
+        const routeLocationState = history.location.state as any;
+        it('sends the currentOffset containing 0', () => {
+            expect(routeLocationState.currentOffset).toBe(0);
+        });
+        it('sends the previousOffset containing the previous service list screen\'s offset', () => {
+            expect(routeLocationState.previousOffset).toBe(serviceListOffset);
+        });
+    });
+
+    goBack(history);
+
+    describe('navigating back to the service list screen', () => {
+        const routeLocationState = history.location.state as any;
+        it('uses the previousOffset state provided to the service detail page for the currentOffset', () => {
+            expect(routeLocationState.currentOffset).toBe(serviceListOffset);
+        });
+        it('maintains the topic detail\'s offset in previousOffset', () => {
+            expect(routeLocationState.previousOffset).toBe(topicDetailOffset);
+        });
+    });
+});
+
+describe('goToRouteWithoutParameter', () => {
+    const firstPath = routePathDefinition(Routes.RecommendedTopics);
+    it('sends the user to the route', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithoutParameter(Routes.Learn, history);
+        expect(history.location.pathname).toBe(routePathDefinition(Routes.Learn));
+    });
+
+    it('sends a previousOffset state when going to the new route', () => {
+        const offset = aNumber();
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithoutParameter(Routes.Learn, history, offset);
+        const { previousOffset }: Partial<RouteLocationStateOffsets> = history.location.state as any;
+        expect(previousOffset).toEqual(offset);
+    });
+
+    it('sends a default offset state when going to the new route', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithoutParameter(Routes.Learn, history);
+        const { previousOffset }: Partial<RouteLocationStateOffsets> = history.location.state as any;
+        expect(previousOffset).toEqual(0);
+    });
+
+    it('sends a currentOffset state with the parameter of 0', () => {
+        const initialPathEntries = [firstPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goToRouteWithoutParameter(Routes.Learn, history);
+        const { currentOffset }: Partial<RouteLocationStateOffsets> = history.location.state as any;
+        expect(currentOffset).toEqual(0);
     });
 });

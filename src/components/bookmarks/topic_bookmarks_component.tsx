@@ -7,31 +7,33 @@ import { colors } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 import { History } from 'history';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly history: History;
-    readonly scrollOffset: number;
 }
 
 type Props = TopicBookmarksProps & TaskListActions;
 
-export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
-        <TaskListComponent
-            tasks={props.bookmarkedTopics}
-            bookmarkedTopicsIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
-            emptyTaskListContent={
-                <EmptyBookmarksComponent
-                    title={<Trans>No topics to show</Trans>}
-                />
-            }
-            headerContent={<View />}
-            history={props.history}
-            bookmarkTopic={props.bookmarkTopic}
-            unbookmarkTopic={props.unbookmarkTopic}
-            scrollOffset={props.scrollOffset}
-            saveScrollOffset={props.saveScrollOffset}
-        />
-    </View>
-);
+export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
+    return (
+        <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
+            <TaskListComponent
+                tasks={props.bookmarkedTopics}
+                bookmarkedTopicsIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
+                emptyTaskListContent={
+                    <EmptyBookmarksComponent
+                        title={<Trans>No topics to show</Trans>}
+                    />
+                }
+                headerContent={<View />}
+                history={props.history}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
+                scrollOffset={offsetFromRouteLocation}
+            />
+        </View>
+    );
+};

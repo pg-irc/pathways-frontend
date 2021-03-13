@@ -9,7 +9,7 @@ export interface HelpButtonProps {
 }
 
 export const HelpButtonComponent = (props: HelpButtonProps): JSX.Element => (
-    <Button onPress={goToRouteWithoutParameter(Routes.Help, props.history)} transparent icon>
+    <Button onPress={(): void => goToRouteWithoutParameter(Routes.Help, props.history)} transparent icon>
         <Icon
             type='FontAwesome'
             name='question-circle'

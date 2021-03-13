@@ -22,6 +22,7 @@ import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { recommendedTopicsStyles } from './styles';
 import { Alert } from '../../validation/content/types';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -29,7 +30,6 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
-    readonly scrollOffset: number;
 }
 
 export interface RecommendedTopicsActions {
@@ -40,20 +40,22 @@ export interface RecommendedTopicsActions {
 
 type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListProps & TaskListActions & RouterProps;
 
-export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        <HelpAndMenuButtonHeaderComponent {...props} />
-        <TaskListComponent
-            {...props}
-            tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
-            bookmarkedTopicsIdList={props.bookmarkedTopics}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
-            headerContent={<TaskListHeaderComponent {...props} />}
-            scrollOffset={props.scrollOffset}
-            saveScrollOffset={props.saveScrollOffset}
-        />
-    </View>
-);
+export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const { offsetFromRouteLocation }: OffsetHook = useOffset();
+    return (
+        <View style={{ flex: 1 }}>
+            <HelpAndMenuButtonHeaderComponent {...props} />
+            <TaskListComponent
+                {...props}
+                tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
+                bookmarkedTopicsIdList={props.bookmarkedTopics}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
+                headerContent={<TaskListHeaderComponent {...props} />}
+                scrollOffset={offsetFromRouteLocation}
+            />
+        </View>
+    );
+};
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>

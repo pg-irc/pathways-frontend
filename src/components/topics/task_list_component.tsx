@@ -9,8 +9,6 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
-import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
-    SaveTopicServicesScrollOffsetAction, SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import throttle from 'lodash.throttle';
 
 // tslint:disable-next-line:no-var-requires
@@ -25,18 +23,9 @@ export interface TaskListProps {
     readonly headerContentIdentifier?: string;
     readonly scrollOffset: number;
 }
-
-export type SaveTaskListScrollOffsetActions =
-    SaveBookmarkedTopicsScrollOffsetAction |
-    SaveHomePageScrollOffsetAction |
-    SaveTopicServicesScrollOffsetAction |
-    SaveTopicDetailScrollOffsetAction |
-    SaveExploreDetailScrollOffsetAction;
-
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TaskListProps & TaskListActions;
@@ -56,7 +45,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state = this.initialState(props.scrollOffset);
+        this.state = this.initialState(this.props.scrollOffset);
         this.setFlatListRef = this.setFlatListRef.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
@@ -65,7 +54,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     componentDidMount(): void {
         if (this.flatListRef) {
-           scrollToOffsetWithTimeout(this.flatListRef, this.props.scrollOffset);
+            scrollToOffset(this.flatListRef, this.state.scrollOffset);
         }
     }
 
@@ -77,15 +66,16 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         if (hasTopicDetailPageChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
-                scrollOffset: 0,
-                }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+                scrollOffset: this.props.scrollOffset,
+                data: this.props.tasks,
+                }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
 
-        if (tasksHaveChanged(previousProps, this.props)) {
+        if (hasTasksChanged(previousProps, this.props)) {
             return this.setState({
                 ...this.state,
                 data: this.props.tasks,
-            }, (): void => scrollToOffsetWithTimeout(this.flatListRef, this.state.scrollOffset));
+            }, (): void => scrollToOffset(this.flatListRef, this.state.scrollOffset));
         }
     }
 
@@ -116,7 +106,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             scrollOffset: e.nativeEvent.contentOffset.y,
             isScrolling: true,
         });
-        this.props.saveScrollOffset(e.nativeEvent.contentOffset.y);
     }
 
     private onScrollEndDrag(): void {
@@ -135,7 +124,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 }
 
-const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): void => {
+const scrollToOffset = (flatListRef: FlatListRef, offset: number): void => {
     // tslint:disable-next-line: max-line-length
     // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
     setTimeout((): void => {
@@ -147,7 +136,7 @@ const hasTopicDetailPageChanged = (previousProps: Props, props: Props): boolean 
     previousProps.headerContentIdentifier !== props.headerContentIdentifier
 );
 
-const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
+const hasTasksChanged = (previousProps: Props, props: Props): boolean => {
     const currentIds = R.pluck('id', props.tasks);
     const previousIds = R.pluck('id', previousProps.tasks);
 
@@ -164,12 +153,7 @@ const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number):
             taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
-            goToTaskDetail={(): void => saveScrollOffsetToReduxAndGoToTopicDetail(item, props, scrollOffset)}
+            goToTaskDetail={(): void => goToRouteWithParameter(Routes.TopicDetail, item.id, props.history, scrollOffset)}
         />
     );
-};
-
-const saveScrollOffsetToReduxAndGoToTopicDetail = (item: ListItem, props: Props, scrollOffset: number): void => {
-    props.saveScrollOffset(scrollOffset);
-    goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)();
 };

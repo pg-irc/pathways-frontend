@@ -61,7 +61,7 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
         const newTopics = computeNewlyRecommendedTopics(props);
         props.closeQuestionnaire(newTopics);
         setShowModal(false);
-        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     };
 
     return (

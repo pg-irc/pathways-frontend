@@ -22,7 +22,7 @@ interface Props {
 export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
     const history = useHistory();
     const onFinishRating = (rating: Rating): ChooseRatingAction => {
-        goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
+        goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history);
         return props.chooseRating(rating, props.serviceId);
     };
 

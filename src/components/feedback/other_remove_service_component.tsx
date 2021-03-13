@@ -110,7 +110,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         } else {
             props.submitFeedback({ type: 'remove_service', reason: feedback });
         }
-        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, memoryHistory)();
+        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, memoryHistory);
     };
 
     const onDiscardModalDiscardPress = (): void => {

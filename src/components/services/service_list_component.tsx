@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
@@ -25,14 +25,14 @@ import { ServiceListLocationSearchComponent } from './service_list_location_sear
 import { SearchListSeparator } from '../search/separators';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
-import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
-import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
+import { useHistory } from 'react-router-native';
+import { OffsetHook, useOffset } from '../use_offset';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -40,7 +40,6 @@ export interface ServiceListProps {
     readonly manualUserLocation: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
-    readonly topicServicesOffset: number;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
 }
@@ -53,14 +52,9 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesScrollOffsetAction;
 }
 
-interface OwnProps {
-    readonly history: History;
-}
-
-type Props = ServiceListProps & ServiceListActions & OwnProps;
+type Props = ServiceListProps & ServiceListActions;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
@@ -78,12 +72,10 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         <ValidServiceListComponent
             topic={props.topic}
             topicServicesOrError={props.topicServicesOrError}
-            topicServicesOffset={props.topicServicesOffset}
             manualUserLocation={props.manualUserLocation}
             customLatLong={props.customLatLong}
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
-            history={props.history}
             isSendingReview={props.isSendingReview}
             dispatchServicesRequest={props.dispatchServicesRequest}
             bookmarkService={props.bookmarkService}
@@ -92,16 +84,16 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             openHeaderMenu={props.openHeaderMenu}
             hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
             setManualUserLocation={props.setManualUserLocation}
-            saveTopicServicesOffset={props.saveTopicServicesOffset}
         />
     );
 };
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
-    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
+    const history = useHistory();
+    const { offset, setOffset, offsetFromRouteLocation }: OffsetHook = useOffset();
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
-    useServicesScrollToOffset(flatListRef, props.topicServicesOffset, services);
+    useServicesScrollToOffset(flatListRef, offsetFromRouteLocation, services);
 
     return (
         <I18n>
@@ -110,18 +102,18 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                     <>
                         <FlatList
                             ref={flatListRef}
-                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
+                            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOffset)}
                             style={{ backgroundColor: colors.lightGrey }}
                             data={services}
                             keyExtractor={(service: HumanServiceData): string => service.id}
                             renderItem={renderServiceItems({
                                 ...props,
-                                scrollOffset: topicServicesOffset,
-                                saveScrollOffset: props.saveTopicServicesOffset,
+                                history: history,
+                                scrollOffset: offset,
                             })}
                             ItemSeparatorComponent={SearchListSeparator}
                             ListHeaderComponent={<ListHeaderComponent {...props} />}
-                            initialNumToRender={props.topicServicesOffset ? services.length : 20}
+                            initialNumToRender={offsetFromRouteLocation ? services.length : 20}
                         />
                         <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
                     </>
@@ -208,7 +200,6 @@ const renderHeader = (props: Props): JSX.Element => (
         manualUserLocation={props.manualUserLocation}
         customLatLong={props.customLatLong}
         setManualUserLocation={props.setManualUserLocation}
-        history={props.history}
         openHeaderMenu={props.openHeaderMenu}
         dispatchServicesRequest={props.dispatchServicesRequest}
     />
@@ -244,7 +235,6 @@ interface ServiceListHeaderComponentProps {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
-    readonly history: History;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;

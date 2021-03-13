@@ -5,20 +5,18 @@ import { HumanServiceData } from '../../validation/services/types';
 import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
-import { OpenHeaderMenuAction, SaveBookmarkedTopicsScrollOffsetAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { OpenServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
 import { BookmarksTab } from '../../stores/user_experience';
-import { SaveBookmarksTabAction, SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarksTabAction } from '../../stores/user_experience/actions';
 import { BookmarkTopicAction, Id, UnbookmarkTopicAction } from '../../stores/topics';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
-    readonly topicsScrollOffset: number;
-    readonly servicesScrollOffset: number;
     readonly isSendingReview: boolean;
 }
 
@@ -30,8 +28,6 @@ export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
-    readonly saveTopicsScrollOffset: (offset: number) => SaveBookmarkedTopicsScrollOffsetAction;
-    readonly saveServicesScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 interface OwnProps {
@@ -62,10 +58,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
-                    topicsScrollOffset={props.topicsScrollOffset}
-                    saveTopicsScrollOffset={props.saveTopicsScrollOffset}
-                    servicesScrollOffset={props.servicesScrollOffset}
-                    saveServicesScrollOffset={props.saveServicesScrollOffset}
                     isSendingReview={props.isSendingReview}
                 />
             )}

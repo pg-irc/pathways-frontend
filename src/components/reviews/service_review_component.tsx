@@ -20,6 +20,7 @@ import { backFromServiceReview, goToRouteWithParameter, Routes } from '../../app
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
 import { Rating } from '../../stores/reviews';
+import { MemoryHistory } from 'history';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
@@ -58,11 +59,6 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
         backFromServiceReview(memoryHistory);
     };
 
-    const onExplainReviewPress = (): void => {
-        props.saveComment(comment);
-        goToRouteWithParameter(Routes.ExplainFeedback, props.serviceId, memoryHistory)();
-    };
-
     return (
         <View style={{ flex: 1, marginBottom: 12 }}>
             <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
@@ -77,7 +73,12 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                     <RatingQuestionComponent />
                     <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
                     <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
-                    <ExplainReviewUsageComponent onPress={onExplainReviewPress}/>
+                    <ExplainReviewUsageComponent
+                        history={memoryHistory}
+                        serviceId={props.serviceId}
+                        comment={comment}
+                        saveComment={props.saveComment}
+                    />
                 </View>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
@@ -152,14 +153,27 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
     </I18n>
 );
 
-const ExplainReviewUsageComponent = ({ onPress }: { readonly onPress: () => void }): JSX.Element => (
-    <View style={{ marginTop: 20, marginBottom: 20 }}>
-        <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
-            <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
-            <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
-                    {' '}
-                    <Trans>Learn more</Trans>
-                </Text>
-        </Text>
-    </View>
-);
+export interface ExplainReviewUsageProps {
+    readonly history: MemoryHistory;
+    readonly serviceId: Id;
+    readonly comment: string;
+    readonly saveComment: (comment: string) => SaveCommentAction;
+}
+
+const ExplainReviewUsageComponent = (props: ExplainReviewUsageProps): JSX.Element => {
+    const onPress = (): void => {
+        props.saveComment(props.comment);
+        goToRouteWithParameter(Routes.ExplainFeedback, props.serviceId, props.history);
+    };
+    return (
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
+                <Trans>Your feedback is reviewed by our team and shared with the service provider.</Trans>
+                <Text style={[textStyles.messageLink, { fontSize: 14 }]}onPress={onPress}>
+                        {' '}
+                        <Trans>Learn more</Trans>
+                    </Text>
+            </Text>
+        </View>
+    );
+};

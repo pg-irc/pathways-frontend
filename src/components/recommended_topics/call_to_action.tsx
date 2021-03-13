@@ -96,7 +96,7 @@ const FullComponentContent = (): JSX.Element => {
 const FullComponentButton = (props: Props): JSX.Element => (
     <Button
         full
-        onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
+        onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
         style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]}
     >
         <Text style={textStyles.tealButton}>
@@ -137,7 +137,7 @@ export const CallToActionPartialComponent = (props: Props): JSX.Element => {
     );
     return (
         <TouchableOpacity
-            onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
+            onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
             style={[
                 applicationStyles.boxShadowBelow,
                 callToActionStyles.callToActionPartialContainer,
