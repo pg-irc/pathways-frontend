@@ -490,7 +490,7 @@ export const applicationStyles = StyleSheet.create({
         ...getTextAlignForLanguage(),
     },
     item: {
-        marginLeft: 0,
+        justifyContent: 'center',
         marginVertical: 8,
         borderColor: 'transparent',
         height: 48,

@@ -111,7 +111,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     source={peacegeeksLogo}
                     resizeMode={'contain'}
                     style={{
-                        height: 45,
+                        height: 46,
+                        width: 96,
                         marginTop: 10,
                         marginBottom: 20,
                     }}
