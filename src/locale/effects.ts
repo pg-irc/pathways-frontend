@@ -4,9 +4,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { PREFERENCES_LOCALE_CODE, PREFERENCES_IS_RTL } from '../application/constants';
 import * as Updates from 'expo-updates';
 
-export function needsTextDirectionChange(localeCode: string): boolean {
-    return I18nManager.isRTL !== isRTL(localeCode);
-}
+export const needsTextDirectionChange = async (localeCode: string): Promise<boolean> => {
+    const _isRTL = await loadIsRTLBoolean();
+    return _isRTL !== isRTL(localeCode);
+};
 
 export function setTextDirection(localeCode: string): void {
     const forceRTLAsync = new Promise((resolve: (value: unknown) => void): void => {

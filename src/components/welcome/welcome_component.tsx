@@ -27,8 +27,8 @@ type Props = WelcomeProps & WelcomeActions;
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
 
-    const handleChange = (localeCode: string): void => {
-        const flipOrientation = needsTextDirectionChange(localeCode);
+    const handleChange = async (localeCode: string): Promise<void> => {
+        const flipOrientation = await needsTextDirectionChange(localeCode);
         if (localeCode !== props.currentLocale.code || flipOrientation) {
             props.setLocale(localeCode, flipOrientation);
         }
