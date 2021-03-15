@@ -56,6 +56,7 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
+            console.log(`flipOrientation: ${RTL !== isRTL(locale.code)} ~ isRTL: ${isRTL(locale.code)} ~ locale.code: ${locale.code}`);
             const flipOrientation = RTL !== isRTL(locale.code);
             console.log(`loadLocaleSuccess locale.code: ${locale.code} isSaved: ${isSaved}, flipOrientation: ${flipOrientation}`);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
