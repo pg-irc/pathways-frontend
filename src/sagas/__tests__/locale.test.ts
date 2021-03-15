@@ -6,10 +6,12 @@ import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from 
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
+import { loadIsRTLBoolean } from '../../locale/effects';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoBuilder().build();
     const aLocale = new LocaleInfoBuilder().build();
+    const isRTLFromStorage = aBoolean();
     beforeAll(() => {
         LocaleInfoManager.register(
             [
@@ -21,23 +23,29 @@ describe('load locale saga', () => {
 
     describe('with locale already saved', () => {
         let loadCurrentLocaleAction: any = undefined;
+        let loadIsRTL: any = undefined;
         let loadSuccessAction: any = undefined;
 
         beforeEach(() => {
             const saga: any = loadCurrentLocale();
             loadCurrentLocaleAction = saga.next().value;
             const valueFromStorage: string = aLocale.code;
-            loadSuccessAction = saga.next(valueFromStorage).value;
+            loadIsRTL = saga.next(valueFromStorage).value;
+            loadSuccessAction = saga.next(isRTLFromStorage).value;
         });
 
         it('dispatches a load current locale action', () => {
             expect(loadCurrentLocaleAction).toEqual(call(loadCurrentLocaleCode));
         });
 
+        it('calls a load is RTL function', () => {
+            expect(loadIsRTL).toEqual(call(loadIsRTLBoolean));
+        });
+
         it('dispatches a load current locale success action with isSaved flag is true', () => {
             const isSaved = true;
-            const flipOrientation = false;
-            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(aLocale.code, isSaved, flipOrientation)));
+            const flipOrientation = isRTLFromStorage;
+            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(aLocale.code, isSaved, flipOrientation, isRTLFromStorage)));
         });
     });
 
@@ -46,17 +54,23 @@ describe('load locale saga', () => {
         let loadCurrentLocaleAction: any = undefined;
         let saveCurrentLocaleCodeAction: any = undefined;
         let loadSuccessActionWithFallbackLocale: any = undefined;
+        let loadIsRTL: any = undefined;
 
         beforeEach(() => {
             saga = loadCurrentLocale();
             loadCurrentLocaleAction = saga.next().value;
             const emptyValueFromStorage: string = null;
-            saveCurrentLocaleCodeAction = saga.next(emptyValueFromStorage).value;
+            loadIsRTL = saga.next(emptyValueFromStorage).value;
+            saveCurrentLocaleCodeAction = saga.next(isRTLFromStorage).value;
             loadSuccessActionWithFallbackLocale = saga.next(null).value;
         });
 
         it('dispatches a load current locale action', () => {
             expect(loadCurrentLocaleAction).toEqual(call(loadCurrentLocaleCode));
+        });
+
+        it('calls a load is RTL function', () => {
+            expect(loadIsRTL).toEqual(call(loadIsRTLBoolean));
         });
 
         it('dispatches action to save the fallback locale as the current locale', () => {
@@ -65,9 +79,9 @@ describe('load locale saga', () => {
 
         it('dispatches a load current locale success action with isSaved flag is false', () => {
             const isSaved = false;
-            const flipOrientation = false;
+            const flipOrientation = isRTLFromStorage;
             expect(loadSuccessActionWithFallbackLocale)
-                .toEqual(put(actions.loadLocaleSuccess(theFallbackLocale.code, isSaved, flipOrientation)));
+                .toEqual(put(actions.loadLocaleSuccess(theFallbackLocale.code, isSaved, flipOrientation, isRTLFromStorage)));
         });
     });
 });
@@ -95,7 +109,7 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, flipOrientation)));
+            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, flipOrientation, false)));
         });
 
         it('should dispatch a failure action upon failure of call effect', () => {

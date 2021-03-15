@@ -12,9 +12,10 @@ export function* watchSaveLocale(): IterableIterator<ForkEffect> {
 export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
+    const RTL = isRTL(localeCode);
     try {
         yield call(saveCurrentLocaleCode, localeCode);
-        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation));
+        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation, RTL));
     } catch (e) {
         yield put(actions.saveLocaleFailure(e.message, localeCode));
     }
@@ -45,21 +46,12 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
         const retrievedCode = yield call(loadCurrentLocaleCode);
         // const RTL = I18nManager.isRTL;
         const RTL = yield call(loadIsRTLBoolean);
-
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
-            yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
-        }
-        if (RTL === null) {
-            console.log('RTL is null')
-            const locale = LocaleInfoManager.get(retrievedCode);
-            const isSaved = true;
-            const flipOrientation = isRTL(locale.code);
-            console.log(`loadLocaleSuccess locale.code: ${locale.code} isSaved: ${isSaved}, flipOrientation: ${flipOrientation}`);
-            yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
+            yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation, RTL));
         }
         else {
             const locale = LocaleInfoManager.get(retrievedCode);
@@ -71,9 +63,9 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
             // flipOrientation is true when:
                 // device is RTL and not 'ar'
                 // device is LTR and 'ar'
+            // console.log('$%^&*(', RTL);
             const flipOrientation = RTL !== isRTL(locale.code);
-            console.log(`loadLocaleSuccess locale.code: ${locale.code} isSaved: ${isSaved}, flipOrientation: ${flipOrientation}`);
-            yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
+            yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation, RTL));
         }
     } catch (e) {
         console.log('loadLocaleError');

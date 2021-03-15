@@ -8,6 +8,7 @@ export interface LocaleStore {
     readonly fallback: string;
     readonly loading: boolean;
     readonly isSaved: boolean;
+    readonly isRTL: boolean;
     readonly errorMessage: string;
 }
 
@@ -17,6 +18,7 @@ export const buildDefaultStore = (): LocaleStore => ({
     fallback: undefined,
     loading: false,
     isSaved: false,
+    isRTL: false,
     errorMessage: '',
 });
 
@@ -28,13 +30,26 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actio
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true};
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, isSaved: action.payload.isSaved, code: action.payload.localeCode };
+            return {
+                ...store,
+                errorMessage: '',
+                loading: false,
+                isSaved: action.payload.isSaved,
+                code: action.payload.localeCode,
+                isRTL: action.payload.RTL,
+             };
         case constants.LOAD_CURRENT_LOCALE_FAILURE:
             return { ...store, errorMessage: action.payload.message, loading: false };
         case constants.SAVE_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true };
         case constants.SAVE_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
+            return {
+                ...store,
+                errorMessage: '',
+                loading: false,
+                code: action.payload.localeCode,
+                isRTL: action.payload.RTL,
+            };
         case constants.SAVE_LOCALE_FAILURE:
             return { ...store, errorMessage: action.payload.message, loading: false };
         default:

@@ -21,8 +21,8 @@ export const loadLocaleRequest = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function loadLocaleSuccess(localeCode: string, isSaved: boolean, flipOrientation: boolean) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode, isSaved, flipOrientation });
+export function loadLocaleSuccess(localeCode: string, isSaved: boolean, flipOrientation: boolean, RTL: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode, isSaved, flipOrientation, RTL });
 }
 
 // tslint:disable-next-line:typedef
@@ -36,8 +36,8 @@ export const saveLocaleRequest = (localeCode: string, flipOrientation: boolean) 
 };
 
 // tslint:disable-next-line:typedef
-export function saveLocaleSuccess(localeCode: string, flipOrientation: boolean) {
-    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { localeCode, flipOrientation });
+export function saveLocaleSuccess(localeCode: string, flipOrientation: boolean, RTL: boolean) {
+    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { localeCode, flipOrientation, RTL });
 }
 
 // tslint:disable-next-line:typedef

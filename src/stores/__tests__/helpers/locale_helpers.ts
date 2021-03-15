@@ -60,6 +60,7 @@ export class LocaleStoreBuilder {
     fallback: string = this.locale.code;
     loading: boolean = false;
     isSaved: boolean = true;
+    isRTL: boolean = false;
     errorMessage: string = '';
 
     withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
@@ -87,6 +88,11 @@ export class LocaleStoreBuilder {
         return this;
     }
 
+    withIsRTL(isRTL: boolean): LocaleStoreBuilder {
+        this.isRTL = isRTL;
+        return this;
+    }
+
     withErrorMessage(message: string): LocaleStoreBuilder {
         this.errorMessage = message;
         return this;
@@ -99,6 +105,7 @@ export class LocaleStoreBuilder {
             fallback: this.fallback,
             loading: this.loading,
             isSaved: this.isSaved,
+            isRTL: this.isRTL,
             errorMessage: this.errorMessage,
         };
     }
