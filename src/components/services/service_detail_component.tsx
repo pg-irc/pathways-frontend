@@ -215,6 +215,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         >
                             <View padder>
                                 <FeedbackComponent
+                                    isRTL={props.isRTL}
                                     setText={setTextForField('name')}
                                     toggleShouldSend={toggleShouldSendForField('name')}
                                     inputField={feedbackInput.name}
@@ -225,6 +226,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                 />
                                 <DividerComponent />
                                 <FeedbackComponent
+                                    isRTL={props.isRTL}
                                     setText={setTextForField('organization')}
                                     toggleShouldSend={toggleShouldSendForField('organization')}
                                     inputField={feedbackInput.organization}
@@ -243,6 +245,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                 />
                                 <DividerComponent />
                                 <FeedbackComponent
+                                    isRTL={props.isRTL}
                                     setText={setTextForField('description')}
                                     toggleShouldSend={toggleShouldSendForField('description')}
                                     inputField={feedbackInput.description}
@@ -260,6 +263,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                 />
                                 <DividerComponent />
                                 <ServiceContactDetails
+                                    isRTL={props.isRTL}
                                     service={props.service}
                                     currentPathForAnaltyics={props.location.pathname}
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
@@ -443,6 +447,7 @@ const Description = (props: DescriptionProps): JSX.Element => (
 );
 
 interface ServiceContactDetailsProps {
+    readonly isRTL: boolean;
     readonly service: HumanServiceData;
     readonly currentPathForAnaltyics: string;
     readonly feedback: ServiceFeedback;
@@ -462,6 +467,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
     return (
         <>
             <FeedbackComponent
+                isRTL={props.isRTL}
                 setText={props.setFeedbackInputForField('address')}
                 toggleShouldSend={props.toggleShouldSendForField('address')}
                 inputField={props.feedback.address}
@@ -481,6 +487,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
+                isRTL={props.isRTL}
                 setText={props.setFeedbackInputForField('phone')}
                 toggleShouldSend={props.toggleShouldSendForField('phone')}
                 inputField={props.feedback.phone}
@@ -498,6 +505,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
+                isRTL={props.isRTL}
                 setText={props.setFeedbackInputForField('website')}
                 toggleShouldSend={props.toggleShouldSendForField('website')}
                 inputField={props.feedback.website}
@@ -515,6 +523,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
+                isRTL={props.isRTL}
                 setText={props.setFeedbackInputForField('email')}
                 toggleShouldSend={props.toggleShouldSendForField('email')}
                 inputField={props.feedback.email}

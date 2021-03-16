@@ -14,6 +14,7 @@ import { chooseRating, ChooseRatingAction, clearReview, ClearReviewAction, close
 } from '../../stores/reviews/actions';
 import { Id } from '../../stores/services';
 import { ServiceReviewActions, ServiceReviewComponent, ServiceReviewProps } from './service_review_component';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceReviewProps => {
     const serviceId = ownProps.match.params.serviceId;
@@ -24,6 +25,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceReviewProp
         comment: selectComment(store),
         showDiscardChangesModal: selectShowDiscardChangesModal(store),
         isSending: selectIsSendingReview(store),
+        isRTL: selectIsRTL(store),
     };
 };
 

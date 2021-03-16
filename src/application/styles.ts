@@ -1,5 +1,4 @@
 import { StyleSheet, Platform, Dimensions, TextStyle } from 'react-native';
-import { I18nManager } from 'react-native';
 import { isAndroid } from './helpers/is_android';
 import { getStatusBarHeightForPlatform } from '../components/main/get_status_bar_height_for_platform';
 
@@ -81,8 +80,8 @@ export const getBoldFontStylesForOS = (): object => (
 // For most components setting textAlign to 'left' ensures it's properly
 // swapped over to 'right' when we switch to a RTL language. For others, like the TextInput component,
 // this is not the case so we need to call this to set it explicitly.
-export const getTextAlignForLanguage = (): TextStyle => (
-    { textAlign: I18nManager.isRTL ? 'right' : 'left' }
+export const getTextAlignForLanguage = (isRTL: boolean): TextStyle => (
+    { textAlign: isRTL ? 'right' : 'left' }
 );
 
 export const textStyles = StyleSheet.create({
@@ -403,7 +402,6 @@ export const applicationStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         flex: 1,
         height: 36,
-        ...getTextAlignForLanguage(),
     },
     searchContainerExpanded: {
         backgroundColor: colors.white,
@@ -487,7 +485,6 @@ export const applicationStyles = StyleSheet.create({
         minHeight: 100,
         padding: 16,
         fontFamily: getNormalFontFamily(),
-        ...getTextAlignForLanguage(),
     },
 });
 

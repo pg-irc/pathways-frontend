@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { colors, textStyles } from '../../application/styles';
+import { colors, getTextAlignForLanguage, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
@@ -93,6 +93,7 @@ export const ContactInformationComponent = ({
                                     value={userInformation.email}
                                     placeholder={INPUT_PLACEHOLDER}
                                     i18n={i18n}
+                                    isRTL={isRTL}
                                     setUserInformation={setUserInformation}
                                 />
                             </View>
@@ -113,6 +114,7 @@ export const ContactInformationComponent = ({
                                 isVisible={userInformation.isEmployee}
                                 userInformation={userInformation}
                                 i18n={i18n}
+                                isRTL={isRTL}
                                 setUserInformation={setUserInformation}
                             />
                         </KeyboardAwareScrollView>
@@ -164,6 +166,7 @@ const EmployeeInputFields = (props: {
     readonly isVisible: boolean,
     readonly userInformation: UserInformation,
     readonly i18n: I18n,
+    readonly isRTL: boolean,
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
 }): JSX.Element => {
 
@@ -181,6 +184,7 @@ const EmployeeInputFields = (props: {
                 placeholder={NAME_PLACEHOLDER}
                 i18n={props.i18n}
                 value={props.userInformation.name}
+                isRTL={props.isRTL}
                 setUserInformation={props.setUserInformation}
             />
             <Text style={[textStyles.headlineH3StyleBlackLeft, { marginTop: 20, marginBottom: 5, lineHeight: 21 }]}>
@@ -192,6 +196,7 @@ const EmployeeInputFields = (props: {
                 placeholder={ORGANIZATION_PLACEHOLDER}
                 i18n={props.i18n}
                 value={props.userInformation.organizationName}
+                isRTL={props.isRTL}
                 setUserInformation={props.setUserInformation}
             />
              <Text style={[textStyles.headlineH3StyleBlackLeft, { marginTop: 20,  marginBottom: 5, lineHeight: 21 }]}>
@@ -203,6 +208,7 @@ const EmployeeInputFields = (props: {
                 placeholder={JOB_TITLE_PLACEHOLDER}
                 i18n={props.i18n}
                 value={props.userInformation.jobTitle}
+                isRTL={props.isRTL}
                 setUserInformation={props.setUserInformation}
             />
         </View>
@@ -215,6 +221,7 @@ export interface TextInputProps {
     readonly placeholder: TemplateStringsArray;
     readonly value: string;
     readonly i18n: I18n;
+    readonly isRTL: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
 }
 
@@ -234,7 +241,7 @@ const TextInputComponent = (props: TextInputProps): JSX.Element => {
             placeholder={props.i18n._(props.placeholder)}
             onFocus={onFocus}
             onBlur={onBlur}
-            style={[styles.employeeInputStyle, { color: textColor }]}
+            style={[styles.employeeInputStyle, { color: textColor, ...getTextAlignForLanguage(props.isRTL) }]}
         />
     );
 };

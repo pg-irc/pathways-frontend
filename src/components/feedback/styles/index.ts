@@ -1,5 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { colors, values, getNormalFontFamily, getBoldFontStylesForOS, getTextAlignForLanguage } from '../../../application/styles';
+import { colors, values, getNormalFontFamily, getBoldFontStylesForOS } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
@@ -118,7 +118,6 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         paddingTop: 8,
         paddingBottom: 8,
         fontFamily: getNormalFontFamily(),
-        ...getTextAlignForLanguage(),
     },
 });
 

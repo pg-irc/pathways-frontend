@@ -4,7 +4,7 @@ import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { values, applicationStyles, colors, textStyles } from '../../application/styles';
+import { values, applicationStyles, colors, textStyles, getTextAlignForLanguage } from '../../application/styles';
 import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';
@@ -25,6 +25,7 @@ export interface SearchProps {
     readonly searchLocation: string;
     readonly collapseSearchInput: boolean;
     readonly i18n: I18n;
+    readonly isRTL: boolean;
 }
 
 export interface SearchActions {
@@ -79,6 +80,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                 searchLocation={props.searchLocation}
                 showMyLocationButton={showMyLocationButton}
                 i18n={props.i18n}
+                isRTL={props.isRTL}
                 setShowMyLocationButton={setShowMyLocationButton}
                 setSearchTermInput={setSearchTermInput}
                 setSearchLocationInput={setSearchLocationInput}
@@ -142,6 +144,7 @@ export interface ExpandedInputProps {
     readonly searchLocation: string;
     readonly showMyLocationButton: boolean;
     readonly i18n: I18n;
+    readonly isRTL: boolean;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
@@ -188,7 +191,9 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                 <InputIcon name='search' />
                 <TextInput
                     ref={props.searchTermInputRef}
-                    style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchTermInput) }]}
+                    style={
+                        [applicationStyles.searchInput, { opacity: getOpacity(props.searchTermInput), ...getTextAlignForLanguage(props.isRTL) }]
+                    }
                     onChangeText={(text: string): void => {
                         debug(`SearchInputComponent search text changed to '${text}'`);
                         props.setSearchTermInput(text);
@@ -206,7 +211,9 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                 <InputIcon name='location-on' />
                 <TextInput
                     ref={props.searchLocationInputRef}
-                    style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchLocationInput) }]}
+                    style={
+                        [applicationStyles.searchInput, { opacity: getOpacity(props.searchTermInput), ...getTextAlignForLanguage(props.isRTL) }]
+                    }
                     onChangeText={(text: string): void => {
                         debug(`SearchInputComponent location text changed to '${text}'`);
                         props.setSearchLocationInput(text);

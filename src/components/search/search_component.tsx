@@ -35,6 +35,7 @@ export interface SearchComponentProps {
     readonly collapseSearchInput: boolean;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface SearchComponentActions {
@@ -128,6 +129,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                             setCollapseSearchInput={props.setCollapseSearchInput}
                             onSearchRequest={onSearchRequest}
                             i18n={i18n}
+                            isRTL={props.isRTL}
                         />
                         <SearchResultsComponent {...searchResultsProps} />
                     </View>

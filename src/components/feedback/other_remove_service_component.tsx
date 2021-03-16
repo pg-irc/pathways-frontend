@@ -4,7 +4,7 @@ import { Trans, I18n } from '@lingui/react';
 import { Text } from 'react-native';
 import { Container, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
-import { textStyles, applicationStyles } from '../../application/styles';
+import { textStyles, applicationStyles, getTextAlignForLanguage } from '../../application/styles';
 import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
@@ -21,6 +21,7 @@ type ContentComponentProps = {
     readonly inputLabel: TemplateStringsArray;
     readonly onInputChange: (value: string) => void;
     readonly placeholder: TemplateStringsArray;
+    readonly isRTL: boolean;
 };
 
 interface SuggestionContent {
@@ -37,6 +38,7 @@ export interface OtherRemoveServiceState {
     readonly otherRemoveServiceFeedback: string;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
+    readonly isRTL: boolean;
 }
 
 export interface OtherRemoveServiceActions {
@@ -78,7 +80,11 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                             value={props.input}
                             numberOfLines={5}
                             placeholder={props.placeholder}
-                            style={[applicationStyles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            style={
+                                [applicationStyles.input, { 
+                                    marginHorizontal: getMarginHorizontalForPlatform(), ...getTextAlignForLanguage(props.isRTL),
+                                }]
+                            }
                             isFocused={false}
                             onChangeText={props.onInputChange}
                         />
@@ -135,6 +141,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 close={onClosePress}
             />
             <ContentComponent
+                isRTL={props.isRTL}
                 inputLabel={content.label}
                 input={feedback}
                 onInputChange={setFeedback}

@@ -4,7 +4,7 @@ import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import { Text, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
-import { colors, textStyles, applicationStyles } from '../../application/styles';
+import { colors, textStyles, applicationStyles, getTextAlignForLanguage } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { ChooseRatingAction, ClearReviewAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction,
@@ -29,6 +29,7 @@ export interface ServiceReviewProps {
     readonly comment: string;
     readonly showDiscardChangesModal: boolean;
     readonly isSending: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface ServiceReviewActions {
@@ -72,7 +73,12 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                     <ServiceNameComponent name={props.serviceName}/>
                     <RatingQuestionComponent />
                     <RatingsComponent rating={props.rating} serviceId={props.serviceId} chooseRating={props.chooseRating}/>
-                    <CommentComponent comment={comment} setComment={setComment} isFocused={props.rating !== Rating.Zero}/>
+                    <CommentComponent
+                        comment={comment}
+                        setComment={setComment}
+                        isFocused={props.rating !== Rating.Zero}
+                        isRTL={props.isRTL}
+                    />
                     <ExplainReviewUsageComponent
                         history={memoryHistory}
                         serviceId={props.serviceId}
@@ -125,6 +131,7 @@ const RatingQuestionComponent = (): JSX.Element => (
 export interface CommentProps {
     readonly isFocused: boolean;
     readonly comment: string;
+    readonly isRTL: boolean;
     readonly setComment: Dispatch<SetStateAction<string>>;
 }
 
@@ -142,7 +149,7 @@ const CommentComponent = (props: CommentProps): JSX.Element => (
                             value={props.comment}
                             numberOfLines={5}
                             placeholder={t`Comment`}
-                            style={applicationStyles.input}
+                            style={[applicationStyles.input, { ...getTextAlignForLanguage(props.isRTL) }]}
                             isFocused={props.isFocused}
                             onChangeText={props.setComment}
                         />
