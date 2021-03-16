@@ -90,7 +90,8 @@ describe('the applyLocaleChange saga', () => {
 
     const aLocale = new LocaleInfoBuilder().build();
     const flipOrientation = aBoolean();
-    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, flipOrientation);
+    const isRTL = aBoolean();
+    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, flipOrientation, isRTL);
 
     it('should dispatch a call effect with saveCurrentLocale', () => {
         const saga = applyLocaleChange(saveLocaleAction);
@@ -109,7 +110,7 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, flipOrientation, false)));
+            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, flipOrientation, isRTL)));
         });
 
         it('should dispatch a failure action upon failure of call effect', () => {

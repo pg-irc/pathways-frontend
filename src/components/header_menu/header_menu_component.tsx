@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
-import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
+import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
@@ -21,12 +21,13 @@ type OwnProps = {
 };
 
 export interface HeaderMenuProps {
+    readonly isRTL: boolean;
     readonly currentLocale: LocaleInfo;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: string, flipOrientation: boolean) => void;
+    readonly setLocale: (locale: string, flipOrientation: boolean, isRTL: boolean) => void;
     readonly updateNotificationToken: () => void;
 }
 
@@ -83,7 +84,7 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 );
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItemBuilder(props.setLocale, props.updateNotificationToken);
+    const localeItemBuilder = createLocaleItemBuilder(props.setLocale, props.isRTL, props.updateNotificationToken);
     const localeSectionData = {
         ...props.currentLocale,
         data: R.map(localeItemBuilder, props.availableLocales),
@@ -101,11 +102,13 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: boolean) => void, updateToken: () => void): LocaleItemBuilder {
+function createLocaleItemBuilder(
+        setLocale: (code: string, flipOrientation: boolean, isRTL: boolean) => void, isCurrentlyRTL: boolean, updateToken: () => void,
+    ): LocaleItemBuilder {
     return (locale: LocaleInfo): LocaleListItem => {
         return {
             ...locale, onPress: (): void => {
-                setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
+                setLocale(locale.code, isCurrentlyRTL !== isRTL(locale.code), isCurrentlyRTL);
                 updateToken();
             },
         };

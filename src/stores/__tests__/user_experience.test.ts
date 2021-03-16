@@ -78,7 +78,8 @@ describe('the user experience reducer', () => {
             const oldStore = buildDefaultStore();
             const localeCode = aString();
             const flipOrientation = aBoolean();
-            const newStore = reducer(oldStore, saveLocaleRequest(localeCode, flipOrientation));
+            const isRTL = aBoolean();
+            const newStore = reducer(oldStore, saveLocaleRequest(localeCode, flipOrientation, isRTL));
             expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsClosed);
         });
     });

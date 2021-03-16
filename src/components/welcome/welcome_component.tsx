@@ -12,6 +12,7 @@ import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
 
 export interface WelcomeProps {
+    readonly isRTL: boolean;
     readonly currentLocale: Locale;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly showOnboarding: boolean;
@@ -19,7 +20,7 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
+    readonly setLocale: (localeCode: string, flipOrientation: boolean, isRTL: boolean) => SaveLocaleRequestAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
@@ -30,7 +31,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
     const handleChange = async (localeCode: string): Promise<void> => {
         const flipOrientation = await needsTextDirectionChange(localeCode);
         if (localeCode !== props.currentLocale.code || flipOrientation) {
-            props.setLocale(localeCode, flipOrientation);
+            props.setLocale(localeCode, flipOrientation, props.isRTL);
         }
     };
 

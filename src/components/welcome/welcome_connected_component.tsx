@@ -8,9 +8,11 @@ import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
+        isRTL: selectIsRTL(store),
         currentLocale: selectLocale(store),
         availableLocales: selectAvailableLocales(store),
         showOnboarding: selectShowOnboarding(store),
@@ -20,8 +22,8 @@ function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
 
 function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction>): WelcomeActions {
     return {
-        setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => (
-            dispatch(saveLocaleRequest(localeCode, flipOrientation))
+        setLocale: (localeCode: string, flipOrientation: boolean, isRTL: boolean): SaveLocaleRequestAction => (
+            dispatch(saveLocaleRequest(localeCode, flipOrientation, isRTL))
         ),
     };
 }

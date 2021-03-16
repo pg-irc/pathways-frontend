@@ -12,13 +12,25 @@ describe('the setLocaleAction for', () => {
     describe('request', () => {
 
         it('should create action with type SAVE_LOCALE_REQUEST', () => {
-            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean());
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean(), aBoolean());
             expect(theSetLangAction.type).toBe(constants.SAVE_LOCALE_REQUEST);
         });
 
         it('should create action with payload containing the locale code', () => {
-            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean());
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean(), aBoolean());
             expect(theSetLangAction.payload.localeCode).toBe(aLocaleCode);
+        });
+
+        it('should create action with payload containing flipOrientation', () => {
+            const flipOrientation = aBoolean();
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, flipOrientation, aBoolean());
+            expect(theSetLangAction.payload.flipOrientation).toBe(flipOrientation);
+        });
+
+        it('should create action with payload containing isRTL', () => {
+            const isRTL = aBoolean();
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean(), isRTL);
+            expect(theSetLangAction.payload.isRTL).toBe(isRTL);
         });
 
     });
@@ -146,7 +158,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().build();
         const theAction = {
             type: constants.SAVE_LOCALE_REQUEST as typeof constants.SAVE_LOCALE_REQUEST,
-            payload: { localeCode: aLocaleCode, flipOrientation: aBoolean() },
+            payload: { localeCode: aLocaleCode, flipOrientation: aBoolean(), isRTL: aBoolean() },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(true);
@@ -220,7 +232,7 @@ describe('the reducer', () => {
                 payload: { localeCode: aString(), isSaved: aBoolean(), flipOrientation: aBoolean(), RTL: aBoolean() },
             },
             { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
-            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
+            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString(), flipOrientation: aBoolean(), isRTL: aBoolean() } },
             { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString(), flipOrientation: aBoolean(), RTL: aBoolean() } },
             { type: constants.SAVE_LOCALE_FAILURE, payload: { message: aString(), localeCode: aString() } },
         ];

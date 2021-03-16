@@ -12,10 +12,10 @@ export function* watchSaveLocale(): IterableIterator<ForkEffect> {
 export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
-    const RTL = isRTL(localeCode);
+    const isCurrentlyRTL = action.payload.isRTL;
     try {
         yield call(saveCurrentLocaleCode, localeCode);
-        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation, RTL));
+        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation, isCurrentlyRTL));
     } catch (e) {
         yield put(actions.saveLocaleFailure(e.message, localeCode));
     }

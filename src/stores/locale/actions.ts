@@ -31,8 +31,8 @@ export function loadLocaleFailure(message: string) {
 }
 
 // tslint:disable-next-line:typedef
-export const saveLocaleRequest = (localeCode: string, flipOrientation: boolean) => {
-    return helpers.makeAction(constants.SAVE_LOCALE_REQUEST, { localeCode, flipOrientation });
+export const saveLocaleRequest = (localeCode: string, flipOrientation: boolean, isRTL: boolean) => {
+    return helpers.makeAction(constants.SAVE_LOCALE_REQUEST, { localeCode, flipOrientation, isRTL });
 };
 
 // tslint:disable-next-line:typedef
