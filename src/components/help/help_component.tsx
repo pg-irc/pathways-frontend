@@ -3,10 +3,9 @@ import React, { useRef } from 'react';
 import { History } from 'history';
 import { Text, View, Icon } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { I18nManager, Alert, TouchableOpacity, AlertButton, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
+import { Alert, TouchableOpacity, AlertButton, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { applicationStyles, colors, textStyles, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link_component';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
@@ -131,7 +130,9 @@ export const HelpComponent = (props: Props): JSX.Element => {
             <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: 10 }]}>
                 <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
             </Text>
-            {mapWithIndex(renderContactComponent, fixture)}
+            {fixture.map((contact: HelpContact, index: number): JSX.Element => (
+                renderContactComponent(contact, index, props.isRTL)
+            ))}
             <View style={{
                 marginTop: 15,
                 marginBottom: 20,
@@ -202,7 +203,7 @@ const ClearAppMemoryButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
+const renderContactComponent = (contact: HelpContact, index: number, isRTL: boolean): JSX.Element => (
     <TouchableOpacity
         key={index}
         style={{
@@ -221,7 +222,7 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
             <Text style={textStyles.paragraphBoldBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
-        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize, flex: .05, marginHorizontal: 3 }} />
+        <Icon name={isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize, flex: .05, marginHorizontal: 3 }} />
     </TouchableOpacity>
 );
 

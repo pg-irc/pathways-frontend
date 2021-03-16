@@ -10,6 +10,7 @@ import { History } from 'history';
 import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicBookmarksProps {
+    readonly isRTL: boolean;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly history: History;
 }
@@ -21,6 +22,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
     return (
         <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
             <TaskListComponent
+                isRTL={props.isRTL}
                 tasks={props.bookmarkedTopics}
                 bookmarkedTopicsIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
                 emptyTaskListContent={

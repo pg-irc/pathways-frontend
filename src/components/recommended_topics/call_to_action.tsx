@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { History } from 'history';
-import { Image, TouchableOpacity, I18nManager, FlatList, ListRenderItemInfo } from 'react-native';
+import { Image, TouchableOpacity, FlatList, ListRenderItemInfo } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
@@ -12,16 +12,18 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
 import { Alert } from '../../validation/content/types';
 
-type Props = { readonly history: History };
+type OwnProps = { readonly history: History };
 
-type AlertProps = {
+export type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
     readonly isRTL: boolean;
     readonly hideLinkAlerts: () => void;
 };
 
-export const AlertComponent = (props: AlertProps): JSX.Element => {
+type Props = OwnProps & AlertProps;
+
+export const AlertComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <FlatList
@@ -60,14 +62,14 @@ export const CallToActionFullComponent = (props: Props): JSX.Element => {
                 applicationStyles.boxShadowBelow,
                 callToActionStyles.callToActionContainer,
             ]}>
-                <FullComponentContent />
+                <FullComponentContent {...props}/>
                 <FullComponentButton {...props} />
             </View>
         </View>
     );
 };
 
-const FullComponentContent = (): JSX.Element => {
+const FullComponentContent = (props: Props): JSX.Element => {
     return (
         <View>
             <View style={callToActionStyles.callToActionContent}>
@@ -80,7 +82,7 @@ const FullComponentContent = (): JSX.Element => {
                     </Text>
                 </View>
                 <Image
-                    source={I18nManager.isRTL ? advisor_rtl : advisor}
+                    source={props.isRTL ? advisor_rtl : advisor}
                     resizeMode='contain'
                     style={callToActionStyles.advisorImage}
                 />
@@ -131,7 +133,7 @@ export const CallToActionPartialComponent = (props: Props): JSX.Element => {
                 </Text>
                 <Icon
                     type='FontAwesome'
-                    name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
+                    name={props.isRTL ? 'arrow-left' : 'arrow-right'}
                     style={callToActionStyles.updateRecommendationIcon}
                 />
             </View>

@@ -1,11 +1,9 @@
 // tslint:disable:no-expression-statement
 import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { History } from 'history';
 import * as R from 'ramda';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
-    I18nManager,
     Image,
     ImageSourcePropType,
     SafeAreaView,
@@ -30,6 +28,7 @@ import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import styles from './styles';
+import { useHistory } from 'react-router-native';
 
 enum STEP {
     FORWARD = 1,
@@ -38,8 +37,8 @@ enum STEP {
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
-interface OnboardingComponentProps {
-    readonly history: History;
+export interface OnboardingComponentProps {
+    readonly isRTL: boolean;
 }
 
 interface OnboardingData {
@@ -134,15 +133,16 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
     return index;
 }
 
-export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
+export const OnboardingComponent = ({ isRTL, hideOnboarding }: Props): JSX.Element => {
+    const history = useHistory();
     const swiperRef = useRef<Swiper>();
 
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(0);
 
-    const swiperIndex: number = computeSwiperIndex(index, I18nManager.isRTL, Platform.OS);
+    const swiperIndex: number = computeSwiperIndex(index, isRTL, Platform.OS);
 
-    const scrollDirection: STEP = I18nManager.isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
+    const scrollDirection: STEP = isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
 
     const onSkipPress = (): void => {
         hideOnboarding();
@@ -150,7 +150,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     };
 
     const onIndexChange = (newIndex: number): void => {
-        setIndex(computeSwiperIndex(newIndex, I18nManager.isRTL, Platform.OS));
+        setIndex(computeSwiperIndex(newIndex, isRTL, Platform.OS));
     };
 
     const onActionPress = (): void => {

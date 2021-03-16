@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React, { useState } from 'react';
-import { I18nManager, Image, Dimensions } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
@@ -27,6 +27,7 @@ export interface QuestionnaireProps {
     readonly newAnswers: AnswersMap;
     readonly topics: TopicMap;
     readonly savedTopicIds: ReadonlyArray<TopicId>;
+    readonly isRTL: boolean;
 }
 
 export interface QuestionnaireActions {
@@ -83,6 +84,7 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
                 />
                 <ButtonsComponent
                     activeQuestion={props.activeQuestion}
+                    isRTL={props.isRTL}
                     setActiveQuestion={props.setActiveQuestion}
                     onDoneButtonPress={closeQuestionnaireWithOptionalModal}
                 />
@@ -140,9 +142,10 @@ const ProgressComponent = (props: { readonly activeQuestion: SelectorQuestion })
 };
 
 type ButtonsProps = {
-    readonly activeQuestion: SelectorQuestion,
+    readonly activeQuestion: SelectorQuestion;
+    readonly isRTL: boolean;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
-    readonly onDoneButtonPress: () => void,
+    readonly onDoneButtonPress: () => void;
 };
 
 const ButtonsComponent = (props: ButtonsProps): JSX.Element => {
@@ -167,7 +170,7 @@ const ButtonsComponent = (props: ButtonsProps): JSX.Element => {
 const renderNextButton = (props: ButtonsProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.nextQuestionId); };
-    const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
+    const icon = props.isRTL ? 'arrow-back' : 'arrow-forward';
     const text = activeQuestionHasBeenAnswered(props) ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
     return (
         <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
@@ -180,7 +183,7 @@ const renderNextButton = (props: ButtonsProps): JSX.Element => {
 const renderPreviousButton = (props: ButtonsProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.previousQuestionId); };
-    const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
+    const icon = props.isRTL ? 'arrow-forward' : 'arrow-back';
     const text = <Trans>Back</Trans>;
     return (
         <Button style={[applicationStyles.whiteTealButton, { marginBottom: 5 }]} onPress={onPress} iconLeft>

@@ -14,6 +14,7 @@ import { TabDividerComponent } from '../content_layout/tab_divider_component';
 export type TabRoutes = Array<Route>;
 
 interface TabSwitcherProps {
+    readonly isRTL: boolean;
     readonly i18n: I18n;
     readonly history: History;
 }
@@ -31,6 +32,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
             case 'topics':
                 return (
                     <TopicBookmarksComponent
+                        isRTL={props.isRTL}
                         bookmarkedTopics={props.bookmarkedTopics}
                         history={props.history}
                         bookmarkTopic={props.bookmarkTopic}

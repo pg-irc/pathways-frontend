@@ -70,6 +70,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 <Trans>Start settling in B.C.</Trans>
             </Text>
             <AlertComponent
+                history={props.history}
                 isRTL={props.isRTL}
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}

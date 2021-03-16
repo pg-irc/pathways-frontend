@@ -3,7 +3,7 @@ import { View, Text, Icon } from 'native-base';
 import { values, colors, textStyles, getNormalFontFamily } from '../../application/styles';
 import { TopicListItem } from '../../selectors/topics/types';
 import { BookmarkTopicAction, UnbookmarkTopicAction, Id } from '../../stores/topics';
-import { I18nManager, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
@@ -12,6 +12,7 @@ import { RecommendedIconComponent } from '../recommended_topics/recommended_icon
 export interface TaskListItemProps {
     readonly topic: TopicListItem;
     readonly taskIsBookmarked: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface TaskListItemActions {
@@ -60,7 +61,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         <RecommendedIconComponent additionalStyles={{ marginRight: 5 }} />
                         :
                         <EmptyComponent />}
-                    <Icon style={{ fontSize: 15 }} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
+                    <Icon style={{ fontSize: 15 }} name={props.isRTL ? 'arrow-back' : 'arrow-forward'} />
                 </View>
             </View>
         </TouchableOpacity>

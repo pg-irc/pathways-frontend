@@ -36,6 +36,7 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => {
         <View style={{ flex: 1}}>
             <Header {...props} />
             <TaskListComponent
+                isRTL={props.isRTL}
                 tasks={props.topics}
                 bookmarkedTopicsIdList={props.bookmarkedTopics}
                 bookmarkTopic={props.bookmarkTopic}

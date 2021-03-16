@@ -11,6 +11,7 @@ import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { pickTopics } from '../../selectors/topics/pick_topics';
 import { Id as TopicId } from '../../stores/topics';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
     oldAnswers: pickQuestionnaire(store).oldAnswers,
@@ -18,6 +19,7 @@ const mapStateToProps = (store: Store): QuestionnaireProps => ({
     topics: pickTopics(store),
     savedTopicIds:  pickBookmarkedTopicIds(store),
     activeQuestion: selectActiveQuestion(store),
+    isRTL: selectIsRTL(store),
 });
 
 type DispatchActions = ChooseAnswerAction | SetActiveQuestionAction | CloseQuestionnaireAction;

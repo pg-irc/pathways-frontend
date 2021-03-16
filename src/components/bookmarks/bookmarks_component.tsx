@@ -18,6 +18,7 @@ export interface BookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
     readonly isSendingReview: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface BookmarkActions {
@@ -59,6 +60,7 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
                     isSendingReview={props.isSendingReview}
+                    isRTL={props.isRTL}
                 />
             )}
         </I18n>

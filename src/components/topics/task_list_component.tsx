@@ -15,6 +15,7 @@ import throttle from 'lodash.throttle';
 const R = require('ramda');
 
 export interface TaskListProps {
+    readonly isRTL: boolean;
     readonly history: History;
     readonly tasks: ReadonlyArray<ListItem>;
     readonly bookmarkedTopicsIdList: ReadonlyArray<Id>;
@@ -149,6 +150,7 @@ const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number):
     }
     return (
         <TaskListItemComponent
+            isRTL={props.isRTL}
             topic={item}
             taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
             bookmarkTopic={props.bookmarkTopic}
