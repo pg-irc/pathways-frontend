@@ -30,6 +30,7 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface RecommendedTopicsActions {
@@ -69,6 +70,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 <Trans>Start settling in B.C.</Trans>
             </Text>
             <AlertComponent
+                isRTL={props.isRTL}
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}
                 hideLinkAlerts={props.hideLinkAlerts} />

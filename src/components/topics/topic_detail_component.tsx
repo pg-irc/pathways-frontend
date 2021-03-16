@@ -98,6 +98,7 @@ const Header = (props: Props): JSX.Element => {
 const ListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <TaskDetailContentComponent
+            isRTL={props.isRTL}
             topic={props.topic}
             onServicesTextPress={(): void => onServicesTextPress(props)}
             showLinkAlert={props.showLinkAlert}

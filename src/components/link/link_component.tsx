@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
-import { Linking, Alert, I18nManager, AlertButton } from 'react-native';
+import { Linking, Alert, AlertButton } from 'react-native';
 import { Text } from 'native-base';
 import { LinkIcon } from './link_icon_component';
 import { t } from '@lingui/macro';
@@ -40,7 +40,7 @@ export const LinkTypes = {
 };
 
 // tslint:disable-next-line: no-any
-export const alertOnLinkClicked = (node: any, i18n: I18n, hideLinkAlerts: () => void): void => {
+export const alertOnLinkClicked = (node: any, i18n: I18n, isRTL: boolean, hideLinkAlerts: () => void): void => {
     const heading = t`Opening External Link`;
     const message = t`This link will open in your device's browser.`;
     const okOption = t`OK`;
@@ -59,7 +59,7 @@ export const alertOnLinkClicked = (node: any, i18n: I18n, hideLinkAlerts: () => 
         { text: i18n._(okOption), onPress: (): Promise<void> => Linking.openURL(node.attributes.href) },
     ];
     // buttons are arranged horizontally on Android and vertically on iPhone, so reverse the buttons on Android only
-    const reverseButtons = I18nManager.isRTL && isAndroid();
+    const reverseButtons = isRTL && isAndroid();
     // tslint:disable-next-line: no-expression-statement
     Alert.alert(i18n._(heading), i18n._(message),
         reverseButtons ? R.reverse(buttons) : buttons,

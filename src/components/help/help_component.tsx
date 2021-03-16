@@ -186,7 +186,7 @@ const ClearAppMemoryButton = (props: Props): JSX.Element => {
         ];
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),
-            I18nManager.isRTL ? R.reverse(buttons) : buttons,
+            props.isRTL ? R.reverse(buttons) : buttons,
         );
     };
     return (

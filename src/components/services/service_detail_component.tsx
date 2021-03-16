@@ -253,7 +253,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                         <Description
                                             description={props.service.description}
                                             showLinkAlerts={props.showLinkAlerts}
-                                            hideLinkAlerts={props.hideLinkAlerts} />
+                                            hideLinkAlerts={props.hideLinkAlerts}
+                                            isRTL={props.isRTL}
+                                        />
                                     }
                                 />
                                 <DividerComponent />
@@ -426,6 +428,7 @@ const ServiceDetailHeader = (props: {
 interface DescriptionProps {
     readonly description: string;
     readonly showLinkAlerts: boolean;
+    readonly isRTL: boolean;
     readonly hideLinkAlerts: () => void;
 }
 
@@ -434,7 +437,9 @@ const Description = (props: DescriptionProps): JSX.Element => (
         body={props.description}
         shouldBeExpandable={true}
         showLinkAlerts={props.showLinkAlerts}
-        hideLinkAlerts={props.hideLinkAlerts} />
+        isRTL={props.isRTL}
+        hideLinkAlerts={props.hideLinkAlerts}
+    />
 );
 
 interface ServiceContactDetailsProps {

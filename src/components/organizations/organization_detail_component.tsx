@@ -9,6 +9,7 @@ import { EmailComponent } from '../email/email_component';
 import { WebsiteComponent } from '../website/website_component';
 
 interface OrganizationDetailProps {
+    readonly isRTL: boolean;
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly organization: HumanOrganizationData;
@@ -17,6 +18,7 @@ interface OrganizationDetailProps {
 export const OrganizationDetailComponent = (props: OrganizationDetailProps): JSX.Element => (
     <Content padder>
         <MarkdownBodyComponent
+            isRTL={props.isRTL}
             body={props.organization.description}
             shouldBeExpandable={true}
             // TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
@@ -24,6 +26,7 @@ export const OrganizationDetailComponent = (props: OrganizationDetailProps): JSX
             hideLinkAlerts={console.log} />
         <DividerComponent />
         <OrganizationContactDetailsComponent
+            isRTL={props.isRTL}
             organization={props.organization}
             analyticsLinkPressed={props.analyticsLinkPressed}
             currentPathForAnalytics={props.currentPathForAnalytics}

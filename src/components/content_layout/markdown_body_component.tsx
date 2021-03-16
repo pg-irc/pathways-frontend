@@ -7,6 +7,7 @@ interface Props {
     readonly shouldBeExpandable: boolean;
     readonly topicId?: string;
     readonly showLinkAlerts: boolean;
+    readonly isRTL: boolean;
     readonly onExpand?: () => void;
     readonly onCollapse?: () => void;
     readonly hideLinkAlerts: () => void;
@@ -15,6 +16,7 @@ interface Props {
 export const MarkdownBodyComponent = (props: Props): JSX.Element => {
     const body = (
         <MarkdownComponent
+            isRTL={props.isRTL}
             showLinkAlerts={props.showLinkAlerts}
             hideLinkAlerts={props.hideLinkAlerts}>
             {props.body}

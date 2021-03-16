@@ -13,8 +13,10 @@ import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_l
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
+    isRTL: selectIsRTL(store),
     hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
     bookmarkedTopics: pickBookmarkedTopicIds(store),
     recommendedTopics: selectRecommendedTopics(store),

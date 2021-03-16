@@ -18,6 +18,7 @@ interface OrganizationTabSwitcherProps {
     readonly i18n: I18n;
     readonly organization: HumanOrganizationData;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
+    readonly isRTL: boolean;
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
@@ -35,6 +36,7 @@ export const OrganizationTabSwitcher = (props: Props): JSX.Element => {
             case 'about':
                 return (
                     <OrganizationDetailComponent
+                        isRTL={props.isRTL}
                         organization={props.organization}
                         analyticsLinkPressed={props.analyticsLinkPressed}
                         currentPathForAnalytics={props.currentPathForAnalytics}

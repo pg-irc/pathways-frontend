@@ -10,6 +10,7 @@ import { alertOnLinkClicked } from '../link/link_component';
 interface Props {
     readonly children: string;
     readonly showLinkAlerts: boolean;
+    readonly isRTL: boolean;
     readonly hideLinkAlerts: () => void;
 }
 
@@ -32,7 +33,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             return (
                 <I18n key={node.key}>
                     {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
-                        <Text onPress={(): void => alertOnLinkClicked(node, i18n, props.hideLinkAlerts)}>
+                        <Text onPress={(): void => alertOnLinkClicked(node, i18n, props.isRTL, props.hideLinkAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />

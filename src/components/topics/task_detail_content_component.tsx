@@ -16,6 +16,7 @@ import { MarkdownBodyComponent } from '../content_layout/markdown_body_component
 export interface TaskDetailContentProps {
     readonly topic: Topic;
     readonly showLinkAlert: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface TaskDetailContentActions {
@@ -38,6 +39,7 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
             shouldBeExpandable={!!props.topic.relatedTopics.length}
             topicId={props.topic.id}
             showLinkAlerts={props.showLinkAlert}
+            isRTL={props.isRTL}
             onExpand={props.onExpand}
             onCollapse={props.onCollapse}
             hideLinkAlerts={props.hideLinkAlert}

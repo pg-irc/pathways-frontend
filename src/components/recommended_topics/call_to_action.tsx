@@ -17,6 +17,7 @@ type Props = { readonly history: History };
 type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
+    readonly isRTL: boolean;
     readonly hideLinkAlerts: () => void;
 };
 
@@ -43,6 +44,7 @@ const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
                 {alert.heading}
             </Text>
             <MarkdownComponent
+                isRTL={props.isRTL}
                 showLinkAlerts={props.showLinkAlerts}
                 hideLinkAlerts={props.hideLinkAlerts}>
                 {alert.content}
