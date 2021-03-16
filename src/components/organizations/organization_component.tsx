@@ -29,6 +29,7 @@ export interface OrganizationProps {
     readonly organizationTab: number;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly isRTL: boolean;
 }
 
 export interface OrganizationActions {
@@ -47,6 +48,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
             <OrganizationHeader
+                isRTL={props.isRTL}
                 location={props.location}
                 history={props.history}
                 openHeaderMenu={props.openHeaderMenu}
@@ -61,12 +63,13 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
 interface OrganizationHeaderProps {
     readonly location: Location;
     readonly history: History;
+    readonly isRTL: boolean;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 const OrganizationHeader = (props: OrganizationHeaderProps): JSX.Element => {
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} isRTL={props.isRTL} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <MenuButtonComponent
             onPress={props.openHeaderMenu}
@@ -115,6 +118,7 @@ const renderValidOrganizationPage = (props: Props): JSX.Element => (
                     <TitleComponent title={props.organization.name} />
                 </View>
                 <OrganizationTabSwitcher
+                    isRTL={props.isRTL}
                     i18n={i18n}
                     organization={props.organization}
                     organizationStatus={props.organizationStatus}

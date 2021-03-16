@@ -6,11 +6,13 @@ import { ContactInformationProps, ContactInformationActions, ContactInformationC
 import { BackFromContactInformationAction, backFromContactInformation, finishFeedback, FinishAction, SendFeedbackAction, sendFeedback } from '../../stores/feedback';
 import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
 import { UserInformation } from '../../stores/feedback/types';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store): ContactInformationProps => {
     return {
         feedbackType: selectFeedbackType(store),
         isSendingFeedback: selectIsSendingFeedback(store),
+        isRTL: selectIsRTL(store),
     };
 };
 

@@ -19,6 +19,7 @@ export interface ExploreDetailProps {
     readonly section: ExploreSection;
     readonly topics: ReadonlyArray<TopicListItem>;
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
+    readonly isRTL: boolean;
 }
 
 export interface ExploreDetailActions {
@@ -71,7 +72,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
 const Header = (props: Props): JSX.Element => {
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent textColor={textColor} />;
+    const leftButton = <BackButtonComponent textColor={textColor} isRTL={props.isRTL}/>;
     const rightButton =
         <MenuButtonComponent
             onPress={props.openHeaderMenu}

@@ -13,6 +13,7 @@ import { selectServicesForOrganization } from '../../selectors/services/select_s
 import { selectOrganizationTab } from '../../selectors/organizations/select_organization_tab';
 import { selectOrganizationStatus } from '../../selectors/organizations/select_organization_status';
 import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
     history: ownProps.history,
@@ -21,6 +22,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps
     organizationTab: selectOrganizationTab(store),
     servicesForOrganization: selectServicesForOrganization(store, ownProps.match.params.organizationId),
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
+    isRTL: selectIsRTL(store),
 });
 
 type Actions =

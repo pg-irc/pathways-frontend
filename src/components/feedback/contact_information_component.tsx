@@ -21,6 +21,7 @@ import { memoryHistory } from '../../application';
 export interface ContactInformationProps {
     readonly feedbackType: string;
     readonly isSendingFeedback: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface ContactInformationActions {
@@ -39,7 +40,7 @@ const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
 export const ContactInformationComponent = ({
-    feedbackType, isSendingFeedback, match, backFromContactInformation, finishFeedback, sendFeedback,
+    feedbackType, isSendingFeedback, match, isRTL, backFromContactInformation, finishFeedback, sendFeedback,
 }: Props): JSX.Element => {
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
     const keyboardIsVisible = useKeyboardIsVisible();
@@ -67,7 +68,11 @@ export const ContactInformationComponent = ({
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
                     <View style={styles.contactInformationContainer}>
-                        <HeaderComponent feedbackType={feedbackType} onBackButtonPress={onBackButtonPress}/>
+                        <HeaderComponent
+                            feedbackType={feedbackType}
+                            isRTL={isRTL}
+                            onBackButtonPress={onBackButtonPress}
+                        />
                         <KeyboardAwareScrollView
                             style={styles.contactInformationInnerContainer}
                             enableResetScrollToCoords={false}
@@ -125,14 +130,15 @@ export const ContactInformationComponent = ({
 
 interface HeaderProps {
     readonly feedbackType: string;
+    readonly isRTL: boolean;
     readonly onBackButtonPress: () => void;
 }
 
-const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.Element => {
+const HeaderComponent = ({ feedbackType, isRTL, onBackButtonPress }: HeaderProps): JSX.Element => {
     return (
         <Header style={otherRemoveServiceStyles.headerContainer} androidStatusBarColor={colors.teal}>
                 <Button transparent onPress={onBackButtonPress}>
-                    <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
+                    <Icon name={getIconForBackButton(isRTL)} style={{ color: colors.teal, fontWeight: 'bold' }} />
                 </Button>
                 <Title>
                     <Text style={textStyles.headline6}>

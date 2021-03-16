@@ -25,6 +25,7 @@ import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { OffsetHook, useOffset } from '../use_offset';
 
 export interface TopicDetailsProps {
+    readonly isRTL: boolean;
     readonly topic: Topic;
     readonly topicIsBookmarked: boolean;
     readonly bookmarkedTopicsIdList: ReadonlyArray<TaskId>;
@@ -72,7 +73,7 @@ const Header = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TopicDetail);
     const topicId = params.topicId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} isRTL={props.isRTL}/>;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(topicId, props.bookmarkedTopicsIdList)}

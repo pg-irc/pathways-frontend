@@ -17,6 +17,7 @@ import { SetManualUserLocationAction, setManualUserLocation } from '../../stores
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -29,6 +30,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
         isSendingReview: selectIsSendingReview(store),
+        isRTL: selectIsRTL(store),
     };
 };
 

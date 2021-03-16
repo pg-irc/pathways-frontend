@@ -17,16 +17,23 @@ import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/s
 import { Topic } from '../../selectors/topics/types';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
     topic: selectCurrentTopic(store, 'contact-workers-at-your-local-settlement-agency'),
     history: ownProps.history,
     manualUserLocation: selectManualUserLocation(store),
-    customLatLong: selectCustomLatLong(store), 
+    customLatLong: selectCustomLatLong(store),
+    isRTL: selectIsRTL(store),
     }
 );
 
-type Actions = ClearAllUserDataAction | SetManualUserLocationAction | ClearManualUserLocationAction | OpenHeaderMenuAction| BuildServicesRequestAction;
+type Actions =
+    ClearAllUserDataAction |
+    SetManualUserLocationAction |
+    ClearManualUserLocationAction |
+    OpenHeaderMenuAction|
+    BuildServicesRequestAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): HelpComponentActions => ({
     clearAllUserState: (): ClearAllUserDataAction => dispatch(clearAllUserData()),

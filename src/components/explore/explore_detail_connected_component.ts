@@ -8,11 +8,13 @@ import { RouterProps } from '../../application/routing';
 import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookmarkTopic } from '../../stores/topics';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
+    isRTL: selectIsRTL(store),
 });
 
 type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction;

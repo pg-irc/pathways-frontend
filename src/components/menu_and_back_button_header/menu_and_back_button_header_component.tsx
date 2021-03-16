@@ -5,6 +5,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 
 export interface MenuAndBackButtonHeaderProps {
+    readonly isRTL: boolean;
     readonly textColor: string;
     readonly backgroundColor: string;
     readonly title?: JSX.Element;
@@ -12,7 +13,7 @@ export interface MenuAndBackButtonHeaderProps {
 }
 
 export const MenuAndBackButtonHeaderComponent = (props: MenuAndBackButtonHeaderProps): JSX.Element => {
-    const leftButton = <BackButtonComponent textColor={props.textColor} />;
+    const leftButton = <BackButtonComponent textColor={props.textColor} isRTL={props.isRTL}/>;
     const rightButton =
         <MenuButtonComponent
             onPress={props.openHeaderMenu}

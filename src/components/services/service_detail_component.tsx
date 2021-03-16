@@ -76,6 +76,7 @@ export interface ServiceDetailProps {
     readonly showLinkAlerts: boolean;
     readonly isReviewed: boolean;
     readonly isSending: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -197,6 +198,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             isFeedbackInputEnabled={isFeedbackInputEnabled}
                             service={props.service}
                             bookmarkedServicesIds={props.bookmarkedServicesIds}
+                            isRTL={props.isRTL}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
                             openHeaderMenu={props.openHeaderMenu}
@@ -356,6 +358,7 @@ interface HeaderProps {
     readonly isFeedbackInputEnabled: boolean;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly isRTL: boolean;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
@@ -378,6 +381,7 @@ const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
             location={props.location}
             service={props.service}
             bookmarkedServicesIds={props.bookmarkedServicesIds}
+            isRTL={props.isRTL}
             bookmarkService={props.bookmarkService}
             unbookmarkService={props.unbookmarkService}
             openHeaderMenu={props.openHeaderMenu}
@@ -389,6 +393,7 @@ const ServiceDetailHeader = (props: {
     readonly location: Location;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly isRTL: boolean;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
@@ -396,7 +401,7 @@ const ServiceDetailHeader = (props: {
     const params = getParametersFromPath(props.location, Routes.ServiceDetail);
     const serviceId = params.serviceId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} isRTL={props.isRTL}/>;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(serviceId, props.bookmarkedServicesIds)}

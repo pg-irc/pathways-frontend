@@ -21,6 +21,7 @@ import { UserLocation } from '../../validation/latlong/types';
 import { Topic } from '../../selectors/topics/types';
 import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { selectIsRTL } from '../../selectors/locale/select_is_RTL';
 
 type OwnProps = {
     readonly history: History;
@@ -30,6 +31,7 @@ type OwnProps = {
 const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
     return {
+        isRTL: selectIsRTL(store),
         topic: selectCurrentTopic(store, matchParams.topicId),
         topicIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
         bookmarkedTopicsIdList: pickBookmarkedTopicIds(store),

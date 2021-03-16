@@ -42,6 +42,7 @@ export interface ServiceListProps {
     readonly showPartialLocalizationMessage: boolean;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
+    readonly isRTL: boolean;
 }
 
 export interface ServiceListActions {
@@ -70,6 +71,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
     return (
         <ValidServiceListComponent
+            isRTL={props.isRTL}
             topic={props.topic}
             topicServicesOrError={props.topicServicesOrError}
             manualUserLocation={props.manualUserLocation}
@@ -196,6 +198,7 @@ const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Elem
 
 const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
+        isRTL={props.isRTL}
         topic={props.topic}
         manualUserLocation={props.manualUserLocation}
         customLatLong={props.customLatLong}
@@ -235,6 +238,7 @@ interface ServiceListHeaderComponentProps {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly isRTL: boolean;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;

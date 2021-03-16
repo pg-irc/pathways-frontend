@@ -69,6 +69,7 @@ export interface HelpComponentProps {
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly isRTL: boolean;
 }
 
 export interface HelpComponentActions {
