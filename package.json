@@ -69,6 +69,7 @@
     "expo": "^40.0.0",
     "expo-analytics": "^1.0.16",
     "expo-intent-launcher": "~8.4.0",
+    "expo-localization": "~9.1.0",
     "expo-location": "~10.0.0",
     "expo-notifications": "~0.8.2",
     "expo-status-bar": "~1.0.3",

@@ -6,6 +6,7 @@ import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from 
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
+import * as Localization from 'expo-localization';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoBuilder().build();
@@ -22,16 +23,22 @@ describe('load locale saga', () => {
     describe('with locale already saved', () => {
         let loadCurrentLocaleAction: any = undefined;
         let loadSuccessAction: any = undefined;
+        let getLocalizationAsyncFunction: any = undefined;
 
         beforeEach(() => {
             const saga: any = loadCurrentLocale();
             loadCurrentLocaleAction = saga.next().value;
             const valueFromStorage: string = aLocale.code;
-            loadSuccessAction = saga.next(valueFromStorage).value;
+            getLocalizationAsyncFunction = saga.next(valueFromStorage).value;
+            loadSuccessAction = saga.next(aLocale).value;
         });
 
         it('dispatches a load current locale action', () => {
             expect(loadCurrentLocaleAction).toEqual(call(loadCurrentLocaleCode));
+        });
+
+        it ('calls a getLocalizationAsync function', () => {
+            expect(getLocalizationAsyncFunction).toEqual(call(Localization.getLocalizationAsync));
         });
 
         it('dispatches a load current locale success action with isSaved flag is true', () => {
@@ -46,17 +53,23 @@ describe('load locale saga', () => {
         let loadCurrentLocaleAction: any = undefined;
         let saveCurrentLocaleCodeAction: any = undefined;
         let loadSuccessActionWithFallbackLocale: any = undefined;
+        let getLocalizationAsyncFunction: any = undefined;
 
         beforeEach(() => {
             saga = loadCurrentLocale();
             loadCurrentLocaleAction = saga.next().value;
             const emptyValueFromStorage: string = null;
-            saveCurrentLocaleCodeAction = saga.next(emptyValueFromStorage).value;
+            getLocalizationAsyncFunction = saga.next(emptyValueFromStorage).value;
+            saveCurrentLocaleCodeAction = saga.next(aLocale).value;
             loadSuccessActionWithFallbackLocale = saga.next(null).value;
         });
 
         it('dispatches a load current locale action', () => {
             expect(loadCurrentLocaleAction).toEqual(call(loadCurrentLocaleCode));
+        });
+
+        it ('calls a getLocalizationAsync function', () => {
+            expect(getLocalizationAsyncFunction).toEqual(call(Localization.getLocalizationAsync));
         });
 
         it('dispatches action to save the fallback locale as the current locale', () => {
