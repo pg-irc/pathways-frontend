@@ -7,7 +7,6 @@ import 'intl';
 import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
-import { I18nManager } from 'react-native';
 import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
 
 export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
@@ -61,7 +60,6 @@ export class LocaleInfoManager {
     private catalogsMap: CatalogsMap;
 
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
-        I18nManager.allowRTL(true);
         this.setLocales(locales);
         this.catalogsMap = buildCatalogsMap(locales);
     }
