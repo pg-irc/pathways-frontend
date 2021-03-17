@@ -26,15 +26,11 @@ export function* watchLocaleSuccess(): IterableIterator<ForkEffect> {
 }
 
 export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {
-    console.log('running enforceRTLChange');
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
     if (flipOrientation) {
-        console.log('calls setTextDirection to see if the app needs to change the direction of text');
         yield call(saveIsRTLBoolean, isRTL(localeCode));
         yield call(setTextDirection, localeCode);
-    } else {
-        console.log('does not change direction of text');
     }
 }
 export function* watchLoadLocale(): IterableIterator<ForkEffect> {
@@ -44,7 +40,6 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
-        // const RTL = I18nManager.isRTL;
         const RTL = yield call(loadIsRTLBoolean);
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
@@ -52,23 +47,13 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
             const isSaved = false;
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation, RTL));
-        }
-        else {
+        } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
-            // flipOrientation is false when:
-                // device is RTL and 'ar'
-                // device is not RTL and not 'ar'
-
-            // flipOrientation is true when:
-                // device is RTL and not 'ar'
-                // device is LTR and 'ar'
-            // console.log('$%^&*(', RTL);
             const flipOrientation = RTL !== isRTL(locale.code);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation, RTL));
         }
     } catch (e) {
-        console.log('loadLocaleError');
         console.error(`Failed to load current locale (${e.message})`);
         yield put(actions.loadLocaleFailure(e.message));
     }

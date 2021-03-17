@@ -12,7 +12,6 @@ export const needsTextDirectionChange = async (localeCode: string): Promise<bool
 export function setTextDirection(localeCode: string): void {
     const forceRTLAsync = new Promise((resolve: (value: unknown) => void): void => {
         setTimeout((): void => {
-            console.log('forcingRTL')
             resolve(I18nManager.forceRTL(isRTL(localeCode)));
         }, 1000);
       });
@@ -24,7 +23,6 @@ export function setTextDirection(localeCode: string): void {
 export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
 
 export function reload(): void {
-    console.log('calling reload');
     Updates.reloadAsync();
 }
 
