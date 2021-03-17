@@ -31,7 +31,6 @@ export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | acti
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
     if (flipOrientation) {
-        console.log('flipping')
         yield call(setTextDirection, localeCode);
     }
 }
@@ -59,9 +58,6 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
             RTL = isAppRTL(deviceLocale, locale.code);
             const isSaved = true;
             const flipOrientation = RTL !== isRTL(locale.code);
-            console.log('RTL: ', RTL);
-            console.log('isRTL: ', isRTL(locale.code));
-            console.log('flipOrientation: ', flipOrientation);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
         }
     } catch (e) {
