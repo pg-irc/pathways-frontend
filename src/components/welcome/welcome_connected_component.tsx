@@ -8,20 +8,26 @@ import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
+import { selectProvince } from '../../selectors/province/select_province';
+import { saveProvince, SaveProvinceAction } from '../../stores/province/actions';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
         currentLocale: selectLocale(store),
+        currentProvince: selectProvince(store),
         availableLocales: selectAvailableLocales(store),
         showOnboarding: selectShowOnboarding(store),
         history: routerProps.history,
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction>): WelcomeActions {
+function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | SaveProvinceAction>): WelcomeActions {
     return {
         setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => (
             dispatch(saveLocaleRequest(localeCode, flipOrientation))
+        ),
+        setProvince: (provinceCode: string): SaveProvinceAction => (
+            dispatch(saveProvince(provinceCode))
         ),
     };
 }

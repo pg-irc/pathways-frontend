@@ -10,9 +10,12 @@ import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '.
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
+import { Province } from '../../province/types';
+import { SaveProvinceAction } from '../../stores/province/actions';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
+    readonly currentProvince: Province;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly showOnboarding: boolean;
     readonly history: History;
@@ -20,6 +23,7 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
+    readonly setProvince: (provinceCode: string) => SaveProvinceAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
@@ -66,8 +70,9 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         <Picker
                             mode='dropdown'
                             placeholder='Select province'
+                            selectedValue={props.currentProvince.code}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={handleChange}
+                            onValueChange={props.setProvince}
                             style={applicationStyles.picker}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
@@ -80,6 +85,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         <Picker
                             mode='dropdown'
                             placeholder='Select language'
+                            selectedValue={props.currentLocale.code}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleChange}
                             style={applicationStyles.picker}
