@@ -10,7 +10,7 @@ import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '.
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
-import { Province } from '../../province/types';
+import { Province, ProvinceCode } from '../../province/types';
 import { SaveProvinceAction } from '../../stores/province/actions';
 
 export interface WelcomeProps {
@@ -23,7 +23,7 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
-    readonly setProvince: (provinceCode: string) => SaveProvinceAction;
+    readonly setProvince: (provinceCode: ProvinceCode) => SaveProvinceAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
@@ -77,8 +77,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             <Picker.Item key='' label='Select province' value='Select Province' />
-                            <Picker.Item key='bc' label='British Columbia' value='bc' />
-                            <Picker.Item key='mb' label='Manitoba' value='mb' />
+                            <Picker.Item key='bc' label='British Columbia' value={ProvinceCode.BC} />
+                            <Picker.Item key='mb' label='Manitoba' value={ProvinceCode.MB} />
                         </Picker>
                     </Item>
                     <Item style={applicationStyles.item}>

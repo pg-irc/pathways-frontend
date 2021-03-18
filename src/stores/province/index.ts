@@ -1,9 +1,10 @@
 import * as constants from '../../application/constants';
+import { ProvinceCode } from '../../province/types';
 import * as actions from './actions';
 
 export interface ProvinceStore {
-    readonly code: string;
-    readonly fallback: string;
+    readonly code: ProvinceCode;
+    readonly fallback: ProvinceCode;
 }
 
 export const buildDefaultStore = (): ProvinceStore => ({

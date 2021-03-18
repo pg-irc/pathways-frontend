@@ -1,6 +1,6 @@
 export interface Province {
-    readonly code: string;
-    readonly fallback: string;
+    readonly code: ProvinceCode;
+    readonly fallback: ProvinceCode;
 }
 
 export interface LocalizedText {
@@ -13,4 +13,9 @@ export interface ReactI18n {
 
 export interface ReactI18nRenderProp {
     readonly i18n: ReactI18n;
+}
+
+export enum ProvinceCode {
+    BC,
+    MB,
 }

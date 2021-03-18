@@ -10,6 +10,7 @@ import { selectShowOnboarding } from '../../selectors/user_profile/select_show_o
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectProvince } from '../../selectors/province/select_province';
 import { saveProvince, SaveProvinceAction } from '../../stores/province/actions';
+import { ProvinceCode } from '../../province/types';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
@@ -26,7 +27,7 @@ function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | SavePro
         setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => (
             dispatch(saveLocaleRequest(localeCode, flipOrientation))
         ),
-        setProvince: (provinceCode: string): SaveProvinceAction => (
+        setProvince: (provinceCode: ProvinceCode): SaveProvinceAction => (
             dispatch(saveProvince(provinceCode))
         ),
     };
