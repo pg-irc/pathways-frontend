@@ -16,6 +16,6 @@ export interface ReactI18nRenderProp {
 }
 
 export enum ProvinceCode {
-    BC,
-    MB,
+    BC = 'bc',
+    MB = 'mb',
 }

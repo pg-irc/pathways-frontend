@@ -4,7 +4,7 @@ import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
-import { SaveLocaleRequestAction } from '../../stores/locale/actions';
+import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
@@ -12,6 +12,7 @@ import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
 import { Province, ProvinceCode } from '../../province/types';
 import { SaveProvinceAction } from '../../stores/province/actions';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -23,6 +24,7 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
+    readonly resetLocale: () => ResetLocaleAction;
     readonly setProvince: (provinceCode: ProvinceCode) => SaveProvinceAction;
 }
 
@@ -31,11 +33,16 @@ type Props = WelcomeProps & WelcomeActions;
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
 
-    const handleChange = (localeCode: string): void => {
+    const handleLocaleChange = (localeCode: string): void => {
         const flipOrientation = needsTextDirectionChange(localeCode);
         if (localeCode !== props.currentLocale.code || flipOrientation) {
             props.setLocale(localeCode, flipOrientation);
         }
+    };
+
+    const handleProvinceChange = (provinceCode: ProvinceCode): void => {
+        props.setProvince(provinceCode);
+        props.resetLocale();
     };
 
     return (
@@ -72,7 +79,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             placeholder='Select province'
                             selectedValue={props.currentProvince.code}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={props.setProvince}
+                            onValueChange={handleProvinceChange}
                             style={applicationStyles.picker}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
@@ -87,8 +94,9 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             placeholder='Select language'
                             selectedValue={props.currentLocale.code}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={handleChange}
+                            onValueChange={handleLocaleChange}
                             style={applicationStyles.picker}
+                            enabled={props.currentProvince.code ? true : false}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
@@ -98,15 +106,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     </Item>
                 </Form>
                 <View>
-                    <Button
-                        full
-                        onPress={(): void => onStartButtonPress(props)}
-                        style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
-                    >
-                        <Text style={textStyles.button}>
-                            <Trans>Start</Trans>
-                        </Text>
-                    </Button>
+                    <StartButton {...props} />
                 </View>
             </View>
             <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -127,6 +127,23 @@ export function WelcomeComponent(props: Props): JSX.Element {
         </ImageBackground>
     );
 }
+
+const StartButton = (props: Props): JSX.Element => {
+    if (props.currentProvince.code && props.currentLocale.code) {
+        return (
+            <Button
+                full
+                onPress={(): void => onStartButtonPress(props)}
+                style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
+            >
+                <Text style={textStyles.button}>
+                    <Trans>Start</Trans>
+                </Text>
+            </Button>
+        );
+    }
+    return <EmptyComponent />;
+};
 
 const onStartButtonPress = (props: Props): void => {
     if (props.showOnboarding) {

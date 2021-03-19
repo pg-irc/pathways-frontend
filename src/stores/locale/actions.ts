@@ -13,7 +13,10 @@ export type SaveLocaleFailureAction = Readonly<ReturnType<typeof saveLocaleFailu
 export type SaveLocaleResult = SaveLocaleSuccessAction | SaveLocaleFailureAction;
 
 export type SaveLocaleAction = SaveLocaleRequestAction | SaveLocaleSuccessAction | SaveLocaleFailureAction;
-export type LocaleAction = LoadLocaleAction | SaveLocaleAction;
+
+export type ResetLocaleAction = Readonly<ReturnType<typeof resetLocale>>;
+
+export type LocaleAction = LoadLocaleAction | SaveLocaleAction | ResetLocaleAction;
 
 // tslint:disable-next-line:typedef
 export const loadLocaleRequest = () => {
@@ -44,3 +47,8 @@ export function saveLocaleSuccess(localeCode: string, flipOrientation: boolean) 
 export function saveLocaleFailure(message: string, localeCode: string) {
     return helpers.makeAction(constants.SAVE_LOCALE_FAILURE, { message, localeCode });
 }
+
+// tslint:disable-next-line:typedef
+export const resetLocale = () => {
+    return helpers.makeAction(constants.RESET_LOCALE);
+};
