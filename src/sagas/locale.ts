@@ -5,7 +5,7 @@ import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from 
 import * as actions from '../stores/locale/actions';
 import { setTextDirection, isRTL } from '../locale/effects';
 import { I18nManager } from 'react-native';
-import * as Localization from 'expo-localization';
+import * as ExpoLocalization from 'expo-localization';
 import { isAndroid } from '../application/helpers/is_android';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
@@ -41,21 +41,18 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
-        const deviceLocalizationSettings: Localization.Localization = yield call(Localization.getLocalizationAsync);
-        const deviceLocale = deviceLocalizationSettings.locale;
-        // tslint:disable-next-line: no-let
-        let RTL;
+        const deviceLocale = yield call(getDeviceLocale);
 
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
-            RTL = isAppRTL(deviceLocale, fallbackLocale.code);
+            const RTL = isAppRTL(deviceLocale, fallbackLocale.code);
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
-            RTL = isAppRTL(deviceLocale, locale.code);
+            const RTL = isAppRTL(deviceLocale, locale.code);
             const isSaved = true;
             const flipOrientation = RTL !== isRTL(locale.code);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
@@ -66,6 +63,11 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
     }
 }
 
+const getDeviceLocale = async (): Promise<string> => {
+    const deviceLocalizationSettings = await ExpoLocalization.getLocalizationAsync();
+    return deviceLocalizationSettings.locale;
+};
+
 const isAppRTL = (deviceLocale: string, appLocale: string): boolean => {
     if (isAndroid()) {
         return isAndroidAppRTL(deviceLocale, appLocale);
@@ -74,7 +76,7 @@ const isAppRTL = (deviceLocale: string, appLocale: string): boolean => {
 };
 
 const isAndroidAppRTL = (deviceLocale: string, appLocale: string): boolean => (
-     isSetToRTL(appLocale) || isSetToRTL(deviceLocale) && isSetToRTL(appLocale)
+    isRTL(appLocale) || deviceAndAppAreRTL(deviceLocale, appLocale)
 );
 
-const isSetToRTL = (locale: string): boolean => locale.toLocaleLowerCase().startsWith('ar');
+const deviceAndAppAreRTL = (deviceLocale: string, appLocale: string): boolean => isRTL(deviceLocale) && isRTL(appLocale);
