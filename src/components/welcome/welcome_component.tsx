@@ -10,13 +10,13 @@ import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '.
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
-import { Province, ProvinceCode } from '../../province/types';
-import { SaveProvinceAction } from '../../stores/province/actions';
+import { Region, RegionCode } from '../../region/types';
+import { SaveRegionAction } from '../../stores/region/actions';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
-    readonly currentProvince: Province;
+    readonly currentRegion: Region;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly showOnboarding: boolean;
     readonly history: History;
@@ -25,7 +25,7 @@ export interface WelcomeProps {
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
     readonly resetLocale: () => ResetLocaleAction;
-    readonly setProvince: (provinceCode: ProvinceCode) => SaveProvinceAction;
+    readonly setRegion: (provinceCode: RegionCode) => SaveRegionAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
@@ -40,8 +40,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
         }
     };
 
-    const handleProvinceChange = (provinceCode: ProvinceCode): void => {
-        props.setProvince(provinceCode);
+    const handleRegionChange = (provinceCode: RegionCode): void => {
+        props.setRegion(provinceCode);
         props.resetLocale();
     };
 
@@ -77,15 +77,15 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         <Picker
                             mode='dropdown'
                             placeholder='Select province'
-                            selectedValue={props.currentProvince.code}
+                            selectedValue={props.currentRegion.code}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={handleProvinceChange}
+                            onValueChange={handleRegionChange}
                             style={applicationStyles.picker}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
-                            <Picker.Item key='' label='Select province' value='Select Province' />
-                            <Picker.Item key='bc' label='British Columbia' value={ProvinceCode.BC} />
-                            <Picker.Item key='mb' label='Manitoba' value={ProvinceCode.MB} />
+                            <Picker.Item key='' label='Select province' value='Select Region' />
+                            <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
+                            <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
                         </Picker>
                     </Item>
                     <Item style={applicationStyles.item}>
@@ -96,7 +96,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleLocaleChange}
                             style={applicationStyles.picker}
-                            enabled={props.currentProvince.code ? true : false}
+                            enabled={props.currentRegion.code ? true : false}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
@@ -129,7 +129,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
 }
 
 const StartButton = (props: Props): JSX.Element => {
-    if (props.currentProvince.code && props.currentLocale.code) {
+    if (props.currentRegion.code && props.currentLocale.code) {
         return (
             <Button
                 full

@@ -8,21 +8,21 @@ import { SaveLocaleRequestAction, saveLocaleRequest, ResetLocaleAction, resetLoc
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
-import { selectProvince } from '../../selectors/province/select_province';
-import { saveProvince, SaveProvinceAction } from '../../stores/province/actions';
-import { ProvinceCode } from '../../province/types';
+import { selectRegion } from '../../selectors/region/select_region';
+import { saveRegion, SaveRegionAction } from '../../stores/region/actions';
+import { RegionCode } from '../../region/types';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
         currentLocale: selectLocale(store),
-        currentProvince: selectProvince(store),
+        currentRegion: selectRegion(store),
         availableLocales: selectAvailableLocales(store),
         showOnboarding: selectShowOnboarding(store),
         history: routerProps.history,
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | ResetLocaleAction | SaveProvinceAction>): WelcomeActions {
+function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | ResetLocaleAction | SaveRegionAction>): WelcomeActions {
     return {
         setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => (
             dispatch(saveLocaleRequest(localeCode, flipOrientation))
@@ -30,8 +30,8 @@ function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | ResetLo
         resetLocale: (): ResetLocaleAction => (
             dispatch(resetLocale())
         ),
-        setProvince: (provinceCode: ProvinceCode): SaveProvinceAction => (
-            dispatch(saveProvince(provinceCode))
+        setRegion: (provinceCode: RegionCode): SaveRegionAction => (
+            dispatch(saveRegion(provinceCode))
         ),
     };
 }

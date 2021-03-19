@@ -1,13 +1,13 @@
 import { Store } from '../../stores';
 import { LocaleInfo } from '../../locale/types';
 import { pickLocaleStore } from './pick_locale_store';
-import { selectProvince } from '../province/select_province';
-import { ProvinceCode } from '../../province/types';
+import { selectRegion } from '../region/select_region';
+import { RegionCode } from '../../region/types';
 
 export const selectAvailableLocales = (appStore: Store): ReadonlyArray<LocaleInfo> => {
     const store = pickLocaleStore(appStore);
-    const province = selectProvince(appStore);
-    if (province.code === ProvinceCode.MB) {
+    const province = selectRegion(appStore);
+    if (province.code === RegionCode.MB) {
         return mbAvailableLocale;
     }
     return store.availableLocales;
