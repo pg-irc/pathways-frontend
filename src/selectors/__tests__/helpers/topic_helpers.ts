@@ -8,6 +8,7 @@ import { TopicListItem } from '../../topics/types';
 
 export class ViewTopicBuilder {
     id: string = aString();
+    region: string = aString();
     title: string = aString();
     description: string = aString();
     taxonomyTerms: Array<TaxonomyTermReference>;
@@ -28,6 +29,7 @@ export class ViewTopicBuilder {
     build(): Topic {
         return {
             id: this.id,
+            region: this.region,
             title: this.title,
             description: this.description,
             taxonomyTerms: this.taxonomyTerms,

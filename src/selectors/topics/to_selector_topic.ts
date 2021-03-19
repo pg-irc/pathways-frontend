@@ -10,6 +10,7 @@ export const toSelectorTopic =
         relatedTopics: ReadonlyArray<TopicListItem>): Topic => (
             {
                 id: topic.id,
+                region: topic.region,
                 title: getLocalizedText(locale, topic.title),
                 description: getLocalizedText(locale, topic.description),
                 taxonomyTerms: topic.taxonomyTerms,

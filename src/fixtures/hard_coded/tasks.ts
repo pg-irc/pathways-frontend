@@ -9,6 +9,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
         topicMap: {
             't1': {
                 'id': 't1',
+                'region': 'bc',
                 'chapter': '',
                 'title': {
                     'en': 'Enroll child in elementary school.',
@@ -29,6 +30,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
             },
             't2': {
                 'id': 't2',
+                'region': 'bc',
                 'chapter': '',
                 'title': {
                     'en': 'Register for Language Instruction for Newcomer to Canada (LINC) classes.',
@@ -49,6 +51,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
             },
             't3': {
                 'id': 't3',
+                'region': 'bc',
                 'chapter': '',
                 'title': {
                     'en': 'Get support for English language learning for children.',
@@ -69,6 +72,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
             },
             't4': {
                 'id': 't4',
+                'region': 'bc',
                 'chapter': '',
                 'title': {
                     'en': 'Open a bank account',
@@ -89,6 +93,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
             },
             't5': {
                 'id': 't5',
+                'region': 'bc',
                 'chapter': '',
                 'title': {
                     'en': 'Get social insurance number (SIN)',

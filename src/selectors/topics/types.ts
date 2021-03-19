@@ -3,6 +3,7 @@ import { ExploreSection } from '../explore/types';
 
 export interface Topic {
     readonly id: string;
+    readonly region: string;
     readonly title: string;
     readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;

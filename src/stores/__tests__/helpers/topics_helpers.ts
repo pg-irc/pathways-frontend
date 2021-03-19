@@ -9,6 +9,7 @@ import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explor
 export class TopicBuilder {
     localeCode: string = aString();
     id: store.Id = aString();
+    region: string = aString();
     chapter: string = aString();
     title: string = aString();
     description: string = aString();
@@ -23,6 +24,11 @@ export class TopicBuilder {
 
     withId(id: string): TopicBuilder {
         this.id = id;
+        return this;
+    }
+
+    withRegion(region: string): TopicBuilder {
+        this.region = region;
         return this;
     }
 
@@ -59,6 +65,7 @@ export class TopicBuilder {
     build(): store.Topic {
         return {
             id: this.id,
+            region: this.region,
             chapter: this.chapter,
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
