@@ -23,7 +23,7 @@ export function reload(): void {
     Updates.reloadAsync();
 }
 
-export const isRTL = (locale: string): boolean => locale.toLocaleLowerCase().startsWith('ar');
+export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
 
 export async function saveCurrentLocaleCode(code: string): Promise<void> {
     return await AsyncStorage.setItem(PREFERENCES_LOCALE_CODE, code);
