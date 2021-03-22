@@ -5,6 +5,7 @@ import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from 
 import * as actions from '../stores/locale/actions';
 import { setTextDirection, isRTL } from '../locale/effects';
 import { I18nManager } from 'react-native';
+import { isAndroid } from '../application/helpers/is_android';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);
@@ -39,16 +40,17 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
-        const RTL = I18nManager.isRTL;
 
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
+            const RTL = isAppRTL(fallbackLocale.code);
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
+            const RTL = isAppRTL(locale.code);
             const isSaved = true;
             const flipOrientation = RTL !== isRTL(locale.code);
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
@@ -58,3 +60,10 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
         yield put(actions.loadLocaleFailure(e.message));
     }
 }
+
+const isAppRTL = (appLocale: string): boolean => {
+    if (isAndroid()) {
+        return isRTL(appLocale);
+    }
+    return I18nManager.isRTL;
+};

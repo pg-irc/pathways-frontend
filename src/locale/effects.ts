@@ -19,11 +19,11 @@ export function setTextDirection(localeCode: string): void {
     });
 }
 
-export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
-
 export function reload(): void {
     Updates.reloadAsync();
 }
+
+export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
 
 export async function saveCurrentLocaleCode(code: string): Promise<void> {
     return await AsyncStorage.setItem(PREFERENCES_LOCALE_CODE, code);

@@ -1,6 +1,5 @@
 // tslint:disable:no-expression-statement no-let no-null-keyword no-any
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
-
 import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from '../../locale';
 import * as actions from '../../stores/locale/actions';
