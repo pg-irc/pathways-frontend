@@ -6,8 +6,10 @@ import { PersistedData } from '../../persisted_data';
 import { SearchServiceData } from '../../../validation/search/types';
 import { LatLong } from '../../../validation/latlong/types';
 import { Alert } from '../../../validation/content/types';
+import { RegionCode } from '../../../validation/region/types';
 
 export class PersistedDataBuilder {
+    region: RegionCode = undefined;
     chosenAnswers: AnswerId[] = [];
     bookmarkedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
@@ -25,6 +27,11 @@ export class PersistedDataBuilder {
     showPartialLocalizationMessage: boolean = true;
     alerts: ReadonlyArray<Alert> = [];
     reviewedServices: ServiceId[] = [];
+
+    withRegion(region: RegionCode): PersistedDataBuilder {
+        this.region = region;
+        return this;
+    }
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
@@ -111,6 +118,7 @@ export class PersistedDataBuilder {
 
     build(): PersistedData {
         return {
+            region: this.region,
             chosenAnswers: this.chosenAnswers,
             bookmarkedTopics: this.bookmarkedTopics,
             showOnboarding: this.showOnboarding,

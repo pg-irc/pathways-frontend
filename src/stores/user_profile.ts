@@ -114,6 +114,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         case constants.CLEAR_ALL_USER_DATA:
             return ({
                 ...store,
+                region: undefined,
                 showOnboarding: true,
                 disableAnalytics: false,
                 customLatLong: undefined,

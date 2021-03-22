@@ -17,8 +17,10 @@ import { selectNumberOfSearchPages } from '../search/select_number_of_search_pag
 import { selectShowLinkAlerts } from '../user_profile/select_show_link_alerts';
 import { selectCustomLatLong } from '../user_profile/select_custom_latlong';
 import { selectReviewedServicesIds } from '../services/select_reviewed_services_ids';
+import { selectRegion } from '../region/select_region';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
+    region: selectRegion(appStore),
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     bookmarkedTopics: pickBookmarkedTopicIds(appStore),
     showOnboarding: selectShowOnboarding(appStore),
@@ -34,5 +36,5 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     searchResults: selectSearchResults(appStore),
     collapseSearchInput: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
-    reviewedServices:  selectReviewedServicesIds(appStore),
+    reviewedServices: selectReviewedServicesIds(appStore),
 });

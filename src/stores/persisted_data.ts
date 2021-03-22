@@ -5,8 +5,10 @@ import { Id as TopicId } from './topics';
 import { Id as ServiceId, ServiceMap } from '../validation/services/types';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
+import { RegionCode } from '../validation/region/types';
 
 export interface PersistedData {
+    readonly region: RegionCode;
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly bookmarkedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;

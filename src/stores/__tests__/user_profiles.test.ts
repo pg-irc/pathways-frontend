@@ -1,12 +1,53 @@
 // tslint:disable:no-expression-statement
-import { reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts, enableCustomLatLong } from '../user_profile';
+import { reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts, enableCustomLatLong, saveRegion } from '../user_profile';
 import { aBoolean, aLatLong } from '../../application/helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
 import { UserProfileBuilder } from './helpers/user_profile_builder';
+import { RegionCode } from '../../validation/region/types';
 
 describe('user profile reducer', () => {
+
+    describe('the region code', () => {
+
+        test('is undefined by default', () => {
+            const store = new UserProfileBuilder().build();
+            expect(store.region).toBe(undefined);
+        });
+
+        test('is changed when a region is set from scratch', () => {
+            const newRegion = RegionCode.BC;
+            const oldStore = new UserProfileBuilder().build();
+            const newStore = reducer(oldStore, saveRegion(newRegion));
+            expect(newStore.region).toBe(newRegion);
+        });
+
+        test('is changed when switching between region', () => {
+            const oldRegion = RegionCode.BC;
+            const newRegion = RegionCode.MB;
+            const oldStore = new UserProfileBuilder().withRegion(oldRegion);
+            const newStore = reducer(oldStore, saveRegion(newRegion));
+            expect(newStore.region).toBe(newRegion);
+        });
+
+        test('is loaded from persisted data', () => {
+            const savedRegion = RegionCode.BC;
+            const oldStore = new UserProfileBuilder().withRegion(savedRegion).build();
+            const dataRegion = new PersistedDataBuilder().
+                withRegion(savedRegion).
+                build();
+            const actionCustomizeLatLong = DataPersistence.loadSuccess(dataRegion);
+            const newStore = reducer(oldStore, actionCustomizeLatLong);
+            expect(newStore.region).toBe(savedRegion);
+        });
+
+        test('is set by clear all user data action', () => {
+            const oldStore = new UserProfileBuilder().withRegion(RegionCode.BC).build();
+            const newStore = reducer(oldStore, clearAllUserData());
+            expect(newStore.region).toBe(undefined);
+        });
+    });
 
     describe('the onboarding flag', () => {
 
@@ -23,16 +64,13 @@ describe('user profile reducer', () => {
                 withShowOnboarding(!onboardingFlag).
                 build();
             const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
-
             const newStore = reducer(oldStore, actionFlippingFlag);
-
             expect(newStore.showOnboarding).toBe(!onboardingFlag);
         });
 
         test('is set by clear all user data action', () => {
             const oldStore = new UserProfileBuilder().withShowOnboarding(false).build();
             const newStore = reducer(oldStore, clearAllUserData());
-
             expect(newStore.showOnboarding).toBe(true);
         });
     });
