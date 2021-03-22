@@ -9,8 +9,8 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectRegion } from '../../selectors/region/select_region';
-import { saveRegion, SaveRegionAction } from '../../stores/region/actions';
-import { RegionCode } from '../../region/types';
+import { RegionCode } from '../../validation/region/types';
+import { saveRegion, SaveRegionAction } from '../../stores/user_profile';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
@@ -30,8 +30,8 @@ function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction | ResetLo
         resetLocale: (): ResetLocaleAction => (
             dispatch(resetLocale())
         ),
-        setRegion: (provinceCode: RegionCode): SaveRegionAction => (
-            dispatch(saveRegion(provinceCode))
+        saveRegion: (regionCode: RegionCode): SaveRegionAction => (
+            dispatch(saveRegion(regionCode))
         ),
     };
 }

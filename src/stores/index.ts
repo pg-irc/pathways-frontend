@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import * as fonts from './fonts';
 import * as locale from './locale';
-import * as region from './region';
 import * as questionnaire from './questionnaire';
 import * as topics from './topics';
 import * as services from './services';
@@ -20,7 +19,6 @@ import * as reviews from './reviews';
 export interface Store {
     readonly fonts: fonts.FontsStore;
     readonly locale: locale.LocaleStore;
-    readonly region: region.RegionStore;
     readonly questionnaire: questionnaire.QuestionnaireStore;
     readonly topics: topics.TopicStore;
     readonly services: services.ServiceStore;
@@ -39,7 +37,6 @@ export interface Store {
 
 export const buildDefaultStore = (): Store => ({
     locale: locale.buildDefaultStore(),
-    region: region.buildDefaultStore(),
     fonts: fonts.buildDefaultStore(),
     questionnaire: questionnaire.buildDefaultStore(),
     topics: topics.buildDefaultStore(),
@@ -60,7 +57,6 @@ export const buildDefaultStore = (): Store => ({
 export const reducer = combineReducers<Store>({
     fonts: fonts.reducer,
     locale: locale.reducer,
-    region: region.reducer,
     questionnaire: questionnaire.reducer,
     topics: topics.reducer,
     services: services.reducer,

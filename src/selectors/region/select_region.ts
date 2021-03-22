@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import { Region } from '../../region/types';
+import { RegionCode } from '../../validation/region/types';
 
-export const selectRegion = (appStore: Store): Region => {
-    return appStore.region;
+export const selectRegion = (appStore: Store): RegionCode => {
+    return appStore.userProfile.region;
 };

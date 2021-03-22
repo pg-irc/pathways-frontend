@@ -10,13 +10,13 @@ import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '.
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
-import { Region, RegionCode } from '../../region/types';
-import { SaveRegionAction } from '../../stores/region/actions';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { RegionCode } from '../../validation/region/types';
+import { SaveRegionAction } from '../../stores/user_profile';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
-    readonly currentRegion: Region;
+    readonly currentRegion: RegionCode;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly showOnboarding: boolean;
     readonly history: History;
@@ -25,7 +25,7 @@ export interface WelcomeProps {
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
     readonly resetLocale: () => ResetLocaleAction;
-    readonly setRegion: (provinceCode: RegionCode) => SaveRegionAction;
+    readonly saveRegion: (regionCode: RegionCode) => SaveRegionAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
@@ -40,8 +40,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
         }
     };
 
-    const handleRegionChange = (provinceCode: RegionCode): void => {
-        props.setRegion(provinceCode);
+    const handleRegionChange = (regionCode: RegionCode): void => {
+        props.saveRegion(regionCode);
         props.resetLocale();
     };
 
@@ -77,7 +77,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         <Picker
                             mode='dropdown'
                             placeholder='Select province'
-                            selectedValue={props.currentRegion.code}
+                            selectedValue={props.currentRegion}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleRegionChange}
                             style={applicationStyles.picker}
@@ -96,7 +96,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleLocaleChange}
                             style={applicationStyles.picker}
-                            enabled={props.currentRegion.code ? true : false}
+                            enabled={props.currentRegion ? true : false}
                             iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
@@ -129,7 +129,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
 }
 
 const StartButton = (props: Props): JSX.Element => {
-    if (props.currentRegion.code && props.currentLocale.code) {
+    if (props.currentRegion && props.currentLocale.code) {
         return (
             <Button
                 full
