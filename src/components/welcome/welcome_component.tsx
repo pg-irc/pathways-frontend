@@ -73,7 +73,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <Item style={applicationStyles.item}>
+                    <Item style={applicationStyles.pickerItem}>
                         <Picker
                             mode='dropdown'
                             placeholder='Select province'
@@ -88,7 +88,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
                         </Picker>
                     </Item>
-                    <Item style={applicationStyles.item}>
+                    <Item style={applicationStyles.pickerItem}>
                         <Picker
                             mode='dropdown'
                             placeholder='Select language'

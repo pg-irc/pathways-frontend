@@ -489,7 +489,7 @@ export const applicationStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         ...getTextAlignForLanguage(),
     },
-    item: {
+    pickerItem: {
         justifyContent: 'center',
         marginVertical: 8,
         borderColor: 'transparent',
