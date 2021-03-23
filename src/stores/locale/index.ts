@@ -34,7 +34,7 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actio
         case constants.SAVE_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true };
         case constants.SAVE_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
+            return { ...store, errorMessage: '', loading: false, isSaved: true, code: action.payload.localeCode };
         case constants.SAVE_LOCALE_FAILURE:
             return { ...store, errorMessage: action.payload.message, loading: false };
         case constants.RESET_LOCALE:

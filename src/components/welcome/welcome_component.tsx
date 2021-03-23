@@ -17,6 +17,7 @@ import { SaveRegionAction } from '../../stores/user_profile';
 export interface WelcomeProps {
     readonly currentLocale: Locale;
     readonly currentRegion: RegionCode;
+    readonly localeIsSet: boolean;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly showOnboarding: boolean;
     readonly history: History;
@@ -92,7 +93,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         <Picker
                             mode='dropdown'
                             placeholder='Select language'
-                            selectedValue={props.currentLocale.code}
+                            selectedValue={props.localeIsSet ? props.currentLocale.code : undefined}
                             placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                             onValueChange={handleLocaleChange}
                             style={applicationStyles.picker}

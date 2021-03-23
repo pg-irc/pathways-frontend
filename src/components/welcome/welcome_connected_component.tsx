@@ -11,11 +11,13 @@ import { selectAvailableLocales } from '../../selectors/locale/select_available_
 import { selectRegion } from '../../selectors/region/select_region';
 import { RegionCode } from '../../validation/region/types';
 import { saveRegion, SaveRegionAction } from '../../stores/user_profile';
+import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
         currentLocale: selectLocale(store),
         currentRegion: selectRegion(store),
+        localeIsSet: selectIsLocaleSet(store),
         availableLocales: selectAvailableLocales(store),
         showOnboarding: selectShowOnboarding(store),
         history: routerProps.history,
