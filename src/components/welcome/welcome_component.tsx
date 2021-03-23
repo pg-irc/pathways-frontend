@@ -13,6 +13,7 @@ import { needsTextDirectionChange } from '../../locale/effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -33,18 +34,6 @@ type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-
-    const handleLocaleChange = (localeCode: string): void => {
-        const flipOrientation = needsTextDirectionChange(localeCode);
-        if (localeCode !== props.currentLocale.code || flipOrientation) {
-            props.setLocale(localeCode, flipOrientation);
-        }
-    };
-
-    const handleRegionChange = (regionCode: RegionCode): void => {
-        props.saveRegion(regionCode);
-        props.resetLocale();
-    };
 
     return (
         <ImageBackground
@@ -74,37 +63,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <Item style={applicationStyles.pickerItem}>
-                        <Picker
-                            mode='dropdown'
-                            placeholder='Select province'
-                            selectedValue={props.currentRegion}
-                            placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={handleRegionChange}
-                            style={applicationStyles.picker}
-                            iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                        >
-                            <Picker.Item key='' label='Select province' value='Select Region' />
-                            <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
-                            <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
-                        </Picker>
-                    </Item>
-                    <Item style={applicationStyles.pickerItem}>
-                        <Picker
-                            mode='dropdown'
-                            placeholder='Select language'
-                            selectedValue={props.localeIsSet ? props.currentLocale.code : undefined}
-                            placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                            onValueChange={handleLocaleChange}
-                            style={applicationStyles.picker}
-                            enabled={props.currentRegion ? true : false}
-                            iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                        >
-                            {props.availableLocales.map((locale: LocaleInfo) => (
-                                <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
-                            ))}
-                        </Picker>
-                    </Item>
+                    <RegionPicker {...props} />
+                    <LocalePicker {...props} />
                 </Form>
                 <View>
                     <StartButton {...props} />
@@ -128,6 +88,62 @@ export function WelcomeComponent(props: Props): JSX.Element {
         </ImageBackground>
     );
 }
+
+const RegionPicker = (props: Props): JSX.Element => {
+
+    const handleRegionChange = (regionCode: RegionCode): void => {
+        props.saveRegion(regionCode);
+        props.resetLocale();
+    };
+
+    return (
+        <Item style={applicationStyles.pickerItem}>
+            <Picker
+                mode='dropdown'
+                placeholder='Select province'
+                selectedValue={props.currentRegion}
+                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                onValueChange={handleRegionChange}
+                style={applicationStyles.picker}
+                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+            >
+                {isAndroid ? <Picker.Item key='' label='Select province' value={false} /> : <EmptyComponent />}
+                <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
+                <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
+            </Picker>
+        </Item>
+    );
+};
+
+const LocalePicker = (props: Props): JSX.Element => {
+
+    const handleLocaleChange = (localeCode: string): void => {
+        const flipOrientation = needsTextDirectionChange(localeCode);
+        if (localeCode !== props.currentLocale.code || flipOrientation) {
+            props.setLocale(localeCode, flipOrientation);
+        }
+    };
+
+    return (
+        <Item style={applicationStyles.pickerItem}>
+            <Picker
+                mode='dropdown'
+                placeholder='Select language'
+                selectedValue={props.localeIsSet ? props.currentLocale.code : undefined}
+                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                onValueChange={handleLocaleChange}
+                style={applicationStyles.picker}
+                enabled={props.currentRegion ? true : false}
+                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+            >
+                {isAndroid ? <Picker.Item key='' label='Select locale' value={false} /> : <EmptyComponent />}
+                {props.availableLocales.map((locale: LocaleInfo) => (
+                    <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
+                ))}
+            </Picker>
+        </Item>
+    );
+};
 
 const StartButton = (props: Props): JSX.Element => {
     if (props.currentRegion && props.currentLocale.code) {
