@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { ExploreDetailComponent, ExploreDetailProps, ExploreDetailActions } from './explore_detail_component';
 import { selectCurrentExploreSection } from '../../selectors/explore/select_current_explore_section';
-import { selectTopicForCurrentExploreSection } from '../../selectors/topics/select_topic_for_current_explore_section';
+import { selectTopicsForCurrentExploreSection } from '../../selectors/topics/select_topics_for_current_explore_section';
 import { RouterProps } from '../../application/routing';
 import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookmarkTopic } from '../../stores/topics';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
@@ -11,7 +11,7 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experien
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
-    topics: selectTopicForCurrentExploreSection(store, ownProps),
+    topics: selectTopicsForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
 });
 

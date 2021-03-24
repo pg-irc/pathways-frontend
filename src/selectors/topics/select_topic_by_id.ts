@@ -11,7 +11,7 @@ import { pickTopics } from './pick_topics';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
-export const selectCurrentTopic = (appStore: Store, topicId: TaskId): Topic => {
+export const selectTopicById = (appStore: Store, topicId: TaskId): Topic => {
     const locale = selectLocale(appStore);
     const topicMap = pickTopics(appStore);
     const topic = topicMap[topicId];

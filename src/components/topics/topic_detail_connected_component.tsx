@@ -8,7 +8,7 @@ import {
     CollapseDetailAction, collapseDeail,
 } from '../../stores/topics';
 import { connect } from 'react-redux';
-import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
+import { selectTopicById } from '../../selectors/topics/select_topic_by_id';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
@@ -30,7 +30,7 @@ type OwnProps = {
 const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
     return {
-        topic: selectCurrentTopic(store, matchParams.topicId),
+        topic: selectTopicById(store, matchParams.topicId),
         topicIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
         bookmarkedTopicsIdList: pickBookmarkedTopicIds(store),
         showLinkAlert: selectShowLinkAlerts(store),
