@@ -489,6 +489,18 @@ export const applicationStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         ...getTextAlignForLanguage(),
     },
+    pickerItem: {
+        justifyContent: 'center',
+        marginVertical: 8,
+        borderColor: 'transparent',
+        height: 48,
+        width: 232,
+    },
+    picker: {
+        justifyContent: 'center',
+        backgroundColor: colors.white,
+        borderRadius: 50,
+    },
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.

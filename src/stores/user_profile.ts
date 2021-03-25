@@ -3,12 +3,19 @@ import * as helpers from './helpers/make_action';
 import { DataPersistence } from './persisted_data';
 import { ClearAllUserDataAction } from './questionnaire/actions';
 import { LatLong } from '../validation/latlong/types';
+import { RegionCode } from '../validation/region/types';
 
+export type SaveRegionAction = Readonly<ReturnType<typeof saveRegion>>;
 export type HideOnboardingAction = Readonly<ReturnType<typeof hideOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
 export type EnableCustomLatLongAction = Readonly<ReturnType<typeof enableCustomLatLong>>;
 export type HidePartialLocalizationMessageAction = Readonly<ReturnType<typeof hidePartialLocalizationMessage>>;
 export type HideLinkAlertsAction = Readonly<ReturnType<typeof hideLinkAlerts>>;
+
+// tslint:disable-next-line:typedef
+export const saveRegion = (regionCode: RegionCode) => {
+    return helpers.makeAction(constants.SAVE_CURRENT_REGION, { regionCode });
+};
 
 // tslint:disable-next-line:typedef
 export const hideOnboarding = () => (
@@ -36,6 +43,7 @@ export const hideLinkAlerts = () => (
 );
 
 export type UserProfileAction =
+    SaveRegionAction |
     HideOnboardingAction |
     ClearAllUserDataAction |
     DisableAnalyticsAction |
@@ -45,6 +53,7 @@ export type UserProfileAction =
     HidePartialLocalizationMessageAction;
 
 export interface UserProfileStore {
+    readonly region: RegionCode;
     readonly showOnboarding: boolean;
     readonly disableAnalytics: boolean;
     readonly customLatLong: LatLong;
@@ -53,6 +62,7 @@ export interface UserProfileStore {
 }
 
 export const buildDefaultStore = (): UserProfileStore => ({
+    region: undefined,
     showOnboarding: false,
     disableAnalytics: false,
     customLatLong: undefined,
@@ -65,6 +75,8 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         return store;
     }
     switch (action.type) {
+        case constants.SAVE_CURRENT_REGION:
+            return { ...store, region: action.payload.regionCode };
         case constants.HIDE_ONBOARDING:
             return ({
                 ...store,
@@ -76,7 +88,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 disableAnalytics: action.payload.disable,
             });
         case constants.ENABLE_CUSTOM_LATLONG:
-            return({
+            return ({
                 ...store,
                 customLatLong: action.payload.customLatLong,
             });
@@ -93,6 +105,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         case constants.LOAD_USER_DATA_SUCCESS:
             return ({
                 ...store,
+                region: action.payload.region,
                 showOnboarding: action.payload.showOnboarding,
                 disableAnalytics: action.payload.disableAnalytics,
                 customLatLong: action.payload.customLatLong,
@@ -102,6 +115,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         case constants.CLEAR_ALL_USER_DATA:
             return ({
                 ...store,
+                region: undefined,
                 showOnboarding: true,
                 disableAnalytics: false,
                 customLatLong: undefined,

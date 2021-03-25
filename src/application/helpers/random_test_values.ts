@@ -29,8 +29,8 @@ export const aLatLong = (): LatLong => {
     return {
         lat: aNumber(),
         lng: aNumber(),
-    }
-}
+    };
+};
 
 export function anError(): Error {
     return new Error(aString());

@@ -5,13 +5,14 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
 import { DataPersistence, PersistedData } from '../stores/persisted_data';
 import * as constants from '../application/constants';
-import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
+import { selectUserDataForLocalPersistence } from '../selectors/user_profile/select_user_data_for_local_persistence';
 import { validateUserData } from '../validation/user_data';
 import { HumanServiceData, ServiceMap } from '../validation/services/types';
 
 export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(
         [
+            constants.SAVE_CURRENT_REGION,
             constants.CHOOSE_ANSWER,
             constants.BOOKMARK_TOPIC,
             constants.UNBOOKMARK_TOPIC,
@@ -94,6 +95,7 @@ export const deserializeUserData = (serializedUserData: string): PersistedData =
 // tslint:disable:no-any
 export const setUserDataDefaultValues = (data: any): PersistedData => (
     {
+        region: data.region || undefined,
         chosenAnswers: data.chosenAnswers || [],
         bookmarkedTopics: data.bookmarkedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
