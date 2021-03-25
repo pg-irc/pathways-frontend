@@ -5,6 +5,7 @@ export type Id = string;
 
 export interface Topic {
     readonly id: Id;
+    readonly region: string;
     readonly chapter: string;
     readonly title: LocalizedText;
     readonly description: LocalizedText;

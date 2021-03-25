@@ -65,6 +65,10 @@ usage() {
     echo "    --bc211path"
     echo "                Path to the iCarol csv file containing the BC211 data dump."
     echo
+    echo "    --mb211path"
+    echo "                Optional path to the iCarol csv file containing the Manitoba 211 data dump."
+    echo "                If left out, the app will be built with BC data only."
+    echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
     echo
@@ -299,17 +303,47 @@ completeManualConfiguration() {
 }
 
 buildServer() {
+    if [ "$MB211PATH" == "" ]
+    then
+        buildServerForBc
+    else
+        buildServerForBcAndManitoba
+    fi
+}
+
+buildServerForBc() {
     echo
-    echo "Building server"
+    echo "Building server for BC only"
     echo
 
     cp $BC211PATH $SERVER_DIRECTORY/icarol_bc211.csv
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./utility/prepare_deploy.sh \
-            --bc211Path                 ./icarol_bc211.csv                \
+            --bc211Path                 ./icarol_bc211.csv           \
             --cityLatLongs              ../content/city_latlong.csv  \
             --newComersGuidePath        ../content/NewcomersGuide/   \
+            --recommendationsToAddPath  ../content/taxonomy/         \
+            --outputDir                 ../                          \
+    )
+    checkForSuccess "build server"
+}
+
+buildServerForBcAndManitoba() {
+    echo
+    echo "Building server for BC and Manitoba"
+    echo
+
+    cp $BC211PATH $SERVER_DIRECTORY/icarol_bc211.csv
+    cp $MB211PATH $SERVER_DIRECTORY/icarol_mb211.csv
+    (cd "$SERVER_DIRECTORY" &&\
+        source .venv/bin/activate &&\
+        ./utility/prepare_deploy.sh \
+            --bc211Path                 ./icarol_bc211.csv           \
+            --mb211Path                 ./icarol_mb211.csv           \
+            --cityLatLongs              ../content/city_latlong.csv  \
+            --newComersGuidePath        ../content/NewcomersGuide/   \
+            --manitobaWinPath           ../content/WinnipegIntroductionForNewcomers.txt   \
             --recommendationsToAddPath  ../content/taxonomy/         \
             --outputDir                 ../                          \
     )

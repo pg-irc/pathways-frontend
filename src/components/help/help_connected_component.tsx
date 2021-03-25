@@ -15,14 +15,14 @@ import { UserLocation } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
 import { Topic } from '../../selectors/topics/types';
-import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { selectHelpTopicForRegion } from '../../selectors/topics/select_help_topic_for_region';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
-    topic: selectCurrentTopic(store, 'contact-workers-at-your-local-settlement-agency'),
+    topic: selectHelpTopicForRegion(store),
     history: ownProps.history,
     manualUserLocation: selectManualUserLocation(store),
-    customLatLong: selectCustomLatLong(store), 
+    customLatLong: selectCustomLatLong(store),
     }
 );
 

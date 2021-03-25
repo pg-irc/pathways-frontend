@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { Store } from '../../stores';
 import * as actions from '../../stores/services/actions';
 import { connect } from 'react-redux';
-import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
+import { selectTopicById } from '../../selectors/topics/select_topic_by_id';
 import { Topic } from '../../selectors/topics/types';
 import { selectServicesForTopic } from '../../selectors/services/select_services_for_topic';
 import { ServiceListComponent, ServiceListProps, ServiceListActions } from './service_list_component';
@@ -19,7 +19,7 @@ import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
-    const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
+    const topic: Topic = selectTopicById(store, ownProps.match.params.topicId);
     const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
