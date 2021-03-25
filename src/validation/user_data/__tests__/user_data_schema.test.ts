@@ -4,7 +4,7 @@ import { validateUserData } from '..';
 import { aString, aBoolean, aLatLong } from '../../../application/helpers/random_test_values';
 import { HumanServiceDataBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore, Store } from '../../../stores';
-import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/select_user_data_for_local_persistence';
+import { selectUserDataForLocalPersistence } from '../../../selectors/user_profile/select_user_data_for_local_persistence';
 import { DataPersistence } from '../../../stores/persisted_data';
 import * as constants from '../../../application/constants';
 import { reducer } from '../../../stores';

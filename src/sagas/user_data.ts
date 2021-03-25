@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
 import { DataPersistence, PersistedData } from '../stores/persisted_data';
 import * as constants from '../application/constants';
-import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
+import { selectUserDataForLocalPersistence } from '../selectors/user_profile/select_user_data_for_local_persistence';
 import { validateUserData } from '../validation/user_data';
 import { HumanServiceData, ServiceMap } from '../validation/services/types';
 
