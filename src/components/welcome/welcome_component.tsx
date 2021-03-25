@@ -115,8 +115,11 @@ const RegionPicker = (props: Props): JSX.Element => {
 };
 
 const LocalePicker = (props: Props): JSX.Element => {
-
+    const placeholder = 'Select language';
     const handleLocaleChange = (localeCode: string): void => {
+        if (localeCode === placeholder) {
+            return;
+        }
         const flipOrientation = needsTextDirectionChange(localeCode);
         if (localeCode !== props.currentLocale.code || flipOrientation) {
             props.setLocale(localeCode, flipOrientation);
@@ -127,7 +130,7 @@ const LocalePicker = (props: Props): JSX.Element => {
         <Item style={applicationStyles.pickerItem}>
             <Picker
                 mode='dropdown'
-                placeholder='Select language'
+                placeholder={placeholder }
                 selectedValue={props.localeIsSet ? props.currentLocale.code : undefined}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                 onValueChange={handleLocaleChange}
@@ -135,7 +138,7 @@ const LocalePicker = (props: Props): JSX.Element => {
                 enabled={props.currentRegion ? true : false}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
-                <Picker.Item key='' label='Select locale' value={false} />
+                <Picker.Item key='' label={placeholder} value={placeholder} />
                 {props.availableLocales.map((locale: LocaleInfo) => (
                     <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                 ))}
