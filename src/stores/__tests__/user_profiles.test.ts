@@ -37,8 +37,8 @@ describe('user profile reducer', () => {
             const dataRegion = new PersistedDataBuilder().
                 withRegion(savedRegion).
                 build();
-            const actionCustomizeLatLong = DataPersistence.loadSuccess(dataRegion);
-            const newStore = reducer(oldStore, actionCustomizeLatLong);
+            const actionLoadRegion = DataPersistence.loadSuccess(dataRegion);
+            const newStore = reducer(oldStore, actionLoadRegion);
             expect(newStore.region).toBe(savedRegion);
         });
 

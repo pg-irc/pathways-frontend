@@ -13,7 +13,6 @@ import { needsTextDirectionChange } from '../../locale/effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
-import { isAndroid } from '../../application/helpers/is_android';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -107,7 +106,7 @@ const RegionPicker = (props: Props): JSX.Element => {
                 style={applicationStyles.picker}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
-                {isAndroid ? <Picker.Item key='' label='Select province' value={false} /> : <EmptyComponent />}
+                <Picker.Item key='' label='Select province' value={false} />
                 <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
                 <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
             </Picker>
@@ -136,7 +135,7 @@ const LocalePicker = (props: Props): JSX.Element => {
                 enabled={props.currentRegion ? true : false}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
-                {isAndroid ? <Picker.Item key='' label='Select locale' value={false} /> : <EmptyComponent />}
+                <Picker.Item key='' label='Select locale' value={false} />
                 {props.availableLocales.map((locale: LocaleInfo) => (
                     <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                 ))}
