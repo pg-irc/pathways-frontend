@@ -105,6 +105,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         case constants.LOAD_USER_DATA_SUCCESS:
             return ({
                 ...store,
+                region: action.payload.region,
                 showOnboarding: action.payload.showOnboarding,
                 disableAnalytics: action.payload.disableAnalytics,
                 customLatLong: action.payload.customLatLong,

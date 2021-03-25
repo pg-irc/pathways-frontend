@@ -32,14 +32,13 @@ describe('user profile reducer', () => {
         });
 
         test('is loaded from persisted data', () => {
-            const savedRegion = RegionCode.BC;
-            const oldStore = new UserProfileBuilder().withRegion(savedRegion).build();
-            const dataRegion = new PersistedDataBuilder().
-                withRegion(savedRegion).
+            const oldStoreWithBC = new UserProfileBuilder().withRegion(RegionCode.BC).build();
+            const persistedDataWithMB = new PersistedDataBuilder().
+                withRegion(RegionCode.MB).
                 build();
-            const actionLoadRegion = DataPersistence.loadSuccess(dataRegion);
-            const newStore = reducer(oldStore, actionLoadRegion);
-            expect(newStore.region).toBe(savedRegion);
+            const loadSuccessActionWithMB = DataPersistence.loadSuccess(persistedDataWithMB);
+            const newStore = reducer(oldStoreWithBC, loadSuccessActionWithMB);
+            expect(newStore.region).toBe(RegionCode.MB);
         });
 
         test('is set by clear all user data action', () => {
