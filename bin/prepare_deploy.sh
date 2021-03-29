@@ -21,6 +21,10 @@ while (( "$#" )); do
     then
         BC211PATH=$2
         shift 2
+    elif [ "$1" == "--mb211path" ]
+    then
+        MB211PATH=$2
+        shift 2
     elif [ "$1" == "--staging" ]
     then
         BUILD="staging"
