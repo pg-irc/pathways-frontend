@@ -29,7 +29,7 @@ const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
 );
 
-const toTaskMap = (topics: ReadonlyArray<stores.Topic>): stores.TopicMap => {
+const toTopicMap = (topics: ReadonlyArray<stores.Topic>): stores.TopicMap => {
     const keys = R.map((topic: stores.Topic): string => topic.id, topics);
     return R.zipObj(keys, topics);
 };
@@ -92,7 +92,7 @@ describe('topics selector', () => {
         it('should include topics for the same region', () => {
             const aRegion = aString();
             const aTopic = new TopicBuilder().withRegion(aRegion).build();
-            const theTopicMap = toTaskMap([aTopic]);
+            const theTopicMap = toTopicMap([aTopic]);
 
             const result = filterTopicsByRegion(aRegion, theTopicMap);
 
@@ -103,7 +103,7 @@ describe('topics selector', () => {
             const aRegion = aString();
             const aDifferentRegion = aString();
             const aTopic = new TopicBuilder().withRegion(aRegion).build();
-            const theTopicMap = toTaskMap([aTopic]);
+            const theTopicMap = toTopicMap([aTopic]);
 
             const result = filterTopicsByRegion(aDifferentRegion, theTopicMap);
 
@@ -169,7 +169,7 @@ describe('topics selector', () => {
 
                 const aRedBlueTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).build();
 
-                const topicMap = toTaskMap([aRedBlueTask]);
+                const topicMap = toTopicMap([aRedBlueTask]);
 
                 it('recommends the topic if colour:red is chosen', () => {
                     const result = getRecommendedTopics(toAnswerMap([redAnswerChosen]), topicMap);
@@ -191,7 +191,7 @@ describe('topics selector', () => {
 
                 const aRedSmallTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(smallTerm).build();
 
-                const topicMap = toTaskMap([aRedSmallTask]);
+                const topicMap = toTopicMap([aRedSmallTask]);
 
                 it('does not recommend the topic if colour:red is chosen', () => {
                     const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
@@ -213,7 +213,7 @@ describe('topics selector', () => {
 
                 const aRedBlueSmallTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).withTaxonomyTerm(smallTerm).build();
 
-                const topicMap = toTaskMap([aRedBlueSmallTask]);
+                const topicMap = toTopicMap([aRedBlueSmallTask]);
 
                 it('does not recommend when one colour is chosen', () => {
                     const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
@@ -249,7 +249,7 @@ describe('topics selector', () => {
                     withTaxonomyTerm(irrelevantTaxonomyTerm).
                     build();
 
-                const topicMap = toTaskMap([aRedTaskWithAdditionalTaxonomyTerm]);
+                const topicMap = toTopicMap([aRedTaskWithAdditionalTaxonomyTerm]);
 
                 it('recommends the topic if colour:red is chosen', () => {
                     const result = getRecommendedTopics(toAnswerMap([redAnswerChosen]), topicMap);
