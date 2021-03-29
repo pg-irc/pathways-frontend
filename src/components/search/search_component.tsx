@@ -79,15 +79,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
         setIsLoading(true);
-        // tslint:disable-next-line: no-let
-        let geocoderLatLong = props.searchLatLong;
         try {
-            if (props.region === RegionCode.BC) {
-                const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
-                geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
-            } else {
-                geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong, props.region);
-            }
+            const geocoderLatLong = await getLatLongByRegion(location);
             props.saveSearchLatLong(geocoderLatLong);
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
             const searchResults = await fetchSearchResultsFromQuery(
@@ -97,6 +90,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
             setIsLoading(false);
             props.searchExecuted(searchTerm, location);
         }
+    };
+
+    const getLatLongByRegion = async (location: string): Promise<LatLong> => {
+        if (props.region === RegionCode.BC) {
+            const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+            return location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+        }
+        return await fetchLatLongFromLocation(location, props.customLatLong, props.region);
     };
 
     const onLoadMore = async (): Promise<void> => {
