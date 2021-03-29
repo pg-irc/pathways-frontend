@@ -83,7 +83,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
             const geocoderLatLong = await getLatLongByRegion(location);
             props.saveSearchLatLong(geocoderLatLong);
             const searchResults = await fetchSearchResultsFromQuery(
-                searchTerm, props.searchPage, location, geocoderLatLong, props.saveNumberOfSearchPages);
+                searchTerm, props.searchPage, location, geocoderLatLong, props.region, props.saveNumberOfSearchPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -102,7 +102,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const onLoadMore = async (): Promise<void> => {
         try {
             const moreResults = await fetchSearchResultsFromQuery(
-                props.searchTerm, props.searchPage + 1, props.searchLocation, props.searchLatLong, props.saveNumberOfSearchPages);
+                props.searchTerm, props.searchPage + 1, props.searchLocation, props.searchLatLong, props.region, props.saveNumberOfSearchPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
             props.saveSearchPage(props.searchPage + 1);

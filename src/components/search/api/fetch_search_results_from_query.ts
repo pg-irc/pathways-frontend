@@ -6,6 +6,7 @@ import { SearchServiceData } from '../../../validation/search/types';
 import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
 import { searchDictionary } from '../search_dictionary';
+import { RegionCode } from '../../../validation/region/types';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -21,14 +22,14 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number,
-    location: string, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
+    searchTerm: string, searchPage: number, location: string, latLong: LatLong, region: RegionCode,
+    setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }
     const url = buildAlgoliaSearchUrl();
     const algoliaQuery = JSON.stringify({
-        query: processSearchTerm(searchTerm, location),
+        query: processSearchTerm(searchTerm, location, region),
         page: searchPage,
         hitsPerPage: '20',
         aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
@@ -45,7 +46,7 @@ export const fetchSearchResultsFromQuery = async (
     }
 };
 
-export const processSearchTerm = (searchTerm: string, location: string): string => {
+export const processSearchTerm = (searchTerm: string, location: string, region: RegionCode): string => {
     // tslint:disable-next-line: no-let
     let processedSearchTerm = searchTerm;
 
@@ -53,6 +54,8 @@ export const processSearchTerm = (searchTerm: string, location: string): string 
     if (needConvert) {
         processedSearchTerm = searchDictionary.get(searchTerm);
     }
+
+    processedSearchTerm += ' ' + region;
 
     if (location.match('.*\\d.*') || location.match('My Location')) {
         return processedSearchTerm;
