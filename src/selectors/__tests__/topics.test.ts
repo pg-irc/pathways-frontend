@@ -108,7 +108,17 @@ describe('topics selector', () => {
             const result = filterTopicsByRegion(aDifferentRegion, theTopicMap);
 
             expect(result).toEqual({});
+        });
 
+        it('should filter list by region', () => {
+            const aRegion = aString();
+            const matchingTopic = new TopicBuilder().withRegion(aRegion).build();
+            const nonMatchingTopic = new TopicBuilder().withRegion(aString()).build();
+            const theTopicMap = toTopicMap([matchingTopic, nonMatchingTopic]);
+
+            const result = filterTopicsByRegion(aRegion, theTopicMap);
+
+            expect(result).toEqual(toTopicMap([matchingTopic]));
         });
     });
 
