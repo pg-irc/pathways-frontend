@@ -82,8 +82,12 @@ export const SearchComponent = (props: Props): JSX.Element => {
         // tslint:disable-next-line: no-let
         let geocoderLatLong = props.searchLatLong;
         try {
-            const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
-            geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+            if (props.region === RegionCode.BC) {
+                const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+                geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+            } else {
+                geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+            }
             props.saveSearchLatLong(geocoderLatLong);
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
             const searchResults = await fetchSearchResultsFromQuery(
