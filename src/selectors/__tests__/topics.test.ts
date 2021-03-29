@@ -21,12 +21,19 @@ import { getNewlyRecommendedTopics } from '../topics/get_newly_recommended_topic
 import { AnswersMap, Answer } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_from_topics';
 import * as R from 'ramda';
+import { filterTopicsByRegion } from '../topics/filter_topics_by_region';
 
 let locale: Locale = undefined;
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
 );
+
+const toTaskMap = (topics: ReadonlyArray<stores.Topic>): stores.TopicMap => {
+    const keys = R.map((topic: stores.Topic): string => topic.id, topics);
+    return R.zipObj(keys, topics);
+};
+
 
 beforeEach(() => {
     locale = aLocale();
@@ -81,6 +88,18 @@ describe('topics selector', () => {
         });
     });
 
+    describe('getting topics for region', () => {
+        it('should include topics for the same region', () => {
+            const aRegion = aString();
+            const aTopic = new TopicBuilder().withRegion(aRegion).build();
+            const theTopicMap = toTaskMap([aTopic]);
+
+            const result = filterTopicsByRegion(aRegion, theTopicMap);
+
+            expect(result).toEqual(theTopicMap);
+        });
+    });
+
     describe('getting recommended topics', () => {
 
         it('should not recommend topics by default', () => {
@@ -132,11 +151,6 @@ describe('topics selector', () => {
             const toAnswerMap = (values: ReadonlyArray<Answer>): AnswersMap => {
                 const keys = R.map((answer: Answer): string => answer.id, values);
                 return R.zipObj(keys, values);
-            };
-
-            const toTaskMap = (topics: ReadonlyArray<stores.Topic>): stores.TopicMap => {
-                const keys = R.map((topic: stores.Topic): string => topic.id, topics);
-                return R.zipObj(keys, topics);
             };
 
             describe('terms from the same taxonomy imply OR', () => {
