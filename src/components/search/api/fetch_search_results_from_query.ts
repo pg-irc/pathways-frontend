@@ -21,13 +21,14 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
+    searchTerm: string, searchPage: number,
+    location: string, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }
     const url = buildAlgoliaSearchUrl();
     const algoliaQuery = JSON.stringify({
-        query: convertSearchTerm(searchTerm.toLowerCase().trim()),
+        query: processSearchTerm(searchTerm, location),
         page: searchPage,
         hitsPerPage: '20',
         aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
@@ -44,12 +45,20 @@ export const fetchSearchResultsFromQuery = async (
     }
 };
 
-export const convertSearchTerm = (searchTerm: string): string => {
-    const needConvert = searchDictionary.has(searchTerm);
+export const processSearchTerm = (searchTerm: string, location: string): string => {
+    // tslint:disable-next-line: no-let
+    let processedSearchTerm = searchTerm;
+
+    const needConvert = searchDictionary.has(searchTerm.toLowerCase().trim());
     if (needConvert) {
-        return searchDictionary.get(searchTerm);
+        processedSearchTerm = searchDictionary.get(searchTerm);
     }
-    return searchTerm;
+
+    if (location.match('.*\\d.*') || location.match('My Location')) {
+        return processedSearchTerm;
+    }
+
+    return processedSearchTerm + ' ' + location;
 };
 
 export const fetchServicesForOrganization = async (

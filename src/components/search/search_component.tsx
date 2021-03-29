@@ -82,9 +82,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
         try {
             const geocoderLatLong = await getLatLongByRegion(location);
             props.saveSearchLatLong(geocoderLatLong);
-            const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
             const searchResults = await fetchSearchResultsFromQuery(
-                searchTermWithCity, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
+                searchTerm, props.searchPage, location, geocoderLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -101,21 +100,13 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     const onLoadMore = async (): Promise<void> => {
-        const searchTermWithCity = appendCityToSearchTerm(props.searchTerm, props.searchLocation);
         try {
             const moreResults = await fetchSearchResultsFromQuery(
-                searchTermWithCity, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
+                props.searchTerm, props.searchPage + 1, props.searchLocation, props.searchLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
             props.saveSearchPage(props.searchPage + 1);
         }
-    };
-
-    const appendCityToSearchTerm = (searchTerm: string, location: string): string => {
-        if (location.match('.*\\d.*') || location.match('My Location')) {
-            return searchTerm;
-        }
-        return searchTerm + ' ' + location;
     };
 
     const searchResultsProps = { ...props, isLoading, onSearchRequest, onLoadMore };
