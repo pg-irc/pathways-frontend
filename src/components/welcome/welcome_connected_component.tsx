@@ -8,7 +8,7 @@ import { SaveLocaleRequestAction, saveLocaleRequest, ResetLocaleAction, resetLoc
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
-import { selectRegion } from '../../selectors/region/select_region';
+import { pickRegion } from '../../selectors/region/pick_region';
 import { RegionCode } from '../../validation/region/types';
 import { saveRegion, SaveRegionAction } from '../../stores/user_profile';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
@@ -16,7 +16,7 @@ import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
         currentLocale: selectLocale(store),
-        currentRegion: selectRegion(store),
+        currentRegion: pickRegion(store),
         localeIsSet: selectIsLocaleSet(store),
         availableLocales: selectAvailableLocales(store),
         showOnboarding: selectShowOnboarding(store),
