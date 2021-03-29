@@ -98,6 +98,18 @@ describe('topics selector', () => {
 
             expect(result).toEqual(theTopicMap);
         });
+
+        it('should exclude topics for a different region', () => {
+            const aRegion = aString();
+            const aDifferentRegion = aString();
+            const aTopic = new TopicBuilder().withRegion(aRegion).build();
+            const theTopicMap = toTaskMap([aTopic]);
+
+            const result = filterTopicsByRegion(aDifferentRegion, theTopicMap);
+
+            expect(result).toEqual({});
+
+        });
     });
 
     describe('getting recommended topics', () => {
