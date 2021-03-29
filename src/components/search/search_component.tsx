@@ -22,6 +22,7 @@ import { Trans, I18n } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
+import { RegionCode } from '../../validation/region/types';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -35,6 +36,7 @@ export interface SearchComponentProps {
     readonly collapseSearchInput: boolean;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
+    readonly region: RegionCode;
 }
 
 export interface SearchComponentActions {
@@ -81,7 +83,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         let geocoderLatLong = props.searchLatLong;
         try {
             const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
-            geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong);
+            geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
             props.saveSearchLatLong(geocoderLatLong);
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
             const searchResults = await fetchSearchResultsFromQuery(

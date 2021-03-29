@@ -16,11 +16,13 @@ import { isMyLocation } from '../../api/fetch_lat_long_from_location';
 import { Topic } from '../../selectors/topics/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { BooleanSetterFunction, StringSetterFunction } from '../search/search_component';
+import { RegionCode } from '../../validation/region/types';
 
 interface Props {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly region: RegionCode;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
@@ -58,6 +60,7 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
                     setSearchIsCollapsed={setSearchIsCollapsed}
                     i18n={i18n}
                     customLatLong={props.customLatLong}
+                    region={props.region}
                 />
             )
         }
@@ -107,6 +110,7 @@ interface ExpandedSearchProps {
     readonly topic: Topic;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
     readonly customLatLong: LatLong;
+    readonly region: RegionCode;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
@@ -123,6 +127,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             props.topic,
             props.dispatchServicesRequest,
             props.customLatLong,
+            props.region,
         );
     };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
@@ -285,12 +290,13 @@ const getSearchOnPress = async (
     topic: Topic,
     dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction,
     customLatLong: LatLong,
+    region: RegionCode,
 ): Promise<void> => {
     const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
     setIsFetchingLatLng(true);
     try {
-        const latLong = await fetchLatLongFromLocation(location, customLatLong);
+        const latLong = await fetchLatLongFromLocation(location, customLatLong, region);
         setManualUserLocation({
             humanReadableLocation: locationInputValue,
             latLong: latLong,

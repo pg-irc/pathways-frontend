@@ -33,6 +33,7 @@ import { ThankYouMessageComponent } from './thank_you_message_component';
 import { useServicesScrollToOffset } from '../use_services_scroll_to_offset';
 import { useHistory } from 'react-router-native';
 import { OffsetHook, useOffset } from '../use_offset';
+import { RegionCode } from '../../validation/region/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -42,6 +43,7 @@ export interface ServiceListProps {
     readonly showPartialLocalizationMessage: boolean;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
+    readonly region: RegionCode;
 }
 
 export interface ServiceListActions {
@@ -77,6 +79,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
             isSendingReview={props.isSendingReview}
+            region={props.region}
             dispatchServicesRequest={props.dispatchServicesRequest}
             bookmarkService={props.bookmarkService}
             unbookmarkService={props.unbookmarkService}
@@ -199,6 +202,7 @@ const renderHeader = (props: Props): JSX.Element => (
         topic={props.topic}
         manualUserLocation={props.manualUserLocation}
         customLatLong={props.customLatLong}
+        region={props.region}
         setManualUserLocation={props.setManualUserLocation}
         openHeaderMenu={props.openHeaderMenu}
         dispatchServicesRequest={props.dispatchServicesRequest}
@@ -235,6 +239,7 @@ interface ServiceListHeaderComponentProps {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly region: RegionCode;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
@@ -261,6 +266,7 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
                 topic={props.topic}
                 manualUserLocation={props.manualUserLocation}
                 customLatLong={props.customLatLong}
+                region={props.region}
                 setManualUserLocation={props.setManualUserLocation}
                 dispatchServicesRequest={props.dispatchServicesRequest}
             />
