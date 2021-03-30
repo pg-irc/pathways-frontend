@@ -48,16 +48,17 @@ export const fetchSearchResultsFromQuery = async (
 
 export const processSearchTerm = (searchTerm: string, location: string, region: RegionCode): string => {
     // tslint:disable-next-line: no-let
-    let processedSearchTerm = searchTerm;
+    let processedSearchTerm = searchTerm.toLocaleLowerCase().trim();
 
-    const needConvert = searchDictionary.has(searchTerm.toLowerCase().trim());
+    const needConvert = searchDictionary.has(processedSearchTerm);
     if (needConvert) {
-        processedSearchTerm = searchDictionary.get(searchTerm);
+        processedSearchTerm = searchDictionary.get(processedSearchTerm);
     }
 
     processedSearchTerm += ' ' + region;
 
-    if (location.match('.*\\d.*') || location.match('My Location')) {
+    const customLatLongRegex = '.*\\d.*';
+    if (location.match(customLatLongRegex) || location.match('My Location')) {
         return processedSearchTerm;
     }
 

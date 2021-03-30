@@ -92,9 +92,17 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     const getLatLongByRegion = async (location: string): Promise<LatLong> => {
-        if (props.region === RegionCode.BC) {
-            const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
-            return location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+        const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+        const winnipegLatLong = { lat: 49.8951, lng: -97.1384 };
+        if (location === '') {
+            switch (props.region) {
+                case 'bc':
+                    return vancouverLatLong;
+                case 'mb':
+                    return winnipegLatLong;
+                default:
+                    return undefined;
+            }
         }
         return await fetchLatLongFromLocation(location, props.customLatLong, props.region);
     };
