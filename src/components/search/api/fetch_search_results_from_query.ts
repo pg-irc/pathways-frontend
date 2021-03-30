@@ -47,22 +47,26 @@ export const fetchSearchResultsFromQuery = async (
 };
 
 export const processSearchTerm = (searchTerm: string, location: string, region: RegionCode): string => {
-    // tslint:disable-next-line: no-let
-    let processedSearchTerm = searchTerm.toLocaleLowerCase().trim();
+    const cleanedSearchTerm = searchTerm.toLocaleLowerCase().trim();
+    const convertedSearchTerm = checkDictionary(cleanedSearchTerm);
+    const searchTermWithLocation = addLocationToSearchTerm(convertedSearchTerm, location);
+    return searchTermWithLocation + ' ' + region;
+};
 
-    const needConvert = searchDictionary.has(processedSearchTerm);
+const checkDictionary = (searchTerm: string): string => {
+    const needConvert = searchDictionary.has(searchTerm);
     if (needConvert) {
-        processedSearchTerm = searchDictionary.get(processedSearchTerm);
+        return searchDictionary.get(searchTerm);
     }
+    return searchTerm;
+};
 
-    processedSearchTerm += ' ' + region;
-
+const addLocationToSearchTerm = (searchTerm: string, location: string): string => {
     const customLatLongRegex = '.*\\d.*';
     if (location.match(customLatLongRegex) || location.match('My Location')) {
-        return processedSearchTerm;
+        return searchTerm;
     }
-
-    return processedSearchTerm + ' ' + location;
+    return searchTerm + ' ' + location;
 };
 
 export const fetchServicesForOrganization = async (
