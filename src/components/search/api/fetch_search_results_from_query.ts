@@ -50,10 +50,11 @@ export const processSearchTerm = (searchTerm: string, location: string, region: 
     const cleanedSearchTerm = searchTerm.toLocaleLowerCase().trim();
     const convertedSearchTerm = checkDictionary(cleanedSearchTerm);
     const searchTermWithLocation = addLocationToSearchTerm(convertedSearchTerm, location);
-    return searchTermWithLocation + ' ' + region;
+    const searchTermWithRegion = addRegionToSearchTerm(searchTermWithLocation, region);
+    return searchTermWithRegion;
 };
 
-const checkDictionary = (searchTerm: string): string => {
+export const checkDictionary = (searchTerm: string): string => {
     const needConvert = searchDictionary.has(searchTerm);
     if (needConvert) {
         return searchDictionary.get(searchTerm);
@@ -61,12 +62,22 @@ const checkDictionary = (searchTerm: string): string => {
     return searchTerm;
 };
 
-const addLocationToSearchTerm = (searchTerm: string, location: string): string => {
+export const addLocationToSearchTerm = (searchTerm: string, location: string): string => {
     const customLatLongRegex = '.*\\d.*';
+    if (!location) {
+        return searchTerm;
+    }
     if (location.match(customLatLongRegex) || location.match('My Location')) {
         return searchTerm;
     }
     return searchTerm + ' ' + location;
+};
+
+export const addRegionToSearchTerm = (searchTerm: string, region: RegionCode): string => {
+    if (region) {
+        return searchTerm + ' ' + region;
+    }
+    return searchTerm;
 };
 
 export const fetchServicesForOrganization = async (
