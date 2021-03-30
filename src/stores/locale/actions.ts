@@ -1,5 +1,6 @@
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 export type LoadLocaleRequestAction = Readonly<ReturnType<typeof loadLocaleRequest>>;
 export type LoadLocaleSuccessAction = Readonly<ReturnType<typeof loadLocaleSuccess>>;
@@ -16,7 +17,7 @@ export type SaveLocaleAction = SaveLocaleRequestAction | SaveLocaleSuccessAction
 
 export type ResetLocaleAction = Readonly<ReturnType<typeof resetLocale>>;
 
-export type LocaleAction = LoadLocaleAction | SaveLocaleAction | ResetLocaleAction;
+export type LocaleAction = LoadLocaleAction | SaveLocaleAction | ResetLocaleAction | ClearAllUserDataAction;
 
 // tslint:disable-next-line:typedef
 export const loadLocaleRequest = () => {
