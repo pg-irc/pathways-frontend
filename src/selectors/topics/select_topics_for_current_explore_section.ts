@@ -10,14 +10,14 @@ import { toSelectorTopicWithoutRelatedEntities } from './to_selector_topic_witho
 import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 import { isTopicRecommended } from './is_topic_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
-import { pickTopics } from './pick_topics';
+import { selectTopicsForCurrentRegion } from './select_topics_for_current_region';
 import { sortTopicList } from './sort_topic_list';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
 export const selectTopicsForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Topic> => {
     const currentExploreSection = pickExploreSectionById(appStore, routerProps.match.params.learnId);
-    const tasks = pickTopics(appStore);
+    const tasks = selectTopicsForCurrentRegion(appStore);
     const matchingTasks = findItemsByExploreTaxonomyTerm(currentExploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(appStore);

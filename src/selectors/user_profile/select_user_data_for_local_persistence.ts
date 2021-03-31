@@ -17,10 +17,10 @@ import { selectNumberOfSearchPages } from '../search/select_number_of_search_pag
 import { selectShowLinkAlerts } from './select_show_link_alerts';
 import { selectCustomLatLong } from './select_custom_latlong';
 import { selectReviewedServicesIds } from '../services/select_reviewed_services_ids';
-import { selectRegion } from '../region/select_region';
+import { pickRegion } from '../region/pick_region';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
-    region: selectRegion(appStore),
+    region: pickRegion(appStore),
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     bookmarkedTopics: pickBookmarkedTopicIds(appStore),
     showOnboarding: selectShowOnboarding(appStore),
