@@ -13,7 +13,7 @@ import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING, ENABLE_CUSTOM_LATLONG } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
-import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
+import { fetchSearchResultsFromQuery, processSearchTerm } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
@@ -22,6 +22,7 @@ import { Trans, I18n } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
+import { RegionCode } from '../../validation/region/types';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -35,6 +36,7 @@ export interface SearchComponentProps {
     readonly collapseSearchInput: boolean;
     readonly customLatLong: LatLong;
     readonly isSendingReview: boolean;
+    readonly region: RegionCode;
 }
 
 export interface SearchComponentActions {
@@ -77,15 +79,12 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
         setIsLoading(true);
-        // tslint:disable-next-line: no-let
-        let geocoderLatLong = props.searchLatLong;
         try {
-            const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
-            geocoderLatLong = location === '' ? vancouverLatLong : await fetchLatLongFromLocation(location, props.customLatLong);
+            const geocoderLatLong = await getLatLongByRegion(location);
             props.saveSearchLatLong(geocoderLatLong);
-            const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
+            const query = processSearchTerm(searchTerm, location, props.region);
             const searchResults = await fetchSearchResultsFromQuery(
-                searchTermWithCity, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
+                query, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -93,22 +92,31 @@ export const SearchComponent = (props: Props): JSX.Element => {
         }
     };
 
+    const getLatLongByRegion = async (location: string): Promise<LatLong> => {
+        const vancouverLatLong = { lat: 49.282729, lng: -123.120738 };
+        const winnipegLatLong = { lat: 49.8951, lng: -97.1384 };
+        if (location === '') {
+            switch (props.region) {
+                case 'bc':
+                    return vancouverLatLong;
+                case 'mb':
+                    return winnipegLatLong;
+                default:
+                    return undefined;
+            }
+        }
+        return await fetchLatLongFromLocation(location, props.customLatLong, props.region);
+    };
+
     const onLoadMore = async (): Promise<void> => {
-        const searchTermWithCity = appendCityToSearchTerm(props.searchTerm, props.searchLocation);
         try {
+            const query = processSearchTerm(props.searchTerm, props.searchLocation, props.region);
             const moreResults = await fetchSearchResultsFromQuery(
-                searchTermWithCity, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
+                query, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
             props.saveSearchPage(props.searchPage + 1);
         }
-    };
-
-    const appendCityToSearchTerm = (searchTerm: string, location: string): string => {
-        if (location.match('.*\\d.*') || location.match('My Location')) {
-            return searchTerm;
-        }
-        return searchTerm + ' ' + location;
     };
 
     const searchResultsProps = { ...props, isLoading, onSearchRequest, onLoadMore };

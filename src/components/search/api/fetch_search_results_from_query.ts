@@ -6,6 +6,7 @@ import { SearchServiceData } from '../../../validation/search/types';
 import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
 import { searchDictionary } from '../search_dictionary';
+import { RegionCode } from '../../../validation/region/types';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -21,13 +22,14 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
-    if (!searchTerm) {
+    query: string, searchPage: number, latLong: LatLong,
+    setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
+    if (!query) {
         return [];
     }
     const url = buildAlgoliaSearchUrl();
     const algoliaQuery = JSON.stringify({
-        query: convertSearchTerm(searchTerm.toLowerCase().trim()),
+        query,
         page: searchPage,
         hitsPerPage: '20',
         aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
@@ -44,10 +46,39 @@ export const fetchSearchResultsFromQuery = async (
     }
 };
 
-export const convertSearchTerm = (searchTerm: string): string => {
+export const processSearchTerm = (searchTerm: string, location: string, region: RegionCode): string => {
+    if (searchTerm === '') {
+        return '';
+    }
+    const cleanedSearchTerm = searchTerm.toLocaleLowerCase().trim();
+    const convertedSearchTerm = checkDictionary(cleanedSearchTerm);
+    const searchTermWithLocation = addLocationToSearchTerm(convertedSearchTerm, location);
+    const searchTermWithRegion = addRegionToSearchTerm(searchTermWithLocation, region);
+    return searchTermWithRegion;
+};
+
+export const checkDictionary = (searchTerm: string): string => {
     const needConvert = searchDictionary.has(searchTerm);
     if (needConvert) {
         return searchDictionary.get(searchTerm);
+    }
+    return searchTerm;
+};
+
+export const addLocationToSearchTerm = (searchTerm: string, location: string): string => {
+    const customLatLongRegex = '.*\\d.*';
+    if (!location) {
+        return searchTerm;
+    }
+    if (location.match(customLatLongRegex) || location.match('My Location')) {
+        return searchTerm;
+    }
+    return searchTerm + ' ' + location;
+};
+
+export const addRegionToSearchTerm = (searchTerm: string, region: RegionCode): string => {
+    if (region) {
+        return searchTerm + ' ' + region;
     }
     return searchTerm;
 };
