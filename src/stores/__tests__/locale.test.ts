@@ -4,6 +4,7 @@ import * as actions from '../locale/actions';
 import * as constants from '../../application/constants';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 const aLocaleCode = aString();
 
@@ -185,6 +186,28 @@ describe('the reducer', () => {
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(false);
+    });
+
+    it('sets the code to undefined when called with CLEAR ALL USER DATA', () => {
+        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
+        const action: ClearAllUserDataAction = {
+            type: constants.CLEAR_ALL_USER_DATA,
+        };
+
+        const newStore = locale.reducer(oldStore, action);
+
+        expect(newStore.code).toBe(undefined);
+    });
+
+    it('sets the saved flag to false when called with CLEAR ALL USER DATA', () => {
+        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
+        const action: ClearAllUserDataAction = {
+            type: constants.CLEAR_ALL_USER_DATA,
+        };
+
+        const newStore = locale.reducer(oldStore, action);
+
+        expect(newStore.isSaved).toBe(false);
     });
 
     describe('should never change', () => {

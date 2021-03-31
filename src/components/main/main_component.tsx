@@ -23,6 +23,7 @@ import { FeedbackScreen } from '../../stores/feedback/types';
 import { CloseAction, BackFromContactInformationAction } from '../../stores/feedback';
 import { memoryHistory } from '../../application';
 import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
+import { RegionCode } from '../../validation/region/types';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -40,6 +41,7 @@ export interface MainComponentActions {
 }
 
 interface MainProps {
+    readonly region: RegionCode;
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;

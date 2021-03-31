@@ -9,7 +9,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link_component';
-import { goToRouteWithParameter, Routes } from '../../application/routing';
+import { goToRouteWithParameter, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
@@ -136,6 +136,11 @@ export const HelpComponent = (props: Props): JSX.Element => {
                 marginBottom: 20,
             }}>
                 <ClearAppMemoryButton {...props} />
+                <MultiLineButtonComponent onPress={(): void => goToRouteWithoutParameter(Routes.Welcome, props.history)} >
+                    <Text style={textStyles.button}>
+                        Go to Welcome screen
+                    </Text>
+                </MultiLineButtonComponent>
             </View>
         </ScrollView>
     </View>

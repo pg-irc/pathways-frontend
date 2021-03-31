@@ -4,6 +4,7 @@
 // available natively; we should see it is possibly conditionally load the
 // polyfill only when needed.
 import 'intl';
+// TODO the next three lines are probably not needed, since the other 5 locales work just fine
 import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
@@ -22,33 +23,42 @@ export class LocaleInfoManager {
         LocaleInfoManager.register([locale]);
     }
 
+    // TODO make this a regular function that stores the data in a variable with file scope.
+    // It also needs to create the catalogs map.
     static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): void {
         if (this.singleton !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
+        // TODO the constructor and its helper function does some useful work, inline that here
         this.singleton = new LocaleInfoManager(locale);
     }
 
+    // TODO remove this function
     static reset(): void {
         this.singleton = undefined;
     }
 
+    // TODO remove the LocaleInfo type, this function should just return its input argument, then remove the function altogether
     static get(localeCode: string): LocaleInfo {
         return this.instance().getLocaleInfo(localeCode);
     }
 
+    // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): LocaleInfo {
         return this.instance().locales[0];
     }
 
+    // TODO just return the value that as received by register()
     static all(): ReadonlyArray<LocaleInfo> {
         return this.instance().locales;
     }
 
+    // TODO return the catalogs map
     static catalogsMap(): CatalogsMap {
         return this.instance().catalogsMap;
     }
 
+    // TODO remove
     private static instance(): LocaleInfoManager {
         if (this.singleton === undefined) {
             throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
@@ -56,16 +66,20 @@ export class LocaleInfoManager {
         return this.singleton;
     }
 
+    // TODO make a file scope variable for this
     private locales: ReadonlyArray<LocaleInfo>;
 
+    // TODO make a file scope variable for this
     private catalogsMap: CatalogsMap;
 
+    // TODO refactor this function away, all of this logic can be inlined in the register function
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
         I18nManager.allowRTL(true);
         this.setLocales(locales);
         this.catalogsMap = buildCatalogsMap(locales);
     }
 
+    // TODO refactor this function away, all of this logic can be inlined in the register function
     private setLocales(locales: ReadonlyArray<LocaleInfoWithCatalog>): LocaleInfoManager {
         this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
             code: localeInfoWithCatalog.code,
@@ -74,6 +88,7 @@ export class LocaleInfoManager {
         return this;
     }
 
+    // TODO remove this function
     private getLocaleInfo(localeCode: string): LocaleInfo {
         const locale = this.findLocale(localeCode);
         if (locale === undefined) {
@@ -82,6 +97,7 @@ export class LocaleInfoManager {
         return locale;
     }
 
+    // TODO remove this function
     private findLocale(code: string): LocaleInfo {
         return this.locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }

@@ -4,9 +4,12 @@ import * as actions from './actions';
 
 export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    // TODO rename to currentLocale
     readonly code: string;
+    // TODO remove the fallback property, hard-code 'en'
     readonly fallback: string;
     readonly loading: boolean;
+    // TODO should be able to remove this flag, and use code === undefined or '' to represent is not saved
     readonly isSaved: boolean;
     readonly errorMessage: string;
 }
@@ -38,6 +41,8 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actio
         case constants.SAVE_LOCALE_FAILURE:
             return { ...store, errorMessage: action.payload.message, loading: false };
         case constants.RESET_LOCALE:
+            // intended fall through
+        case constants.CLEAR_ALL_USER_DATA:
             return { ...store, isSaved: false, code: undefined };
         default:
             return store;

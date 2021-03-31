@@ -30,6 +30,7 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
+    readonly region: string;
 }
 
 export interface RecommendedTopicsActions {
@@ -66,7 +67,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                     recommendedTopicsStyles.taskListHeaderTitle,
                 ]}
             >
-                <Trans>Start settling in B.C.</Trans>
+                <HomeScreenTitle {...props} />
             </Text>
             <AlertComponent
                 alerts={props.alerts}
@@ -97,4 +98,8 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             }
         </View>
     </View>
+);
+
+const HomeScreenTitle = (props: Props): JSX.Element => (
+    props.region === 'bc' ? <Trans>Start settling in B.C.</Trans> : <Trans>Start settling in Manitoba</Trans>
 );
