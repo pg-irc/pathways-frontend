@@ -41,10 +41,10 @@ describe('user profile reducer', () => {
             expect(newStore.region).toBe(RegionCode.MB);
         });
 
-        test('is set by clear all user data action', () => {
+        test('is set to BC by the clear all user data action', () => {
             const oldStore = new UserProfileBuilder().withRegion(RegionCode.BC).build();
             const newStore = reducer(oldStore, clearAllUserData());
-            expect(newStore.region).toBe(undefined);
+            expect(newStore.region).toBe(RegionCode.BC);
         });
     });
 
