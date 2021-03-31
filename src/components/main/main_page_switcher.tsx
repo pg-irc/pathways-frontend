@@ -19,8 +19,10 @@ import { Locale } from '../../locale';
 import { ContactInformationConnectedComponent } from '../feedback/contact_information_connected_component';
 import { OrganizationConnectedComponent } from '../organizations/organization_connected_component';
 import { ServiceReviewConnectedComponent } from '../reviews/service_review_connected_component';
+import { RegionCode } from '../../validation/region/types';
 
 interface Props {
+    readonly region: RegionCode;
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
@@ -50,7 +52,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
 );
 
 const defaultPath = (props: Props): string => {
-    if (!props.localeIsSet) {
+    if (!props.localeIsSet || !props.region) {
         return routePathWithoutParameter(Routes.Welcome);
     }
     if (props.showOnboarding) {
