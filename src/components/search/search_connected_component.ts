@@ -21,7 +21,7 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experien
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 import { selectIsSendingReview } from '../../selectors/reviews/select_is_sending_review';
-import { selectRegion } from '../../selectors/region/select_region';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -35,7 +35,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     collapseSearchInput: selectIsInputCollapsed(store),
     customLatLong: selectCustomLatLong(store),
     isSendingReview: selectIsSendingReview(store),
-    region: selectRegion(store),
+    region: pickRegion(store),
 });
 
 type Actions =

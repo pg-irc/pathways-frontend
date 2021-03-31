@@ -22,7 +22,7 @@ import { selectIsDisclaimerModalVisible } from '../../selectors/user_experience/
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
 import { close as backOutOfFeedbackScreen, CloseAction, BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
 import { openDiscardChangesModal, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
-import { selectRegion } from '../../selectors/region/select_region';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -31,7 +31,7 @@ export interface OnboardingProps {
 }
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
-    region: selectRegion(store),
+    region: pickRegion(store),
     loading: isApplicationLoading(store),
     history: ownProps.history,
     location: ownProps.location,

@@ -13,7 +13,7 @@ import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_l
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
-import { selectRegion } from '../../selectors/region/select_region';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
@@ -21,7 +21,7 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     recommendedTopics: selectRecommendedTopics(store),
     alerts: selectAlerts(store),
     showLinkAlerts: selectShowLinkAlerts(store),
-    region: selectRegion(store),
+    region: pickRegion(store),
 });
 
 type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction | HideLinkAlertsAction;
