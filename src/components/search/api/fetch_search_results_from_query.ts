@@ -22,14 +22,14 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number, location: string, latLong: LatLong, region: RegionCode,
+    query: string, searchPage: number, latLong: LatLong,
     setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
-    if (!searchTerm) {
+    if (!query) {
         return [];
     }
     const url = buildAlgoliaSearchUrl();
     const algoliaQuery = JSON.stringify({
-        query: processSearchTerm(searchTerm, location, region),
+        query,
         page: searchPage,
         hitsPerPage: '20',
         aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
@@ -47,6 +47,9 @@ export const fetchSearchResultsFromQuery = async (
 };
 
 export const processSearchTerm = (searchTerm: string, location: string, region: RegionCode): string => {
+    if (searchTerm === '') {
+        return '';
+    }
     const cleanedSearchTerm = searchTerm.toLocaleLowerCase().trim();
     const convertedSearchTerm = checkDictionary(cleanedSearchTerm);
     const searchTermWithLocation = addLocationToSearchTerm(convertedSearchTerm, location);
