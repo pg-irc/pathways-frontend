@@ -64,7 +64,7 @@ const fixture: ReadonlyArray<HelpContact> = [
 ];
 
 export interface HelpComponentProps {
-    readonly topic: string;
+    readonly topicId: string;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
@@ -75,7 +75,7 @@ export interface HelpComponentActions {
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topicId: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
@@ -117,7 +117,7 @@ export const HelpComponent = (props: Props): JSX.Element => {
                     marginBottom: 20,
                 }}>
                     <FindSettlementAgencyButton
-                        topic={props.topic}
+                        topicId={props.topicId}
                         history={props.history}
                         manualUserLocation={props.manualUserLocation}
                         customLatLong={props.customLatLong}
@@ -147,12 +147,12 @@ export const HelpComponent = (props: Props): JSX.Element => {
 };
 
 export interface FindSettlementAgencyButtonProps {
-    readonly topic: string;
+    readonly topicId: string;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
     readonly offset: number;
-    readonly dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topicId: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 const FindSettlementAgencyButton = (props: FindSettlementAgencyButtonProps): JSX.Element => (
@@ -165,11 +165,11 @@ const FindSettlementAgencyButton = (props: FindSettlementAgencyButtonProps): JSX
 
 const onFindSettlementAgencyPress = (props: FindSettlementAgencyButtonProps): void => {
     if (props.customLatLong) {
-        props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
+        props.dispatchServicesRequest(props.topicId, { humanReadableLocation: '', latLong: props.customLatLong });
     } else {
-        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
+        props.dispatchServicesRequest(props.topicId, props.manualUserLocation);
     }
-    goToRouteWithParameter(Routes.Services, props.topic, props.history, props.offset);
+    goToRouteWithParameter(Routes.Services, props.topicId, props.history, props.offset);
 };
 
 const ClearAppMemoryButton = (props: Props): JSX.Element => {
