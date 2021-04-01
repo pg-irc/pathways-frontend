@@ -22,6 +22,8 @@ import { AnswersMap, Answer } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_from_topics';
 import * as R from 'ramda';
 import { filterTopicsByRegion } from '../topics/filter_topics_by_region';
+import { getHelpTopicIdForRegion } from '../topics/get_help_topicId_for_region';
+import { RegionCode } from '../../validation/region/types';
 
 let locale: Locale = undefined;
 
@@ -121,6 +123,20 @@ describe('topics selector', () => {
             expect(result).toEqual(toTopicMap([matchingTopic]));
         });
     });
+
+    describe('getting default help topic for region', () => {
+        it('should return topic for bc', () => {
+           expect(getHelpTopicIdForRegion(RegionCode.BC)).toBe('contact-workers-at-your-local-settlement-agency_bc');
+        });
+
+        it('should return topic for mb', () => {
+           expect(getHelpTopicIdForRegion(RegionCode.MB)).toBe('contact-workers-at-your-local-settlement-agency_mb');
+        });
+
+        it('should return BC topic for undefined', () => {
+            expect(getHelpTopicIdForRegion(undefined)).toBe('contact-workers-at-your-local-settlement-agency_bc');
+        });
+     });
 
     describe('getting recommended topics', () => {
 
