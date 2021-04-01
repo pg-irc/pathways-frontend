@@ -26,7 +26,8 @@ with open('app.json', 'r') as file:
     text = file.read()
     content = json.loads(text, object_pairs_hook=OrderedDict)
     content['expo']['version'] = NEW_VERSION
-    content['expo']['android']['versionCode'] = NEW_VERSION.replace('.', '') + '00'
+    version_number = int(NEW_VERSION.replace('.', ''))
+    content['expo']['android']['versionCode'] = version_number * 100
     with open('app.tmp', 'w') as file:
         file.write(json.dumps(content, indent=2))
 
