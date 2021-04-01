@@ -19,10 +19,6 @@ export class LocaleInfoManager {
 
     private static singleton: LocaleInfoManager = undefined;
 
-    static registerSingle = (locale: LocaleInfoWithCatalog): void => {
-        LocaleInfoManager.register([locale]);
-    }
-
     // TODO make this a regular function that stores the data in a variable with file scope.
     // It also needs to create the catalogs map.
     static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): void {

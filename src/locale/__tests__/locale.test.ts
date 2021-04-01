@@ -35,8 +35,8 @@ describe('LocaleManager', () => {
         });
 
         it('should throw an error if called twice', () => {
-            LocaleInfoManager.registerSingle(aLocale);
-            expect(() => LocaleInfoManager.registerSingle(aLocale)).toThrow();
+            LocaleInfoManager.register([aLocale]);
+            expect(() => LocaleInfoManager.register([aLocale])).toThrow();
         });
 
     });

@@ -88,7 +88,7 @@ describe('the applyLocaleChange saga', () => {
 
         beforeEach(() => {
             LocaleInfoManager.reset();
-            LocaleInfoManager.registerSingle({ ...aLocale, catalog: {} });
+            LocaleInfoManager.register([{ ...aLocale, catalog: {} }]);
             saga = applyLocaleChange(saveLocaleAction);
             saga.next();
         });
