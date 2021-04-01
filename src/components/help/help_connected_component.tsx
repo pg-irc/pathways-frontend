@@ -14,7 +14,6 @@ import { selectManualUserLocation } from '../../selectors/services/select_manual
 import { UserLocation } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
-import { Topic } from '../../selectors/topics/types';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectHelpTopicForRegion } from '../../selectors/topics/select_help_topic_for_region';
 
@@ -26,15 +25,16 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProp
     }
 );
 
-type Actions = ClearAllUserDataAction | SetManualUserLocationAction | ClearManualUserLocationAction | OpenHeaderMenuAction| BuildServicesRequestAction;
+type Actions = ClearAllUserDataAction | SetManualUserLocationAction |
+     ClearManualUserLocationAction | OpenHeaderMenuAction| BuildServicesRequestAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): HelpComponentActions => ({
     clearAllUserState: (): ClearAllUserDataAction => dispatch(clearAllUserData()),
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     clearManualUserLocation: (): ClearManualUserLocationAction => dispatch(clearManualUserLocation()),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
-    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
-    dispatch(buildServicesRequest(topic.id, manualUserLocation)),
+    dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
+    dispatch(buildServicesRequest(topic, manualUserLocation)),
 });
 
 export const HelpConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HelpComponent);

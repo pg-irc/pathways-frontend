@@ -18,7 +18,6 @@ import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
-import { Topic } from '../../selectors/topics/types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { OffsetHook, useOffset } from '../use_offset';
 import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
@@ -65,7 +64,7 @@ const fixture: ReadonlyArray<HelpContact> = [
 ];
 
 export interface HelpComponentProps {
-    readonly topic: Topic;
+    readonly topic: string;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
@@ -76,7 +75,7 @@ export interface HelpComponentActions {
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
@@ -148,12 +147,12 @@ export const HelpComponent = (props: Props): JSX.Element => {
 };
 
 export interface FindSettlementAgencyButtonProps {
-    readonly topic: Topic;
+    readonly topic: string;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
     readonly offset: number;
-    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 const FindSettlementAgencyButton = (props: FindSettlementAgencyButtonProps): JSX.Element => (
@@ -170,7 +169,7 @@ const onFindSettlementAgencyPress = (props: FindSettlementAgencyButtonProps): vo
     } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
-    goToRouteWithParameter(Routes.Services, props.topic.id, props.history, props.offset);
+    goToRouteWithParameter(Routes.Services, props.topic, props.history, props.offset);
 };
 
 const ClearAppMemoryButton = (props: Props): JSX.Element => {
