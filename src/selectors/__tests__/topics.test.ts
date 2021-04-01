@@ -120,6 +120,16 @@ describe('topics selector', () => {
 
             expect(result).toEqual(toTopicMap([matchingTopic]));
         });
+
+        it('should default to region bc', () => {
+            const matchingTopic = new TopicBuilder().withRegion('bc').build();
+            const nonMatchingTopic = new TopicBuilder().withRegion('mb').build();
+            const theTopicMap = toTopicMap([matchingTopic, nonMatchingTopic]);
+
+            const result = filterTopicsByRegion(undefined, theTopicMap);
+
+            expect(result).toEqual(toTopicMap([matchingTopic]));
+        });
     });
 
     describe('getting recommended topics', () => {
