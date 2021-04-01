@@ -18,7 +18,7 @@ import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_
 import { selectHelpTopicForRegion } from '../../selectors/topics/select_help_topic_for_region';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
-    topic: selectHelpTopicForRegion(store),
+    topicId: selectHelpTopicForRegion(store),
     history: ownProps.history,
     manualUserLocation: selectManualUserLocation(store),
     customLatLong: selectCustomLatLong(store),
@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): HelpComponentActions =
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     clearManualUserLocation: (): ClearManualUserLocationAction => dispatch(clearManualUserLocation()),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
-    dispatchServicesRequest: (topic: string, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
-    dispatch(buildServicesRequest(topic, manualUserLocation)),
+    dispatchServicesRequest: (topicId: string, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
+    dispatch(buildServicesRequest(topicId, manualUserLocation)),
 });
 
 export const HelpConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HelpComponent);
