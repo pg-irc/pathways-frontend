@@ -10,6 +10,7 @@ import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
 import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
+import * as R from 'ramda';
 
 export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
 
@@ -17,8 +18,8 @@ export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCo
 
 export class LocaleInfoManager {
 
-    private static _locales: ReadonlyArray<LocaleInfo>;
-    private static _catalogsMap: CatalogsMap;
+    private static _locales: ReadonlyArray<LocaleInfo> = [];
+    private static _catalogsMap: CatalogsMap = {};
     private static singleton: LocaleInfoManager = undefined;
 
     // TODO make this a regular function that stores the data in a variable with file scope.
@@ -44,6 +45,14 @@ export class LocaleInfoManager {
     // TODO remove this function
     static reset(): void {
         this.singleton = undefined;
+        this._locales = [];
+        this._catalogsMap = {};
+    }
+
+    static validate(): void {
+        if (R.isEmpty(this._locales) || R.isEmpty(this._catalogsMap)) {
+            throw new Error('Locales have not been initialized');
+        }
     }
 
     // TODO remove the LocaleInfo type, this function should just return its input argument, then remove the function altogether
@@ -53,22 +62,19 @@ export class LocaleInfoManager {
 
     // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): LocaleInfo {
+        this.validate();
         return this._locales[0];
     }
 
     // TODO just return the value that as received by register()
     static all(): ReadonlyArray<LocaleInfo> {
-        if (this.singleton === undefined) {
-            throw new Error();
-        }
+        this.validate();
         return this._locales;
     }
 
     // TODO return the catalogs map
     static catalogsMap(): CatalogsMap {
-        if (this.singleton === undefined) {
-            throw new Error();
-        }
+        this.validate();
         return this._catalogsMap;
     }
 

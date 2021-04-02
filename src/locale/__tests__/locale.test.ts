@@ -8,6 +8,8 @@ describe('LocaleManager', () => {
 
     describe('before .registerLocales() is called', () => {
 
+        beforeEach(() => LocaleInfoManager.reset());
+
         it('.get() should throw an error', () => {
             expect(() => LocaleInfoManager.get(aString())).toThrow();
         });
