@@ -71,17 +71,11 @@ export class LocaleInfoManager {
     // TODO refactor this function away, all of this logic can be inlined in the register function
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
         I18nManager.allowRTL(true);
-        this.setLocales(locales);
         this.catalogsMap = buildCatalogsMap(locales);
-    }
-
-    // TODO refactor this function away, all of this logic can be inlined in the register function
-    private setLocales(locales: ReadonlyArray<LocaleInfoWithCatalog>): LocaleInfoManager {
         this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
         }));
-        return this;
     }
 
     // TODO remove this function
