@@ -51,11 +51,6 @@ export class LocaleInfoManager {
         }
     }
 
-    // TODO remove the LocaleInfo type, this function should just return its input argument, then remove the function altogether
-    static get(localeCode: string): LocaleInfoWithCatalog {
-        return this.getLocaleInfo(localeCode);
-    }
-
     // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): LocaleInfo {
         this.validate();
@@ -75,7 +70,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove this function
-    private static getLocaleInfo(localeCode: string): LocaleInfoWithCatalog {
+    static get(localeCode: string): LocaleInfoWithCatalog {
         const locale = this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
