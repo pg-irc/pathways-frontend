@@ -71,6 +71,7 @@ export class LocaleInfoManager {
 
     // TODO remove this function
     static get(localeCode: string): LocaleInfoWithCatalog {
+        this.validate();
         const locale = this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
