@@ -17,16 +17,28 @@ export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCo
 
 export class LocaleInfoManager {
 
+    private static _locales: ReadonlyArray<LocaleInfo>;
+    private static _catalogsMap: CatalogsMap;
     private static singleton: LocaleInfoManager = undefined;
 
     // TODO make this a regular function that stores the data in a variable with file scope.
     // It also needs to create the catalogs map.
-    static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): void {
+    static register(locales: ReadonlyArray<LocaleInfoWithCatalog>): void {
         if (this.singleton !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
         // TODO the constructor and its helper function does some useful work, inline that here
-        this.singleton = new LocaleInfoManager(locale);
+        this.singleton = new LocaleInfoManager();
+
+        I18nManager.allowRTL(true);
+        const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
+            return { ...accumulator, [locale.code]: locale.catalog };
+        };
+        this._catalogsMap = locales.reduce(reducer, {});
+        this._locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
+            code: localeInfoWithCatalog.code,
+            label: localeInfoWithCatalog.label,
+        }));
     }
 
     // TODO remove this function
@@ -36,53 +48,32 @@ export class LocaleInfoManager {
 
     // TODO remove the LocaleInfo type, this function should just return its input argument, then remove the function altogether
     static get(localeCode: string): LocaleInfo {
-        return this.instance().getLocaleInfo(localeCode);
+        return this.getLocaleInfo(localeCode);
     }
 
     // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): LocaleInfo {
-        return this.instance().locales[0];
+        return this._locales[0];
     }
 
     // TODO just return the value that as received by register()
     static all(): ReadonlyArray<LocaleInfo> {
-        return this.instance().locales;
+        if (this.singleton === undefined) {
+            throw new Error();
+        }
+        return this._locales;
     }
 
     // TODO return the catalogs map
     static catalogsMap(): CatalogsMap {
-        return this.instance().catalogsMap;
-    }
-
-    // TODO remove
-    private static instance(): LocaleInfoManager {
         if (this.singleton === undefined) {
-            throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
+            throw new Error();
         }
-        return this.singleton;
-    }
-
-    // TODO make a file scope variable for this
-    private locales: ReadonlyArray<LocaleInfo>;
-
-    // TODO make a file scope variable for this
-    private catalogsMap: CatalogsMap;
-
-    // TODO refactor this function away, all of this logic can be inlined in the register function
-    private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
-        I18nManager.allowRTL(true);
-        const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
-            return { ...accumulator, [locale.code]: locale.catalog };
-        };
-        this.catalogsMap = locales.reduce(reducer, {});
-        this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
-            code: localeInfoWithCatalog.code,
-            label: localeInfoWithCatalog.label,
-        }));
+        return this._catalogsMap;
     }
 
     // TODO remove this function
-    private getLocaleInfo(localeCode: string): LocaleInfo {
+    private static getLocaleInfo(localeCode: string): LocaleInfo {
         const locale = this.findLocale(localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
@@ -91,7 +82,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove this function
-    private findLocale(code: string): LocaleInfo {
-        return this.locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
+    private static findLocale(code: string): LocaleInfo {
+        return this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
 }
