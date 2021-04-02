@@ -20,17 +20,13 @@ export class LocaleInfoManager {
 
     private static _locales: ReadonlyArray<LocaleInfo> = [];
     private static _catalogsMap: CatalogsMap = {};
-    private static singleton: LocaleInfoManager = undefined;
 
     // TODO make this a regular function that stores the data in a variable with file scope.
     // It also needs to create the catalogs map.
     static register(locales: ReadonlyArray<LocaleInfoWithCatalog>): void {
-        if (this.singleton !== undefined) {
-            throw new Error('Cannot register new locales after locale manager has been built');
+        if (R.not(R.isEmpty(this._locales))) {
+            throw new Error('Locales have already been initialized');
         }
-        // TODO the constructor and its helper function does some useful work, inline that here
-        this.singleton = new LocaleInfoManager();
-
         I18nManager.allowRTL(true);
         const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
             return { ...accumulator, [locale.code]: locale.catalog };
@@ -44,7 +40,6 @@ export class LocaleInfoManager {
 
     // TODO remove this function
     static reset(): void {
-        this.singleton = undefined;
         this._locales = [];
         this._catalogsMap = {};
     }
