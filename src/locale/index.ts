@@ -57,12 +57,6 @@ export class LocaleInfoManager {
         return this._locales[0];
     }
 
-    // TODO just return the value that as received by register()
-    static all(): ReadonlyArray<LocaleInfo> {
-        this.validate();
-        return this._locales;
-    }
-
     // TODO return the catalogs map
     static catalogsMap(): CatalogsMap {
         this.validate();

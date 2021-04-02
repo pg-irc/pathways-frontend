@@ -18,10 +18,6 @@ describe('LocaleManager', () => {
             expect(() => LocaleInfoManager.getFallback()).toThrow();
         });
 
-        it('.all should throw an error', () => {
-            expect(() => LocaleInfoManager.all()).toThrow();
-        });
-
         it('.catalogsMap should throw an error', () => {
             expect(() => LocaleInfoManager.catalogsMap()).toThrow();
         });
@@ -110,10 +106,6 @@ describe('LocaleManager', () => {
 
         it('the default fallback locale should be the first locale registered', () => {
             expect(LocaleInfoManager.getFallback()).toEqual(availableLocales[0]);
-        });
-
-        it('.all should be an array of the known locales', () => {
-            expect(LocaleInfoManager.all()).toEqual(availableLocales);
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {
