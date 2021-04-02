@@ -18,7 +18,7 @@ export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCo
 
 export class LocaleInfoManager {
 
-    private static _locales: ReadonlyArray<LocaleInfo> = [];
+    private static _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
     private static _catalogsMap: CatalogsMap = {};
 
     // TODO make this a regular function that stores the data in a variable with file scope.
@@ -32,9 +32,10 @@ export class LocaleInfoManager {
             return { ...accumulator, [locale.code]: locale.catalog };
         };
         this._catalogsMap = locales.reduce(reducer, {});
-        this._locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
+        this._locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfoWithCatalog => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
+            catalog: localeInfoWithCatalog.catalog,
         }));
     }
 
@@ -51,7 +52,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove the LocaleInfo type, this function should just return its input argument, then remove the function altogether
-    static get(localeCode: string): LocaleInfo {
+    static get(localeCode: string): LocaleInfoWithCatalog {
         return this.getLocaleInfo(localeCode);
     }
 
@@ -74,7 +75,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove this function
-    private static getLocaleInfo(localeCode: string): LocaleInfo {
+    private static getLocaleInfo(localeCode: string): LocaleInfoWithCatalog {
         const locale = this.findLocale(localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
@@ -83,7 +84,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove this function
-    private static findLocale(code: string): LocaleInfo {
+    private static findLocale(code: string): LocaleInfoWithCatalog {
         return this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
 }

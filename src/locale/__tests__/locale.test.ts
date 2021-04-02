@@ -29,22 +29,54 @@ describe('LocaleManager', () => {
     });
 
     describe('register locale info', () => {
-        const code = aString();
-        const label = aString();
-        const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withLabel(label).build();
-        LocaleInfoManager.register([aLocale]);
-        const result = LocaleInfoManager.get(code);
-        expect(result.code).toEqual(code);
-        expect(result.label).toEqual(label);
-    })
+
+        beforeEach(() => {
+            LocaleInfoManager.reset();
+        });
+
+        it('processes the locale code', () => {
+            const code = aString();
+            const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).build();
+            LocaleInfoManager.register([aLocale]);
+
+            const result = LocaleInfoManager.get(code);
+
+            expect(result.code).toEqual(code);
+        });
+
+        it('processes the locale label', () => {
+            const code = aString();
+            const label = aString();
+            const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withLabel(label).build();
+            LocaleInfoManager.register([aLocale]);
+
+            const result = LocaleInfoManager.get(code);
+
+            expect(result.label).toEqual(label);
+        });
+
+        it('processes the locale catalog', () => {
+            const code = aString();
+            const catalog: object = { this: 'that'};
+            const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withCatalog(catalog).build();
+            LocaleInfoManager.register([aLocale]);
+            const result = LocaleInfoManager.get(code);
+
+            expect(result.catalog).toEqual(catalog);
+        });
+    });
 
     describe('.registerLocales()', () => {
 
         const aLocale = { ...new LocaleInfoBuilder().build(), catalog: {} };
 
-        afterEach(() => {
+        beforeEach(() => {
             LocaleInfoManager.reset();
         });
+
+        afterEach(() => {
+            LocaleInfoManager.reset();
+        })
 
         it('should throw an error if called twice', () => {
             LocaleInfoManager.register([aLocale]);
@@ -57,7 +89,7 @@ describe('LocaleManager', () => {
 
         const localeCodes: ReadonlyArray<string> = ['en', 'ar', 'zh'];
         const availableLocales: ReadonlyArray<LocaleInfo> = localeCodes.map((localeCode: string) => (
-            new LocaleInfoBuilder().withCode(localeCode).build()
+            new LocaleInfoWithCatalogBuilder().withCode(localeCode).build()
         ));
 
         const aCatalog = {};
