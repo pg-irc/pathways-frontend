@@ -76,15 +76,10 @@ export class LocaleInfoManager {
 
     // TODO remove this function
     private static getLocaleInfo(localeCode: string): LocaleInfoWithCatalog {
-        const locale = this.findLocale(localeCode);
+        const locale = this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }
         return locale;
-    }
-
-    // TODO remove this function
-    private static findLocale(code: string): LocaleInfoWithCatalog {
-        return this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
 }

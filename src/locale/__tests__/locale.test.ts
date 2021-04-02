@@ -60,6 +60,7 @@ describe('LocaleManager', () => {
             const catalog: object = { this: 'that'};
             const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withCatalog(catalog).build();
             LocaleInfoManager.register([aLocale]);
+
             const result = LocaleInfoManager.get(code);
 
             expect(result.catalog).toEqual(catalog);
