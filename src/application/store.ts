@@ -37,7 +37,6 @@ const buildStoreWithLocaleData = (): Store => {
         ...defaultStore,
         locale: {
             ...defaultStore.locale,
-            availableLocales: LocaleInfoManager.all(),
             fallback: LocaleInfoManager.getFallback().code,
         },
     };

@@ -9,7 +9,7 @@ import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
-import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
+import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
 import * as R from 'ramda';
 
 export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
@@ -77,5 +77,11 @@ export class LocaleInfoManager {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }
         return locale;
+    }
+
+    static getLocalesWithLabels(): ReadonlyArray<LocaleWithLabel> {
+        return this._locales.map((f: LocaleInfoWithCatalog): LocaleWithLabel => ({
+            code: f.code, label: f.label,
+        }));
     }
 }

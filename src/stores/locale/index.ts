@@ -1,9 +1,7 @@
 import * as constants from '../../application/constants';
-import { LocaleInfo } from '../../locale';
 import * as actions from './actions';
 
 export interface LocaleStore {
-    readonly availableLocales: ReadonlyArray<LocaleInfo>;
     // TODO rename to currentLocale
     readonly code: string;
     // TODO remove the fallback property, hard-code 'en'
@@ -15,7 +13,6 @@ export interface LocaleStore {
 }
 
 export const buildDefaultStore = (): LocaleStore => ({
-    availableLocales: [],
     code: undefined,
     fallback: undefined,
     loading: false,

@@ -3,7 +3,7 @@ import * as locale from '../locale';
 import * as actions from '../locale/actions';
 import * as constants from '../../application/constants';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
-import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
+import { LocaleStoreBuilder } from './helpers/locale_helpers';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 const aLocaleCode = aString();
@@ -222,14 +222,6 @@ describe('the reducer', () => {
             { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
             { type: constants.SAVE_LOCALE_FAILURE, payload: { message: aString(), localeCode: aString() } },
         ];
-
-        test('property: availableLocales', () => {
-            let theStore = new LocaleStoreBuilder().withLocales([new LocaleInfoBuilder().build()]).build();
-            for (let theAction of allLocaleActions) {
-                const theNewStore = locale.reducer(theStore, theAction);
-                expect(theNewStore.availableLocales).toEqual(theStore.availableLocales);
-            }
-        });
 
         test('property: fallback', () => {
             let theStore = new LocaleStoreBuilder().build();

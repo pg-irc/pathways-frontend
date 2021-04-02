@@ -7,22 +7,16 @@ import { LocaleInfoWithCatalog } from '../../../locale/types';
 
 export class LocaleInfoBuilder {
     code: string = aString();
-    label: string = aString();
 
     withCode(code: string): LocaleInfoBuilder {
         this.code = code;
         return this;
     }
 
-    withLabel(label: string): LocaleInfoBuilder {
-        this.label = label;
-        return this;
-    }
 
     build(): LocaleInfo {
         return {
             code: this.code,
-            label: this.label,
         };
     }
 }
@@ -124,7 +118,6 @@ export class LocaleStoreBuilder {
 
     build(): LocaleStore {
         return {
-            availableLocales: this.availableLocales,
             code: this.code,
             fallback: this.fallback,
             loading: this.loading,

@@ -6,11 +6,16 @@ export type Catalog = { readonly [message: string]: object };
 // for looking up the label for a given code
 export interface LocaleInfo {
     readonly code: string;
+}
+
+export interface LocaleWithLabel {
+    readonly code: string;
     readonly label: string;
 }
 
 // TODO remove this type
 export interface LocaleInfoWithCatalog extends LocaleInfo {
+    readonly label: string;
     readonly catalog: object;
 }
 

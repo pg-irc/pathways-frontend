@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import { LocaleInfoManager } from '..';
 import { aString } from '../../application/helpers/random_test_values';
-import { LocaleInfoBuilder, LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { LocaleInfo, CatalogsMap } from '../types';
+import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { CatalogsMap, LocaleInfoWithCatalog } from '../types';
 
 describe('LocaleManager', () => {
 
@@ -69,7 +69,7 @@ describe('LocaleManager', () => {
 
     describe('.registerLocales()', () => {
 
-        const aLocale = { ...new LocaleInfoBuilder().build(), catalog: {} };
+        const aLocale = new LocaleInfoWithCatalogBuilder().build();
 
         beforeEach(() => {
             LocaleInfoManager.reset();
@@ -89,16 +89,14 @@ describe('LocaleManager', () => {
     describe('with locales registered', () => {
 
         const localeCodes: ReadonlyArray<string> = ['en', 'ar', 'zh'];
-        const availableLocales: ReadonlyArray<LocaleInfo> = localeCodes.map((localeCode: string) => (
+        const availableLocales: ReadonlyArray<LocaleInfoWithCatalog> = localeCodes.map((localeCode: string): LocaleInfoWithCatalog => (
             new LocaleInfoWithCatalogBuilder().withCode(localeCode).build()
         ));
 
         const aCatalog = {};
 
         beforeAll(() => {
-            LocaleInfoManager.register(availableLocales.map((locale: LocaleInfo) => ({
-                ...locale, catalog: aCatalog,
-            })));
+            LocaleInfoManager.register(availableLocales);
         });
 
         it('.get() should return a locale when given a known locale code', () => {

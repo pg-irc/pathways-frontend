@@ -3,7 +3,7 @@ import React from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { LocaleInfo, Locale } from '../../locale';
+import { Locale } from '../../locale';
 import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
@@ -13,12 +13,13 @@ import { needsTextDirectionChange } from '../../locale/effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
+import { LocaleWithLabel } from '../../locale/types';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
     readonly currentRegion: RegionCode;
     readonly localeIsSet: boolean;
-    readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
     readonly showOnboarding: boolean;
     readonly history: History;
 }
@@ -139,7 +140,7 @@ const LocalePicker = (props: Props): JSX.Element => {
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
                 <Picker.Item key='' label={placeholder} value={placeholder} />
-                {props.availableLocales.map((locale: LocaleInfo) => (
+                {props.availableLocales.map((locale: LocaleWithLabel) => (
                     <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                 ))}
             </Picker>

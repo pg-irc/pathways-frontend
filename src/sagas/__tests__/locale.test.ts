@@ -1,19 +1,19 @@
 // tslint:disable:no-expression-statement no-let no-null-keyword no-any
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
-import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from '../../locale';
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
 
 describe('load locale saga', () => {
-    const theFallbackLocale = new LocaleInfoBuilder().build();
-    const aLocale = new LocaleInfoBuilder().build();
+    const theFallbackLocale = new LocaleInfoWithCatalogBuilder().build();
+    const aLocale = new LocaleInfoWithCatalogBuilder().build();
     beforeAll(() => {
         LocaleInfoManager.register(
             [
-                { ...theFallbackLocale, catalog: {} },
-                { ...aLocale, catalog: {} },
+                theFallbackLocale,
+                aLocale,
             ],
         );
     });
@@ -73,7 +73,7 @@ describe('load locale saga', () => {
 
 describe('the applyLocaleChange saga', () => {
 
-    const aLocale = new LocaleInfoBuilder().build();
+    const aLocale = new LocaleInfoWithCatalogBuilder().build();
     const flipOrientation = aBoolean();
     const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, flipOrientation);
 
@@ -88,7 +88,7 @@ describe('the applyLocaleChange saga', () => {
 
         beforeEach(() => {
             LocaleInfoManager.reset();
-            LocaleInfoManager.register([{ ...aLocale, catalog: {} }]);
+            LocaleInfoManager.register([aLocale]);
             saga = applyLocaleChange(saveLocaleAction);
             saga.next();
         });

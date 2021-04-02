@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { LocaleInfo } from '../../locale/types';
+import { LocaleInfo, LocaleWithLabel } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
@@ -58,7 +58,7 @@ const getViewBackgroundColorForPlatform = (): string => (
     isAndroid() ? colors.teal : colors.white
 );
 
-type LocaleListItem = LocaleInfo & {
+type LocaleListItem = LocaleWithLabel & {
     readonly onPress: () => void;
 };
 
@@ -73,7 +73,7 @@ export interface SectionListItemInfo {
 };
 
 type SelectedLocaleListItemInfo = {
-    readonly section: LocaleInfo & SectionBase<LocaleListItem>;
+    readonly section: LocaleWithLabel & SectionBase<LocaleListItem>;
 };
 
 const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element => (
@@ -102,7 +102,7 @@ const LocaleSection = (props: Props): JSX.Element => {
 };
 
 function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: boolean) => void, updateToken: () => void): LocaleItemBuilder {
-    return (locale: LocaleInfo): LocaleListItem => {
+    return (locale: LocaleWithLabel): LocaleListItem => {
         return {
             ...locale, onPress: (): void => {
                 setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
