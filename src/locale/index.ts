@@ -71,7 +71,10 @@ export class LocaleInfoManager {
     // TODO refactor this function away, all of this logic can be inlined in the register function
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
         I18nManager.allowRTL(true);
-        this.catalogsMap = buildCatalogsMap(locales);
+        const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
+            return { ...accumulator, [locale.code]: locale.catalog };
+        };
+        this.catalogsMap = locales.reduce(reducer, {});
         this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
@@ -91,11 +94,4 @@ export class LocaleInfoManager {
     private findLocale(code: string): LocaleInfo {
         return this.locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
-}
-
-function buildCatalogsMap(withLocales: ReadonlyArray<LocaleInfoWithCatalog>): CatalogsMap {
-    const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
-        return { ...accumulator, [locale.code]: locale.catalog };
-    };
-    return withLocales.reduce(reducer, {});
 }
