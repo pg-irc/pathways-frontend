@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { LocaleInfoManager } from '..';
 import { aString } from '../../application/helpers/random_test_values';
-import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleInfoBuilder, LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { LocaleInfo, CatalogsMap } from '../types';
 
 describe('LocaleManager', () => {
@@ -27,6 +27,16 @@ describe('LocaleManager', () => {
         });
 
     });
+
+    describe('register locale info', () => {
+        const code = aString();
+        const label = aString();
+        const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withLabel(label).build();
+        LocaleInfoManager.register([aLocale]);
+        const result = LocaleInfoManager.get(code);
+        expect(result.code).toEqual(code);
+        expect(result.label).toEqual(label);
+    })
 
     describe('.registerLocales()', () => {
 

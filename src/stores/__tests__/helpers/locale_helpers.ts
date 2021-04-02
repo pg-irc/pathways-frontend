@@ -3,6 +3,7 @@ import { LocalizedText } from '../../../locale';
 import { aString } from '../../../application/helpers/random_test_values';
 import { Locale, LocaleInfo } from '../../../locale';
 import { LocaleStore } from '../../locale';
+import { LocaleInfoWithCatalog } from '../../../locale/types';
 
 export class LocaleInfoBuilder {
     code: string = aString();
@@ -22,6 +23,35 @@ export class LocaleInfoBuilder {
         return {
             code: this.code,
             label: this.label,
+        };
+    }
+}
+
+export class LocaleInfoWithCatalogBuilder {
+    code: string = aString();
+    label: string = aString();
+    catalog: object = {};
+
+    withCode(code: string): LocaleInfoWithCatalogBuilder {
+        this.code = code;
+        return this;
+    }
+
+    withLabel(label: string): LocaleInfoWithCatalogBuilder {
+        this.label = label;
+        return this;
+    }
+
+    withCatalog(catalog: object): LocaleInfoWithCatalogBuilder {
+        this.catalog = catalog;
+        return this;
+    }
+
+    build(): LocaleInfoWithCatalog {
+        return {
+            code: this.code,
+            label: this.label,
+            catalog: this.catalog,
         };
     }
 }
