@@ -28,15 +28,11 @@ export class LocaleInfoManager {
             throw new Error('Locales have already been initialized');
         }
         I18nManager.allowRTL(true);
+        this._locales = locales;
         const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
             return { ...accumulator, [locale.code]: locale.catalog };
         };
         this._catalogsMap = locales.reduce(reducer, {});
-        this._locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfoWithCatalog => ({
-            code: localeInfoWithCatalog.code,
-            label: localeInfoWithCatalog.label,
-            catalog: localeInfoWithCatalog.catalog,
-        }));
     }
 
     // TODO remove this function
