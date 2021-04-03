@@ -10,8 +10,8 @@ describe('LocaleManager', () => {
 
         beforeEach(() => LocaleInfoManager.reset());
 
-        it('.getFallback() should throw an error', () => {
-            expect(() => LocaleInfoManager.getFallback()).toThrow();
+        it('.getFallback() should not throw an error', () => {
+            LocaleInfoManager.getFallback();
         });
 
         it('.catalogsMap should throw an error', () => {
@@ -100,8 +100,8 @@ describe('LocaleManager', () => {
             expect(() => LocaleInfoManager.getLocaleInfoWithCatalog(aString())).toThrow();
         });
 
-        it('the default fallback locale should be the first locale registered', () => {
-            expect(LocaleInfoManager.getFallback()).toEqual(availableLocales[0]);
+        it('the default fallback locale should be English', () => {
+            expect(LocaleInfoManager.getFallback()).toEqual({ code: 'en' });
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {

@@ -7,7 +7,7 @@ import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
 
 describe('load locale saga', () => {
-    const theFallbackLocale = new LocaleInfoWithCatalogBuilder().build();
+    const theFallbackLocale = new LocaleInfoWithCatalogBuilder().withCode('en').build();
     const aLocale = new LocaleInfoWithCatalogBuilder().build();
     beforeAll(() => {
         LocaleInfoManager.register(
@@ -59,7 +59,7 @@ describe('load locale saga', () => {
         });
 
         it('dispatches action to save the fallback locale as the current locale', () => {
-            expect(saveCurrentLocaleCodeAction).toEqual(call(saveCurrentLocaleCode, theFallbackLocale.code));
+            expect(saveCurrentLocaleCodeAction).toEqual(call(saveCurrentLocaleCode, 'en'));
         });
 
         it('dispatches a load current locale success action with isSaved flag is false', () => {

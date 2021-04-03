@@ -49,8 +49,7 @@ export class LocaleInfoManager {
 
     // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): LocaleInfo {
-        this.validate();
-        return this._locales[0];
+        return { code: 'en'};
     }
 
     // TODO return the catalogs map
