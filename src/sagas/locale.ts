@@ -49,11 +49,10 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
         } else {
-            const locale = LocaleInfoManager.get(retrievedCode);
-            const RTL = isAppRTL(locale.code);
+            const RTL = isAppRTL(retrievedCode);
             const isSaved = true;
-            const flipOrientation = RTL !== isRTL(locale.code);
-            yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
+            const flipOrientation = RTL !== isRTL(retrievedCode);
+            yield put(actions.loadLocaleSuccess(retrievedCode, isSaved, flipOrientation));
         }
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);

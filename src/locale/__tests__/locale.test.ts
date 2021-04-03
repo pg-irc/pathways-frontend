@@ -10,10 +10,6 @@ describe('LocaleManager', () => {
 
         beforeEach(() => LocaleInfoManager.reset());
 
-        it('.get() should throw an error', () => {
-            expect(() => LocaleInfoManager.get(aString())).toThrow();
-        });
-
         it('.getFallback() should throw an error', () => {
             expect(() => LocaleInfoManager.getFallback()).toThrow();
         });
@@ -35,7 +31,7 @@ describe('LocaleManager', () => {
             const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).build();
             LocaleInfoManager.register([aLocale]);
 
-            const result = LocaleInfoManager.get(code);
+            const result = LocaleInfoManager.getLocaleInfoWithCatalog(code);
 
             expect(result.code).toEqual(code);
         });
@@ -46,7 +42,7 @@ describe('LocaleManager', () => {
             const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withLabel(label).build();
             LocaleInfoManager.register([aLocale]);
 
-            const result = LocaleInfoManager.get(code);
+            const result = LocaleInfoManager.getLocaleInfoWithCatalog(code);
 
             expect(result.label).toEqual(label);
         });
@@ -57,7 +53,7 @@ describe('LocaleManager', () => {
             const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withCatalog(catalog).build();
             LocaleInfoManager.register([aLocale]);
 
-            const result = LocaleInfoManager.get(code);
+            const result = LocaleInfoManager.getLocaleInfoWithCatalog(code);
 
             expect(result.catalog).toEqual(catalog);
         });
@@ -97,11 +93,11 @@ describe('LocaleManager', () => {
 
         it('.get() should return a locale when given a known locale code', () => {
             const aLocale = availableLocales[availableLocales.length - 1];
-            expect(LocaleInfoManager.get(aLocale.code)).toEqual(aLocale);
+            expect(LocaleInfoManager.getLocaleInfoWithCatalog(aLocale.code)).toEqual(aLocale);
         });
 
         it('.get() should throw an error if given an unknown locale code', () => {
-            expect(() => LocaleInfoManager.get(aString())).toThrow();
+            expect(() => LocaleInfoManager.getLocaleInfoWithCatalog(aString())).toThrow();
         });
 
         it('the default fallback locale should be the first locale registered', () => {
