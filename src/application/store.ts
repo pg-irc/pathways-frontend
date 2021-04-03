@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import { reducer, Store, buildDefaultStore } from '../stores';
+import { reducer, buildDefaultStore } from '../stores';
 import * as analytics from '../sagas/analytics/middleware';
 import { runSaga, ApplicationSaga } from '../sagas';
 
@@ -31,22 +31,11 @@ LocaleInfoManager.register([
     { code: 'zh_TW', label: '繁體中文', catalog: zhTwMessages },
 ]);
 
-const buildStoreWithLocaleData = (): Store => {
-    const defaultStore = buildDefaultStore();
-    return {
-        ...defaultStore,
-        locale: {
-            ...defaultStore.locale,
-            fallback: LocaleInfoManager.getFallback().code,
-        },
-    };
-};
-
 type CreatedStore = ReturnType<typeof createStore>;
 
 export const buildStore = (saga: ApplicationSaga): CreatedStore => {
     const middleware = applyMiddleware(saga.middleware, analytics.middleware);
-    const store = buildStoreWithLocaleData();
+    const store = buildDefaultStore();
     const enhancers = compose(middleware);
     return createStore(reducer, store, enhancers);
 };

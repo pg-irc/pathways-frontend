@@ -81,7 +81,6 @@ export class LocaleStoreBuilder {
     locale: LocaleInfo = new LocaleInfoBuilder().build();
     availableLocales: ReadonlyArray<LocaleInfo> = [this.locale];
     code: string = this.locale.code;
-    fallback: string = this.locale.code;
     loading: boolean = false;
     isSaved: boolean = true;
     errorMessage: string = '';
@@ -93,11 +92,6 @@ export class LocaleStoreBuilder {
 
     withCode(code: string): LocaleStoreBuilder {
         this.code = code;
-        return this;
-    }
-
-    withFallback(fallback: string): LocaleStoreBuilder {
-        this.fallback = fallback;
         return this;
     }
 
@@ -119,7 +113,6 @@ export class LocaleStoreBuilder {
     build(): LocaleStore {
         return {
             code: this.code,
-            fallback: this.fallback,
             loading: this.loading,
             isSaved: this.isSaved,
             errorMessage: this.errorMessage,

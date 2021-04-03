@@ -5,7 +5,6 @@ export interface LocaleStore {
     // TODO rename to currentLocale
     readonly code: string;
     // TODO remove the fallback property, hard-code 'en'
-    readonly fallback: string;
     readonly loading: boolean;
     // TODO should be able to remove this flag, and use code === undefined or '' to represent is not saved
     readonly isSaved: boolean;
@@ -14,7 +13,6 @@ export interface LocaleStore {
 
 export const buildDefaultStore = (): LocaleStore => ({
     code: undefined,
-    fallback: undefined,
     loading: false,
     isSaved: false,
     errorMessage: '',

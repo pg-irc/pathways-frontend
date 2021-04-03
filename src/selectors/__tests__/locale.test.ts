@@ -18,11 +18,6 @@ describe('locale selectors fetch', () => {
         expect(theLocale.code).toBe(aLocaleStore.code);
     });
 
-    it('the fallback locale', () => {
-        const theLocale = toSelectorLocale(aLocaleStore);
-        expect(theLocale.fallback).toBe(aLocaleStore.fallback);
-    });
-
 });
 
 describe('localized text selector', () => {

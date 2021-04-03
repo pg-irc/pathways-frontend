@@ -120,11 +120,6 @@ describe('the reducer', () => {
         expect(theStore.code).toBe(undefined);
     });
 
-    it('should default to build a store with a undefined fallback locale code', () => {
-        const theStore = locale.reducer();
-        expect(theStore.fallback).toBe(undefined);
-    });
-
     it('when called with SAVE_LOCALE_REQUEST should return store with loading flag set', () => {
         const theStore = new LocaleStoreBuilder().build();
         const theAction = {
@@ -209,28 +204,4 @@ describe('the reducer', () => {
 
         expect(newStore.isSaved).toBe(false);
     });
-
-    describe('should never change', () => {
-        let allLocaleActions: ReadonlyArray<actions.LocaleAction> = [
-            { type: constants.LOAD_CURRENT_LOCALE_REQUEST },
-            {
-                type: constants.LOAD_CURRENT_LOCALE_SUCCESS,
-                payload: { localeCode: aString(), isSaved: aBoolean(), flipOrientation: aBoolean() },
-            },
-            { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
-            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
-            { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
-            { type: constants.SAVE_LOCALE_FAILURE, payload: { message: aString(), localeCode: aString() } },
-        ];
-
-        test('property: fallback', () => {
-            let theStore = new LocaleStoreBuilder().build();
-            for (let theAction of allLocaleActions) {
-                const theNewStore = locale.reducer(theStore, theAction);
-                expect(theNewStore.fallback).toEqual(theStore.fallback);
-            }
-        });
-
-    });
-
 });
