@@ -14,7 +14,8 @@ export interface LocaleWithLabel {
 }
 
 // TODO remove this type
-export interface LocaleInfoWithCatalog extends LocaleInfo {
+export interface LocaleInfoWithCatalog {
+    readonly code: string;
     readonly label: string;
     readonly catalog: object;
 }
