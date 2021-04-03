@@ -8,13 +8,16 @@ import { selectAvailableLocales } from '../../selectors/locale/select_available_
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
 
-const mapStateToProps = (store: Store): HeaderMenuProps => {
+const selectOtherLocales = (store: Store): ReadonlyArray<LocaleInfo> => {
     const locales = selectAvailableLocales(store);
-    const locale = selectLocale(store);
-    const currentLocale = locales.find((aLocale: LocaleInfo) => locale.code === aLocale.code);
-    const availableLocales = locales.filter((aLocale: LocaleInfo) => locale.code !== aLocale.code);
-    return { currentLocale, availableLocales };
+    const currentLocale = selectLocale(store);
+    return locales.filter((l: LocaleInfo): boolean => l.code !== currentLocale.code);
 };
+
+const mapStateToProps = (store: Store): HeaderMenuProps => ({
+    currentLocale: selectLocale(store),
+    availableLocales: selectOtherLocales(store),
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction | PushNotificationTokenRequestAction>): HeaderMenuActions => ({
     setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
