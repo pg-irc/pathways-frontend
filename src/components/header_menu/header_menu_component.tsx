@@ -58,7 +58,9 @@ const getViewBackgroundColorForPlatform = (): string => (
     isAndroid() ? colors.teal : colors.white
 );
 
-type LocaleListItem = LocaleWithLabel & {
+type LocaleListItem = {
+    readonly code: string;
+    readonly label: string;
     readonly onPress: () => void;
 };
 
@@ -81,7 +83,7 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 );
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItemBuilder(props.setLocale, props.updateNotificationToken);
+    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
         ...props.currentLocale,
         data: R.map(localeItemBuilder, props.availableLocales),
@@ -99,16 +101,18 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-const createLocaleItemBuilder = R.curry((setLocale: (code: string, flipOrientation: boolean) => void,
-                                        updateToken: () => void,
-                                        locale: LocaleWithLabel): LocaleListItem => {
-        return {
-            ...locale, onPress: (): void => {
+const createLocaleItem = R.curry((setLocale: (code: string, flipOrientation: boolean) => void,
+                                updateToken: () => void,
+                                locale: LocaleWithLabel): LocaleListItem => (
+        {
+            ...locale,
+            onPress: (): void => {
                 setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
                 updateToken();
             },
-    };
-});
+        }
+    ),
+);
 
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
