@@ -62,8 +62,6 @@ type LocaleListItem = LocaleWithLabel & {
     readonly onPress: () => void;
 };
 
-type LocaleItemBuilder = (locale: LocaleInfo) => LocaleListItem;
-
 // TO DO complete rest of these types
 export interface SectionListItemInfo {
     readonly item: LocaleListItem;
@@ -101,16 +99,16 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: boolean) => void, updateToken: () => void): LocaleItemBuilder {
-    return (locale: LocaleWithLabel): LocaleListItem => {
+const createLocaleItemBuilder = R.curry((setLocale: (code: string, flipOrientation: boolean) => void,
+                                        updateToken: () => void,
+                                        locale: LocaleWithLabel): LocaleListItem => {
         return {
             ...locale, onPress: (): void => {
                 setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
                 updateToken();
             },
-        };
     };
-}
+});
 
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
