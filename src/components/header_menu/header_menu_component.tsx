@@ -22,7 +22,7 @@ type OwnProps = {
 
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleInfo;
-    readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    readonly otherLocales: ReadonlyArray<LocaleInfo>;
 }
 
 export interface HeaderMenuActions {
@@ -85,8 +85,8 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 const LocaleSection = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
-        ...props.currentLocale,
-        data: R.map(localeItemBuilder, props.availableLocales),
+        code: props.currentLocale.code,
+        data: R.map(localeItemBuilder, props.otherLocales),
     };
     return (
         <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>

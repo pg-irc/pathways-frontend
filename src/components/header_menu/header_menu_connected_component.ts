@@ -16,7 +16,7 @@ const selectOtherLocales = (store: Store): ReadonlyArray<LocaleInfo> => {
 
 const mapStateToProps = (store: Store): HeaderMenuProps => ({
     currentLocale: selectLocale(store),
-    availableLocales: selectOtherLocales(store),
+    otherLocales: selectOtherLocales(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction | PushNotificationTokenRequestAction>): HeaderMenuActions => ({
