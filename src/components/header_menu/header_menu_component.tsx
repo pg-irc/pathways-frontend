@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { LocaleInfo, LocaleWithLabel } from '../../locale/types';
+import { Locale, LocaleWithLabel } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
@@ -21,8 +21,8 @@ type OwnProps = {
 };
 
 export interface HeaderMenuProps {
-    readonly currentLocale: LocaleInfo;
-    readonly otherLocales: ReadonlyArray<LocaleInfo>;
+    readonly currentLocale: Locale;
+    readonly otherLocales: ReadonlyArray<Locale>;
 }
 
 export interface HeaderMenuActions {
@@ -93,7 +93,7 @@ const LocaleSection = (props: Props): JSX.Element => {
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SectionList
                 stickySectionHeadersEnabled={true}
-                keyExtractor={(item: LocaleInfo): string => item.code}
+                keyExtractor={(item: Locale): string => item.code}
                 sections={[localeSectionData]}
                 renderItem={LocaleItem}
                 renderSectionHeader={SelectedLocaleItem} />

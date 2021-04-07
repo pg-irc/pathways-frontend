@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './header_menu_component';
 import { Store } from '../../stores';
 import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/actions';
-import { LocaleInfo } from '../../locale';
+import { Locale } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
 
-const selectOtherLocales = (store: Store): ReadonlyArray<LocaleInfo> => {
+const selectOtherLocales = (store: Store): ReadonlyArray<Locale> => {
     const locales = selectAvailableLocales(store);
     const currentLocale = selectLocale(store);
-    return locales.filter((l: LocaleInfo): boolean => l.code !== currentLocale.code);
+    return locales.filter((l: Locale): boolean => l.code !== currentLocale.code);
 };
 
 const mapStateToProps = (store: Store): HeaderMenuProps => ({

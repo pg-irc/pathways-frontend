@@ -9,10 +9,10 @@ import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
-import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
+import { CatalogsMap, Catalog, Locale, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
 import * as R from 'ramda';
 
-export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
+export { CatalogsMap, Catalog, Locale, LocalizedText };
 
 export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
@@ -48,7 +48,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove function, hard-code 'en' as fallback locale
-    static getFallback(): LocaleInfo {
+    static getFallback(): Locale {
         return { code: 'en'};
     }
 
@@ -61,7 +61,7 @@ export class LocaleInfoManager {
     // TODO remove this function, it is now dead code, but useful in tests?
     static getLocaleInfoWithCatalog(localeCode: string): LocaleInfoWithCatalog {
         this.validate();
-        const locale = this._locales.find((aLocale: LocaleInfo): boolean => aLocale.code === localeCode);
+        const locale = this._locales.find((aLocale: Locale): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }
