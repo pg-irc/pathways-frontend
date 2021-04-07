@@ -1,6 +1,6 @@
 // tslint:disable:no-let no-expression-statement
-import { LocaleStoreBuilder, LocalizedTextBuilder, aLocale } from '../../stores/__tests__/helpers/locale_helpers';
-import { getLocalizedText, getLocalizedTextOrDefault } from '../locale/get_localized_text';
+import { LocaleStoreBuilder, LocalizedTextBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { getLocalizedText } from '../locale/get_localized_text';
 import * as locale from '../../stores/locale';
 import { aString } from '../../application/helpers/random_test_values';
 import { toSelectorLocale } from '../locale/to_selector_locale';
@@ -50,37 +50,4 @@ describe('localized text selector', () => {
         expect(result).toBe('missing in fr&en');
     });
 
-    let theLocale = aLocale();
-
-    it('selects the correct localized version of the text', () => {
-        const theText = aString();
-        const theFallbackText = aString();
-        const theLocalizedText = new LocalizedTextBuilder().
-            addLocalizedText(theLocale.code, theText).
-            addLocalizedText(theLocale.fallback, theFallbackText).
-            build();
-        expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theText);
-    });
-
-    it('selects text from the fallback locale if the current locale is not available', () => {
-        const theFallbackText = aString();
-        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText(theLocale.fallback, theFallbackText).build();
-        expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
-    });
-
-    it('returns error if string is not available in the fallback locale', () => {
-        const theLocalizedText = new LocalizedTextBuilder().build();
-        expect(getLocalizedText(theLocale, theLocalizedText)).toContain('missing');
-    });
-});
-
-describe('localized text selector with default', () => {
-
-    let theLocale = aLocale();
-
-    it('returns the default value when the localized string is missing', () => {
-        const theLocalizedText = new LocalizedTextBuilder().build();
-        const theDefault = aString();
-        expect(getLocalizedTextOrDefault(theDefault, theLocale, theLocalizedText)).toBe(theDefault);
-    });
 });
