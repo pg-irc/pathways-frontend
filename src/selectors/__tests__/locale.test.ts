@@ -22,6 +22,34 @@ describe('locale selectors fetch', () => {
 
 describe('localized text selector', () => {
 
+    it('returns the localized string if it exists', () => {
+        const englishText = aString();
+        const frenchText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('en', englishText).addLocalizedText('fr', frenchText).build();
+
+        const result = getLocalizedText({code: 'fr', fallback: 'en'}, theLocalizedText);
+
+        expect(result).toBe(frenchText);
+    });
+
+    it('returns english string if the localized string does not exist', () => {
+        const englishText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('en', englishText).build();
+
+        const result = getLocalizedText({code: 'fr', fallback: 'en'}, theLocalizedText);
+
+        expect(result).toBe(englishText);
+    });
+
+    it('returns an error string if the string does not exist in either langage', () => {
+        const tagalogText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('tg', tagalogText).build();
+
+        const result = getLocalizedText({code: 'fr', fallback: 'en'}, theLocalizedText);
+
+        expect(result).toBe('missing in fr&en');
+    });
+
     let theLocale = aLocale();
 
     it('selects the correct localized version of the text', () => {
