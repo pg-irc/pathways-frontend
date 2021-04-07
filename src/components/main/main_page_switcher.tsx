@@ -15,7 +15,7 @@ import { ServiceDetailConnectedComponent } from '../services/service_detail_conn
 import { OtherRemoveServiceConnectedComponent } from '../feedback/other_remove_service_connected_component';
 import { ExplainFeedbackConnectedComponent } from '../feedback/explain_feedback_connected_component';
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
-import { Locale } from '../../locale';
+import {  LocaleCode } from '../../locale';
 import { ContactInformationConnectedComponent } from '../feedback/contact_information_connected_component';
 import { OrganizationConnectedComponent } from '../organizations/organization_connected_component';
 import { ServiceReviewConnectedComponent } from '../reviews/service_review_connected_component';
@@ -23,7 +23,7 @@ import { RegionCode } from '../../validation/region/types';
 
 interface Props {
     readonly region: RegionCode;
-    readonly locale: Locale;
+    readonly locale: LocaleCode;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
 }

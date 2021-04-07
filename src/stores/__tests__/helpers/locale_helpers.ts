@@ -1,6 +1,6 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { aString } from '../../../application/helpers/random_test_values';
-import { Locale } from '../../../locale';
+import { LocaleCode } from '../../../locale';
 import { LocaleStore } from '../../locale';
 import { LocaleInfoWithCatalog } from '../../../locale/types';
 
@@ -33,18 +33,18 @@ export class LocaleInfoWithCatalogBuilder {
     }
 }
 
-export const aLocale = (): Locale => aString();
+export const aLocale = (): LocaleCode => aString();
 
 export class LocaleStoreBuilder {
 
-    locale: Locale = aString();
-    availableLocales: ReadonlyArray<Locale> = [this.locale];
+    locale: LocaleCode = aString();
+    availableLocales: ReadonlyArray<LocaleCode> = [this.locale];
     code: string = this.locale;
     loading: boolean = false;
     isSaved: boolean = true;
     errorMessage: string = '';
 
-    withLocales(locales: ReadonlyArray<Locale>): LocaleStoreBuilder {
+    withLocales(locales: ReadonlyArray<LocaleCode>): LocaleStoreBuilder {
         this.availableLocales = locales;
         return this;
     }

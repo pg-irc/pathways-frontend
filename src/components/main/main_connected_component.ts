@@ -9,7 +9,7 @@ import { RouterProps } from '../../application/routing';
 import { Location } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 import { selectLocale } from '../../selectors/locale/select_locale';
-import { Locale } from '../../locale';
+import { LocaleCode } from '../../locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 import {
@@ -60,7 +60,7 @@ type Actions =
     OpenDiscardChangesModalAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions => ({
-    sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
+    sendAnalyticsData: (location: Location, locale: LocaleCode): RouteChangedAction => dispatch(routeChanged(location, locale)),
     closeHeaderMenu: (): CloseHeaderMenuAction => dispatch(closeHeaderMenu()),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     closeAboutModal: (): CloseAboutModalAction => dispatch(closeAboutModal()),

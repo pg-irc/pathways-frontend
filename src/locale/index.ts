@@ -9,10 +9,10 @@ import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
-import { CatalogsMap, Catalog, Locale, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
+import { CatalogsMap, Catalog, LocaleCode, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
 import * as R from 'ramda';
 
-export { CatalogsMap, Catalog, Locale, LocalizedText };
+export { CatalogsMap, Catalog, LocaleCode, LocalizedText };
 
 export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
@@ -48,7 +48,7 @@ export class LocaleInfoManager {
     }
 
     // TODO remove function, hard-code 'en' as fallback locale
-    static getFallback(): Locale {
+    static getFallback(): LocaleCode {
         return 'en';
     }
 

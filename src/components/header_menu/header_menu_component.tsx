@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { Locale, LocaleWithLabel } from '../../locale/types';
+import { LocaleCode, LocaleWithLabel } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
@@ -21,12 +21,12 @@ type OwnProps = {
 };
 
 export interface HeaderMenuProps {
-    readonly currentLocale: Locale;
+    readonly currentLocale: LocaleCode;
     readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: Locale, flipOrientation: boolean) => void;
+    readonly setLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
     readonly updateNotificationToken: () => void;
 }
 
@@ -101,7 +101,7 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-const createLocaleItem = R.curry((setLocale: (code: Locale, flipOrientation: boolean) => void,
+const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
                                 updateToken: () => void,
                                 locale: LocaleWithLabel): LocaleListItem => (
         {
