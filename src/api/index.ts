@@ -84,7 +84,7 @@ export async function putPushNotificationToken(token: string, locale: Locale, ap
                 ['Content-Type', 'application/json'],
             ],
             body: JSON.stringify({
-                'locale': locale.code,
+                'locale': locale,
                 'api_key': api_key,
             }),
         },

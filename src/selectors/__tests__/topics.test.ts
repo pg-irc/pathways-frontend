@@ -55,7 +55,7 @@ describe('topics selector', () => {
             taxonomyTermId = aString();
             exploreSectionName = aString();
             topic = new TopicBuilder().
-                withLocaleCode(locale.code).
+                withLocaleCode(locale).
                 withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
                 build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
@@ -68,11 +68,11 @@ describe('topics selector', () => {
         });
 
         test('title property', () => {
-            expect(denormalizedTask.title).toBe(topic.title[locale.code]);
+            expect(denormalizedTask.title).toBe(topic.title[locale]);
         });
 
         test('description property', () => {
-            expect(denormalizedTask.description).toBe(topic.description[locale.code]);
+            expect(denormalizedTask.description).toBe(topic.description[locale]);
         });
 
         test('taxonomy term reference', () => {

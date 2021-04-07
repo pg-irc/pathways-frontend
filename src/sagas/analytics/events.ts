@@ -109,7 +109,7 @@ interface GoogleAnalyticsLanguageParameter {
 }
 
 const createGoogleAnalyticsLanguageParameter = (action: RouteChangedAction): GoogleAnalyticsLanguageParameter => ({
-    ul: action.payload.locale.code,
+    ul: action.payload.locale,
 });
 
 interface GoogleAnalyticsScreenNameParameter {

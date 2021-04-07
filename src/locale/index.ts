@@ -49,7 +49,7 @@ export class LocaleInfoManager {
 
     // TODO remove function, hard-code 'en' as fallback locale
     static getFallback(): Locale {
-        return { code: 'en'};
+        return 'en';
     }
 
     // TODO return the catalogs map
@@ -61,7 +61,7 @@ export class LocaleInfoManager {
     // TODO remove this function, it is now dead code, but useful in tests?
     static getLocaleInfoWithCatalog(localeCode: string): LocaleInfoWithCatalog {
         this.validate();
-        const locale = this._locales.find((aLocale: Locale): boolean => aLocale.code === localeCode);
+        const locale = this._locales.find((aLocale: LocaleInfoWithCatalog): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }

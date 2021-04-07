@@ -4,22 +4,6 @@ import { Locale } from '../../../locale';
 import { LocaleStore } from '../../locale';
 import { LocaleInfoWithCatalog } from '../../../locale/types';
 
-export class LocaleInfoBuilder {
-    code: string = aString();
-
-    withCode(code: string): LocaleInfoBuilder {
-        this.code = code;
-        return this;
-    }
-
-
-    build(): Locale {
-        return {
-            code: this.code,
-        };
-    }
-}
-
 export class LocaleInfoWithCatalogBuilder {
     code: string = aString();
     label: string = aString();
@@ -49,16 +33,13 @@ export class LocaleInfoWithCatalogBuilder {
     }
 }
 
-export const aLocale = (): Locale => ({
-    code: aString(),
-});
-
+export const aLocale = (): Locale => aString();
 
 export class LocaleStoreBuilder {
 
-    locale: Locale = new LocaleInfoBuilder().build();
+    locale: Locale = aString();
     availableLocales: ReadonlyArray<Locale> = [this.locale];
-    code: string = this.locale.code;
+    code: string = this.locale;
     loading: boolean = false;
     isSaved: boolean = true;
     errorMessage: string = '';

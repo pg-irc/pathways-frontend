@@ -33,11 +33,11 @@ describe('toSelectorQuestion selector', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
 
-            firstAnswer = new AnswerBuilder().withLocaleCode(locale.code).withQuestionId(firstQuestionId);
-            firstQuestion = new QuestionBuilder().withLocaleCode(locale.code).withId(firstQuestionId).withAnswers([firstAnswer]);
+            firstAnswer = new AnswerBuilder().withLocaleCode(locale).withQuestionId(firstQuestionId);
+            firstQuestion = new QuestionBuilder().withLocaleCode(locale).withId(firstQuestionId).withAnswers([firstAnswer]);
 
-            secondAnswer = new AnswerBuilder().withLocaleCode(locale.code).withQuestionId(secondQuestionId);
-            secondQuestion = new QuestionBuilder().withLocaleCode(locale.code).withId(secondQuestionId).withAnswers([secondAnswer]);
+            secondAnswer = new AnswerBuilder().withLocaleCode(locale).withQuestionId(secondQuestionId);
+            secondQuestion = new QuestionBuilder().withLocaleCode(locale).withId(secondQuestionId).withAnswers([secondAnswer]);
 
             const normalizedData = new ValidStoreBuilder().withQuestions([firstQuestion, secondQuestion]).build();
             firstDenormalizedQuestion = toSelectorQuestion(normalizedData.questions[firstQuestion.id],
@@ -88,9 +88,9 @@ describe('toSelectorQuestion selector', () => {
     it('should return all the answers to a question', () => {
         const answerCount = anInteger();
         const answers = new Array(answerCount).fill(0).map(() => (
-            new AnswerBuilder().withLocaleCode(locale.code)),
+            new AnswerBuilder().withLocaleCode(locale)),
         );
-        const theQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
+        const theQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers(answers);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
         const firstQuestionKey = R.keys(normalizedData.questions)[0];
         const denormalizedData = toSelectorQuestion(normalizedData.questions[firstQuestionKey],
@@ -168,12 +168,12 @@ describe('getting all taxonomy ids from questionnaire', () => {
     const firstTerm = aTaxonomyTermReference();
     const secondTerm = aTaxonomyTermReference();
 
-    const answerWithFirstTerm = new AnswerBuilder().withTaxonomyTerm(firstTerm).withLocaleCode(locale.code);
-    const answerWithSecondTerm = new AnswerBuilder().withTaxonomyTerm(secondTerm).withLocaleCode(locale.code);
-    const answerWithBothTerms = new AnswerBuilder().withTaxonomyTerm(firstTerm).withTaxonomyTerm(secondTerm).withLocaleCode(locale.code);
+    const answerWithFirstTerm = new AnswerBuilder().withTaxonomyTerm(firstTerm).withLocaleCode(locale);
+    const answerWithSecondTerm = new AnswerBuilder().withTaxonomyTerm(secondTerm).withLocaleCode(locale);
+    const answerWithBothTerms = new AnswerBuilder().withTaxonomyTerm(firstTerm).withTaxonomyTerm(secondTerm).withLocaleCode(locale);
 
     it('returns the taxonomy id from an answer in the questionnaire', () => {
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm]);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([answerWithFirstTerm]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
@@ -181,7 +181,7 @@ describe('getting all taxonomy ids from questionnaire', () => {
     });
 
     it('returns the taxonomy ids from different answers in the questionnaire', () => {
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm, answerWithSecondTerm]);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([answerWithFirstTerm, answerWithSecondTerm]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
@@ -190,7 +190,7 @@ describe('getting all taxonomy ids from questionnaire', () => {
     });
 
     it('returns the two taxonomy ids from the same answer in the questionnaire', () => {
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithBothTerms]);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([answerWithBothTerms]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
@@ -199,7 +199,7 @@ describe('getting all taxonomy ids from questionnaire', () => {
     });
 
     it('returns taxonomy ids without duplicates', () => {
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm, answerWithBothTerms]);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([answerWithFirstTerm, answerWithBothTerms]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
@@ -211,8 +211,8 @@ describe('getting ids of all chosen answers', () => {
     it('should include ids for chosen answers', () => {
         const locale = aLocale();
         const aChosenAnswer = new AnswerBuilder().withIsChosen(true).withIsInverted(false).
-            withLocaleCode(locale.code);
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
+            withLocaleCode(locale);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([aChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
@@ -223,8 +223,8 @@ describe('getting ids of all chosen answers', () => {
     it('should not include ids for non-chosen answers', () => {
         const locale = aLocale();
         const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(false).
-            withLocaleCode(locale.code);
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
+            withLocaleCode(locale);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([aNonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
@@ -235,8 +235,8 @@ describe('getting ids of all chosen answers', () => {
     it('should not include ids for non-chosen answers even if inverted', () => {
         const locale = aLocale();
         const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(true).
-            withLocaleCode(locale.code);
-        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
+            withLocaleCode(locale);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale).withAnswers([aNonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);

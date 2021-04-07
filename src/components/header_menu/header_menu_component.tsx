@@ -26,7 +26,7 @@ export interface HeaderMenuProps {
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: string, flipOrientation: boolean) => void;
+    readonly setLocale: (locale: Locale, flipOrientation: boolean) => void;
     readonly updateNotificationToken: () => void;
 }
 
@@ -70,7 +70,7 @@ export interface SectionListItemInfo {
     readonly index: number;
     readonly section: any;
     readonly separators: any;
-};
+}
 
 type SelectedLocaleListItemInfo = {
     readonly section: LocaleWithLabel & SectionBase<LocaleListItem>;
@@ -85,7 +85,7 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 const LocaleSection = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
-        code: props.currentLocale.code,
+        code: props.currentLocale,
         data: R.map(localeItemBuilder, props.otherLocales),
     };
     return (
@@ -101,7 +101,7 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-const createLocaleItem = R.curry((setLocale: (code: string, flipOrientation: boolean) => void,
+const createLocaleItem = R.curry((setLocale: (code: Locale, flipOrientation: boolean) => void,
                                 updateToken: () => void,
                                 locale: LocaleWithLabel): LocaleListItem => (
         {

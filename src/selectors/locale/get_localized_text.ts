@@ -5,8 +5,8 @@ export { Locale } from '../../locale/types';
 
 export const getLocalizedText = (locale: Locale, localizedText: LocalizedText): string => {
     const fallback = 'en';
-    const placeholder = `missing in ${locale.code}&${fallback}`;
-    return getLocalizedTextOrDefault(placeholder, locale.code, fallback, localizedText);
+    const placeholder = `missing in ${locale}&${fallback}`;
+    return getLocalizedTextOrDefault(placeholder, locale, fallback, localizedText);
 };
 
 export const getLocalizedTextOrDefault = (theDefault: string, locale: string, fallback: string, localizedText: LocalizedText): string => {

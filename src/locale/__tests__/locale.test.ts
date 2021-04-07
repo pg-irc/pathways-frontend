@@ -101,7 +101,7 @@ describe('LocaleManager', () => {
         });
 
         it('the default fallback locale should be English', () => {
-            expect(LocaleInfoManager.getFallback()).toEqual({ code: 'en' });
+            expect(LocaleInfoManager.getFallback()).toEqual('en');
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {

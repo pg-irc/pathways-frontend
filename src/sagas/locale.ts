@@ -43,11 +43,11 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
 
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
-            yield call(saveCurrentLocaleCode, fallbackLocale.code);
+            yield call(saveCurrentLocaleCode, fallbackLocale);
             const isSaved = false;
-            const RTL = isAppRTL(fallbackLocale.code);
-            const flipOrientation = RTL !== isRTL(fallbackLocale.code);
-            yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
+            const RTL = isAppRTL(fallbackLocale);
+            const flipOrientation = RTL !== isRTL(fallbackLocale);
+            yield put(actions.loadLocaleSuccess(fallbackLocale, isSaved, flipOrientation));
         } else {
             const RTL = isAppRTL(retrievedCode);
             const isSaved = true;

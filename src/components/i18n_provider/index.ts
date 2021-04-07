@@ -13,7 +13,7 @@ interface Actions { }
 
 const mapStateToProps = (appStore: Store): Props => ({
     catalogs: LocaleInfoManager.catalogsMap(),
-    language: selectLocale(appStore).code,
+    language: selectLocale(appStore),
 });
 
 const mapDispatchToProps = (): Actions => ({});

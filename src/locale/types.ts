@@ -15,9 +15,7 @@ export interface LocaleInfoWithCatalog {
 }
 
 // TODO remove this type, just use string. Definitely get rid of the logic around fallback
-export interface Locale {
-    readonly code: string;
-}
+export type Locale = string;
 
 export interface LocalizedText {
     readonly [localeCode: string]: string;

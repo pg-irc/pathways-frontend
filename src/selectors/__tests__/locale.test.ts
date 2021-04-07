@@ -15,7 +15,7 @@ describe('locale selectors fetch', () => {
 
     it('the locale code', () => {
         const theLocale = toSelectorLocale(aLocaleStore);
-        expect(theLocale.code).toBe(aLocaleStore.code);
+        expect(theLocale).toBe(aLocaleStore.code);
     });
 
 });
@@ -27,7 +27,7 @@ describe('localized text selector', () => {
         const frenchText = aString();
         const theLocalizedText = { 'en': englishText, 'fr': frenchText};
 
-        const result = getLocalizedText({code: 'fr'}, theLocalizedText);
+        const result = getLocalizedText('fr', theLocalizedText);
 
         expect(result).toBe(frenchText);
     });
@@ -36,7 +36,7 @@ describe('localized text selector', () => {
         const englishText = aString();
         const theLocalizedText = {'en': englishText };
 
-        const result = getLocalizedText({code: 'fr' }, theLocalizedText);
+        const result = getLocalizedText('fr', theLocalizedText);
 
         expect(result).toBe(englishText);
     });
@@ -45,7 +45,7 @@ describe('localized text selector', () => {
         const tagalogText = aString();
         const theLocalizedText = { 'tg': tagalogText };
 
-        const result = getLocalizedText({code: 'fr'}, theLocalizedText);
+        const result = getLocalizedText('fr', theLocalizedText);
 
         expect(result).toBe('missing in fr&en');
     });
