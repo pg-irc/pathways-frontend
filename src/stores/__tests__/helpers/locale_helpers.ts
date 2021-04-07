@@ -1,5 +1,4 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
-import { LocalizedText } from '../../../locale';
 import { aString } from '../../../application/helpers/random_test_values';
 import { Locale } from '../../../locale';
 import { LocaleStore } from '../../locale';
@@ -54,26 +53,6 @@ export const aLocale = (): Locale => ({
     code: aString(),
 });
 
-export class LocalizedTextBuilder {
-
-    localizations: LocalizedText;
-
-    constructor() {
-        this.addLocalizedText(aString(), aString());
-    }
-
-    addLocalizedText(localeCode: string, localeText: string): LocalizedTextBuilder {
-        this.localizations = {
-            ...this.localizations,
-            [localeCode]: localeText,
-        };
-        return this;
-    }
-
-    build(): LocalizedText {
-        return this.localizations;
-    }
-}
 
 export class LocaleStoreBuilder {
 

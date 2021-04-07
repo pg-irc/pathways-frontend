@@ -3,7 +3,6 @@ import * as store from '../../topics';
 import { Id as TaskId } from '../../topics';
 import { aString } from '../../../application/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
-import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 
 export class TopicBuilder {
@@ -76,7 +75,7 @@ export class TopicBuilder {
     }
 
     private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
+        return { [this.localeCode]: text };
     }
 }
 
