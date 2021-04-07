@@ -27,7 +27,7 @@ describe('localized text selector', () => {
         const frenchText = aString();
         const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('en', englishText).addLocalizedText('fr', frenchText).build();
 
-        const result = getLocalizedText({code: 'fr', fallback: 'foo'}, theLocalizedText);
+        const result = getLocalizedText({code: 'fr'}, theLocalizedText);
 
         expect(result).toBe(frenchText);
     });
@@ -36,7 +36,7 @@ describe('localized text selector', () => {
         const englishText = aString();
         const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('en', englishText).build();
 
-        const result = getLocalizedText({code: 'fr', fallback: 'foo'}, theLocalizedText);
+        const result = getLocalizedText({code: 'fr' }, theLocalizedText);
 
         expect(result).toBe(englishText);
     });
@@ -45,7 +45,7 @@ describe('localized text selector', () => {
         const tagalogText = aString();
         const theLocalizedText = new LocalizedTextBuilder().addLocalizedText('tg', tagalogText).build();
 
-        const result = getLocalizedText({code: 'fr', fallback: 'foo'}, theLocalizedText);
+        const result = getLocalizedText({code: 'fr'}, theLocalizedText);
 
         expect(result).toBe('missing in fr&en');
     });

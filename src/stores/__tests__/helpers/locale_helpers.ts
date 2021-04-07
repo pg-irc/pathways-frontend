@@ -52,7 +52,6 @@ export class LocaleInfoWithCatalogBuilder {
 
 export const aLocale = (): Locale => ({
     code: aString(),
-    fallback: aString(),
 });
 
 export class LocalizedTextBuilder {
