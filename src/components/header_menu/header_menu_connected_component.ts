@@ -7,8 +7,9 @@ import { Locale } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
+import { LocaleWithLabel } from '../../locale/types';
 
-const selectOtherLocales = (store: Store): ReadonlyArray<Locale> => {
+const selectOtherLocales = (store: Store): ReadonlyArray<LocaleWithLabel> => {
     const locales = selectAvailableLocales(store);
     const currentLocale = selectLocale(store);
     return locales.filter((l: Locale): boolean => l.code !== currentLocale.code);

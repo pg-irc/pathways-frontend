@@ -22,7 +22,7 @@ type OwnProps = {
 
 export interface HeaderMenuProps {
     readonly currentLocale: Locale;
-    readonly otherLocales: ReadonlyArray<Locale>;
+    readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
 export interface HeaderMenuActions {
@@ -93,7 +93,7 @@ const LocaleSection = (props: Props): JSX.Element => {
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SectionList
                 stickySectionHeadersEnabled={true}
-                keyExtractor={(item: Locale): string => item.code}
+                keyExtractor={(item: LocaleWithLabel): string => item.code}
                 sections={[localeSectionData]}
                 renderItem={LocaleItem}
                 renderSectionHeader={SelectedLocaleItem} />
