@@ -1,13 +1,13 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { aString } from '../../../application/helpers/random_test_values';
-import { LocaleCode } from '../../../application/locales';
+import { Catalog, LocaleCode } from '../../../application/locales';
 import { LocaleStore } from '../../locale';
 import { LocaleInfoWithCatalog } from '../../../application/locales';
 
 export class LocaleInfoWithCatalogBuilder {
     code: string = aString();
     label: string = aString();
-    catalog: object = {};
+    catalog: Catalog = {};
 
     withCode(code: string): LocaleInfoWithCatalogBuilder {
         this.code = code;
@@ -19,7 +19,7 @@ export class LocaleInfoWithCatalogBuilder {
         return this;
     }
 
-    withCatalog(catalog: object): LocaleInfoWithCatalogBuilder {
+    withCatalog(catalog: Catalog): LocaleInfoWithCatalogBuilder {
         this.catalog = catalog;
         return this;
     }

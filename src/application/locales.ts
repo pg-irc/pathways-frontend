@@ -11,7 +11,7 @@ import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
 import * as R from 'ramda';
 
-export type CatalogsMap = { readonly [localeCode: string]: object };
+export type CatalogsMap = { readonly [localeCode: string]: Catalog };
 
 export type Catalog = { readonly [message: string]: string };
 
@@ -25,7 +25,7 @@ export interface LocaleWithLabel {
 export interface LocaleInfoWithCatalog {
     readonly code: string;
     readonly label: string;
-    readonly catalog: object;
+    readonly catalog: Catalog;
 }
 
 export interface LocalizedText {

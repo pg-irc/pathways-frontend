@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { CatalogsMap, LocaleInfoWithCatalog, Locales } from '../locales';
+import { Catalog, CatalogsMap, LocaleInfoWithCatalog, Locales } from '../locales';
 import { aString } from '../helpers/random_test_values';
 import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
@@ -48,7 +48,7 @@ describe('LocaleManager', () => {
 
         it('processes the locale catalog', () => {
             const code = aString();
-            const catalog: object = { this: 'that'};
+            const catalog: Catalog = { this: 'that'};
             const aLocale = new LocaleInfoWithCatalogBuilder().withCode(code).withCatalog(catalog).build();
             Locales.register([aLocale]);
 
