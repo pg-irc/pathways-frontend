@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { LocaleWithLabel } from '../../locale/types';
+import { LocaleWithLabel } from '../../locale';
 import { pickRegion } from '../region/pick_region';
 import { RegionCode } from '../../validation/region/types';
 import { LocaleInfoManager } from '../../locale';

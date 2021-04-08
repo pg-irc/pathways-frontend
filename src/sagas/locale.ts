@@ -1,11 +1,12 @@
 // tslint:disable:no-expression-statement
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale';
+import { saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale/effects';
 import * as actions from '../stores/locale/actions';
 import { setTextDirection, isRTL } from '../locale/effects';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../application/helpers/is_android';
+import { LocaleInfoManager } from '../locale';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);

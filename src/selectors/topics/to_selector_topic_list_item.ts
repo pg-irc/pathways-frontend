@@ -1,6 +1,6 @@
 import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
-import { LocaleCode } from '../../locale/types';
+import { LocaleCode } from '../../locale';
 import { TopicListItem } from './types';
 import { ExploreSection } from '../explore/types';
 

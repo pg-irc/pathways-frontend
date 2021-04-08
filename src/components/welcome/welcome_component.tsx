@@ -13,7 +13,7 @@ import { needsTextDirectionChange } from '../../locale/effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
-import { LocaleWithLabel } from '../../locale/types';
+import { LocaleWithLabel } from '../../locale';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;

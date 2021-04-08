@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement no-let no-null-keyword no-any
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
 import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from '../../locale';
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
+import { LocaleInfoManager } from '../../locale';
+import { loadCurrentLocaleCode, saveCurrentLocaleCode } from '../../locale/effects';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoWithCatalogBuilder().withCode('en').build();

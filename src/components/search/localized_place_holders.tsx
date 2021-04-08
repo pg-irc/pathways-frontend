@@ -1,6 +1,6 @@
 import { View, Text } from 'native-base';
 import { Trans } from '@lingui/react';
-import { ReactI18nRenderProp } from '../../locale/types';
+import { ReactI18nRenderProp } from '../../locale';
 
 interface LocalizedPlaceHolders {
     readonly searchTermPlaceHolder: string;

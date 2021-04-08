@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { LocaleCode } from '../../locale/types';
+import { LocaleCode } from '../../locale';
 import { pickLocaleStore } from './pick_locale_store';
 import { toSelectorLocale } from './to_selector_locale';
 

@@ -9,12 +9,36 @@ import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
-import { CatalogsMap, Catalog, LocaleCode, LocaleInfoWithCatalog, LocalizedText, LocaleWithLabel } from './types';
 import * as R from 'ramda';
 
-export { CatalogsMap, Catalog, LocaleCode, LocalizedText };
+export type CatalogsMap = { readonly [localeCode: string]: object };
 
-export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
+export type Catalog = { readonly [message: string]: string };
+
+export type LocaleCode = string;
+
+export interface LocaleWithLabel {
+    readonly code: string;
+    readonly label: string;
+}
+
+export interface LocaleInfoWithCatalog {
+    readonly code: string;
+    readonly label: string;
+    readonly catalog: object;
+}
+
+export interface LocalizedText {
+    readonly [localeCode: string]: string;
+}
+
+export interface ReactI18n {
+    _(str: string): string;
+}
+
+export interface ReactI18nRenderProp {
+    readonly i18n: ReactI18n;
+}
 
 export namespace LocaleInfoManager {
 

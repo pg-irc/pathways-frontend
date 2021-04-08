@@ -1,8 +1,7 @@
 // tslint:disable:no-expression-statement
-import { LocaleInfoManager } from '..';
+import { CatalogsMap, LocaleInfoWithCatalog, LocaleInfoManager } from '..';
 import { aString } from '../../application/helpers/random_test_values';
 import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { CatalogsMap, LocaleInfoWithCatalog } from '../types';
 
 describe('LocaleManager', () => {
 

@@ -2,7 +2,7 @@
 import { aString } from '../../../application/helpers/random_test_values';
 import { LocaleCode } from '../../../locale';
 import { LocaleStore } from '../../locale';
-import { LocaleInfoWithCatalog } from '../../../locale/types';
+import { LocaleInfoWithCatalog } from '../../../locale';
 
 export class LocaleInfoWithCatalogBuilder {
     code: string = aString();

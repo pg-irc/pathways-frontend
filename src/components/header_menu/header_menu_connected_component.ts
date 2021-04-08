@@ -6,7 +6,7 @@ import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
-import { LocaleWithLabel } from '../../locale/types';
+import { LocaleWithLabel } from '../../locale';
 
 const selectOtherLocales = (store: Store): ReadonlyArray<LocaleWithLabel> => {
     const locales = selectAvailableLocales(store);
