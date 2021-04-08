@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
-import { CatalogsMap, LocaleInfoWithCatalog, Locales } from '../../application/locales';
-import { aString } from '../../application/helpers/random_test_values';
+import { CatalogsMap, LocaleInfoWithCatalog, Locales } from '../locales';
+import { aString } from '../helpers/random_test_values';
 import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('LocaleManager', () => {
@@ -109,7 +109,5 @@ describe('LocaleManager', () => {
             };
             expect(Locales.catalogsMap()).toEqual(localeCodes.reduce(reducer, {}));
         });
-
     });
-
 });
