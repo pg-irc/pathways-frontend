@@ -184,7 +184,7 @@ describe('the reducer', () => {
     });
 
     it('sets the code to undefined when called with CLEAR ALL USER DATA', () => {
-        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
+        const oldStore = new LocaleStoreBuilder().withCode('en').build();
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };
@@ -193,15 +193,5 @@ describe('the reducer', () => {
 
         expect(newStore.code).toBe(undefined);
     });
-
-    it('sets the saved flag to false when called with CLEAR ALL USER DATA', () => {
-        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
-        const action: ClearAllUserDataAction = {
-            type: constants.CLEAR_ALL_USER_DATA,
-        };
-
-        const newStore = locale.reducer(oldStore, action);
-
-        expect(newStore.isSaved).toBe(false);
-    });
 });
+

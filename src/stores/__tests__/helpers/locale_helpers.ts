@@ -41,7 +41,6 @@ export class LocaleStoreBuilder {
     availableLocales: ReadonlyArray<LocaleCode> = [this.locale];
     code: string = this.locale;
     loading: boolean = false;
-    isSaved: boolean = true;
 
     withLocales(locales: ReadonlyArray<LocaleCode>): LocaleStoreBuilder {
         this.availableLocales = locales;
@@ -58,16 +57,10 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    withIsSaved(isSaved: boolean): LocaleStoreBuilder {
-        this.isSaved = isSaved;
-        return this;
-    }
-
     build(): LocaleStore {
         return {
             code: this.code,
             loading: this.loading,
-            isSaved: this.isSaved,
         };
     }
 }
