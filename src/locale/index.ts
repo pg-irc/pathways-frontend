@@ -21,54 +21,55 @@ export namespace LocaleInfoManager {
     let _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
     let _catalogsMap: CatalogsMap = {};
 
-    // TODO make this a regular function that stores the data in a variable with file scope.
-    // It also needs to create the catalogs map.
+    export const reset = (): void => {
+        _locales = [];
+        _catalogsMap = {};
+    };
+
+    export const getFallback = (): LocaleCode => 'en';
+
     export const register = (locales: ReadonlyArray<LocaleInfoWithCatalog>): void => {
         if (R.not(R.isEmpty(_locales))) {
             throw new Error('Locales have already been initialized');
         }
         I18nManager.allowRTL(true);
         _locales = locales;
-        const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
-            return { ...accumulator, [locale.code]: locale.catalog };
-        };
-        _catalogsMap = locales.reduce(reducer, {});
+        _catalogsMap = buildCatalogsMap(locales);
     };
 
-    // TODO remove this function
-    export const reset = (): void => {
-        _locales = [];
-        _catalogsMap = {};
+    const buildCatalogsMap = (locales: ReadonlyArray<LocaleInfoWithCatalog>): CatalogsMap => {
+        const addCatalogToMap = (acc: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => (
+            { ...acc, [locale.code]: locale.catalog }
+        );
+        return R.reduce(addCatalogToMap, {}, locales);
     };
 
-    export const validate = (): void => {
-        if (R.isEmpty(_locales) || R.isEmpty(_catalogsMap)) {
-            throw new Error('Locales have not been initialized');
-        }
-    };
-
-    export const getFallback = (): LocaleCode => 'en';
-
-    // TODO return the catalogs map
     export const catalogsMap = (): CatalogsMap => {
         validate();
         return _catalogsMap;
     };
 
-    // TODO remove this function, it is now dead code, but useful in tests?
-    export const getLocaleInfoWithCatalog = (localeCode: string): LocaleInfoWithCatalog => {
-        validate();
-        const locale =_locales.find((aLocale: LocaleInfoWithCatalog): boolean => aLocale.code === localeCode);
-        if (locale === undefined) {
-            throw new Error(`Unknown locale code: ${localeCode}`);
+    const validate = (): void => {
+        if (R.isEmpty(_locales) || R.isEmpty(_catalogsMap)) {
+            throw new Error('Locales have not been initialized');
         }
-        return locale;
     };
 
     export const getLocalesWithLabels  = (): ReadonlyArray<LocaleWithLabel> => {
+        validate();
         return _locales.map((locale: LocaleInfoWithCatalog): LocaleWithLabel => ({
             code: locale.code,
             label: locale.label,
         }));
+    };
+
+    // TODO this function is only used in tests, use catalogsMap() instead and remove this
+    export const getLocaleInfoWithCatalog = (localeCode: string): LocaleInfoWithCatalog => {
+        validate();
+        const locale = _locales.find((aLocale: LocaleInfoWithCatalog): boolean => aLocale.code === localeCode);
+        if (locale === undefined) {
+            throw new Error(`Unknown locale code: ${localeCode}`);
+        }
+        return locale;
     };
 }
