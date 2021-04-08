@@ -16,61 +16,59 @@ export { CatalogsMap, Catalog, LocaleCode, LocalizedText };
 
 export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
-export class LocaleInfoManager {
+export namespace LocaleInfoManager {
 
-    private static _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
-    private static _catalogsMap: CatalogsMap = {};
+    let _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
+    let _catalogsMap: CatalogsMap = {};
 
     // TODO make this a regular function that stores the data in a variable with file scope.
     // It also needs to create the catalogs map.
-    static register(locales: ReadonlyArray<LocaleInfoWithCatalog>): void {
-        if (R.not(R.isEmpty(this._locales))) {
+    export const register = (locales: ReadonlyArray<LocaleInfoWithCatalog>): void => {
+        if (R.not(R.isEmpty(_locales))) {
             throw new Error('Locales have already been initialized');
         }
         I18nManager.allowRTL(true);
-        this._locales = locales;
+        _locales = locales;
         const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
             return { ...accumulator, [locale.code]: locale.catalog };
         };
-        this._catalogsMap = locales.reduce(reducer, {});
-    }
+        _catalogsMap = locales.reduce(reducer, {});
+    };
 
     // TODO remove this function
-    static reset(): void {
-        this._locales = [];
-        this._catalogsMap = {};
-    }
+    export const reset = (): void => {
+        _locales = [];
+        _catalogsMap = {};
+    };
 
-    static validate(): void {
-        if (R.isEmpty(this._locales) || R.isEmpty(this._catalogsMap)) {
+    export const validate = (): void => {
+        if (R.isEmpty(_locales) || R.isEmpty(_catalogsMap)) {
             throw new Error('Locales have not been initialized');
         }
-    }
+    };
 
-    // TODO remove function, hard-code 'en' as fallback locale
-    static getFallback(): LocaleCode {
-        return 'en';
-    }
+    export const getFallback = (): LocaleCode => 'en';
 
     // TODO return the catalogs map
-    static catalogsMap(): CatalogsMap {
-        this.validate();
-        return this._catalogsMap;
-    }
+    export const catalogsMap = (): CatalogsMap => {
+        validate();
+        return _catalogsMap;
+    };
 
     // TODO remove this function, it is now dead code, but useful in tests?
-    static getLocaleInfoWithCatalog(localeCode: string): LocaleInfoWithCatalog {
-        this.validate();
-        const locale = this._locales.find((aLocale: LocaleInfoWithCatalog): boolean => aLocale.code === localeCode);
+    export const getLocaleInfoWithCatalog = (localeCode: string): LocaleInfoWithCatalog => {
+        validate();
+        const locale =_locales.find((aLocale: LocaleInfoWithCatalog): boolean => aLocale.code === localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }
         return locale;
-    }
+    };
 
-    static getLocalesWithLabels(): ReadonlyArray<LocaleWithLabel> {
-        return this._locales.map((f: LocaleInfoWithCatalog): LocaleWithLabel => ({
-            code: f.code, label: f.label,
+    export const getLocalesWithLabels  = (): ReadonlyArray<LocaleWithLabel> => {
+        return _locales.map((locale: LocaleInfoWithCatalog): LocaleWithLabel => ({
+            code: locale.code,
+            label: locale.label,
         }));
-    }
+    };
 }
