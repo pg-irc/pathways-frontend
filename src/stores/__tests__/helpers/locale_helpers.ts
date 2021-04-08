@@ -42,7 +42,6 @@ export class LocaleStoreBuilder {
     code: string = this.locale;
     loading: boolean = false;
     isSaved: boolean = true;
-    errorMessage: string = '';
 
     withLocales(locales: ReadonlyArray<LocaleCode>): LocaleStoreBuilder {
         this.availableLocales = locales;
@@ -64,17 +63,11 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    withErrorMessage(message: string): LocaleStoreBuilder {
-        this.errorMessage = message;
-        return this;
-    }
-
     build(): LocaleStore {
         return {
             code: this.code,
             loading: this.loading,
             isSaved: this.isSaved,
-            errorMessage: this.errorMessage,
         };
     }
 }
