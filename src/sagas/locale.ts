@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale/effects';
+import { saveCurrentLocaleCode, loadCurrentLocaleCode } from '../application/locale_effects';
 import * as actions from '../stores/locale/actions';
-import { setTextDirection, isRTL } from '../locale/effects';
+import { setTextDirection, isRTL } from '../application/locale_effects';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../application/helpers/is_android';
 import { Locales } from '../application/locales';

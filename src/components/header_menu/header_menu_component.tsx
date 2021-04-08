@@ -8,7 +8,7 @@ import { LocaleCode, LocaleWithLabel } from '../../application/locales';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
-import { isRTL } from '../../locale/effects';
+import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';

@@ -5,7 +5,7 @@ import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
 import { Locales } from '../../application/locales';
-import { loadCurrentLocaleCode, saveCurrentLocaleCode } from '../../locale/effects';
+import { loadCurrentLocaleCode, saveCurrentLocaleCode } from '../../application/locale_effects';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoWithCatalogBuilder().withCode('en').build();

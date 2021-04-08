@@ -9,7 +9,7 @@ import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
-import { needsTextDirectionChange } from '../../locale/effects';
+import { needsTextDirectionChange } from '../../application/locale_effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
