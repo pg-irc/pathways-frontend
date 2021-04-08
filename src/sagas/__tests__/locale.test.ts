@@ -4,14 +4,14 @@ import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/loc
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
-import { LocaleInfoManager } from '../../locale';
+import { Locales } from '../../application/locales';
 import { loadCurrentLocaleCode, saveCurrentLocaleCode } from '../../locale/effects';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoWithCatalogBuilder().withCode('en').build();
     const aLocale = new LocaleInfoWithCatalogBuilder().build();
     beforeAll(() => {
-        LocaleInfoManager.register(
+        Locales.register(
             [
                 theFallbackLocale,
                 aLocale,
@@ -88,8 +88,8 @@ describe('the applyLocaleChange saga', () => {
         let saga: IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>>;
 
         beforeEach(() => {
-            LocaleInfoManager.reset();
-            LocaleInfoManager.register([aLocale]);
+            Locales.reset();
+            Locales.register([aLocale]);
             saga = applyLocaleChange(saveLocaleAction);
             saga.next();
         });

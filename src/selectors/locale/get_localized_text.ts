@@ -1,7 +1,7 @@
-import { LocalizedText } from '../../locale';
-import { LocaleCode } from '../../locale';
+import { LocalizedText } from '../../application/locales';
+import { LocaleCode } from '../../application/locales';
 
-export { LocaleCode } from '../../locale';
+export { LocaleCode } from '../../application/locales';
 
 export const getLocalizedText = (locale: LocaleCode, localizedText: LocalizedText): string => {
     const fallback = 'en';

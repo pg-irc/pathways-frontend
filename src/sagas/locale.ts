@@ -6,7 +6,7 @@ import * as actions from '../stores/locale/actions';
 import { setTextDirection, isRTL } from '../locale/effects';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../application/helpers/is_android';
-import { LocaleInfoManager } from '../locale';
+import { Locales } from '../application/locales';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);
@@ -43,7 +43,7 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
         const retrievedCode = yield call(loadCurrentLocaleCode);
 
         if (retrievedCode === null) {
-            const fallbackLocale = LocaleInfoManager.getFallback();
+            const fallbackLocale = Locales.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale);
             const isSaved = false;
             const RTL = isAppRTL(fallbackLocale);

@@ -2,7 +2,7 @@
 const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
-import {  LocaleCode } from '../locale';
+import {  LocaleCode } from '../application/locales';
 
 export interface APIResponse {
     readonly hasError: boolean;

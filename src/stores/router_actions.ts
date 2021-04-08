@@ -1,7 +1,7 @@
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import { Location } from 'history';
-import {  LocaleCode } from '../locale';
+import {  LocaleCode } from '../application/locales';
 
 export type RouteChangedAction = Readonly<ReturnType<typeof routeChanged>>;
 

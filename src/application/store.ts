@@ -9,7 +9,7 @@ import { loadLocaleRequest } from '../stores/locale/actions';
 import { DataPersistence } from '../stores/persisted_data';
 import { pushNotificationTokenRequest } from '../sagas/post_push_notification_token';
 
-import { LocaleInfoManager } from '../locale';
+import { Locales } from './locales';
 import arMessages from '../../locale/ar/messages';
 import enMessages from '../../locale/en/messages';
 import frMessages from '../../locale/fr/messages';
@@ -20,7 +20,7 @@ import zhCnMessages from '../../locale/zh_CN/messages';
 import zhTwMessages from '../../locale/zh_TW/messages';
 
 // tslint:disable-next-line:no-expression-statement
-LocaleInfoManager.register([
+Locales.register([
     { code: 'en', label: 'English', catalog: enMessages },
     { code: 'ar', label: 'عربى', catalog: arMessages },
     { code: 'fr', label: 'Français', catalog: frMessages },

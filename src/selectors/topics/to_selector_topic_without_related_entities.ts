@@ -1,5 +1,5 @@
 import * as store from '../../stores/topics';
-import { LocaleCode } from '../../locale';
+import { LocaleCode } from '../../application/locales';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTopic } from './to_selector_topic';
 import { Topic } from './types';

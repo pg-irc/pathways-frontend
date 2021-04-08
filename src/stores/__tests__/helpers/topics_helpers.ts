@@ -2,7 +2,7 @@
 import * as store from '../../topics';
 import { Id as TaskId } from '../../topics';
 import { aString } from '../../../application/helpers/random_test_values';
-import { LocalizedText } from '../../../locale';
+import { LocalizedText } from '../../../application/locales';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 
 export class TopicBuilder {

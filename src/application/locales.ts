@@ -40,7 +40,7 @@ export interface ReactI18nRenderProp {
     readonly i18n: ReactI18n;
 }
 
-export namespace LocaleInfoManager {
+export namespace Locales {
 
     let _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
     let _catalogsMap: CatalogsMap = {};

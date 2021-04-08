@@ -1,8 +1,8 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { aString } from '../../../application/helpers/random_test_values';
-import { LocaleCode } from '../../../locale';
+import { LocaleCode } from '../../../application/locales';
 import { LocaleStore } from '../../locale';
-import { LocaleInfoWithCatalog } from '../../../locale';
+import { LocaleInfoWithCatalog } from '../../../application/locales';
 
 export class LocaleInfoWithCatalogBuilder {
     code: string = aString();

@@ -9,7 +9,7 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps, goBack, isServiceReviewScreen } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
-import {  LocaleCode } from '../../locale';
+import {  LocaleCode } from '../../application/locales';
 import { AppModalsComponent } from './app_modals_component';
 import * as Notifications from 'expo-notifications';
 import { notificationListener } from './notification';

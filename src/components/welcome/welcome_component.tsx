@@ -3,7 +3,7 @@ import React from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { LocaleCode } from '../../locale';
+import { LocaleCode } from '../../application/locales';
 import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
@@ -13,7 +13,7 @@ import { needsTextDirectionChange } from '../../locale/effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
-import { LocaleWithLabel } from '../../locale';
+import { LocaleWithLabel } from '../../application/locales';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
