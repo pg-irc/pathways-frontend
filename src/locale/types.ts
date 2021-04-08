@@ -1,6 +1,6 @@
 export type CatalogsMap = { readonly [localeCode: string]: object };
 
-export type Catalog = { readonly [message: string]: object };
+export type Catalog = { readonly [message: string]: string };
 
 export interface LocaleWithLabel {
     readonly code: string;
