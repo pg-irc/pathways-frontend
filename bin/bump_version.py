@@ -20,7 +20,7 @@ with open('package.json', 'r') as file:
     content = json.loads(text, object_pairs_hook=OrderedDict)
     content['version'] = NEW_VERSION
     with open('package.tmp', 'w') as file:
-        file.write(json.dumps(content, indent=2))
+        file.write(json.dumps(content, indent=2, separators=(',', ': ')))
 
 with open('app.json', 'r') as file:
     text = file.read()
@@ -29,7 +29,7 @@ with open('app.json', 'r') as file:
     version_number = int(NEW_VERSION.replace('.', ''))
     content['expo']['android']['versionCode'] = version_number * 100
     with open('app.tmp', 'w') as file:
-        file.write(json.dumps(content, indent=2))
+        file.write(json.dumps(content, indent=2, separators=(',', ': ')))
 
 with open('.env', 'r') as file:
     ENV = file.read()
