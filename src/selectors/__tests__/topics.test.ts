@@ -4,7 +4,7 @@ import { TopicBuilder } from '../../stores/__tests__/helpers/topics_helpers';
 import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import * as stores from '../../stores/topics';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
-import { Locale } from '../../locale/types';
+import { LocaleCode } from '../../application/locales';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
@@ -23,7 +23,7 @@ import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_
 import * as R from 'ramda';
 import { filterTopicsByRegion } from '../topics/filter_topics_by_region';
 
-let locale: Locale = undefined;
+let locale: LocaleCode = undefined;
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -55,7 +55,7 @@ describe('topics selector', () => {
             taxonomyTermId = aString();
             exploreSectionName = aString();
             topic = new TopicBuilder().
-                withLocaleCode(locale.code).
+                withLocaleCode(locale).
                 withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
                 build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
@@ -68,11 +68,11 @@ describe('topics selector', () => {
         });
 
         test('title property', () => {
-            expect(denormalizedTask.title).toBe(topic.title[locale.code]);
+            expect(denormalizedTask.title).toBe(topic.title[locale]);
         });
 
         test('description property', () => {
-            expect(denormalizedTask.description).toBe(topic.description[locale.code]);
+            expect(denormalizedTask.description).toBe(topic.description[locale]);
         });
 
         test('taxonomy term reference', () => {

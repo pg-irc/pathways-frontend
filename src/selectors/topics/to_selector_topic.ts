@@ -1,12 +1,12 @@
 import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
-import { Locale } from '../../locale/types';
+import { LocaleCode } from '../../application/locales';
 import { ExploreSection } from '../explore/types';
 import { TopicListItem } from './types';
 import { Topic } from './types';
 
 export const toSelectorTopic =
-    (locale: Locale, topic: store.Topic, exploreSection: ExploreSection, isRecommended: boolean,
+    (locale: LocaleCode, topic: store.Topic, exploreSection: ExploreSection, isRecommended: boolean,
         relatedTopics: ReadonlyArray<TopicListItem>): Topic => (
             {
                 id: topic.id,

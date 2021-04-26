@@ -3,22 +3,23 @@ import React from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { LocaleInfo, Locale } from '../../locale';
+import { LocaleCode } from '../../application/locales';
 import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
-import { needsTextDirectionChange } from '../../locale/effects';
+import { needsTextDirectionChange } from '../../application/locale_effects';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
+import { LocaleWithLabel } from '../../application/locales';
 
 export interface WelcomeProps {
-    readonly currentLocale: Locale;
+    readonly currentLocale: LocaleCode;
     readonly currentRegion: RegionCode;
     readonly localeIsSet: boolean;
-    readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
     readonly showOnboarding: boolean;
     readonly history: History;
 }
@@ -121,7 +122,7 @@ const LocalePicker = (props: Props): JSX.Element => {
             return;
         }
         const flipOrientation = needsTextDirectionChange(localeCode);
-        if (localeCode !== props.currentLocale.code || flipOrientation) {
+        if (localeCode !== props.currentLocale || flipOrientation) {
             props.setLocale(localeCode, flipOrientation);
         }
     };
@@ -131,7 +132,7 @@ const LocalePicker = (props: Props): JSX.Element => {
             <Picker
                 mode='dropdown'
                 placeholder={placeholder }
-                selectedValue={props.localeIsSet ? props.currentLocale.code : undefined}
+                selectedValue={props.localeIsSet ? props.currentLocale : undefined}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                 onValueChange={handleLocaleChange}
                 style={applicationStyles.picker}
@@ -139,7 +140,7 @@ const LocalePicker = (props: Props): JSX.Element => {
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
                 <Picker.Item key='' label={placeholder} value={placeholder} />
-                {props.availableLocales.map((locale: LocaleInfo) => (
+                {props.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
                     <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                 ))}
             </Picker>
@@ -148,7 +149,7 @@ const LocalePicker = (props: Props): JSX.Element => {
 };
 
 const StartButton = (props: Props): JSX.Element => {
-    if (props.currentRegion && props.currentLocale.code) {
+    if (props.currentRegion && props.currentLocale) {
         return (
             <Button
                 full

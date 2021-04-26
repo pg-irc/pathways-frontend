@@ -1,68 +1,48 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
-import { LocalizedText } from '../../../locale';
 import { aString } from '../../../application/helpers/random_test_values';
-import { Locale, LocaleInfo } from '../../../locale';
+import { Catalog, LocaleCode } from '../../../application/locales';
 import { LocaleStore } from '../../locale';
+import { LocaleInfoWithCatalog } from '../../../application/locales';
 
-export class LocaleInfoBuilder {
+export class LocaleInfoWithCatalogBuilder {
     code: string = aString();
     label: string = aString();
+    catalog: Catalog = {};
 
-    withCode(code: string): LocaleInfoBuilder {
+    withCode(code: string): LocaleInfoWithCatalogBuilder {
         this.code = code;
         return this;
     }
 
-    withLabel(label: string): LocaleInfoBuilder {
+    withLabel(label: string): LocaleInfoWithCatalogBuilder {
         this.label = label;
         return this;
     }
 
-    build(): LocaleInfo {
-        return {
-            code: this.code,
-            label: this.label,
-        };
-    }
-}
-
-export const aLocale = (): Locale => ({
-    code: aString(),
-    fallback: aString(),
-});
-
-export class LocalizedTextBuilder {
-
-    localizations: LocalizedText;
-
-    constructor() {
-        this.addLocalizedText(aString(), aString());
-    }
-
-    addLocalizedText(localeCode: string, localeText: string): LocalizedTextBuilder {
-        this.localizations = {
-            ...this.localizations,
-            [localeCode]: localeText,
-        };
+    withCatalog(catalog: Catalog): LocaleInfoWithCatalogBuilder {
+        this.catalog = catalog;
         return this;
     }
 
-    build(): LocalizedText {
-        return this.localizations;
+    build(): LocaleInfoWithCatalog {
+        return {
+            code: this.code,
+            label: this.label,
+            catalog: this.catalog,
+        };
     }
 }
 
+export const aLocale = (): LocaleCode => aString();
+
 export class LocaleStoreBuilder {
 
-    locale: LocaleInfo = new LocaleInfoBuilder().build();
-    availableLocales: ReadonlyArray<LocaleInfo> = [this.locale];
-    code: string = this.locale.code;
-    fallback: string = this.locale.code;
+    locale: LocaleCode = aString();
+    availableLocales: ReadonlyArray<LocaleCode> = [this.locale];
+    code: string = this.locale;
     loading: boolean = false;
-    isSaved: boolean = true;
-    errorMessage: string = '';
 
-    withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
+    withLocales(locales: ReadonlyArray<LocaleCode>): LocaleStoreBuilder {
         this.availableLocales = locales;
         return this;
     }
@@ -72,34 +52,15 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    withFallback(fallback: string): LocaleStoreBuilder {
-        this.fallback = fallback;
-        return this;
-    }
-
     withLoading(loading: boolean): LocaleStoreBuilder {
         this.loading = loading;
         return this;
     }
 
-    withIsSaved(isSaved: boolean): LocaleStoreBuilder {
-        this.isSaved = isSaved;
-        return this;
-    }
-
-    withErrorMessage(message: string): LocaleStoreBuilder {
-        this.errorMessage = message;
-        return this;
-    }
-
     build(): LocaleStore {
         return {
-            availableLocales: this.availableLocales,
             code: this.code,
-            fallback: this.fallback,
             loading: this.loading,
-            isSaved: this.isSaved,
-            errorMessage: this.errorMessage,
         };
     }
 }

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { I18nManager } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { PREFERENCES_LOCALE_CODE } from '../application/constants';
+import { PREFERENCES_LOCALE_CODE } from './constants';
 import * as Updates from 'expo-updates';
 
 export function needsTextDirectionChange(localeCode: string): boolean {

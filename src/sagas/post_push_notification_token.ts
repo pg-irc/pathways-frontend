@@ -7,7 +7,7 @@ import * as Notifications from 'expo-notifications';
 import { putPushNotificationToken, APIResponse } from '../api';
 import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
-import { Locale } from '../locale';
+import {  LocaleCode } from '../application/locales';
 
 export type PushNotificationTokenRequestAction = Readonly<ReturnType<typeof pushNotificationTokenRequest>>;
 export type PushNotificationTokenSuccessAction = Readonly<ReturnType<typeof pushNotificationTokenSuccess>>;
@@ -48,7 +48,7 @@ function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): R
     if (token === '') {
         return yield put(pushNotificationTokenFailure('Error retrieving push notification token'));
     }
-    const locale: Locale = yield select(selectLocale);
+    const locale: LocaleCode = yield select(selectLocale);
     // tslint:disable:no-string-literal
     const result: APIResponse = yield call(putPushNotificationToken, token['data'], locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {

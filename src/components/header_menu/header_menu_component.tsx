@@ -4,11 +4,11 @@ import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { LocaleInfo } from '../../locale/types';
+import { LocaleCode, LocaleWithLabel } from '../../application/locales';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
-import { isRTL } from '../../locale/effects';
+import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
@@ -21,12 +21,12 @@ type OwnProps = {
 };
 
 export interface HeaderMenuProps {
-    readonly currentLocale: LocaleInfo;
-    readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    readonly currentLocale: LocaleCode;
+    readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: string, flipOrientation: boolean) => void;
+    readonly setLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
     readonly updateNotificationToken: () => void;
 }
 
@@ -58,11 +58,11 @@ const getViewBackgroundColorForPlatform = (): string => (
     isAndroid() ? colors.teal : colors.white
 );
 
-type LocaleListItem = LocaleInfo & {
+type LocaleListItem = {
+    readonly code: string;
+    readonly label: string;
     readonly onPress: () => void;
 };
-
-type LocaleItemBuilder = (locale: LocaleInfo) => LocaleListItem;
 
 // TO DO complete rest of these types
 export interface SectionListItemInfo {
@@ -70,10 +70,10 @@ export interface SectionListItemInfo {
     readonly index: number;
     readonly section: any;
     readonly separators: any;
-};
+}
 
 type SelectedLocaleListItemInfo = {
-    readonly section: LocaleInfo & SectionBase<LocaleListItem>;
+    readonly section: LocaleWithLabel & SectionBase<LocaleListItem>;
 };
 
 const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element => (
@@ -83,17 +83,17 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 );
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItemBuilder(props.setLocale, props.updateNotificationToken);
+    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
-        ...props.currentLocale,
-        data: R.map(localeItemBuilder, props.availableLocales),
+        code: props.currentLocale,
+        data: R.map(localeItemBuilder, props.otherLocales),
     };
     return (
         <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SectionList
                 stickySectionHeadersEnabled={true}
-                keyExtractor={(item: LocaleInfo): string => item.code}
+                keyExtractor={(item: LocaleWithLabel): string => item.code}
                 sections={[localeSectionData]}
                 renderItem={LocaleItem}
                 renderSectionHeader={SelectedLocaleItem} />
@@ -101,16 +101,18 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: boolean) => void, updateToken: () => void): LocaleItemBuilder {
-    return (locale: LocaleInfo): LocaleListItem => {
-        return {
-            ...locale, onPress: (): void => {
+const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
+                                updateToken: () => void,
+                                locale: LocaleWithLabel): LocaleListItem => (
+        {
+            ...locale,
+            onPress: (): void => {
                 setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
                 updateToken();
             },
-        };
-    };
-}
+        }
+    ),
+);
 
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (

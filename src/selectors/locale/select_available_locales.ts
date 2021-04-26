@@ -1,18 +1,17 @@
 import { Store } from '../../stores';
-import { LocaleInfo } from '../../locale/types';
-import { pickLocaleStore } from './pick_locale_store';
+import { LocaleWithLabel } from '../../application/locales';
 import { pickRegion } from '../region/pick_region';
 import { RegionCode } from '../../validation/region/types';
+import { Locales } from '../../application/locales';
 
-export const selectAvailableLocales = (appStore: Store): ReadonlyArray<LocaleInfo> => {
-    const store = pickLocaleStore(appStore);
+export const selectAvailableLocales = (appStore: Store): ReadonlyArray<LocaleWithLabel> => {
     const region = pickRegion(appStore);
     if (region === RegionCode.MB) {
         return mbAvailableLocale;
     }
-    return store.availableLocales;
+    return Locales.getLocalesWithLabels();
 };
 
-const mbAvailableLocale: ReadonlyArray<LocaleInfo> = [
+const mbAvailableLocale: ReadonlyArray<LocaleWithLabel> = [
     { code: 'en', label: 'English' },
 ];

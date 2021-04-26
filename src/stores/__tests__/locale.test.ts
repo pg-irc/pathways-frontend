@@ -3,7 +3,7 @@ import * as locale from '../locale';
 import * as actions from '../locale/actions';
 import * as constants from '../../application/constants';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
-import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
+import { LocaleStoreBuilder } from './helpers/locale_helpers';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 const aLocaleCode = aString();
@@ -120,11 +120,6 @@ describe('the reducer', () => {
         expect(theStore.code).toBe(undefined);
     });
 
-    it('should default to build a store with a undefined fallback locale code', () => {
-        const theStore = locale.reducer();
-        expect(theStore.fallback).toBe(undefined);
-    });
-
     it('when called with SAVE_LOCALE_REQUEST should return store with loading flag set', () => {
         const theStore = new LocaleStoreBuilder().build();
         const theAction = {
@@ -189,7 +184,7 @@ describe('the reducer', () => {
     });
 
     it('sets the code to undefined when called with CLEAR ALL USER DATA', () => {
-        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
+        const oldStore = new LocaleStoreBuilder().withCode('en').build();
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };
@@ -198,47 +193,5 @@ describe('the reducer', () => {
 
         expect(newStore.code).toBe(undefined);
     });
-
-    it('sets the saved flag to false when called with CLEAR ALL USER DATA', () => {
-        const oldStore = new LocaleStoreBuilder().withCode('en').withIsSaved(true).build();
-        const action: ClearAllUserDataAction = {
-            type: constants.CLEAR_ALL_USER_DATA,
-        };
-
-        const newStore = locale.reducer(oldStore, action);
-
-        expect(newStore.isSaved).toBe(false);
-    });
-
-    describe('should never change', () => {
-        let allLocaleActions: ReadonlyArray<actions.LocaleAction> = [
-            { type: constants.LOAD_CURRENT_LOCALE_REQUEST },
-            {
-                type: constants.LOAD_CURRENT_LOCALE_SUCCESS,
-                payload: { localeCode: aString(), isSaved: aBoolean(), flipOrientation: aBoolean() },
-            },
-            { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
-            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
-            { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
-            { type: constants.SAVE_LOCALE_FAILURE, payload: { message: aString(), localeCode: aString() } },
-        ];
-
-        test('property: availableLocales', () => {
-            let theStore = new LocaleStoreBuilder().withLocales([new LocaleInfoBuilder().build()]).build();
-            for (let theAction of allLocaleActions) {
-                const theNewStore = locale.reducer(theStore, theAction);
-                expect(theNewStore.availableLocales).toEqual(theStore.availableLocales);
-            }
-        });
-
-        test('property: fallback', () => {
-            let theStore = new LocaleStoreBuilder().build();
-            for (let theAction of allLocaleActions) {
-                const theNewStore = locale.reducer(theStore, theAction);
-                expect(theNewStore.fallback).toEqual(theStore.fallback);
-            }
-        });
-
-    });
-
 });
+

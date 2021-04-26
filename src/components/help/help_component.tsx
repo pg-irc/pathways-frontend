@@ -11,7 +11,7 @@ import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link_component';
 import { goToRouteWithParameter, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
+import { ReactI18nRenderProp, ReactI18n } from '../../application/locales';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { UserLocation, LatLong } from '../../validation/latlong/types';

@@ -1,4 +1,4 @@
-import { LocalizedText } from '../../locale';
+import { LocalizedText } from '../../application/locales';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;

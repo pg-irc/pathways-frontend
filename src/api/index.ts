@@ -2,7 +2,7 @@
 const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
-import { Locale } from '../locale';
+import {  LocaleCode } from '../application/locales';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -75,7 +75,7 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     return { hasError: false, message, response, results };
 }
 
-export async function putPushNotificationToken(token: string, locale: Locale, api_key: string): Promise<APIResponse> {
+export async function putPushNotificationToken(token: string, locale: LocaleCode, api_key: string): Promise<APIResponse> {
     const url = createPushNotificationTokenUrl(baseUrl, token);
     const response = await fetch(url,
         {
@@ -84,7 +84,7 @@ export async function putPushNotificationToken(token: string, locale: Locale, ap
                 ['Content-Type', 'application/json'],
             ],
             body: JSON.stringify({
-                'locale': locale.code,
+                'locale': locale,
                 'api_key': api_key,
             }),
         },

@@ -9,7 +9,7 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps, goBack, isServiceReviewScreen } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { Locale } from '../../locale';
+import {  LocaleCode } from '../../application/locales';
 import { AppModalsComponent } from './app_modals_component';
 import * as Notifications from 'expo-notifications';
 import { notificationListener } from './notification';
@@ -28,7 +28,7 @@ import { RegionCode } from '../../validation/region/types';
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
 export interface MainComponentActions {
-    readonly sendAnalyticsData: (location: Location, locale: Locale) => RouteChangedAction;
+    readonly sendAnalyticsData: (location: Location, locale: LocaleCode) => RouteChangedAction;
     readonly closeHeaderMenu: () => CloseHeaderMenuAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly closeAboutModal: () => CloseAboutModalAction;
@@ -42,7 +42,7 @@ export interface MainComponentActions {
 
 interface MainProps {
     readonly region: RegionCode;
-    readonly locale: Locale;
+    readonly locale: LocaleCode;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
     readonly isHeaderMenuVisible: boolean;

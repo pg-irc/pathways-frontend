@@ -1,19 +1,20 @@
 // tslint:disable:no-expression-statement no-let no-null-keyword no-any
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
-import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { loadCurrentLocaleCode, saveCurrentLocaleCode, LocaleInfoManager } from '../../locale';
+import { LocaleInfoWithCatalogBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError, aBoolean } from '../../application/helpers/random_test_values';
+import { Locales } from '../../application/locales';
+import { loadCurrentLocaleCode, saveCurrentLocaleCode } from '../../application/locale_effects';
 
 describe('load locale saga', () => {
-    const theFallbackLocale = new LocaleInfoBuilder().build();
-    const aLocale = new LocaleInfoBuilder().build();
+    const theFallbackLocale = new LocaleInfoWithCatalogBuilder().withCode('en').build();
+    const aLocale = new LocaleInfoWithCatalogBuilder().build();
     beforeAll(() => {
-        LocaleInfoManager.register(
+        Locales.register(
             [
-                { ...theFallbackLocale, catalog: {} },
-                { ...aLocale, catalog: {} },
+                theFallbackLocale,
+                aLocale,
             ],
         );
     });
@@ -59,7 +60,7 @@ describe('load locale saga', () => {
         });
 
         it('dispatches action to save the fallback locale as the current locale', () => {
-            expect(saveCurrentLocaleCodeAction).toEqual(call(saveCurrentLocaleCode, theFallbackLocale.code));
+            expect(saveCurrentLocaleCodeAction).toEqual(call(saveCurrentLocaleCode, 'en'));
         });
 
         it('dispatches a load current locale success action with isSaved flag is false', () => {
@@ -73,7 +74,7 @@ describe('load locale saga', () => {
 
 describe('the applyLocaleChange saga', () => {
 
-    const aLocale = new LocaleInfoBuilder().build();
+    const aLocale = new LocaleInfoWithCatalogBuilder().build();
     const flipOrientation = aBoolean();
     const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, flipOrientation);
 
@@ -87,8 +88,8 @@ describe('the applyLocaleChange saga', () => {
         let saga: IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>>;
 
         beforeEach(() => {
-            LocaleInfoManager.reset();
-            LocaleInfoManager.registerSingle({ ...aLocale, catalog: {} });
+            Locales.reset();
+            Locales.register([aLocale]);
             saga = applyLocaleChange(saveLocaleAction);
             saga.next();
         });

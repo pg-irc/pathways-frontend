@@ -1,11 +1,12 @@
 // tslint:disable:no-expression-statement
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale';
+import { saveCurrentLocaleCode, loadCurrentLocaleCode } from '../application/locale_effects';
 import * as actions from '../stores/locale/actions';
-import { setTextDirection, isRTL } from '../locale/effects';
+import { setTextDirection, isRTL } from '../application/locale_effects';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../application/helpers/is_android';
+import { Locales } from '../application/locales';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);
@@ -42,18 +43,17 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<ac
         const retrievedCode = yield call(loadCurrentLocaleCode);
 
         if (retrievedCode === null) {
-            const fallbackLocale = LocaleInfoManager.getFallback();
-            yield call(saveCurrentLocaleCode, fallbackLocale.code);
+            const fallbackLocale = Locales.getFallback();
+            yield call(saveCurrentLocaleCode, fallbackLocale);
             const isSaved = false;
-            const RTL = isAppRTL(fallbackLocale.code);
-            const flipOrientation = RTL !== isRTL(fallbackLocale.code);
-            yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
+            const RTL = isAppRTL(fallbackLocale);
+            const flipOrientation = RTL !== isRTL(fallbackLocale);
+            yield put(actions.loadLocaleSuccess(fallbackLocale, isSaved, flipOrientation));
         } else {
-            const locale = LocaleInfoManager.get(retrievedCode);
-            const RTL = isAppRTL(locale.code);
+            const RTL = isAppRTL(retrievedCode);
             const isSaved = true;
-            const flipOrientation = RTL !== isRTL(locale.code);
-            yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
+            const flipOrientation = RTL !== isRTL(retrievedCode);
+            yield put(actions.loadLocaleSuccess(retrievedCode, isSaved, flipOrientation));
         }
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);

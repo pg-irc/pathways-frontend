@@ -1,9 +1,4 @@
-import { Locale } from '../../locale/types';
+import { LocaleCode } from '../../application/locales';
 import { LocaleStore } from '../../stores/locale';
 
-export const toSelectorLocale = (store: LocaleStore): Locale => (
-    {
-        code: store.code,
-        fallback: store.fallback,
-    }
-);
+export const toSelectorLocale = (store: LocaleStore): LocaleCode => store.code;

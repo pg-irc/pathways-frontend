@@ -1,19 +1,20 @@
-import { LocalizedText } from '../../locale';
-import { Locale } from '../../locale/types';
+import { LocalizedText } from '../../application/locales';
+import { LocaleCode } from '../../application/locales';
 
-export { Locale, LocaleInfo } from '../../locale/types';
+export { LocaleCode } from '../../application/locales';
 
-export const getLocalizedText = (locale: Locale, localizedText: LocalizedText): string => {
-    const placeholder = `missing in ${locale.code}&${locale.fallback}`;
-    return getLocalizedTextOrDefault(placeholder, locale, localizedText);
+export const getLocalizedText = (locale: LocaleCode, localizedText: LocalizedText): string => {
+    const fallback = 'en';
+    const placeholder = `missing in ${locale}&${fallback}`;
+    return getLocalizedTextOrDefault(placeholder, locale, fallback, localizedText);
 };
 
-export const getLocalizedTextOrDefault = (theDefault: string, locale: Locale, localizedText: LocalizedText): string => {
-    if (localizedText[locale.code]) {
-        return localizedText[locale.code];
+export const getLocalizedTextOrDefault = (theDefault: string, locale: string, fallback: string, localizedText: LocalizedText): string => {
+    if (localizedText[locale]) {
+        return localizedText[locale];
     }
-    if (localizedText[locale.fallback]) {
-        return localizedText[locale.fallback];
+    if (localizedText[fallback]) {
+        return localizedText[fallback];
     }
     return theDefault;
 };
