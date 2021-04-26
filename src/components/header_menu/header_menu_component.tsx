@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { LocaleCode, LocaleWithLabel } from '../../application/locales';
+import { LocaleCode, LocaleWithLabel, localeCodeToLabel } from '../../application/locales';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
@@ -90,6 +90,7 @@ const LocaleSection = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
         code: props.currentLocale,
+        label: localeCodeToLabel(props.currentLocale),
         data: R.map(localeItemBuilder, props.otherLocales),
     };
     return (

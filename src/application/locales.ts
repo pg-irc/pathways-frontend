@@ -61,6 +61,27 @@ export const getAvailableLocales = (region: RegionCode): ReadonlyArray<LocaleWit
     }
 };
 
+export const localeCodeToLabel = (locale: LocaleCode): string => {
+    switch (locale) {
+        case 'ar':
+            return 'عربى';
+        case 'fr':
+            return 'Français';
+        case 'ko':
+            return '한국어';
+        case 'pa':
+            return 'ਪੰਜਾਬੀ';
+        case 'tl':
+            return 'Tagalog';
+        case 'zh_CN':
+            return '简体中文';
+        case 'zh_TW':
+            return '繁體中文';
+        default:
+            return 'English';
+    }
+};
+
 export namespace Locales {
 
     let _locales: ReadonlyArray<LocaleInfoWithCatalog> = [];
