@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement readonly-keyword
-import React from 'react';
+import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
@@ -11,7 +11,7 @@ import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../applicat
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../application/locale_effects';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RegionCode } from '../../validation/region/types';
+import { RegionCode, RegionLocaleMap, SelectProvinceAction } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
 
@@ -34,6 +34,34 @@ type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
+
+    const reducer = (regionState: RegionLocaleMap, action: SelectProvinceAction): RegionLocaleMap => {
+        switch (action.type) {
+            case RegionCode.MB:
+                return {
+                    ...regionState,
+                    region: RegionCode.MB,
+                };
+            case RegionCode.BC:
+                return {
+                    ...regionState,
+                    region: RegionCode.BC,
+                };
+            default:
+                return {
+                    ...regionState,
+                    region: undefined,
+                };
+        }
+    };
+
+    const [state, dispatch]: readonly [RegionLocaleMap, Dispatch<SelectProvinceAction>] = useReducer(
+        reducer,
+        {
+            region: undefined,
+            availableLocales: [],
+        },
+    );
 
     return (
         <ImageBackground
@@ -63,7 +91,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <RegionPicker {...props} />
+                    {RegionPicker(state, dispatch)}
                     <LocalePicker {...props} />
                 </Form>
                 <View>
@@ -89,21 +117,16 @@ export function WelcomeComponent(props: Props): JSX.Element {
     );
 }
 
-const RegionPicker = (props: Props): JSX.Element => {
-
-    const handleRegionChange = (regionCode: RegionCode): void => {
-        props.saveRegion(regionCode);
-        props.resetLocale();
-    };
+const RegionPicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectProvinceAction>): JSX.Element => {
 
     return (
         <Item style={applicationStyles.pickerItem}>
             <Picker
                 mode='dropdown'
                 placeholder='Select province'
-                selectedValue={props.currentRegion}
+                selectedValue={state.region}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={handleRegionChange}
+                onValueChange={(event: RegionCode): void => dispatch({ type: event })}
                 style={applicationStyles.picker}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
@@ -111,7 +134,7 @@ const RegionPicker = (props: Props): JSX.Element => {
                 <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
                 <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
             </Picker>
-        </Item>
+        </Item >
     );
 };
 
@@ -131,7 +154,7 @@ const LocalePicker = (props: Props): JSX.Element => {
         <Item style={applicationStyles.pickerItem}>
             <Picker
                 mode='dropdown'
-                placeholder={placeholder }
+                placeholder={placeholder}
                 selectedValue={props.localeIsSet ? props.currentLocale : undefined}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
                 onValueChange={handleLocaleChange}
