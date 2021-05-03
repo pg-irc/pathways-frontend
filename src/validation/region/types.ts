@@ -15,7 +15,7 @@ export interface RegionLocaleMap {
     readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
-export type SelectProvinceAction =
+export type SelectRegionAction =
     | { readonly type: RegionCode.BC }
     | { readonly type: RegionCode.MB }
     | { readonly type: undefined };
