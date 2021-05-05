@@ -1,64 +1,70 @@
 // tslint:disable:no-expression-statement readonly-keyword
-import React, { Dispatch, useReducer, useState } from 'react';
+import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
-import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
+import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
-// import { needsTextDirectionChange } from '../../application/locale_effects';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RegionCode, RegionLocaleMap, SelectRegionAction } from '../../validation/region/types';
+import { RegionCode, RegionLocaleMap, SelectRegionAction, SelectLocaleAction } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
+import * as constants from '../../application/constants';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
     readonly currentRegion: RegionCode;
-    readonly localeIsSet: boolean;
-    readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
     readonly showOnboarding: boolean;
     readonly history: History;
 }
 
 export interface WelcomeActions {
     readonly saveLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
-    readonly resetLocale: () => ResetLocaleAction;
     readonly saveRegion: (regionCode: RegionCode) => SaveRegionAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
+type SelectRegionLocaleAction = SelectRegionAction | SelectLocaleAction;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-
-    const reducer = (regionState: RegionLocaleMap, action: SelectRegionAction): RegionLocaleMap => {
-        switch (action.type) {
+    const getAvailableLocales = (region: RegionCode): ReadonlyArray<LocaleWithLabel> => {
+        switch (region) {
             case RegionCode.MB:
-                return {
-                    ...regionState,
-                    region: RegionCode.MB,
-                    availableLocales: [
-                        { code: 'en', label: 'English' },
-                    ],
-                };
+                return [{ code: 'en', label: 'English' }];
             case RegionCode.BC:
+                return [
+                    { code: 'en', label: 'English' },
+                    { code: 'ar', label: 'عربى' },
+                    { code: 'fr', label: 'Français' },
+                    { code: 'ko', label: '한국어' },
+                    { code: 'pa', label: 'ਪੰਜਾਬੀ' },
+                    { code: 'tl', label: 'Tagalog' },
+                    { code: 'zh_CN', label: '简体中文' },
+                    { code: 'zh_TW', label: '繁體中文' },
+                ];
+            default:
+                return [];
+        }
+    };
+
+    const reducer = (regionState: RegionLocaleMap, action: SelectRegionLocaleAction): RegionLocaleMap => {
+        switch (action.type) {
+            case constants.SELECT_REGION:
                 return {
                     ...regionState,
-                    region: RegionCode.BC,
-                    availableLocales: [
-                        { code: 'en', label: 'English' },
-                        { code: 'ar', label: 'عربى' },
-                        { code: 'fr', label: 'Français' },
-                        { code: 'ko', label: '한국어' },
-                        { code: 'pa', label: 'ਪੰਜਾਬੀ' },
-                        { code: 'tl', label: 'Tagalog' },
-                        { code: 'zh_CN', label: '简体中文' },
-                        { code: 'zh_TW', label: '繁體中文' },
-                    ],
+                    region: action.payload.region,
+                    locale: undefined,
+                    availableLocales: getAvailableLocales(action.payload.region),
+                };
+            case constants.SELECT_LOCALE:
+                return {
+                    ...regionState,
+                    locale: action.payload.locale,
                 };
             default:
                 return {
@@ -69,9 +75,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
         }
     };
 
-    const [localeSelected, setLocale]: readonly [LocaleWithLabel, (l: LocaleWithLabel) => void] = useState(undefined);
-    const [regionLocaleState, dispatch]: readonly [RegionLocaleMap, Dispatch<SelectRegionAction>] = useReducer(
-        reducer, { region: undefined, availableLocales: [] },
+    const [selectedRegionState, dispatch]: readonly [RegionLocaleMap, Dispatch<SelectRegionLocaleAction>] = useReducer(
+        reducer, { region: undefined, locale: undefined, availableLocales: [] },
     );
 
     return (
@@ -102,11 +107,18 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    {RegionPicker(regionLocaleState, dispatch, setLocale)}
-                    {LocalePicker(regionLocaleState, localeSelected, setLocale)}
+                    {RegionPicker(selectedRegionState, dispatch)}
+                    {LocalePicker(selectedRegionState, dispatch)}
                 </Form>
                 <View>
-                    <StartButton {...props} />
+                    <StartButton
+                        selectedRegionState={selectedRegionState}
+                        currentLocale={props.currentLocale}
+                        currentRegion={props.currentRegion}
+                        showOnboarding={props.showOnboarding}
+                        history={props.history}
+                        saveLocale={props.saveLocale}
+                        saveRegion={props.saveRegion} />
                 </View>
             </View>
             <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -128,12 +140,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
     );
 }
 
-const RegionPicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectRegionAction>, setLocale: (l: LocaleWithLabel) => void): JSX.Element => {
-
-    const handleOnRegionChange = (event: RegionCode): void => {
-        setLocale(undefined);
-        dispatch({ type: event });
-    };
+const RegionPicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectRegionAction>): JSX.Element => {
 
     return (
         <Item style={applicationStyles.pickerItem}>
@@ -142,7 +149,7 @@ const RegionPicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectRegionAct
                 placeholder='Select province'
                 selectedValue={state.region}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={handleOnRegionChange}
+                onValueChange={(region: RegionCode): void => dispatch({ type: constants.SELECT_REGION, payload: { region } })}
                 style={applicationStyles.picker}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
@@ -154,7 +161,7 @@ const RegionPicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectRegionAct
     );
 };
 
-const LocalePicker = (state: RegionLocaleMap, localeSelected: LocaleWithLabel, setLocale: (l: LocaleWithLabel) => void): JSX.Element => {
+const LocalePicker = (state: RegionLocaleMap, dispatch: Dispatch<SelectLocaleAction>): JSX.Element => {
     const placeholder = 'Select language';
 
     return (
@@ -162,9 +169,9 @@ const LocalePicker = (state: RegionLocaleMap, localeSelected: LocaleWithLabel, s
             <Picker
                 mode='dropdown'
                 placeholder={placeholder}
-                selectedValue={localeSelected}
+                selectedValue={state.locale}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={(e: LocaleWithLabel): void => setLocale(e)}
+                onValueChange={(locale: string): void => dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
                 style={applicationStyles.picker}
                 enabled={state.region ? true : false}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
@@ -178,8 +185,18 @@ const LocalePicker = (state: RegionLocaleMap, localeSelected: LocaleWithLabel, s
     );
 };
 
-const StartButton = (props: Props): JSX.Element => {
-    if (props.currentRegion && props.currentLocale) {
+export interface StartButtonProps {
+    readonly currentLocale: LocaleCode;
+    readonly selectedRegionState: RegionLocaleMap;
+    readonly currentRegion: RegionCode;
+    readonly showOnboarding: boolean;
+    readonly history: History;
+    readonly saveLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
+    readonly saveRegion: (regionCode: RegionCode) => SaveRegionAction;
+}
+
+const StartButton = (props: StartButtonProps): JSX.Element => {
+    if (props.selectedRegionState) {
         return (
             <Button
                 full
@@ -195,7 +212,9 @@ const StartButton = (props: Props): JSX.Element => {
     return <EmptyComponent />;
 };
 
-const onStartButtonPress = (props: Props): void => {
+const onStartButtonPress = (props: StartButtonProps): void => {
+    props.saveLocale(props.selectedRegionState.locale, true);
+    props.saveRegion(props.selectedRegionState.region);
     if (props.showOnboarding) {
         return goToRouteWithoutParameter(Routes.Onboarding, props.history);
     }
