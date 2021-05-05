@@ -3,7 +3,7 @@ import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { LocaleCode } from '../../application/locales';
+import { getAvailableLocales, LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
@@ -14,6 +14,7 @@ import { RegionCode, RegionLocaleMap, SelectRegionAction, SelectLocaleAction } f
 import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
 import * as constants from '../../application/constants';
+import { needsTextDirectionChange } from '../../application/locale_effects';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
@@ -32,25 +33,6 @@ type SelectRegionLocaleAction = SelectRegionAction | SelectLocaleAction;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-    const getAvailableLocales = (region: RegionCode): ReadonlyArray<LocaleWithLabel> => {
-        switch (region) {
-            case RegionCode.MB:
-                return [{ code: 'en', label: 'English' }];
-            case RegionCode.BC:
-                return [
-                    { code: 'en', label: 'English' },
-                    { code: 'ar', label: 'عربى' },
-                    { code: 'fr', label: 'Français' },
-                    { code: 'ko', label: '한국어' },
-                    { code: 'pa', label: 'ਪੰਜਾਬੀ' },
-                    { code: 'tl', label: 'Tagalog' },
-                    { code: 'zh_CN', label: '简体中文' },
-                    { code: 'zh_TW', label: '繁體中文' },
-                ];
-            default:
-                return [];
-        }
-    };
 
     const reducer = (regionState: RegionLocaleMap, action: SelectRegionLocaleAction): RegionLocaleMap => {
         switch (action.type) {
@@ -213,7 +195,8 @@ const StartButton = (props: StartButtonProps): JSX.Element => {
 };
 
 const onStartButtonPress = (props: StartButtonProps): void => {
-    props.saveLocale(props.selectedRegionState.locale, true);
+    const flipOrientation = needsTextDirectionChange(props.selectedRegionState.locale);
+    props.saveLocale(props.selectedRegionState.locale, flipOrientation);
     props.saveRegion(props.selectedRegionState.region);
     if (props.showOnboarding) {
         return goToRouteWithoutParameter(Routes.Onboarding, props.history);
