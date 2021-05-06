@@ -264,8 +264,10 @@ setStagingValuesInAppJson() {
 }
 
 setVersionInEnv() {
-    sed s/VERSION=.*/VERSION=$VERSION/ .env > .env.tmp
-    mv .env.tmp .env
+    ( cd "$CLIENT_DIRECTORY" && \
+        sed s/VERSION=.*/VERSION=$VERSION/ .env > .env.tmp && \
+        mv .env.tmp .env
+    )
 }
 
 createClientEnvironment() {
@@ -276,15 +278,18 @@ createClientEnvironment() {
     if [ "$BUILD" == "staging" ]
     then
         setStagingValuesInAppJson
-
-        cp ../pathways-deploy/staging/env $CLIENT_DIRECTORY/.env
-        cp ../pathways-deploy/staging/google-services.json $CLIENT_DIRECTORY
+        ( cd "$CLIENT_DIRECTORY" && \
+            cp ../pathways-deploy/staging/env .env && \
+            cp ../pathways-deploy/staging/google-services.json .
+        )
         setVersionInEnv
 
     elif [ "$BUILD" == "production" ]
     then
-        cp ../pathways-deploy/production/env $CLIENT_DIRECTORY/.env
-        cp ../pathways-deploy/production/google-services.json $CLIENT_DIRECTORY
+        ( cd "$CLIENT_DIRECTORY" && \
+            cp ../pathways-deploy/production/env .env && \
+            cp ../pathways-deploy/production/google-services.json .
+        )
         setVersionInEnv
 
     else
