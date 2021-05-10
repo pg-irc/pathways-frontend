@@ -3,7 +3,7 @@ import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { getAvailableLocales, LocaleCode } from '../../application/locales';
+import { LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
@@ -15,7 +15,7 @@ import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
 import * as constants from '../../application/constants';
 import { needsTextDirectionChange } from '../../application/locale_effects';
-import * as helpers from '../../stores/helpers/make_action';
+import { reducer, SelectRegionLocaleAction } from './index';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
@@ -31,46 +31,8 @@ export interface WelcomeActions {
 
 type Props = WelcomeProps & WelcomeActions;
 
-export type SelectRegionAction = Readonly<ReturnType<typeof selectRegion>>;
-export type SelectLocaleAction = Readonly<ReturnType<typeof selectLocale>>;
-
-// tslint:disable-next-line:typedef
-export const selectRegion = (region: RegionCode) => (
-    helpers.makeAction(constants.SELECT_REGION, { region })
-);
-
-// tslint:disable-next-line:typedef
-export const selectLocale = (locale: string) => (
-    helpers.makeAction(constants.SELECT_LOCALE, { locale })
-);
-
-type SelectRegionLocaleAction = SelectRegionAction | SelectLocaleAction;
-
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-
-    const reducer = (regionState: RegionLocaleState, action: SelectRegionLocaleAction): RegionLocaleState => {
-        switch (action.type) {
-            case constants.SELECT_REGION:
-                return {
-                    ...regionState,
-                    region: action.payload.region,
-                    locale: undefined,
-                    availableLocales: getAvailableLocales(action.payload.region),
-                };
-            case constants.SELECT_LOCALE:
-                return {
-                    ...regionState,
-                    locale: action.payload.locale,
-                };
-            default:
-                return {
-                    ...regionState,
-                    region: undefined,
-                    availableLocales: [],
-                };
-        }
-    };
 
     const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
         reducer, { region: undefined, locale: undefined, availableLocales: [] },

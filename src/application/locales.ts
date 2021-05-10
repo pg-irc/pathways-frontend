@@ -57,7 +57,7 @@ export const getAvailableLocales = (region: RegionCode): ReadonlyArray<LocaleWit
                 { code: 'zh_TW', label: '繁體中文' },
             ];
         default:
-            return [];
+            return [{ code: 'en', label: 'English' }];
     }
 };
 
