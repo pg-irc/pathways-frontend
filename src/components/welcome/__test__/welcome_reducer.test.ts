@@ -70,11 +70,17 @@ describe('welcome reducer', () => {
             expect(state.availableLocales).toStrictEqual([]);
         });
 
-        test('is changed when a region is set from scratch', () => {
-            const newRegion = RegionCode.BC;
-            const oldState = new RegionLocaleStateBuilder().build();
-            const newState = reducer(oldState, selectRegion(newRegion));
-            expect(newState.availableLocales).toStrictEqual(getAvailableLocales(newRegion));
+        test('locales available in BC', () => {
+            const locales = getAvailableLocales(RegionCode.BC);
+
+            expect(locales).toContainEqual({ code: 'en', label: 'English' });
+            expect(locales).toContainEqual({ code: "ar", label: "عربى" });
+            expect(locales).toContainEqual({ code: "fr", label: "Français" });
+            expect(locales).toContainEqual({ code: "ko", label: "한국어" });
+            expect(locales).toContainEqual({ code: "pa", label: "ਪੰਜਾਬੀ" });
+            expect(locales).toContainEqual({ code: "tl", label: "Tagalog" });
+            expect(locales).toContainEqual({ code: 'zh_CN', label: '简体中文' });
+            expect(locales).toContainEqual({ code: 'zh_TW', label: '繁體中文' });
         });
 
         test('is changed when switching between region', () => {
