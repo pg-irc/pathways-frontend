@@ -73,6 +73,7 @@ describe('welcome reducer', () => {
         test('locales available in BC', () => {
             const locales = getAvailableLocales(RegionCode.BC);
 
+            expect(locales).toHaveLength(8);
             expect(locales).toContainEqual({ code: 'en', label: 'English' });
             expect(locales).toContainEqual({ code: 'ar', label: 'عربى' });
             expect(locales).toContainEqual({ code: 'fr', label: 'Français' });
@@ -81,6 +82,13 @@ describe('welcome reducer', () => {
             expect(locales).toContainEqual({ code: 'tl', label: 'Tagalog' });
             expect(locales).toContainEqual({ code: 'zh_CN', label: '简体中文' });
             expect(locales).toContainEqual({ code: 'zh_TW', label: '繁體中文' });
+        });
+
+        test('locales available in MB', () => {
+            const locales = getAvailableLocales(RegionCode.MB);
+
+            expect(locales).toHaveLength(1);
+            expect(locales).toContainEqual({ code: 'en', label: 'English' });
         });
 
         test('is changed when switching between region', () => {
