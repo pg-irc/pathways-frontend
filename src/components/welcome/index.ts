@@ -47,7 +47,10 @@ export class RegionLocaleStateBuilder {
     }
 }
 
-export const reducer = (regionState: RegionLocaleState, action: SelectRegionLocaleAction): RegionLocaleState => {
+export const reducer = (regionState: RegionLocaleState = buildDefaultState(), action: SelectRegionLocaleAction = undefined): RegionLocaleState => {
+    if (!action) {
+        return regionState;
+    }
     switch (action.type) {
         case constants.SELECT_REGION:
             return {
@@ -62,6 +65,12 @@ export const reducer = (regionState: RegionLocaleState, action: SelectRegionLoca
                 locale: action.payload.locale,
             };
         default:
-            return { region: undefined, locale: undefined, availableLocales: [] };
+            return regionState;
     }
 };
+
+const buildDefaultState = (): RegionLocaleState => ({
+    region: undefined,
+    locale: undefined,
+    availableLocales: [],
+});

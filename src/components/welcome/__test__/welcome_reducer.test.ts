@@ -9,7 +9,7 @@ describe('welcome reducer', () => {
     describe('the region code', () => {
 
         test('is undefined by default', () => {
-            const state = new RegionLocaleStateBuilder().build();
+            const state = reducer();
             expect(state.region).toBe(undefined);
         });
 
