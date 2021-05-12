@@ -32,7 +32,7 @@ describe('welcome reducer', () => {
     describe('the locale code', () => {
 
         test('is undefined by default', () => {
-            const state = new RegionLocaleStateBuilder().build();
+            const state = reducer();
             expect(state.locale).toBe(undefined);
         });
 

@@ -3,6 +3,7 @@ import { getAvailableLocales, LocaleCode, LocaleWithLabel } from '../../applicat
 import { RegionCode, RegionLocaleState } from '../../validation/region/types';
 import * as constants from '../../application/constants';
 import * as helpers from '../../stores/helpers/make_action';
+import { aBoolean, aString } from '../../application/helpers/random_test_values';
 
 export type SelectRegionAction = Readonly<ReturnType<typeof selectRegion>>;
 export type SelectLocaleAction = Readonly<ReturnType<typeof selectLocale>>;
@@ -19,8 +20,8 @@ export const selectLocale = (locale: string) => (
 );
 
 export class RegionLocaleStateBuilder {
-    region: RegionCode = undefined;
-    locale: string = undefined;
+    region: RegionCode = aBoolean() ? RegionCode.BC : RegionCode.MB;
+    locale: string = aString();
     availableLocales: ReadonlyArray<LocaleWithLabel> = [];
 
     withRegion(region: RegionCode): RegionLocaleStateBuilder {
