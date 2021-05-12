@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement typedef
 import { getAvailableLocales } from '../../../application/locales';
 import { RegionCode } from '../../../validation/region/types';
 import { RegionLocaleStateBuilder, reducer, selectRegion, selectLocale } from '../index';
