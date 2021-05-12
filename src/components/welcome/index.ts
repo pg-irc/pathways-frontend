@@ -22,7 +22,12 @@ export const selectLocale = (locale: string) => (
 export class RegionLocaleStateBuilder {
     region: RegionCode = aBoolean() ? RegionCode.BC : RegionCode.MB;
     locale: string = aString();
-    availableLocales: ReadonlyArray<LocaleWithLabel> = [];
+    availableLocales: ReadonlyArray<LocaleWithLabel> = [
+        { code: aString(), label: aString() },
+        { code: aString(), label: aString() },
+        { code: aString(), label: aString() },
+        { code: aString(), label: aString() },
+    ];
 
     withRegion(region: RegionCode): RegionLocaleStateBuilder {
         this.region = region;

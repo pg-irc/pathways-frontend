@@ -66,7 +66,7 @@ describe('welcome reducer', () => {
     describe('the available locales', () => {
 
         test('is empty array by default', () => {
-            const state = new RegionLocaleStateBuilder().build();
+            const state = reducer();
             expect(state.availableLocales).toStrictEqual([]);
         });
 
