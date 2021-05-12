@@ -74,11 +74,11 @@ describe('welcome reducer', () => {
             const locales = getAvailableLocales(RegionCode.BC);
 
             expect(locales).toContainEqual({ code: 'en', label: 'English' });
-            expect(locales).toContainEqual({ code: "ar", label: "عربى" });
-            expect(locales).toContainEqual({ code: "fr", label: "Français" });
-            expect(locales).toContainEqual({ code: "ko", label: "한국어" });
-            expect(locales).toContainEqual({ code: "pa", label: "ਪੰਜਾਬੀ" });
-            expect(locales).toContainEqual({ code: "tl", label: "Tagalog" });
+            expect(locales).toContainEqual({ code: 'ar', label: 'عربى' });
+            expect(locales).toContainEqual({ code: 'fr', label: 'Français' });
+            expect(locales).toContainEqual({ code: 'ko', label: '한국어' });
+            expect(locales).toContainEqual({ code: 'pa', label: 'ਪੰਜਾਬੀ' });
+            expect(locales).toContainEqual({ code: 'tl', label: 'Tagalog' });
             expect(locales).toContainEqual({ code: 'zh_CN', label: '简体中文' });
             expect(locales).toContainEqual({ code: 'zh_TW', label: '繁體中文' });
         });
