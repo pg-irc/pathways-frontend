@@ -1,8 +1,10 @@
 // tslint:disable:no-expression-statement typedef
+import { aBoolean } from '../../../application/helpers/random_test_values';
 import { getAvailableLocales } from '../../../application/locales';
 import { RegionCode } from '../../../validation/region/types';
 import { RegionLocaleStateBuilder, reducer, selectRegion, selectLocale } from '../index';
 
+const aRegion = (): RegionCode => aBoolean() ? RegionCode.BC : RegionCode.MB;
 
 describe('welcome reducer', () => {
 
@@ -14,7 +16,7 @@ describe('welcome reducer', () => {
         });
 
         test('is changed when a region is set from scratch', () => {
-            const newRegion = RegionCode.BC;
+            const newRegion = aRegion();
             const oldState = new RegionLocaleStateBuilder().build();
             const newState = reducer(oldState, selectRegion(newRegion));
             expect(newState.region).toBe(newRegion);
