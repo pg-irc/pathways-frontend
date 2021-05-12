@@ -62,6 +62,6 @@ export const reducer = (regionState: RegionLocaleState, action: SelectRegionLoca
                 locale: action.payload.locale,
             };
         default:
-            return new RegionLocaleStateBuilder().build();
+            return { region: undefined, locale: undefined, availableLocales: [] };
     }
 };
