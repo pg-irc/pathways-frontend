@@ -17,7 +17,7 @@ describe('welcome reducer', () => {
 
         test('is changed when a region is set from scratch', () => {
             const newRegion = aRegion();
-            const oldState = new RegionLocaleStateBuilder().build();
+            const oldState = new RegionLocaleStateBuilder().withRegion(undefined).build();
             const newState = reducer(oldState, selectRegion(newRegion));
             expect(newState.region).toBe(newRegion);
         });
@@ -40,7 +40,7 @@ describe('welcome reducer', () => {
 
         test('is changed when a locale is set from scratch', () => {
             const newLocale = 'ar';
-            const oldState = new RegionLocaleStateBuilder().build();
+            const oldState = new RegionLocaleStateBuilder().withLocale(undefined).build();
             const newState = reducer(oldState, selectLocale(newLocale));
             expect(newState.locale).toBe(newLocale);
         });
