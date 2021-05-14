@@ -2,7 +2,9 @@
 import { aBoolean } from '../../../application/helpers/random_test_values';
 import { getAvailableLocales } from '../../../application/locales';
 import { RegionCode } from '../../../validation/region/types';
-import { RegionLocaleStateBuilder, reducer, selectRegion, selectLocale } from '../index';
+import { selectLocale, selectRegion } from '../action';
+import { reducer } from '../index';
+import { RegionLocaleStateBuilder } from '../welcome_helper';
 
 const aRegion = (): RegionCode => aBoolean() ? RegionCode.BC : RegionCode.MB;
 
