@@ -4,7 +4,7 @@ import { getAvailableLocales } from '../../../application/locales';
 import { RegionCode } from '../../../validation/region/types';
 import { selectLocale, selectRegion } from '../action';
 import { reducer } from '../index';
-import { RegionLocaleStateBuilder } from '../welcome_helper';
+import { buildDefaultState, RegionLocaleStateBuilder } from '../welcome_helper';
 
 const aRegion = (): RegionCode => aBoolean() ? RegionCode.BC : RegionCode.MB;
 
@@ -13,7 +13,7 @@ describe('welcome reducer', () => {
     describe('the region code', () => {
 
         test('is undefined by default', () => {
-            const state = reducer();
+            const state = buildDefaultState();
             expect(state.region).toBe(undefined);
         });
 
@@ -27,7 +27,7 @@ describe('welcome reducer', () => {
         test('is changed when switching between region', () => {
             const oldRegion = RegionCode.BC;
             const newRegion = RegionCode.MB;
-            const oldState = new RegionLocaleStateBuilder().withRegion(oldRegion);
+            const oldState = new RegionLocaleStateBuilder().withRegion(oldRegion).build();
             const newState = reducer(oldState, selectRegion(newRegion));
             expect(newState.region).toBe(newRegion);
         });
@@ -36,7 +36,7 @@ describe('welcome reducer', () => {
     describe('the locale code', () => {
 
         test('is undefined by default', () => {
-            const state = reducer();
+            const state = buildDefaultState();
             expect(state.locale).toBe(undefined);
         });
 
@@ -50,7 +50,7 @@ describe('welcome reducer', () => {
         test('is changed when switching between locale', () => {
             const oldLocale = 'en';
             const newLocale = 'ar';
-            const oldState = new RegionLocaleStateBuilder().withLocale(oldLocale);
+            const oldState = new RegionLocaleStateBuilder().withLocale(oldLocale).build();
             const newState = reducer(oldState, selectLocale(newLocale));
             expect(newState.locale).toBe(newLocale);
         });
@@ -59,7 +59,7 @@ describe('welcome reducer', () => {
             const oldLocale = 'en';
             const oldRegion = RegionCode.BC;
             const newRegion = RegionCode.MB;
-            const oldState = new RegionLocaleStateBuilder().withLocale(oldLocale).withRegion(oldRegion);
+            const oldState = new RegionLocaleStateBuilder().withLocale(oldLocale).withRegion(oldRegion).build();
             const newState = reducer(oldState, selectRegion(newRegion));
             expect(newState.locale).toBe(undefined);
         });
@@ -68,7 +68,7 @@ describe('welcome reducer', () => {
     describe('the available locales', () => {
 
         test('is empty array by default', () => {
-            const state = reducer();
+            const state = buildDefaultState();
             expect(state.availableLocales).toStrictEqual([]);
         });
 
@@ -96,7 +96,7 @@ describe('welcome reducer', () => {
         test('is changed when switching between region', () => {
             const oldRegion = RegionCode.BC;
             const newRegion = RegionCode.MB;
-            const oldState = new RegionLocaleStateBuilder().withRegion(oldRegion);
+            const oldState = new RegionLocaleStateBuilder().withRegion(oldRegion).build();
             const newState = reducer(oldState, selectRegion(newRegion));
             expect(newState.availableLocales).toStrictEqual(getAvailableLocales(newRegion));
         });
