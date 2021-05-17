@@ -37,8 +37,3 @@ export class RegionLocaleStateBuilder {
     }
 }
 
-export const buildDefaultState = (): RegionLocaleState => ({
-    region: undefined,
-    locale: undefined,
-    availableLocales: [],
-});
