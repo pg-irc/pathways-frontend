@@ -15,8 +15,8 @@ import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
 import * as constants from '../../application/constants';
 import { needsTextDirectionChange } from '../../application/locale_effects';
-import { reducer } from './index';
-import { SelectRegionLocaleAction } from './action';
+import { reducer } from './reducer';
+import { SelectRegionLocaleAction } from './actions';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
