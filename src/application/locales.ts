@@ -10,6 +10,7 @@ import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
 import { I18nManager } from 'react-native';
 import * as R from 'ramda';
+import { RegionCode } from '../validation/region/types';
 
 export type CatalogsMap = { readonly [localeCode: string]: Catalog };
 
@@ -39,6 +40,26 @@ export interface ReactI18n {
 export interface ReactI18nRenderProp {
     readonly i18n: ReactI18n;
 }
+
+export const getAvailableLocales = (region: RegionCode): ReadonlyArray<LocaleWithLabel> => {
+    switch (region) {
+        case RegionCode.MB:
+            return [{ code: 'en', label: 'English' }];
+        case RegionCode.BC:
+            return [
+                { code: 'en', label: 'English' },
+                { code: 'ar', label: 'عربى' },
+                { code: 'fr', label: 'Français' },
+                { code: 'ko', label: '한국어' },
+                { code: 'pa', label: 'ਪੰਜਾਬੀ' },
+                { code: 'tl', label: 'Tagalog' },
+                { code: 'zh_CN', label: '简体中文' },
+                { code: 'zh_TW', label: '繁體中文' },
+            ];
+        default:
+            return [{ code: 'en', label: 'English' }];
+    }
+};
 
 export namespace Locales {
 
@@ -79,7 +100,7 @@ export namespace Locales {
         }
     };
 
-    export const getLocalesWithLabels  = (): ReadonlyArray<LocaleWithLabel> => {
+    export const getLocalesWithLabels = (): ReadonlyArray<LocaleWithLabel> => {
         validate();
         return _locales.map((locale: LocaleInfoWithCatalog): LocaleWithLabel => ({
             code: locale.code,

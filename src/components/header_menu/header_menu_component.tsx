@@ -102,16 +102,17 @@ const LocaleSection = (props: Props): JSX.Element => {
 };
 
 const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
-                                updateToken: () => void,
-                                locale: LocaleWithLabel): LocaleListItem => (
-        {
-            ...locale,
-            onPress: (): void => {
-                setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
-                updateToken();
-            },
-        }
-    ),
+    updateToken: () => void,
+    locale: LocaleWithLabel): LocaleListItem => (
+    {
+        ...locale,
+        onPress: (): void => {
+            console.log(locale.code);
+            setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
+            updateToken();
+        },
+    }
+),
 );
 
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
@@ -174,39 +175,39 @@ const AboutListItems = (props: Props): JSX.Element => {
 const AboutIcon = (props: {
     readonly name: string, readonly fontSize: number, readonly marginRight: number, readonly marginVertical: number
 }): JSX.Element => (
-        <Icon
-            name={props.name}
-            type={'FontAwesome'}
-            style={{
-                fontSize: props.fontSize,
-                marginRight: props.marginRight,
-                marginVertical: props.marginVertical,
-                color: colors.greyishBrown,
-                textAlign: 'center',
-            }}
-        />
-    );
+    <Icon
+        name={props.name}
+        type={'FontAwesome'}
+        style={{
+            fontSize: props.fontSize,
+            marginRight: props.marginRight,
+            marginVertical: props.marginVertical,
+            color: colors.greyishBrown,
+            textAlign: 'center',
+        }}
+    />
+);
 
 const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Element, readonly onPress: () => void }):
     JSX.Element => (
-        <TouchableOpacity
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingVertical: 10,
-                paddingLeft: 10,
-            }}
-            onPress={props.onPress}
-        >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ marginLeft: 12 }}>
-                    {props.icon}
-                </View>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
+    <TouchableOpacity
+        style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 10,
+            paddingLeft: 10,
+        }}
+        onPress={props.onPress}
+    >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ marginLeft: 12 }}>
+                {props.icon}
             </View>
-        </TouchableOpacity>
-    );
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
+        </View>
+    </TouchableOpacity>
+);
 
 const buildOnPressForURL = (url: string): () => void => (
     (): void => openURL(url)

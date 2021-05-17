@@ -1,32 +1,32 @@
 // tslint:disable:no-expression-statement readonly-keyword
-import React from 'react';
+import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, ImageBackground, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
-import { ResetLocaleAction, SaveLocaleRequestAction } from '../../stores/locale/actions';
+import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
-import { needsTextDirectionChange } from '../../application/locale_effects';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RegionCode } from '../../validation/region/types';
+import { RegionCode, RegionLocaleState } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
+import * as constants from '../../application/constants';
+import { needsTextDirectionChange } from '../../application/locale_effects';
+import { buildDefaultState, reducer } from './reducer';
+import { SelectRegionLocaleAction } from './actions';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
     readonly currentRegion: RegionCode;
-    readonly localeIsSet: boolean;
-    readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
     readonly showOnboarding: boolean;
     readonly history: History;
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
-    readonly resetLocale: () => ResetLocaleAction;
+    readonly saveLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
     readonly saveRegion: (regionCode: RegionCode) => SaveRegionAction;
 }
 
@@ -34,6 +34,20 @@ type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
+
+    const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
+        reducer, buildDefaultState(),
+    );
+
+    const onStartButtonPress = (): void => {
+        const flipOrientation = needsTextDirectionChange(selectedRegionState.locale);
+        props.saveLocale(selectedRegionState.locale, flipOrientation);
+        props.saveRegion(selectedRegionState.region);
+        if (props.showOnboarding) {
+            return goToRouteWithoutParameter(Routes.Onboarding, props.history);
+        }
+        return goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
+    };
 
     return (
         <ImageBackground
@@ -63,11 +77,19 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <RegionPicker {...props} />
-                    <LocalePicker {...props} />
+                    <RegionPicker
+                        state={selectedRegionState}
+                        dispatch={dispatch}
+                    />
+                    <LocalePicker
+                        state={selectedRegionState}
+                        dispatch={dispatch}
+                    />
                 </Form>
                 <View>
-                    <StartButton {...props} />
+                    <StartButton
+                        state={selectedRegionState}
+                        onStartButtonPress={onStartButtonPress} />
                 </View>
             </View>
             <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -89,21 +111,21 @@ export function WelcomeComponent(props: Props): JSX.Element {
     );
 }
 
-const RegionPicker = (props: Props): JSX.Element => {
+export interface PickerProps {
+    readonly state: RegionLocaleState;
+    readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+}
 
-    const handleRegionChange = (regionCode: RegionCode): void => {
-        props.saveRegion(regionCode);
-        props.resetLocale();
-    };
+const RegionPicker = (props: PickerProps): JSX.Element => {
 
     return (
         <Item style={applicationStyles.pickerItem}>
             <Picker
                 mode='dropdown'
                 placeholder='Select province'
-                selectedValue={props.currentRegion}
+                selectedValue={props.state.region}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={handleRegionChange}
+                onValueChange={(region: RegionCode): void => props.dispatch({ type: constants.SELECT_REGION, payload: { region } })}
                 style={applicationStyles.picker}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
@@ -111,36 +133,27 @@ const RegionPicker = (props: Props): JSX.Element => {
                 <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
                 <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
             </Picker>
-        </Item>
+        </Item >
     );
 };
 
-const LocalePicker = (props: Props): JSX.Element => {
+const LocalePicker = (props: PickerProps): JSX.Element => {
     const placeholder = 'Select language';
-    const handleLocaleChange = (localeCode: string): void => {
-        if (localeCode === placeholder) {
-            return;
-        }
-        const flipOrientation = needsTextDirectionChange(localeCode);
-        if (localeCode !== props.currentLocale || flipOrientation) {
-            props.setLocale(localeCode, flipOrientation);
-        }
-    };
 
     return (
         <Item style={applicationStyles.pickerItem}>
             <Picker
                 mode='dropdown'
-                placeholder={placeholder }
-                selectedValue={props.localeIsSet ? props.currentLocale : undefined}
+                placeholder={placeholder}
+                selectedValue={props.state.locale}
                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={handleLocaleChange}
+                onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
                 style={applicationStyles.picker}
-                enabled={props.currentRegion ? true : false}
+                enabled={!!props.state.region}
                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
             >
                 <Picker.Item key='' label={placeholder} value={placeholder} />
-                {props.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
+                {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
                     <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                 ))}
             </Picker>
@@ -148,12 +161,17 @@ const LocalePicker = (props: Props): JSX.Element => {
     );
 };
 
-const StartButton = (props: Props): JSX.Element => {
-    if (props.currentRegion && props.currentLocale) {
+export interface StartButtonProps {
+    readonly state: RegionLocaleState;
+    readonly onStartButtonPress: () => void;
+}
+
+const StartButton = (props: StartButtonProps): JSX.Element => {
+    if (props.state) {
         return (
             <Button
                 full
-                onPress={(): void => onStartButtonPress(props)}
+                onPress={(): void => props.onStartButtonPress()}
                 style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
             >
                 <Text style={textStyles.button}>
@@ -163,11 +181,4 @@ const StartButton = (props: Props): JSX.Element => {
         );
     }
     return <EmptyComponent />;
-};
-
-const onStartButtonPress = (props: Props): void => {
-    if (props.showOnboarding) {
-        return goToRouteWithoutParameter(Routes.Onboarding, props.history);
-    }
-    return goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
 };
