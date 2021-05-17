@@ -15,7 +15,7 @@ import { SaveRegionAction } from '../../stores/user_profile';
 import { LocaleWithLabel } from '../../application/locales';
 import * as constants from '../../application/constants';
 import { needsTextDirectionChange } from '../../application/locale_effects';
-import { reducer } from './reducer';
+import { buildDefaultState, reducer } from './reducer';
 import { SelectRegionLocaleAction } from './actions';
 
 export interface WelcomeProps {
@@ -36,7 +36,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
 
     const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
-        reducer, { region: undefined, locale: undefined, availableLocales: [] },
+        reducer, buildDefaultState(),
     );
 
     const onStartButtonPress = (): void => {
