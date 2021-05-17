@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { I18nManager } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PREFERENCES_LOCALE_CODE } from './constants';
 import * as Updates from 'expo-updates';
 
@@ -13,7 +13,7 @@ export function setTextDirection(localeCode: string): void {
         setTimeout((): void => {
             resolve(I18nManager.forceRTL(isRTL(localeCode)));
         }, 1000);
-      });
+    });
     forceRTLAsync.then((): void => {
         reload();
     });
