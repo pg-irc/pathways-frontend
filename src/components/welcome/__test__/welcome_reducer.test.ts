@@ -4,7 +4,7 @@ import { getAvailableLocales } from '../../../application/locales';
 import { RegionCode } from '../../../validation/region/types';
 import { selectLocale, selectRegion } from '../action';
 import { reducer } from '../index';
-import { buildDefaultState, RegionLocaleStateBuilder } from '../welcome_helper';
+import { buildDefaultState, RegionLocaleStateBuilder } from './welcome_helper';
 
 const aRegion = (): RegionCode => aBoolean() ? RegionCode.BC : RegionCode.MB;
 

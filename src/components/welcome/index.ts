@@ -3,7 +3,7 @@ import { getAvailableLocales } from '../../application/locales';
 import { RegionLocaleState } from '../../validation/region/types';
 import * as constants from '../../application/constants';
 import { SelectRegionLocaleAction } from './action';
-import { buildDefaultState } from './welcome_helper';
+import { buildDefaultState } from './__test__/welcome_helper';
 
 export const reducer = (regionState: RegionLocaleState = buildDefaultState(), action: SelectRegionLocaleAction = undefined): RegionLocaleState => {
     if (!action) {

@@ -1,7 +1,7 @@
 // tslint:disable: no-this readonly-keyword no-expression-statement no-class
-import { LocaleCode, LocaleWithLabel } from '../../application/locales';
-import { RegionCode, RegionLocaleState } from '../../validation/region/types';
-import { aBoolean, aString } from '../../application/helpers/random_test_values';
+import { LocaleCode, LocaleWithLabel } from '../../../application/locales';
+import { RegionCode, RegionLocaleState } from '../../../validation/region/types';
+import { aBoolean, aString } from '../../../application/helpers/random_test_values';
 
 export class RegionLocaleStateBuilder {
     region: RegionCode = aBoolean() ? RegionCode.BC : RegionCode.MB;
