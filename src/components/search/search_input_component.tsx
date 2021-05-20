@@ -19,6 +19,7 @@ import { MY_LOCATION } from '../../application/constants';
 import { SearchServiceData } from '../../validation/search/types';
 import { SaveSearchResultsAction } from '../../stores/search';
 import { requestLocationPermission } from '../../application/helpers/request_location_permission';
+import { PermissionStatus } from 'unimodules-permissions-interface';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -292,8 +293,7 @@ const MyLocationButton = (props: {
             onPress={(): void => {
                 props.setIsVisible(false);
                 myLocationOnPress(props.setSearchLocationInput, props.i18n);
-            }
-            }
+            }}
         >
             <Icon
                 type={'MaterialIcons'} name={'my-location'}
@@ -311,19 +311,10 @@ const MyLocationButton = (props: {
 const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
     const status = await requestLocationPermission();
     switch (status) {
-        case 'whenInUse':
+        case PermissionStatus.GRANTED:
             setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
             break;
-        case 'always':
-            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            break;
-        case 'fine':
-            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            break;
-        case 'coarse':
-            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            break;
-        case 'none':
+        case PermissionStatus.DENIED:
             openAppSettings();
             break;
         default:

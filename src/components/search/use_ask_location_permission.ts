@@ -1,18 +1,17 @@
 // tslint:disable: no-expression-statement
 import { useEffect } from 'react';
 import * as Location from 'expo-location';
-import { isAndroid } from '../../application/helpers/is_android';
 import { requestLocationPermission } from '../../application/helpers/request_location_permission';
 
 export const useAskLocationPermission = (setLocationToMyLocation: () => void): void => {
     useEffect((): void => {
         const askLocationPermission = async (): Promise<void> => {
-            const getPermissionResponse = await Location.getPermissionsAsync();
-            const status = isAndroid() ? getPermissionResponse.android.scope : getPermissionResponse.ios.scope;
-            const haveNeverAskedBefore = status === 'none';
+            const getPermissionResponse = await Location.getForegroundPermissionsAsync();
+            const status = getPermissionResponse.status;
+            const haveNeverAskedBefore = status === Location.PermissionStatus.UNDETERMINED;
             if (haveNeverAskedBefore) {
                 const newStatus = await requestLocationPermission();
-                const permissionNewlyGranted = newStatus !== 'none';
+                const permissionNewlyGranted = newStatus === Location.PermissionStatus.GRANTED;
                 if (permissionNewlyGranted) {
                     setLocationToMyLocation();
                 }

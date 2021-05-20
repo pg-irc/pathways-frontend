@@ -1,10 +1,9 @@
-import { isAndroid } from './is_android';
 import * as Location from 'expo-location';
 import { LocationPermissionResponse } from 'expo-location';
 
-export const requestLocationPermission = (): Promise<string> => {
-    return Location.requestPermissionsAsync().
-        then((permissionResponse: LocationPermissionResponse): string => {
-            return isAndroid() ? permissionResponse.android.scope : permissionResponse.ios.scope;
+export const requestLocationPermission = (): Promise<Location.PermissionStatus> => {
+    return Location.requestForegroundPermissionsAsync().
+        then((permissionResponse: LocationPermissionResponse): Location.PermissionStatus => {
+            return permissionResponse.status;
         });
 };

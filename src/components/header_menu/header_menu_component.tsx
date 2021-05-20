@@ -107,7 +107,6 @@ const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation:
     {
         ...locale,
         onPress: (): void => {
-            console.log(locale.code);
             setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
             updateToken();
         },

@@ -36,11 +36,11 @@ function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): R
     const existingStatus: Notifications.NotificationPermissionsStatus = yield call(Notifications.getPermissionsAsync);
     // tslint:disable-next-line: no-let
     let finalStatus: Notifications.NotificationPermissionsStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    if (!existingStatus.granted) {
         const newStatus = yield call(Notifications.requestPermissionsAsync);
         finalStatus = newStatus;
     }
-    if (finalStatus !== 'granted') {
+    if (!finalStatus.granted) {
         return yield put(pushNotificationTokenFailure('Permission not granted for push notifications'));
     }
     // tslint:disable:no-any

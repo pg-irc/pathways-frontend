@@ -17,7 +17,7 @@ export const getDeviceLocation = async (manualUserLocation?: LatLong): DeviceLoc
             return buildManualUserLocation(manualUserLocation);
         }
         const permissionStatus = await requestLocationPermission();
-        if (permissionStatus !== 'none') {
+        if (permissionStatus !== Location.PermissionStatus.GRANTED) {
             return noLocationPermissionError();
         }
         const deviceLocation = await Location.getLastKnownPositionAsync();
