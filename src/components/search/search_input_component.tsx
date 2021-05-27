@@ -8,7 +8,6 @@ import { values, applicationStyles, colors, textStyles } from '../../application
 import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';
-import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../application/helpers/is_android';
 import { openURL } from '../link/link_component';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -19,6 +18,8 @@ import { useAskLocationPermission } from './use_ask_location_permission';
 import { MY_LOCATION } from '../../application/constants';
 import { SearchServiceData } from '../../validation/search/types';
 import { SaveSearchResultsAction } from '../../stores/search';
+import { requestLocationPermission } from '../../application/helpers/request_location_permission';
+import { PermissionStatus } from 'unimodules-permissions-interface';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -292,8 +293,7 @@ const MyLocationButton = (props: {
             onPress={(): void => {
                 props.setIsVisible(false);
                 myLocationOnPress(props.setSearchLocationInput, props.i18n);
-            }
-            }
+            }}
         >
             <Icon
                 type={'MaterialIcons'} name={'my-location'}
@@ -309,24 +309,12 @@ const MyLocationButton = (props: {
 };
 
 const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
-    const status = await getPermission();
-    switch (status) {
-        case Permissions.PermissionStatus.GRANTED:
-            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            break;
-        case Permissions.PermissionStatus.DENIED:
-            openAppSettings();
-            break;
-        default:
-            break;
+    const status = await requestLocationPermission();
+    if (status === PermissionStatus.GRANTED) {
+        setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+    } else {
+        openAppSettings();
     }
-};
-
-const getPermission = (): Promise<Permissions.PermissionStatus> => {
-    return Permissions.getAsync(Permissions.LOCATION).
-        then((permissionResponse: Permissions.PermissionResponse): Permissions.PermissionStatus => {
-            return permissionResponse.status;
-        });
 };
 
 const openAppSettings = (): void => {

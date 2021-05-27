@@ -2,12 +2,11 @@
 import { CallEffect, PutEffect, takeLatest, SelectEffect, ForkEffect, put, call, select } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
-import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 import { putPushNotificationToken, APIResponse } from '../api';
 import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
-import {  LocaleCode } from '../application/locales';
+import { LocaleCode } from '../application/locales';
 
 export type PushNotificationTokenRequestAction = Readonly<ReturnType<typeof pushNotificationTokenRequest>>;
 export type PushNotificationTokenSuccessAction = Readonly<ReturnType<typeof pushNotificationTokenSuccess>>;
@@ -33,14 +32,15 @@ export function* watchRequestPushNotificationToken(): IterableIterator<ForkEffec
 }
 
 function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): Result {
-    const existingStatus: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
+
+    const existingStatus: Notifications.NotificationPermissionsStatus = yield call(Notifications.getPermissionsAsync);
     // tslint:disable-next-line: no-let
-    let finalStatus: Permissions.PermissionResponse = existingStatus;
-    if (existingStatus.status !== 'granted') {
-        const newStatus = yield call(Permissions.askAsync, Permissions.NOTIFICATIONS);
+    let finalStatus: Notifications.NotificationPermissionsStatus = existingStatus;
+    if (!existingStatus.granted) {
+        const newStatus = yield call(Notifications.requestPermissionsAsync);
         finalStatus = newStatus;
     }
-    if (finalStatus.status !== 'granted') {
+    if (!finalStatus.granted) {
         return yield put(pushNotificationTokenFailure('Permission not granted for push notifications'));
     }
     // tslint:disable:no-any

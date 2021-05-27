@@ -1,15 +1,17 @@
 // tslint:disable: no-expression-statement
-import * as Permissions from 'expo-permissions';
 import { useEffect } from 'react';
+import * as Location from 'expo-location';
+import { requestLocationPermission } from '../../application/helpers/request_location_permission';
 
 export const useAskLocationPermission = (setLocationToMyLocation: () => void): void => {
     useEffect((): void => {
         const askLocationPermission = async (): Promise<void> => {
-            const getPermissionResponse = await Permissions.getAsync(Permissions.LOCATION);
-            const haveNeverAskedBefore = getPermissionResponse.status === Permissions.PermissionStatus.UNDETERMINED;
+            const getPermissionResponse = await Location.getForegroundPermissionsAsync();
+            const status = getPermissionResponse.status;
+            const haveNeverAskedBefore = status === Location.PermissionStatus.UNDETERMINED;
             if (haveNeverAskedBefore) {
-                const askPermissionResponse = await Permissions.askAsync(Permissions.LOCATION);
-                const permissionNewlyGranted = askPermissionResponse.status === Permissions.PermissionStatus.GRANTED;
+                const newStatus = await requestLocationPermission();
+                const permissionNewlyGranted = newStatus === Location.PermissionStatus.GRANTED;
                 if (permissionNewlyGranted) {
                     setLocationToMyLocation();
                 }

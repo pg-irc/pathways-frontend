@@ -1,7 +1,7 @@
-import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
+import { requestLocationPermission } from './request_location_permission';
 
 export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocationPermissionError>>;
 
@@ -16,8 +16,8 @@ export const getDeviceLocation = async (manualUserLocation?: LatLong): DeviceLoc
         if (manualUserLocation) {
             return buildManualUserLocation(manualUserLocation);
         }
-        const permissions = await Permissions.askAsync(Permissions.LOCATION);
-        if (permissions.status !== 'granted') {
+        const permissionStatus = await requestLocationPermission();
+        if (permissionStatus !== Location.PermissionStatus.GRANTED) {
             return noLocationPermissionError();
         }
         const deviceLocation = await Location.getLastKnownPositionAsync();
