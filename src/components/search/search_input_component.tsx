@@ -310,15 +310,10 @@ const MyLocationButton = (props: {
 
 const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
     const status = await requestLocationPermission();
-    switch (status) {
-        case PermissionStatus.GRANTED:
-            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-            break;
-        case PermissionStatus.DENIED:
-            openAppSettings();
-            break;
-        default:
-            break;
+    if (status === PermissionStatus.GRANTED) {
+        setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+    } else {
+        openAppSettings();
     }
 };
 
