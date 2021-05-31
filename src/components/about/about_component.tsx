@@ -76,7 +76,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                         {serverVersion}
                     </ParagraphComponent>
                     <ParagraphComponent>
-                        <Trans>Aloglia index:</Trans>
+                        <Trans>Index:</Trans>
                         {algoliaIndex}
                     </ParagraphComponent>
                 </Content>
