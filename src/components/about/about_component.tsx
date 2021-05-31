@@ -5,7 +5,7 @@ import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { Trans } from '@lingui/react';
 import { values, textStyles, colors } from '../../application/styles';
 import { Link } from '../link/link_component';
-import { VERSION } from 'react-native-dotenv';
+import { VERSION, ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { CloseButtonComponent } from '../close_button_component';
 
 type Props = {
@@ -19,6 +19,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     const appVersion = wrapWithSpace(VERSION);
+    const algoliaIndex = wrapWithSpace(ALGOLIA_SERVICES_INDEX);
     const serverVersion = wrapWithSpace(props.serverVersion);
     return (
         <Modal isVisible={props.isVisible}>
@@ -73,6 +74,10 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                     <ParagraphComponent>
                         <Trans>Server version:</Trans>
                         {serverVersion}
+                    </ParagraphComponent>
+                    <ParagraphComponent>
+                        <Trans>Index:</Trans>
+                        {algoliaIndex}
                     </ParagraphComponent>
                 </Content>
             </View>
