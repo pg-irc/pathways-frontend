@@ -10,7 +10,7 @@ import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
 import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { arrivalAdvisorGlyphLogo, mb211Logo, mbStartLogo, pgLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo, pgLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode } from '../../validation/region/types';
 
@@ -230,7 +230,11 @@ const LogoItems = (props: { readonly currentRegion: RegionCode }): JSX.Element =
         );
     } else {
         return (
-            <Text>Placeholder for BC sponsors</Text>
+            <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                <Image source={pgLogo} style={{ height: 40, width: 65 }} />
+                <Image source={welcomeBCLogo} style={{ height: 40, width: 95, marginHorizontal: 16 }} />
+                <Image source={bc211Logo} style={{ height: 40, width: 61 }} />
+            </View>
         );
     }
 };
