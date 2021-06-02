@@ -20,3 +20,7 @@ export const emptySearch = require('../../assets/images/aa_empty_search.png');
 export const noMatchingSearchResults = require('../../assets/images/aa_no_matching_search_results.png');
 export const invalidSearchLocation = require('../../assets/images/aa_invalid_search_location.png');
 export const emptyBookmarks = require('../../assets/images/aa_empty_bookmarks.png');
+export const welcomeBcLogo = require('../../assets/images/sponsor_logo_lock_up_welcome_bc.png');
+export const bc211Logo = require('../../assets/images/sponsor_logo_lock_up_bc_211.png');
+export const mbStartLogo = require('../../assets/images/sponsor_logo_lock_up_mb_start.png');
+export const mb211Logo = require('../../assets/images/sponsor_logo_lock_up_mb_211.png');

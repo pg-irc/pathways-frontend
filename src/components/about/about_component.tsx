@@ -1,21 +1,24 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import { Text, Content, View } from 'native-base';
+import { Image } from 'react-native';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { Trans } from '@lingui/react';
 import { values, textStyles, colors } from '../../application/styles';
 import { Link } from '../link/link_component';
 import { VERSION, ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { CloseButtonComponent } from '../close_button_component';
+import { RegionCode } from '../../validation/region/types';
+import { welcomeBcLogo, bc211Logo, mbStartLogo, mb211Logo } from '../../application/images';
 
 type Props = {
     readonly serverVersion: string;
     readonly isVisible: boolean;
+    readonly region: RegionCode;
     readonly closeModal: () => void;
 };
 
 export const AboutComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     const appVersion = wrapWithSpace(VERSION);
@@ -35,36 +38,24 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                     </Text>
                     <ParagraphComponent>
                         <Trans>
-                            Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia,
-                            Canada find information and services to navigate their settlement journey. Arrival Advisor is offered in English,
-                            Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, Punjabi, and Tagalog.
+                            Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in Canada
+                            find information and services to navigate their settlement journey. Arrival Advisor is offered in multiple languages.
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>
                         <Trans>
-                            From finding a job to learning English, accessing health care, and more, Arrival Advisor has everything
-                            you need to get started in your new community. Explore topics and services without ever needing
-                            to create an account. Access important information no matter where you are: the newcomer topics provided
-                            by Arrival Advisor are saved to your phone so you can view them, even without internet. You can fill out
-                            some questions to get personalized recommendations of topics and services to settle in British Columbia.
+                            The newcomer topics provided by Arrival Advisor are saved to your phone so you can view them, even without internet.
                             Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations.
                             We never save or share your personal data with funders or any third parties.
+
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>
                         <Trans>
-                            The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro
-                            Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the
-                            Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
-                            Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
-                            project. You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and <Link
-                                href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
-                        </Trans>
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>Information in this app is provided by the <Link href={welcomeBcUrl}
-                            style={textStyles.link} >Newcomers Guide to British Columbia</Link> Copyright
-                            2018 Province of British Columbia. All rights reserved.
+                            The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations and immigrants and
+                            refugees like you. Arrival Advisor is an open-source project.
+                            You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and
+                            <Link href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>
@@ -79,10 +70,68 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                         <Trans>Index:</Trans>
                         {algoliaIndex}
                     </ParagraphComponent>
+                    <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding, paddingBottom: 20}]}>
+                        <Trans>Information in Arrival Advisor</Trans>
+                    </Text>
+                    <RegionSpecificInformation {...props} />
                 </Content>
             </View>
         </Modal>
     );
+};
+
+const RegionSpecificInformation = (props: { readonly region: RegionCode }): JSX.Element => {
+    if (props.region === RegionCode.BC) {
+        const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
+        const bc211Url = 'http://www.bc211.ca/';
+        return (
+            <View>
+                <ParagraphComponent>
+                    <Trans>
+                        Topics in this app come from <Link href={welcomeBcUrl} style={textStyles.link}>Newcomers'
+                        Guide to British Columbia</Link>. Copyright 2018 Province of British Columbia. All rights reserved.
+                    </Trans>
+                </ParagraphComponent>
+                <ParagraphComponent>
+                    <Trans>Services come from <Link href={bc211Url}style={textStyles.link}>BC211</Link>.</Trans>
+                </ParagraphComponent>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+                    <Image
+                        style={{height: 72, width: 172, marginRight: 16}}
+                        source={welcomeBcLogo}
+                    />
+                    <Image
+                        style={{height: 72, width: 109}}
+                        source={bc211Logo}
+                    />
+                </View>
+            </View>
+        );
+    } else {
+        const mb211Url = 'https://mb.211.ca/';
+        return (
+            <View>
+                <ParagraphComponent>
+                    <Trans>
+                        Topics in this app come from the Winnipeg Introduction for Newcomers Workbook and Fact Sheets.
+                    </Trans>
+                </ParagraphComponent>
+                <ParagraphComponent>
+                    <Trans>Services come from <Link href={mb211Url} style={textStyles.link}>211 Manitoba</Link>.</Trans>
+                </ParagraphComponent>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+                    <Image
+                        style={{height: 72, width: 95, marginRight: 16}}
+                        source={mbStartLogo}
+                    />
+                    <Image
+                        style={{height: 72, width: 149}}
+                        source={mb211Logo}
+                    />
+                </View>
+            </View>
+        );
+    }
 };
 
 const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (

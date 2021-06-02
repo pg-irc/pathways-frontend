@@ -2,9 +2,11 @@
 import React from 'react';
 import { AboutComponent } from './about_component';
 import { API_URL } from 'react-native-dotenv';
+import { RegionCode } from '../../validation/region/types';
 
 type Props = {
     readonly isVisible: boolean;
+    readonly region: RegionCode;
     readonly closeModal: () => void;
 };
 
@@ -32,6 +34,7 @@ export class AboutComponentWithServerVersion extends React.Component<Props, Stat
             <AboutComponent
                 serverVersion={this.state.serverVersion}
                 isVisible={this.props.isVisible}
+                region={this.props.region}
                 closeModal={this.props.closeModal}
             />
         );
