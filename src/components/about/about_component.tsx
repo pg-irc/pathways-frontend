@@ -9,7 +9,7 @@ import { Link } from '../link/link_component';
 import { VERSION, ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { CloseButtonComponent } from '../close_button_component';
 import { RegionCode } from '../../validation/region/types';
-import { welcomeBcLogo, bc211Logo, mbStartLogo, mb211Logo } from '../../application/images';
+import { welcomeBCLogo, bc211Logo, mbStartLogo, mb211Logo } from '../../application/images';
 
 type Props = {
     readonly serverVersion: string;
@@ -54,7 +54,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                         <Trans>
                             The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations and immigrants and
                             refugees like you. Arrival Advisor is an open-source project.
-                            You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and
+                            You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and&#160;
                             <Link href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
                         </Trans>
                     </ParagraphComponent>
@@ -82,56 +82,54 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
 
 const RegionSpecificInformation = (props: { readonly region: RegionCode }): JSX.Element => {
     if (props.region === RegionCode.BC) {
-        const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
-        const bc211Url = 'http://www.bc211.ca/';
         return (
-            <View>
-                <ParagraphComponent>
-                    <Trans>
-                        Topics in this app come from <Link href={welcomeBcUrl} style={textStyles.link}>Newcomers'
-                        Guide to British Columbia</Link>. Copyright 2018 Province of British Columbia. All rights reserved.
-                    </Trans>
-                </ParagraphComponent>
-                <ParagraphComponent>
-                    <Trans>Services come from <Link href={bc211Url}style={textStyles.link}>BC211</Link>.</Trans>
-                </ParagraphComponent>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
-                    <Image
-                        style={{height: 72, width: 172, marginRight: 16}}
-                        source={welcomeBcLogo}
-                    />
-                    <Image
-                        style={{height: 72, width: 109}}
-                        source={bc211Logo}
-                    />
-                </View>
-            </View>
+            <BCSpecificInformation/>
         );
     } else {
-        const mb211Url = 'https://mb.211.ca/';
         return (
-            <View>
-                <ParagraphComponent>
-                    <Trans>
-                        Topics in this app come from the Winnipeg Introduction for Newcomers Workbook and Fact Sheets.
-                    </Trans>
-                </ParagraphComponent>
-                <ParagraphComponent>
-                    <Trans>Services come from <Link href={mb211Url} style={textStyles.link}>211 Manitoba</Link>.</Trans>
-                </ParagraphComponent>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
-                    <Image
-                        style={{height: 72, width: 95, marginRight: 16}}
-                        source={mbStartLogo}
-                    />
-                    <Image
-                        style={{height: 72, width: 149}}
-                        source={mb211Logo}
-                    />
-                </View>
-            </View>
+            <MBSpecificInformation/>
         );
     }
+};
+
+const BCSpecificInformation = (): JSX.Element => {
+    const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
+    const bc211Url = 'http://www.bc211.ca/';
+    return (
+        <View>
+            <ParagraphComponent>
+                <Trans>
+                    Topics in this app come from <Link href={welcomeBcUrl} style={textStyles.link}>Newcomers'
+                    Guide to British Columbia</Link>. Copyright 2018 Province of British Columbia. All rights reserved.
+                </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>Services come from <Link href={bc211Url}style={textStyles.link}>BC211</Link>.</Trans>
+            </ParagraphComponent>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Image source={welcomeBCLogo} style={{height: 72, width: 172, marginRight: 16}} />
+                <Image source={bc211Logo} style={{height: 72, width: 109}} />
+            </View>
+        </View>
+    );
+};
+
+const MBSpecificInformation = (): JSX.Element => {
+    const mb211Url = 'https://mb.211.ca/';
+    return (
+        <View>
+            <ParagraphComponent>
+                <Trans>Topics in this app come from the Winnipeg Introduction for Newcomers Workbook and Fact Sheets.</Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>Services come from <Link href={mb211Url} style={textStyles.link}>211 Manitoba</Link>.</Trans>
+            </ParagraphComponent>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Image source={mbStartLogo} style={{height: 72, width: 95, marginRight: 16}} />
+                <Image source={mb211Logo} style={{height: 72, width: 149}} />
+            </View>
+        </View>
+    );
 };
 
 const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (
