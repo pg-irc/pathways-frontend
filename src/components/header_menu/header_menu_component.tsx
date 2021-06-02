@@ -10,7 +10,7 @@ import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
 import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo, mb211Logo, mbStartLogo, pgLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 
 type OwnProps = {
@@ -50,6 +50,8 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <LocaleSection {...props} />
             <Divider />
             <AboutSection {...props} />
+            <Divider />
+            <LogoSection />
         </Content>
     </View>
 );
@@ -206,6 +208,17 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
             <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
         </View>
     </TouchableOpacity>
+);
+
+const LogoSection = (): JSX.Element => (
+    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
+        <MenuSectionTitle title={<Trans>BROUGHT TO YOU BY</Trans>} />
+        <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+            <Image source={pgLogo} style={{ height: 40, width: 65 }} />
+            <Image source={mbStartLogo} style={{ height: 40, width: 53, marginHorizontal: 16 }} />
+            <Image source={mb211Logo} style={{ height: 40, width: 84 }} />
+        </View>
+    </View>
 );
 
 const buildOnPressForURL = (url: string): () => void => (
