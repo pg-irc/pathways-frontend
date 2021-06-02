@@ -12,6 +12,7 @@ import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo, mb211Logo, mbStartLogo, pgLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
+import { RegionCode } from '../../validation/region/types';
 
 type OwnProps = {
     readonly history: History;
@@ -22,6 +23,7 @@ type OwnProps = {
 
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleCode;
+    readonly currentRegion: RegionCode;
     readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
@@ -51,7 +53,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <Divider />
             <AboutSection {...props} />
             <Divider />
-            <LogoSection />
+            <LogoSection currentRegion={props.currentRegion} />
         </Content>
     </View>
 );
@@ -210,16 +212,28 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
     </TouchableOpacity>
 );
 
-const LogoSection = (): JSX.Element => (
+const LogoSection = (props: { readonly currentRegion: RegionCode }): JSX.Element => (
     <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
         <MenuSectionTitle title={<Trans>BROUGHT TO YOU BY</Trans>} />
-        <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
-            <Image source={pgLogo} style={{ height: 40, width: 65 }} />
-            <Image source={mbStartLogo} style={{ height: 40, width: 53, marginHorizontal: 16 }} />
-            <Image source={mb211Logo} style={{ height: 40, width: 84 }} />
-        </View>
+        <LogoItems {...props} />
     </View>
 );
+
+const LogoItems = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
+    if (props.currentRegion === RegionCode.MB) {
+        return (
+            <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                <Image source={pgLogo} style={{ height: 40, width: 65 }} />
+                <Image source={mbStartLogo} style={{ height: 40, width: 53, marginHorizontal: 16 }} />
+                <Image source={mb211Logo} style={{ height: 40, width: 84 }} />
+            </View>
+        );
+    } else {
+        return (
+            <Text>Placeholder for BC sponsors</Text>
+        );
+    }
+};
 
 const buildOnPressForURL = (url: string): () => void => (
     (): void => openURL(url)
