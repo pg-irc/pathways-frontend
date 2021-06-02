@@ -25,3 +25,5 @@ export const mbStartLogo = require('../../assets/images/mb_start_logo.png');
 export const bc211Logo = require('../../assets/images/bc_211_logo.png');
 export const welcomeBCLogo = require('../../assets/images/welcome_bc_logo.png');
 export const pgLogo = require('../../assets/images/pg_logo.png');
+export const bc211Logo = require('../../assets/images/bc_211_logo.png');
+export const welcomeBCLogo = require('../../assets/images/welcome_bc_logo.png');
