@@ -123,6 +123,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                         <AppModalsComponent
                             isAboutModalVisible={props.isAboutModalVisible}
                             isDisclaimerModalVisible={props.isDisclaimerModalVisible}
+                            region={props.region}
                             closeAboutModal={props.closeAboutModal}
                             closeDisclaimerModal={props.closeDisclaimerModal}
                         />
