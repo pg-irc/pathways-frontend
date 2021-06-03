@@ -17,6 +17,7 @@ yarn install
 ```
 
 Copy example configuration file and modify accordingly (set your own API host, Sentry auth token etc).
+
 ```
 cp .env.example .env
 ```
@@ -42,6 +43,27 @@ yarn start [-c]
 ```
 
 To clear out cached values from `.env`, use `--reset-cache`.
+
+## Asset Bundling
+
+Our assets are bundled through the `assetBundlePatterns` in app.json as follows.
+
+```
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*",
+      "node_modules/native-base/Fonts"
+    ],
+```
+
+To ensure the new assets are included in the app run the following commands:
+
+```
+yarn build
+yarn start //close the server once it's done building
+expo publish
+yarn start //to check new assets show up within the app
+```
 
 ## Entities
 

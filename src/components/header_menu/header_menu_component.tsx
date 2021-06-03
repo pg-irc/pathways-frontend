@@ -10,8 +10,9 @@ import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
 import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
+import { RegionCode } from '../../validation/region/types';
 
 type OwnProps = {
     readonly history: History;
@@ -22,6 +23,7 @@ type OwnProps = {
 
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleCode;
+    readonly currentRegion: RegionCode;
     readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
@@ -50,6 +52,8 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <LocaleSection {...props} />
             <Divider />
             <AboutSection {...props} />
+            <Divider />
+            <LogoSection currentRegion={props.currentRegion} />
         </Content>
     </View>
 );
@@ -207,6 +211,33 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
         </View>
     </TouchableOpacity>
 );
+
+const LogoSection = (props: { readonly currentRegion: RegionCode }): JSX.Element => (
+    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
+        <MenuSectionTitle title={<Trans>BROUGHT TO YOU BY</Trans>} />
+        <LogoItems {...props} />
+    </View>
+);
+
+const LogoItems = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
+    if (props.currentRegion === RegionCode.MB) {
+        return (
+            <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                <Image source={peacegeeksColorLogo} style={{ height: 40, width: 65 }} />
+                <Image source={mbStartLogo} style={{ height: 40, width: 53, marginHorizontal: 16 }} />
+                <Image source={mb211Logo} style={{ height: 40, width: 84 }} />
+            </View>
+        );
+    } else {
+        return (
+            <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
+                <Image source={peacegeeksColorLogo} style={{ height: 40, width: 65 }} />
+                <Image source={welcomeBCLogo} style={{ height: 40, width: 95, marginHorizontal: 16 }} />
+                <Image source={bc211Logo} style={{ height: 40, width: 61 }} />
+            </View>
+        );
+    }
+};
 
 const buildOnPressForURL = (url: string): () => void => (
     (): void => openURL(url)

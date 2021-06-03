@@ -7,6 +7,7 @@ import { selectAvailableLocales } from '../../selectors/locale/select_available_
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
 import { LocaleWithLabel } from '../../application/locales';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 const selectOtherLocales = (store: Store): ReadonlyArray<LocaleWithLabel> => {
     const locales = selectAvailableLocales(store);
@@ -16,6 +17,7 @@ const selectOtherLocales = (store: Store): ReadonlyArray<LocaleWithLabel> => {
 
 const mapStateToProps = (store: Store): HeaderMenuProps => ({
     currentLocale: selectLocale(store),
+    currentRegion: pickRegion(store),
     otherLocales: selectOtherLocales(store),
 });
 
