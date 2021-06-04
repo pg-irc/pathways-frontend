@@ -1,8 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { HideOnboardingAction, hideOnboarding } from '../../stores/user_profile';
-import { OnboardingComponentActions } from './onboarding_component';
-import { OnboardingComponent, OnboardingComponentProps } from './onboarding_component';
+import { OnboardingComponentActions, OnboardingComponent, OnboardingComponentProps  } from './onboarding_component';
 import { pickRegion } from '../../selectors/region/pick_region';
 import { Store } from '../../stores';
 
