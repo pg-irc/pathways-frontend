@@ -21,13 +21,17 @@ import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { textStyles } from '../../application/styles';
 import {
-    communityOnBoardingImage,
     answerQuestionsOnBoardingImage,
     settlementJourneyOnBoardingImage,
     bookmarkOnBoardingImage,
+    welcomeBCLogo,
+    bc211Logo,
+    mbStartLogo,
+    mb211Logo,
 } from '../../application/images';
 import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
+import { RegionCode } from '../../validation/region/types';
 
 import styles from './styles';
 
@@ -38,7 +42,11 @@ enum STEP {
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
-interface OnboardingComponentProps {
+export interface OnboardingComponentProps {
+    readonly region: RegionCode;
+}
+
+interface OwnProps {
     readonly history: History;
 }
 
@@ -48,11 +56,13 @@ interface OnboardingData {
     readonly title: string;
 }
 
+type Props = OnboardingComponentProps & OnboardingComponentActions & OwnProps;
+
 const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     {
       id: 1,
-      image: communityOnBoardingImage,
-      title: t`Your go-to guide to getting settled in your new community.`,
+      image: undefined,
+      title: undefined,
     },
     {
       id: 2,
@@ -70,15 +80,55 @@ const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
       title: t`Answer a few optional questions to get tailored recommendations for your needs.`,
     },
 ];
+const BC_ONBOARDING_TITLE: Readonly<string> = t`Trusted information for newcomers from Newcomers’ Guide to British Columbia and BC211`;
+const MB_ONBOARDING_TITLE: Readonly<string> = t`Trusted information for newcomers from Manitoba Start and 211 Manitoba`;
 
-type Props = OnboardingComponentProps & OnboardingComponentActions;
+const OnboardingImage = (props: {readonly item: OnboardingData, readonly region: RegionCode}): JSX.Element => {
+    if (props.item.id === 1 && props.region === RegionCode.MB) {
+        return <MBOnboardingImages/>;
+    } else if (props.item.id === 1 && props.region === RegionCode.BC) {
+        return <BCOnboardingImages/>;
+    }
 
-const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.Element => (
+    return <SingleOnboardingImage source={props.item.image}/>;
+};
+
+const SingleOnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.Element => (
     <Image
         source={props.source}
         resizeMode='contain'
         style={styles.onboardingImage}
     />
+);
+
+const BCOnboardingImages = (): JSX.Element => (
+    <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+        <Image
+            source={welcomeBCLogo}
+            resizeMode='contain'
+            style={{height: 80, width: 190, marginBottom: 16}}
+        />
+        <Image
+            source={bc211Logo}
+            resizeMode='contain'
+            style={{height: 92, width: 140, marginBottom: 40}}
+        />
+    </View>
+);
+
+const MBOnboardingImages = (): JSX.Element => (
+    <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+        <Image
+            source={mbStartLogo}
+            resizeMode='contain'
+            style={{height: 106, width: 140, marginBottom: 16}}
+        />
+        <Image
+            source={mb211Logo}
+            resizeMode='contain'
+            style={{height: 68, width: 140, marginBottom: 40}}
+        />
+    </View>
 );
 
 const OnboardingText = (props: { readonly children: JSX.Element }): JSX.Element => (
@@ -134,7 +184,16 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
     return index;
 }
 
-export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
+function getOnboardingText(item: OnboardingData, region: RegionCode): string {
+    if (item.id === 1 && region === RegionCode.MB) {
+        return MB_ONBOARDING_TITLE;
+    } else if (item.id === 1 && region === RegionCode.BC) {
+        return BC_ONBOARDING_TITLE;
+    }
+    return item.title;
+}
+
+export const OnboardingComponent = (props: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
 
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
@@ -145,8 +204,8 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     const scrollDirection: STEP = I18nManager.isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
 
     const onSkipPress = (): void => {
-        hideOnboarding();
-        goToRouteWithoutParameter(Routes.RecommendedTopics, history);
+        props.hideOnboarding();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     };
 
     const onIndexChange = (newIndex: number): void => {
@@ -182,7 +241,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                                 (item: OnboardingData, slideIndex: number): JSX.Element => {
                                     return (
                                         <OnboardingSlide key={slideIndex}>
-                                            <OnboardingImage source={item.image} />
+                                            <OnboardingImage item={item} region={props.region}/>
                                             {
                                                 slideIndex === 0 &&
                                                 <WelcomeText>
@@ -190,7 +249,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                                                 </WelcomeText>
                                             }
                                             <OnboardingText>
-                                                <Trans id={item.title} />
+                                                <Trans id={getOnboardingText(item, props.region)} />
                                             </OnboardingText>
                                         </OnboardingSlide>
                                     );
