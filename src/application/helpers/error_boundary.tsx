@@ -25,7 +25,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             error: error,
             errorInfo: errorInfo,
         });
-        Sentry.captureException(error);
+        Sentry.Native.captureException(error);
     }
 
     render(): React.ReactNode {

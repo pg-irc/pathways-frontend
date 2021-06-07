@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import React, { useRef } from 'react';
-import { TouchableOpacity, StyleSheet, NativeSyntheticEvent, ScrollViewProps, ScrollView } from 'react-native';
+import { TouchableOpacity, StyleSheet, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
@@ -13,6 +13,7 @@ import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header
 import { memoryHistory } from '../../application';
 import { OffsetHook, useOffset } from '../use_offset';
 import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -39,7 +40,7 @@ export const ExploreAllComponent = (props: Props): JSX.Element => {
                 onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setOffset(e.nativeEvent.contentOffset.y)}
                 scrollEventThrottle={scrollViewThrottle}
             >
-                <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
+                <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
                     <Trans>Learn all about B.C.</Trans>
                 </Text>
                 <View style={styles.buttonsWrapper}>
@@ -80,10 +81,10 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
             ]}
         />
         <Text style={textStyles.headlineH2StyleBlackLeft}>
-        <Trans id={section.name} />
+            <Trans id={section.name} />
         </Text>
         <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown }]}>
-        <Trans id={section.description} />
+            <Trans id={section.description} />
         </Text>
     </View>
 );
