@@ -48,32 +48,9 @@ interface OwnProps {
 
 interface OnboardingData {
     readonly id: number;
-    readonly image: ImageSourcePropType;
-    readonly title: string;
+    readonly ImageElement: JSX.Element;
+    readonly TitleElement: JSX.Element;
 }
-
-const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
-    {
-      id: 1,
-      image: communityOnBoardingImage,
-      title: t`Your go-to guide to getting settled in your new community.`,
-    },
-    {
-      id: 2,
-      image: bookmarkOnBoardingImage,
-      title: t`Bookmark the topics and services that you find helpful for future use.`,
-    },
-    {
-      id: 3,
-      image: settlementJourneyOnBoardingImage,
-      title: t`Find service providers near you that can help you through your settlement journey.`,
-    },
-    {
-      id: 4,
-      image: answerQuestionsOnBoardingImage,
-      title: t`Answer a few optional questions to get tailored recommendations for your needs.`,
-    },
-];
 
 type Props = OnboardingComponentProps & OnboardingComponentActions & OwnProps;
 
@@ -138,6 +115,37 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
     return index;
 }
 
+const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
+    {
+      id: 1,
+      ImageElement: (<OnboardingImage source={communityOnBoardingImage} />),
+      TitleElement: (<OnboardingText>
+                        <Trans id={t`Your go-to guide to getting settled in your new community.`} />
+                    </OnboardingText>),
+    },
+    {
+      id: 2,
+      ImageElement: (<OnboardingImage source={bookmarkOnBoardingImage} />),
+      TitleElement: (<OnboardingText>
+                        <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
+                    </OnboardingText>),
+    },
+    {
+      id: 3,
+      ImageElement: (<OnboardingImage source={settlementJourneyOnBoardingImage} />),
+      TitleElement: (<OnboardingText>
+                        <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
+                    </OnboardingText>),
+    },
+    {
+      id: 4,
+      ImageElement: (<OnboardingImage source={answerQuestionsOnBoardingImage} />),
+      TitleElement: (<OnboardingText>
+                        <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
+                    </OnboardingText>),
+    },
+];
+
 export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
 
@@ -186,16 +194,14 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                                 (item: OnboardingData, slideIndex: number): JSX.Element => {
                                     return (
                                         <OnboardingSlide key={slideIndex}>
-                                            <OnboardingImage source={item.image} />
+                                            {item.ImageElement}
                                             {
                                                 slideIndex === 0 &&
                                                 <WelcomeText>
                                                     <Trans>Welcome to Arrival Advisor</Trans>
                                                 </WelcomeText>
                                             }
-                                            <OnboardingText>
-                                                <Trans id={item.title} />
-                                            </OnboardingText>
+                                            {item.TitleElement}
                                         </OnboardingSlide>
                                     );
                                 },
