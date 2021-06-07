@@ -28,8 +28,8 @@ import {
 } from '../../application/images';
 import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-
 import styles from './styles';
+import { RegionCode } from '../../validation/region/types';
 
 enum STEP {
     FORWARD = 1,
@@ -38,7 +38,11 @@ enum STEP {
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
-interface OnboardingComponentProps {
+export interface OnboardingComponentProps {
+    readonly region: RegionCode;
+}
+
+interface OwnProps {
     readonly history: History;
 }
 
@@ -71,7 +75,7 @@ const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     },
 ];
 
-type Props = OnboardingComponentProps & OnboardingComponentActions;
+type Props = OnboardingComponentProps & OnboardingComponentActions & OwnProps;
 
 const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.Element => (
     <Image

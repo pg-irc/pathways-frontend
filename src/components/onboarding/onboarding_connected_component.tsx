@@ -1,11 +1,16 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { HideOnboardingAction, hideOnboarding } from '../../stores/user_profile';
-import { OnboardingComponentActions } from './onboarding_component';
-import { OnboardingComponent } from './onboarding_component';
+import { OnboardingComponentActions, OnboardingComponent, OnboardingComponentProps  } from './onboarding_component';
+import { pickRegion } from '../../selectors/region/pick_region';
+import { Store } from '../../stores';
 
 const mapDispatchToProps = (dispatch: Dispatch<HideOnboardingAction>): OnboardingComponentActions => ({
     hideOnboarding: (): HideOnboardingAction => dispatch(hideOnboarding()),
 });
 
-export const OnboardingConnectedComponent = connect(undefined, mapDispatchToProps)(OnboardingComponent);
+const mapStateToProps = (store: Store): OnboardingComponentProps => ({
+    region: pickRegion(store),
+});
+
+export const OnboardingConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OnboardingComponent);
