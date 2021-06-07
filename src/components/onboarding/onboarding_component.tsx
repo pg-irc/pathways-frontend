@@ -21,10 +21,11 @@ import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { textStyles } from '../../application/styles';
 import {
-    communityOnBoardingImage,
     answerQuestionsOnBoardingImage,
     settlementJourneyOnBoardingImage,
     bookmarkOnBoardingImage,
+    welcomeBCLogo,
+    mbStartLogo,
 } from '../../application/images';
 import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -35,6 +36,9 @@ enum STEP {
     FORWARD = 1,
     BACKWARD = -1,
 }
+
+const ONBOARDING_DATA_LENGTH = 4;
+
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
@@ -109,44 +113,45 @@ const NavigationDots = (props: { readonly currentIndex: number, readonly count: 
 
 function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOSType): number {
     if (platform === 'android' && isRTL) {
-        return ONBOARDING_DATA.length - 1 - index;
+        return ONBOARDING_DATA_LENGTH - 1 - index;
     }
 
     return index;
 }
 
-const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
+const getOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
     {
-      id: 1,
-      ImageElement: (<OnboardingImage source={communityOnBoardingImage} />),
-      TitleElement: (<OnboardingText>
+    id: 1,
+    ImageElement: region === RegionCode.MB ? (<OnboardingImage source={mbStartLogo} />)
+        : (<OnboardingImage source={welcomeBCLogo} />),
+    TitleElement: (<OnboardingText>
                         <Trans id={t`Your go-to guide to getting settled in your new community.`} />
                     </OnboardingText>),
     },
     {
-      id: 2,
-      ImageElement: (<OnboardingImage source={bookmarkOnBoardingImage} />),
-      TitleElement: (<OnboardingText>
+    id: 2,
+    ImageElement: (<OnboardingImage source={bookmarkOnBoardingImage} />),
+    TitleElement: (<OnboardingText>
                         <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
                     </OnboardingText>),
     },
     {
-      id: 3,
-      ImageElement: (<OnboardingImage source={settlementJourneyOnBoardingImage} />),
-      TitleElement: (<OnboardingText>
+    id: 3,
+    ImageElement: (<OnboardingImage source={settlementJourneyOnBoardingImage} />),
+    TitleElement: (<OnboardingText>
                         <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
                     </OnboardingText>),
     },
     {
-      id: 4,
-      ImageElement: (<OnboardingImage source={answerQuestionsOnBoardingImage} />),
-      TitleElement: (<OnboardingText>
+    id: 4,
+    ImageElement: (<OnboardingImage source={answerQuestionsOnBoardingImage} />),
+    TitleElement: (<OnboardingText>
                         <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
                     </OnboardingText>),
     },
 ];
 
-export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
+export const OnboardingComponent = (props: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
 
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
@@ -157,8 +162,8 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     const scrollDirection: STEP = I18nManager.isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
 
     const onSkipPress = (): void => {
-        hideOnboarding();
-        goToRouteWithoutParameter(Routes.RecommendedTopics, history);
+        props.hideOnboarding();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     };
 
     const onIndexChange = (newIndex: number): void => {
@@ -166,7 +171,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     };
 
     const onActionPress = (): void => {
-        if (index === ONBOARDING_DATA.length - 1) {
+        if (index === ONBOARDING_DATA_LENGTH - 1) {
             onSkipPress();
         } else {
             swiperRef.current.scrollBy(scrollDirection);
@@ -205,7 +210,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                                         </OnboardingSlide>
                                     );
                                 },
-                                ONBOARDING_DATA,
+                                getOnboardingData(props.region),
                             )
                         }
                     </Swiper>
@@ -213,10 +218,10 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                 <View style={styles.nextButtonSection}>
                     <MultiLineButtonComponent onPress={onActionPress} additionalStyles={styles.nextButton}>
                         <Text style={textStyles.button}>
-                            <Trans id={index === ONBOARDING_DATA.length - 1 ? t`Start` : t`Next` } />
+                            <Trans id={index === ONBOARDING_DATA_LENGTH - 1 ? t`Start` : t`Next` } />
                         </Text>
                     </MultiLineButtonComponent>
-                    <NavigationDots currentIndex={index} count={ONBOARDING_DATA.length}/>
+                    <NavigationDots currentIndex={index} count={ONBOARDING_DATA_LENGTH}/>
                 </View>
             </View>
         </SafeAreaView>
