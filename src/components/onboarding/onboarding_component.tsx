@@ -25,7 +25,9 @@ import {
     settlementJourneyOnBoardingImage,
     bookmarkOnBoardingImage,
     welcomeBCLogo,
+    bc211Logo,
     mbStartLogo,
+    mb211Logo,
 } from '../../application/images';
 import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -64,6 +66,36 @@ const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.E
         resizeMode='contain'
         style={styles.onboardingImage}
     />
+);
+
+const BCOnboardingImages = (): JSX.Element => (
+    <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+        <Image
+            source={welcomeBCLogo}
+            resizeMode='contain'
+            style={{height: 80, width: 190, marginBottom: 16}}
+        />
+        <Image
+            source={bc211Logo}
+            resizeMode='contain'
+            style={{height: 92, width: 140, marginBottom: 40}}
+        />
+    </View>
+);
+
+const MBOnboardingImages = (): JSX.Element => (
+    <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+        <Image
+            source={mbStartLogo}
+            resizeMode='contain'
+            style={{height: 106, width: 140, marginBottom: 16}}
+        />
+        <Image
+            source={mb211Logo}
+            resizeMode='contain'
+            style={{height: 68, width: 140, marginBottom: 40}}
+        />
+    </View>
 );
 
 const OnboardingText = (props: { readonly children: JSX.Element }): JSX.Element => (
@@ -122,8 +154,7 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
 const getOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
     {
     id: 1,
-    ImageElement: region === RegionCode.MB ? (<OnboardingImage source={mbStartLogo} />)
-        : (<OnboardingImage source={welcomeBCLogo} />),
+    ImageElement: region === RegionCode.MB ? (<MBOnboardingImages/>) : (<BCOnboardingImages/>),
     TitleElement: (<OnboardingText>
                         <Trans id={t`Your go-to guide to getting settled in your new community.`} />
                     </OnboardingText>),
