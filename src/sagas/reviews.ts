@@ -10,7 +10,7 @@ import { Rating, ServiceReviewPostData } from '../stores/reviews';
 import { Id } from '../stores/services';
 import { selectLocaleCode } from '../selectors/locale/select_locale_code';
 
-type Effects = CallEffect| SelectEffect | PutEffect<FinishServiceReviewAction>;
+type Effects = CallEffect | SelectEffect | PutEffect<FinishServiceReviewAction>;
 
 export function* watchSubmitServiceReview(): IterableIterator<ForkEffect> {
     yield takeLatest(SUBMIT_SERVICE_REVIEW, submitServiceReview);
@@ -27,14 +27,14 @@ function* submitServiceReview(action: SubmitServiceReviewAction): IterableIterat
         const response = yield call(sendToAirtable, serviceReviewJSON);
         yield call(handleResponse, response);
     } catch (error) {
-        Sentry.captureException(error);
+        Sentry.Native.captureException(error);
         console.warn(error?.message || 'Error saving review');
     } finally {
         yield put(finishServiceReview());
     }
 }
 
-const buildServiceReviewPostData = (serviceId: Id, userLocale: string, rating: Rating, comment?: string): ServiceReviewPostData =>({
+const buildServiceReviewPostData = (serviceId: Id, userLocale: string, rating: Rating, comment?: string): ServiceReviewPostData => ({
     serviceId,
     userLocale,
     rating,

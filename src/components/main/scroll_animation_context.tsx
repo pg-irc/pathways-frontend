@@ -12,7 +12,7 @@ import Animated, {
     diffClamp,
     event,
     eq,
-    interpolate,
+    interpolateNode,
     max,
     multiply,
     set,
@@ -119,7 +119,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             },
         }];
 
-        const eventConfig =  {
+        const eventConfig = {
             useNativeDriver: true,
         };
 
@@ -154,25 +154,25 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             ),
         );
 
-        const interpolateHeaderHeight = set(animatedHeaderHeight, interpolate(animatedClampedScrollValue, {
+        const interpolateHeaderHeight = set(animatedHeaderHeight, interpolateNode(animatedClampedScrollValue, {
             inputRange: [0, TOTAL_HEADER_HEIGHT],
             outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
             extrapolate: Extrapolate.CLAMP,
         }));
 
-        const interpolateFooterHeight = set(animatedFooterHeight, interpolate(animatedClampedScrollValue, {
+        const interpolateFooterHeight = set(animatedFooterHeight, interpolateNode(animatedClampedScrollValue, {
             inputRange: [0, footerHeight],
             outputRange: [footerHeight, 0],
             extrapolate: Extrapolate.CLAMP,
         }));
 
-        const interpolateFooterPadding = set(animatedFooterBottomPadding, interpolate(animatedClampedScrollValue, {
+        const interpolateFooterPadding = set(animatedFooterBottomPadding, interpolateNode(animatedClampedScrollValue, {
             inputRange: [0, footerPaddingBottom],
             outputRange: [footerPaddingBottom, 0],
             extrapolate: Extrapolate.CLAMP,
         }));
 
-        const interpolateFooterIconTranslation = set(animatedFooterIconVerticalTranslate, interpolate(animatedClampedScrollValue, {
+        const interpolateFooterIconTranslation = set(animatedFooterIconVerticalTranslate, interpolateNode(animatedClampedScrollValue, {
             inputRange: [footerPaddingBottom, footerHeight],
             outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
             extrapolate: Extrapolate.CLAMP,

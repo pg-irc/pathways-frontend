@@ -22,7 +22,7 @@ export function* sendFeedback(action: SendFeedbackAction): IterableIterator<Effe
         const response = yield call(sendToAirtable, feedbackJSON);
         yield call(handleResponse, response);
     } catch (error) {
-        Sentry.captureException(error);
+        Sentry.Native.captureException(error);
         console.warn(error?.message || 'Error saving feedback');
         return yield put(setError(error));
     } finally {

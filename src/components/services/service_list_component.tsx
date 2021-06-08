@@ -100,7 +100,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
 
     return (
         <I18n>
-            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+            {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
                 <ServiceListWrapper {...props}>
                     <>
                         <FlatList
@@ -118,7 +118,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                             ListHeaderComponent={<ListHeaderComponent {...props} />}
                             initialNumToRender={offsetFromRouteLocation ? services.length : 20}
                         />
-                        <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
+                        <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview} />
                     </>
                 </ServiceListWrapper>
             )}
@@ -170,7 +170,7 @@ const isTopicServicesError = (topicServicesOrError: SelectorTopicServices, userL
 const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
     const errorType = determineErrorType(props.topicServicesOrError, props.manualUserLocation);
     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
-    Sentry.captureMessage(sentryMessage);
+    Sentry.Native.captureMessage(sentryMessage);
     return (
         <ServiceListWrapper {...props}>
             <ErrorScreenSwitcherComponent
