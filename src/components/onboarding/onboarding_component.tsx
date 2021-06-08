@@ -68,6 +68,10 @@ const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.E
     />
 );
 
+const OnboardingRegionImages = (props: { readonly region: RegionCode }): JSX.Element => {
+    return props.region === RegionCode.MB ? (<MBOnboardingImages/>) : (<BCOnboardingImages/>);
+};
+
 const BCOnboardingImages = (): JSX.Element => (
     <View style={{ flexDirection: 'column', alignItems: 'center'}}>
         <Image
@@ -116,6 +120,17 @@ const WelcomeText = (props: { readonly children: JSX.Element }): JSX.Element => 
     </Text>
 );
 
+const WelcomeSlideText = (props: { readonly region: RegionCode }): JSX.Element => (
+    <View>
+        <WelcomeText>
+            <Trans>Welcome to Arrival Advisor</Trans>
+        </WelcomeText>
+        <OnboardingText>
+            <Trans id={getOnboardingRegionText(props.region)} />
+        </OnboardingText>
+    </View>
+);
+
 const SkipButton = ({ onPress }: { readonly onPress: () => void }): JSX.Element => {
     return (
         <TouchableOpacity style={styles.skipButton} onPress={onPress}>
@@ -153,34 +168,43 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
 
 const getOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
     {
-    id: 1,
-    ImageElement: region === RegionCode.MB ? (<MBOnboardingImages/>) : (<BCOnboardingImages/>),
-    TitleElement: (<OnboardingText>
-                        <Trans id={t`Your go-to guide to getting settled in your new community.`} />
-                    </OnboardingText>),
+        id: 1,
+        ImageElement: <OnboardingRegionImages region={region}/>,
+        TitleElement: <WelcomeSlideText region={region}/>,
     },
     {
-    id: 2,
-    ImageElement: (<OnboardingImage source={bookmarkOnBoardingImage} />),
-    TitleElement: (<OnboardingText>
-                        <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
-                    </OnboardingText>),
+        id: 2,
+        ImageElement: <OnboardingImage source={bookmarkOnBoardingImage} />,
+        TitleElement: (
+            <OnboardingText>
+                <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
+            </OnboardingText>
+        ),
     },
     {
-    id: 3,
-    ImageElement: (<OnboardingImage source={settlementJourneyOnBoardingImage} />),
-    TitleElement: (<OnboardingText>
-                        <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
-                    </OnboardingText>),
+        id: 3,
+        ImageElement: <OnboardingImage source={settlementJourneyOnBoardingImage} />,
+        TitleElement: (
+            <OnboardingText>
+                <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
+            </OnboardingText>
+        ),
     },
     {
     id: 4,
-    ImageElement: (<OnboardingImage source={answerQuestionsOnBoardingImage} />),
-    TitleElement: (<OnboardingText>
-                        <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
-                    </OnboardingText>),
+    ImageElement: <OnboardingImage source={answerQuestionsOnBoardingImage} />,
+    TitleElement: (
+        <OnboardingText>
+            <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
+        </OnboardingText>
+    ),
     },
 ];
+
+const getOnboardingRegionText = (region: RegionCode ): string => {
+    return region === RegionCode.MB ? t`Trusted information for newcomers from Manitoba Start and 211 Manitoba`
+        : t`Trusted information for newcomers from Newcomers’ Guide to British Columbia and BC211`;
+};
 
 export const OnboardingComponent = (props: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
@@ -231,12 +255,6 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
                                     return (
                                         <OnboardingSlide key={slideIndex}>
                                             {item.ImageElement}
-                                            {
-                                                slideIndex === 0 &&
-                                                <WelcomeText>
-                                                    <Trans>Welcome to Arrival Advisor</Trans>
-                                                </WelcomeText>
-                                            }
                                             {item.TitleElement}
                                         </OnboardingSlide>
                                     );
