@@ -96,12 +96,11 @@ const LocaleSection = (props: Props): JSX.Element => {
     return (
         <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
+            <SelectedLocaleItem section={localeSectionData} />
             <SectionList
-                stickySectionHeadersEnabled={true}
                 keyExtractor={(item: LocaleWithLabel): string => item.code}
                 sections={[localeSectionData]}
-                renderItem={LocaleItem}
-                renderSectionHeader={SelectedLocaleItem} />
+                renderItem={LocaleItem} />
         </View>
     );
 };
@@ -122,22 +121,18 @@ const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation:
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
         <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
+            <Text style={textStyles.headlineH4StyleBlackLeft}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
 };
 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (
-        <View key={section.code} style={styles.localeListItem}>
-            <View style={{ marginLeft: 12, marginRight: 7 }}>
-                <Icon
-                    name='check'
-                    type='FontAwesome'
-                    style={{ fontSize: 22, color: colors.teal, marginHorizontal: -2, marginVertical: -2 }}
-                />
-            </View>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 12 }]}>{section.label}</Text>
+        <View key={section.code} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
+            <TouchableOpacity>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}>Change</Text>
+            </TouchableOpacity>
         </View>
     );
 };
