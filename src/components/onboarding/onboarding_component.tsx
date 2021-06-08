@@ -103,9 +103,9 @@ const MBOnboardingImages = (): JSX.Element => (
     </View>
 );
 
-const OnboardingText = (props: { readonly children: JSX.Element }): JSX.Element => (
+const OnboardingText = (props: { readonly text: string }): JSX.Element => (
     <Text style={styles.onboardingText}>
-        {props.children}
+        <Trans id={props.text} />
     </Text>
 );
 
@@ -126,9 +126,7 @@ const WelcomeSlideText = (props: { readonly region: RegionCode }): JSX.Element =
         <WelcomeText>
             <Trans>Welcome to Arrival Advisor</Trans>
         </WelcomeText>
-        <OnboardingText>
-            <Trans id={getOnboardingRegionText(props.region)} />
-        </OnboardingText>
+        <OnboardingText text={getOnboardingRegionText(props.region)} />
     </View>
 );
 
@@ -176,29 +174,17 @@ const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData
     {
         id: 2,
         imageElement: <OnboardingImage source={bookmarkOnBoardingImage} />,
-        titleElement: (
-            <OnboardingText>
-                <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
-            </OnboardingText>
-        ),
+        titleElement: <OnboardingText text={t`Bookmark the topics and services that you find helpful for future use.`}/>,
     },
     {
         id: 3,
         imageElement: <OnboardingImage source={settlementJourneyOnBoardingImage} />,
-        titleElement: (
-            <OnboardingText>
-                <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
-            </OnboardingText>
-        ),
+        titleElement: <OnboardingText text={t`Find service providers near you that can help you through your settlement journey.`}/>,
     },
     {
     id: 4,
         imageElement: <OnboardingImage source={answerQuestionsOnBoardingImage} />,
-        titleElement: (
-            <OnboardingText>
-                <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
-            </OnboardingText>
-        ),
+        titleElement: <OnboardingText text={t`Answer a few optional questions to get tailored recommendations for your needs.`}/>,
     },
 ];
 
