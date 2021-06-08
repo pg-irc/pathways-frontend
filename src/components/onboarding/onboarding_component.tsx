@@ -52,8 +52,8 @@ interface OwnProps {
 
 interface OnboardingData {
     readonly id: number;
-    readonly ImageElement: JSX.Element;
-    readonly TitleElement: JSX.Element;
+    readonly imageElement: JSX.Element;
+    readonly titleElement: JSX.Element;
 }
 
 type Props = OnboardingComponentProps & OnboardingComponentActions & OwnProps;
@@ -170,13 +170,13 @@ function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOST
 const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
     {
         id: 1,
-        ImageElement: <OnboardingRegionImages region={region}/>,
-        TitleElement: <WelcomeSlideText region={region}/>,
+        imageElement: <OnboardingRegionImages region={region}/>,
+        titleElement: <WelcomeSlideText region={region}/>,
     },
     {
         id: 2,
-        ImageElement: <OnboardingImage source={bookmarkOnBoardingImage} />,
-        TitleElement: (
+        imageElement: <OnboardingImage source={bookmarkOnBoardingImage} />,
+        titleElement: (
             <OnboardingText>
                 <Trans id={t`Bookmark the topics and services that you find helpful for future use.`} />
             </OnboardingText>
@@ -184,8 +184,8 @@ const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData
     },
     {
         id: 3,
-        ImageElement: <OnboardingImage source={settlementJourneyOnBoardingImage} />,
-        TitleElement: (
+        imageElement: <OnboardingImage source={settlementJourneyOnBoardingImage} />,
+        titleElement: (
             <OnboardingText>
                 <Trans id={t`Find service providers near you that can help you through your settlement journey.`} />
             </OnboardingText>
@@ -193,12 +193,12 @@ const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData
     },
     {
     id: 4,
-    ImageElement: <OnboardingImage source={answerQuestionsOnBoardingImage} />,
-    TitleElement: (
-        <OnboardingText>
-            <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
-        </OnboardingText>
-    ),
+        imageElement: <OnboardingImage source={answerQuestionsOnBoardingImage} />,
+        titleElement: (
+            <OnboardingText>
+                <Trans id={t`Answer a few optional questions to get tailored recommendations for your needs.`} />
+            </OnboardingText>
+        ),
     },
 ];
 
@@ -259,8 +259,8 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
                                 (item: OnboardingData, slideIndex: number): JSX.Element => {
                                     return (
                                         <OnboardingSlide key={slideIndex}>
-                                            {item.ImageElement}
-                                            {item.TitleElement}
+                                            {item.imageElement}
+                                            {item.titleElement}
                                         </OnboardingSlide>
                                     );
                                 },
