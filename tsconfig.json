@@ -1,42 +1,44 @@
 {
-    "compilerOptions": {
-        "target": "es2015",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "jsx": "react-native",
-        "incremental": true,
-        "outDir": "lib",
-        "rootDir": "src",
-        "allowSyntheticDefaultImports": true,
-        "noImplicitAny": true,
-        "preserveConstEnums": true,
-        "allowJs": false,
-        "sourceMap": true,
-        "noImplicitReturns": true,
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
-        "skipLibCheck": true,
-        "typeRoots": [
-            "./src/@types",
-            "./node_modules/@types",
-        ],
-    },
-    "filesGlob": [
-        "typings/index.d.ts",
-        "src/**/*.ts",
-        "src/**/*.tsx"
-    ],
-    "types": [
-        "react",
-        "react-native",
-        "jest",
-        "node"
-    ],
-    "exclude": [
-        "android",
-        "ios",
-        "build",
-        "node_modules"
-    ],
-    "compileOnSave": false
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "jsx": "react-native",
+    "incremental": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "allowJs": false,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "typeRoots": [
+      "./src/@types",
+      "./node_modules/@types"
+    ]
+  },
+  "filesGlob": [
+    "typings/index.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "types": [
+    "react",
+    "react-native",
+    "jest",
+    "node"
+  ],
+  "exclude": [
+    "android",
+    "ios",
+    "build",
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "extends": "expo/tsconfig.base"
 }
