@@ -67,7 +67,10 @@ const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.E
 );
 
 const OnboardingRegionImages = (props: { readonly region: RegionCode }): JSX.Element => {
-    return props.region === RegionCode.MB ? (<MBOnboardingImages/>) : (<BCOnboardingImages/>);
+    if (props.region === RegionCode.MB) {
+        return <MBOnboardingImages/>;
+    }
+    return <BCOnboardingImages/>;
 };
 
 const BCOnboardingImages = (): JSX.Element => (
@@ -200,8 +203,10 @@ const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData
 ];
 
 const getOnboardingRegionText = (region: RegionCode ): string => {
-    return region === RegionCode.MB ? t`Trusted information for newcomers from Manitoba Start and 211 Manitoba`
-        : t`Trusted information for newcomers from Newcomers’ Guide to British Columbia and BC211`;
+    if (region === RegionCode.MB) {
+        return t`Trusted information for newcomers from Manitoba Start and 211 Manitoba`;
+    }
+    return t`Trusted information for newcomers from Newcomers’ Guide to British Columbia and BC211`;
 };
 
 export const OnboardingComponent = (props: Props): JSX.Element => {
