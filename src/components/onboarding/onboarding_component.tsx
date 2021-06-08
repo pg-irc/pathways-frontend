@@ -39,8 +39,6 @@ enum STEP {
     BACKWARD = -1,
 }
 
-const ONBOARDING_DATA_LENGTH = 4;
-
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
@@ -158,15 +156,15 @@ const NavigationDots = (props: { readonly currentIndex: number, readonly count: 
     );
 };
 
-function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOSType): number {
+function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOSType, dataLength: number): number {
     if (platform === 'android' && isRTL) {
-        return ONBOARDING_DATA_LENGTH - 1 - index;
+        return dataLength - 1 - index;
     }
 
     return index;
 }
 
-const getOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
+const computeOnboardingData = (region: RegionCode): ReadonlyArray<OnboardingData> => [
     {
         id: 1,
         ImageElement: <OnboardingRegionImages region={region}/>,
@@ -207,12 +205,14 @@ const getOnboardingRegionText = (region: RegionCode ): string => {
 };
 
 export const OnboardingComponent = (props: Props): JSX.Element => {
+    const onboardingData = computeOnboardingData(props.region);
+
     const swiperRef = useRef<Swiper>();
 
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(0);
 
-    const swiperIndex: number = computeSwiperIndex(index, I18nManager.isRTL, Platform.OS);
+    const swiperIndex: number = computeSwiperIndex(index, I18nManager.isRTL, Platform.OS, onboardingData.length);
 
     const scrollDirection: STEP = I18nManager.isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
 
@@ -222,11 +222,11 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
     };
 
     const onIndexChange = (newIndex: number): void => {
-        setIndex(computeSwiperIndex(newIndex, I18nManager.isRTL, Platform.OS));
+        setIndex(computeSwiperIndex(newIndex, I18nManager.isRTL, Platform.OS, onboardingData.length));
     };
 
     const onActionPress = (): void => {
-        if (index === ONBOARDING_DATA_LENGTH - 1) {
+        if (index === onboardingData.length - 1) {
             onSkipPress();
         } else {
             swiperRef.current.scrollBy(scrollDirection);
@@ -259,7 +259,7 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
                                         </OnboardingSlide>
                                     );
                                 },
-                                getOnboardingData(props.region),
+                                onboardingData,
                             )
                         }
                     </Swiper>
@@ -267,10 +267,10 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
                 <View style={styles.nextButtonSection}>
                     <MultiLineButtonComponent onPress={onActionPress} additionalStyles={styles.nextButton}>
                         <Text style={textStyles.button}>
-                            <Trans id={index === ONBOARDING_DATA_LENGTH - 1 ? t`Start` : t`Next` } />
+                            <Trans id={index === onboardingData.length - 1 ? t`Start` : t`Next` } />
                         </Text>
                     </MultiLineButtonComponent>
-                    <NavigationDots currentIndex={index} count={ONBOARDING_DATA_LENGTH}/>
+                    <NavigationDots currentIndex={index} count={onboardingData.length}/>
                 </View>
             </View>
         </SafeAreaView>
