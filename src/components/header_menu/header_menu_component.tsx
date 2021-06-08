@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
@@ -13,6 +13,7 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode } from '../../validation/region/types';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 type OwnProps = {
     readonly history: History;
@@ -76,10 +77,6 @@ export interface SectionListItemInfo {
     readonly separators: any;
 }
 
-type SelectedLocaleListItemInfo = {
-    readonly section: LocaleWithLabel & SectionBase<LocaleListItem>;
-};
-
 const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element => (
     <Text style={[textStyles.headlineH5StyleBlackLeft, { marginVertical: 10, marginHorizontal: 10 }]}>
         {props.title}
@@ -93,16 +90,33 @@ const LocaleSection = (props: Props): JSX.Element => {
         label: localeCodeToLabel(props.currentLocale),
         data: R.map(localeItemBuilder, props.otherLocales),
     };
+    const [otherLocaleVisible, setOtherLocaleVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     return (
         <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
-            <SelectedLocaleItem section={localeSectionData} />
+            <SelectedLocaleItem section={localeSectionData} setOtherLocaleVisible={setOtherLocaleVisible} />
+            <OtherLocales {...props} otherLocaleVisible={otherLocaleVisible} />
+        </View>
+    );
+};
+
+const OtherLocales = (props: Props & { readonly otherLocaleVisible: boolean }): JSX.Element => {
+    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
+    const localeSectionData = {
+        code: props.currentLocale,
+        label: localeCodeToLabel(props.currentLocale),
+        data: R.map(localeItemBuilder, props.otherLocales),
+    };
+    if (props.otherLocaleVisible) {
+        return (
             <SectionList
                 keyExtractor={(item: LocaleWithLabel): string => item.code}
                 sections={[localeSectionData]}
                 renderItem={LocaleItem} />
-        </View>
-    );
+        );
+    } else {
+        return <EmptyComponent />;
+    }
 };
 
 const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
@@ -126,12 +140,15 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
     );
 };
 
-const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
+const SelectedLocaleItem = (props: {
+    readonly section: LocaleWithLabel & SectionBase<LocaleListItem>,
+    readonly setOtherLocaleVisible: (b: boolean) => void,
+}): JSX.Element => {
     return (
-        <View key={section.code} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
-            <TouchableOpacity>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}>Change</Text>
+        <View key={props.section.code} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{props.section.label}</Text>
+            <TouchableOpacity onPress={(): void => props.setOtherLocaleVisible(true)}>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
             </TouchableOpacity>
         </View>
     );
