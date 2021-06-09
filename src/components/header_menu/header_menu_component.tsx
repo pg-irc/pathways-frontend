@@ -12,7 +12,7 @@ import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
-import { RegionCode } from '../../validation/region/types';
+import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 type OwnProps = {
@@ -50,6 +50,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
+            <RegionSection currentRegion={props.currentRegion} />
             <LocaleSection {...props} />
             <Divider />
             <AboutSection {...props} />
@@ -83,6 +84,26 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
     </Text>
 );
 
+const RegionSection = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
+    return (
+        <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
+            <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
+            <SelectedRegion currentRegion={props.currentRegion} />
+        </View>
+    );
+};
+
+const SelectedRegion = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
+    return (
+        <View key={props.currentRegion} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{regionCodeToLabel(props.currentRegion)}</Text>
+            <TouchableOpacity >
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
 const LocaleSection = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
@@ -92,7 +113,7 @@ const LocaleSection = (props: Props): JSX.Element => {
     };
     const [otherLocaleVisible, setOtherLocaleVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     return (
-        <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
+        <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SelectedLocaleItem section={localeSectionData} setOtherLocaleVisible={setOtherLocaleVisible} />
             <OtherLocales {...props} otherLocaleVisible={otherLocaleVisible} />
