@@ -11,6 +11,7 @@ import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
+import { EmptyDividerComponent } from '../content_layout/empty_divider_component'
 import { RouterProps, getParametersFromPath, Routes, goToRouteWithParameter } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification_component';
 import { HumanServiceData, Address, PhoneNumber } from '../../validation/services/types';
@@ -221,7 +222,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
                                     nonFeedbackComponent={<Name name={props.service.name} />}
                                 />
-                                <DividerComponent />
+                                <EmptyDividerComponent />
                                 <FeedbackComponent
                                     setText={setTextForField('organization')}
                                     toggleShouldSend={toggleShouldSendForField('organization')}
@@ -239,7 +240,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                         />
                                     }
                                 />
-                                <DividerComponent />
+                                <EmptyDividerComponent />
                                 <FeedbackComponent
                                     setText={setTextForField('description')}
                                     toggleShouldSend={toggleShouldSendForField('description')}
