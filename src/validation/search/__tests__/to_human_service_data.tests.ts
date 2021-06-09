@@ -13,6 +13,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -45,6 +46,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -82,6 +84,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -111,6 +114,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -142,6 +146,7 @@ describe('Adapting search result to service data', () => {
             expect(() => toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -170,6 +175,7 @@ describe('Adapting search result to service data', () => {
             expect(() => toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -202,6 +208,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -233,6 +240,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -269,6 +277,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
                 last_verified_date: aDate(),
@@ -300,6 +309,7 @@ describe('Adapting search result to service data', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
+                alternate_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
                 last_verified_date: aDate(),

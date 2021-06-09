@@ -223,6 +223,7 @@ describe('user data schema', () => {
                 const searchResults: ReadonlyArray<SearchServiceData> = [{
                     type: 'SearchServiceData',
                     service_name: aString(),
+                    alternate_name: aString(),
                     service_id: aString(),
                     service_description: aString(),
                     address: anAddress(),

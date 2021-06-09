@@ -8,6 +8,7 @@ describe('Adapting server service object to client service object', () => {
         service: {
             id: aString(),
             name: aString(),
+            alternate_name: aString(),
             description: aString(),
             organization_id: aString(),
             organization_url: aString(),
@@ -43,6 +44,7 @@ describe('Adapting server service object to client service object', () => {
                 lng: serverServiceObject.location.longitude,
             },
             name: serverServiceObject.service.name,
+            alternateName: serverServiceObject.service.alternate_name,
             description: serverServiceObject.service.description,
             phoneNumbers: [{
                 type: serverServiceObject.location.phone_numbers[0].phone_number_type,

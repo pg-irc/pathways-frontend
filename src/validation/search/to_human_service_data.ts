@@ -9,6 +9,7 @@ export const toHumanServiceData = (
     id: data.service_id,
     latlong: validateLatLong(data._geoloc.lat, data._geoloc.lng),
     name: data.service_name,
+    alternateName: data.alternate_name,
     description: data.service_description,
     phoneNumbers: data.phone_numbers || [],
     addresses: [{
