@@ -6,7 +6,7 @@ import { History, Location } from 'history';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors } from '../../application/styles';
+import { values, textStyles, colors, markdownStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -222,6 +222,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
                                     nonFeedbackComponent={<Name name={props.service.name} />}
                                 />
+                                <AlternateName
+                                    alternateName={props.service.alternateName}
+                                    isFeedbackInputEnabled={isFeedbackInputEnabled} />
                                 <EmptyDividerComponent />
                                 <FeedbackComponent
                                     setText={setTextForField('organization')}
@@ -327,6 +330,16 @@ const Name = (props: NameProps): JSX.Element => (
     </>
 );
 
+const AlternateName = (props: {readonly alternateName: string, readonly isFeedbackInputEnabled: boolean}): JSX.Element => {
+    if (props.alternateName && !props.isFeedbackInputEnabled) {
+        return <AlternateNameText alternateName={props.alternateName}/>;
+    }
+    return <></>;
+};
+
+const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
+    <Text style={[markdownStyles.body, {paddingTop: 4}]}><Trans>(aka {props.alternateName})</Trans></Text>
+);
 const Organization = (props: {
     readonly history: History,
     readonly name: string,
