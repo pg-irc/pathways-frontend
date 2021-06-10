@@ -12,7 +12,10 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
 import { Alert } from '../../validation/content/types';
 
-type Props = { readonly history: History };
+type Props = {
+    readonly history: History
+    readonly region: String
+};
 
 type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
@@ -53,19 +56,22 @@ const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
 
 export const CallToActionFullComponent = (props: Props): JSX.Element => {
     return (
-        <View>
-            <View style={[
-                applicationStyles.boxShadowBelow,
-                callToActionStyles.callToActionContainer,
-            ]}>
-                <FullComponentContent />
-                <FullComponentButton {...props} />
-            </View>
-        </View>
+        <View style={[
+            applicationStyles.boxShadowBelow,
+            callToActionStyles.callToActionContainer,
+        ]}>
+            {props.region == 'bc'
+                ?
+                <BCFullComponentContent />
+                :
+                <MBFullComponentContent />
+            }
+            <FullComponentButton {...props} />
+        </View >
     );
 };
 
-const FullComponentContent = (): JSX.Element => {
+const BCFullComponentContent = (): JSX.Element => {
     return (
         <View>
             <View style={callToActionStyles.callToActionContent}>
@@ -87,6 +93,30 @@ const FullComponentContent = (): JSX.Element => {
                 <Trans>
                     Answer a few questions about your situation to get personalized
                     recommendations of topics and services to help you settle in British Columbia.
+                </Trans>
+            </Text>
+        </View>
+    );
+};
+
+const MBFullComponentContent = (): JSX.Element => {
+    return (
+        <View>
+            <View style={callToActionStyles.callToActionContent}>
+                <View style={callToActionStyles.callToActionUpperContent}>
+                    <Text style={textStyles.headlineH2StyleBlackLeft}>
+                        <Trans>Get important topics based on your needs</Trans>
+                    </Text>
+                </View>
+                <Image
+                    source={I18nManager.isRTL ? advisor_rtl : advisor}
+                    resizeMode='contain'
+                    style={callToActionStyles.advisorImage}
+                />
+            </View>
+            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
+                <Trans>
+                    Answer some questions about your situation
                 </Trans>
             </Text>
         </View>
