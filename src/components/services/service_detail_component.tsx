@@ -11,7 +11,6 @@ import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { EmptyDividerComponent } from '../content_layout/empty_divider_component'
 import { RouterProps, getParametersFromPath, Routes, goToRouteWithParameter } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification_component';
 import { HumanServiceData, Address, PhoneNumber } from '../../validation/services/types';
@@ -561,6 +560,10 @@ const SuggestAnUpdateText = (): JSX.Element => (
             <Trans>Suggest an update</Trans>
         </Text>
     </View>
+);
+
+const EmptyDividerComponent = (): JSX.Element => (
+    <View style={{ marginVertical: 16, marginHorizontal: -20 }}></View>
 );
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
