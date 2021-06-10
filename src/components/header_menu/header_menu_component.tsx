@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
@@ -13,7 +13,7 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { openLanguageDrawer, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
 
 type OwnProps = {
     readonly history: History;
@@ -31,6 +31,7 @@ export interface HeaderMenuProps {
 export interface HeaderMenuActions {
     readonly setLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
     readonly updateNotificationToken: () => void;
+    readonly openLanguageDrawer: () => OpenLanguageDrawerAction;
 }
 
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
@@ -111,33 +112,28 @@ const LocaleSection = (props: Props): JSX.Element => {
         label: localeCodeToLabel(props.currentLocale),
         data: R.map(localeItemBuilder, props.otherLocales),
     };
-    const [otherLocaleVisible, setOtherLocaleVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     return (
         <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
-            <SelectedLocaleItem section={localeSectionData} setOtherLocaleVisible={setOtherLocaleVisible} />
-            <OtherLocales {...props} otherLocaleVisible={otherLocaleVisible} />
+            <SelectedLocaleItem section={localeSectionData} openLanguageDrawer={props.openLanguageDrawer} />
+            <OtherLocales {...props} />
         </View>
     );
 };
 
-const OtherLocales = (props: Props & { readonly otherLocaleVisible: boolean }): JSX.Element => {
+const OtherLocales = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
         code: props.currentLocale,
         label: localeCodeToLabel(props.currentLocale),
         data: R.map(localeItemBuilder, props.otherLocales),
     };
-    if (props.otherLocaleVisible) {
-        return (
-            <SectionList
-                keyExtractor={(item: LocaleWithLabel): string => item.code}
-                sections={[localeSectionData]}
-                renderItem={LocaleItem} />
-        );
-    } else {
-        return <EmptyComponent />;
-    }
+    return (
+        <SectionList
+            keyExtractor={(item: LocaleWithLabel): string => item.code}
+            sections={[localeSectionData]}
+            renderItem={LocaleItem} />
+    );
 };
 
 const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
@@ -163,12 +159,12 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
 
 const SelectedLocaleItem = (props: {
     readonly section: LocaleWithLabel & SectionBase<LocaleListItem>,
-    readonly setOtherLocaleVisible: (b: boolean) => void,
+    readonly openLanguageDrawer: () => OpenLanguageDrawerAction,
 }): JSX.Element => {
     return (
         <View key={props.section.code} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
             <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{props.section.label}</Text>
-            <TouchableOpacity onPress={(): void => props.setOtherLocaleVisible(true)}>
+            <TouchableOpacity onPress={props.openLanguageDrawer}>
                 <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
             </TouchableOpacity>
         </View>

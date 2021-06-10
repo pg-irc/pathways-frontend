@@ -8,6 +8,7 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { PushNotificationTokenRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
 import { LocaleWithLabel } from '../../application/locales';
 import { pickRegion } from '../../selectors/region/pick_region';
+import { openLanguageDrawer, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
 
 const selectOtherLocales = (store: Store): ReadonlyArray<LocaleWithLabel> => {
     const locales = selectAvailableLocales(store);
@@ -21,9 +22,11 @@ const mapStateToProps = (store: Store): HeaderMenuProps => ({
     otherLocales: selectOtherLocales(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction | PushNotificationTokenRequestAction>): HeaderMenuActions => ({
+type Actions = SaveLocaleRequestAction | PushNotificationTokenRequestAction | OpenLanguageDrawerAction;
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): HeaderMenuActions => ({
     setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
     updateNotificationToken: (): PushNotificationTokenRequestAction => dispatch(pushNotificationTokenRequest()),
+    openLanguageDrawer: (): OpenLanguageDrawerAction => dispatch(openLanguageDrawer()),
 });
 
 export const HeaderMenuConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent);
