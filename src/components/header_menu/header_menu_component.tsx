@@ -13,7 +13,7 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
-import { openLanguageDrawer, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
+import { OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
 
 type OwnProps = {
     readonly history: History;

@@ -1,11 +1,19 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import { View, Header, Title } from 'native-base';
+import { View, Header, Title, Icon } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { isAndroid } from '../../application/helpers/is_android';
+import { I18nManager, TouchableOpacity } from 'react-native';
+import { CloseLanguageDrawerAction } from '../../stores/user_experience/actions';
 
-export const LanguageDrawerComponent = (): JSX.Element => (
+export interface LanguageDrawerActions {
+    readonly closeLanguageDrawer: () => CloseLanguageDrawerAction;
+}
+
+type Props = LanguageDrawerActions;
+
+export const LanguageDrawerComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
         <Header
             style={{
@@ -16,6 +24,9 @@ export const LanguageDrawerComponent = (): JSX.Element => (
             }}
             androidStatusBarColor={colors.teal}
         >
+            <TouchableOpacity onPress={props.closeLanguageDrawer} style={{ padding: 15 }} >
+                <Icon name={I18nManager.isRTL ? 'arrow-forward' : 'arrow-back'} style={{ color: colors.white }} />
+            </TouchableOpacity >
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Select Language</Title>
         </Header>
     </View>

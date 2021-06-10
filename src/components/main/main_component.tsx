@@ -24,7 +24,7 @@ import { CloseAction, BackFromContactInformationAction } from '../../stores/feed
 import { memoryHistory } from '../../application';
 import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { RegionCode } from '../../validation/region/types';
-import { LanguageDrawerComponent } from '../header_menu/language_drawer_component';
+import { LanguageDrawerConnectedComponent } from '../header_menu/language_drawer_connected_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -106,7 +106,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                 onClose={props.closeLanguageDrawer}
                 open={props.isLanguageDrawerVisible}
                 content={
-                    <LanguageDrawerComponent />
+                    <LanguageDrawerConnectedComponent />
                 }
             >
                 <Drawer
