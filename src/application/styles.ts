@@ -247,11 +247,11 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
-    paragraphStyleWhiteCenter: {
+    paragraphStyleBlackCenter: {
         fontSize: 16,
         lineHeight: 21,
         textAlign: 'center',
-        color: colors.white,
+        color: colors.black,
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },

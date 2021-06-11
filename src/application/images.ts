@@ -1,7 +1,6 @@
 // tslint:disable:no-var-requires
 
-export const landingPhoto = require('../../assets/images/landing_photo.png');
-export const arrivalAdvisorLogo = require('../../assets/images/aa_logo.png');
+export const welcomeHeader = require('../../assets/images/welcome_header.png');
 export const arrivalAdvisorGlyphLogo = require('../../assets/images/aa_logoglyph.png');
 export const advisor = require('../../assets/images/advisor_graphic.png');
 export const advisor_rtl = require('../../assets/images/advisor_graphic_rtl.png');

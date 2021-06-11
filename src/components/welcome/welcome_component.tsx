@@ -1,13 +1,13 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React, { Dispatch, useReducer } from 'react';
-import { Dimensions, Image, ImageBackground, View } from 'react-native';
+import { Dimensions, Image, View } from 'react-native';
 import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
-import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
+import { welcomeHeader } from '../../application/images';
 import { History } from 'history';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode, RegionLocaleState } from '../../validation/region/types';
@@ -33,8 +33,6 @@ export interface WelcomeActions {
 type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
-    const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-
     const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
         reducer, buildDefaultState(),
     );
@@ -50,30 +48,22 @@ export function WelcomeComponent(props: Props): JSX.Element {
     };
 
     return (
-        <ImageBackground
-            source={landingPhoto}
-            resizeMode={'stretch'}
-            style={{
-                width: '100%',
-                height: '100%',
-            }}
-        >
             <View style={{
-                flex: 1,
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
-                padding: 20,
+                flex: 1,
+                flexDirection: 'column',
             }}>
                 <Image
-                    source={arrivalAdvisorLogo}
-                    resizeMode={'contain'}
+                    source={welcomeHeader}
+                    resizeMode='contain'
                     style={{
-                        width: arrivalAdvisorLogoSize,
-                        height: arrivalAdvisorLogoSize,
-                        marginBottom: 20,
+                        width: Dimensions.get('window').width,
+                        height: Dimensions.get('window').width * 34 / 36,
+                        backgroundColor: '#e1f5ff',
                     }}
                 />
-                <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 20 }]}>
+                <Text style={[textStyles.paragraphStyleBlackCenter, { marginVertical: 20 }]}>
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
@@ -92,22 +82,6 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         onStartButtonPress={onStartButtonPress} />
                 </View>
             </View>
-            <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
-                <Text style={textStyles.paragraphStyleWhiteleft}>
-                    <Trans>Created by</Trans>
-                </Text>
-                <Image
-                    source={peacegeeksLogo}
-                    resizeMode={'contain'}
-                    style={{
-                        height: 46,
-                        width: 96,
-                        marginTop: 10,
-                        marginBottom: 20,
-                    }}
-                />
-            </View>
-        </ImageBackground>
     );
 }
 
