@@ -154,7 +154,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history, offset);
         resetInputs();
         props.chooseExplainFeedback();
-    }
+    };
 
     const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
@@ -333,7 +333,7 @@ const AlternateName = (props: {readonly alternateName: string, readonly isFeedba
     if (props.alternateName && !props.isFeedbackInputEnabled) {
         return <AlternateNameText alternateName={props.alternateName}/>;
     }
-    return <></>;
+    return <EmptyComponent/>;
 };
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
