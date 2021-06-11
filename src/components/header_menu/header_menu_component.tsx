@@ -1,14 +1,12 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import * as R from 'ramda';
-import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { LocaleCode, LocaleWithLabel, localeCodeToLabel } from '../../application/locales';
+import { LocaleCode, localeCodeToLabel } from '../../application/locales';
 import { Content, View, Icon, Header, Title } from 'native-base';
-import { colors, textStyles } from '../../application/styles';
+import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { openURL } from '../link/link_component';
-import { isRTL } from '../../application/locale_effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
@@ -25,12 +23,9 @@ type OwnProps = {
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleCode;
     readonly currentRegion: RegionCode;
-    readonly otherLocales: ReadonlyArray<LocaleWithLabel>;
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
-    readonly updateNotificationToken: () => void;
     readonly openLanguageDrawer: () => OpenLanguageDrawerAction;
 }
 
@@ -52,7 +47,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
             <RegionSection currentRegion={props.currentRegion} />
-            <LocaleSection {...props} />
+            <LocaleSection currentLocale={props.currentLocale} openLanguageDrawer={props.openLanguageDrawer} />
             <Divider />
             <AboutSection {...props} />
             <Divider />
@@ -89,84 +84,26 @@ const RegionSection = (props: { readonly currentRegion: RegionCode }): JSX.Eleme
     return (
         <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
-            <SelectedRegion currentRegion={props.currentRegion} />
+            <View key={props.currentRegion} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{regionCodeToLabel(props.currentRegion)}</Text>
+                <TouchableOpacity >
+                    <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
 
-const SelectedRegion = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
-    return (
-        <View key={props.currentRegion} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{regionCodeToLabel(props.currentRegion)}</Text>
-            <TouchableOpacity >
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
-
-const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
-    const localeSectionData = {
-        code: props.currentLocale,
-        label: localeCodeToLabel(props.currentLocale),
-        data: R.map(localeItemBuilder, props.otherLocales),
-    };
+const LocaleSection = (props: { readonly currentLocale: LocaleCode, readonly openLanguageDrawer: () => OpenLanguageDrawerAction }): JSX.Element => {
     return (
         <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
-            <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
-            <SelectedLocaleItem section={localeSectionData} openLanguageDrawer={props.openLanguageDrawer} />
-            <OtherLocales {...props} />
-        </View>
-    );
-};
-
-const OtherLocales = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
-    const localeSectionData = {
-        code: props.currentLocale,
-        label: localeCodeToLabel(props.currentLocale),
-        data: R.map(localeItemBuilder, props.otherLocales),
-    };
-    return (
-        <SectionList
-            keyExtractor={(item: LocaleWithLabel): string => item.code}
-            sections={[localeSectionData]}
-            renderItem={LocaleItem} />
-    );
-};
-
-const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
-    updateToken: () => void,
-    locale: LocaleWithLabel): LocaleListItem => (
-    {
-        ...locale,
-        onPress: (): void => {
-            setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
-            updateToken();
-        },
-    }
-),
-);
-
-const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
-    return (
-        <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>{sectionListLocaleItem.item.label}</Text>
-        </TouchableOpacity>
-    );
-};
-
-const SelectedLocaleItem = (props: {
-    readonly section: LocaleWithLabel & SectionBase<LocaleListItem>,
-    readonly openLanguageDrawer: () => OpenLanguageDrawerAction,
-}): JSX.Element => {
-    return (
-        <View key={props.section.code} style={[styles.localeListItem, { justifyContent: 'space-between' }]}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{props.section.label}</Text>
-            <TouchableOpacity onPress={props.openLanguageDrawer}>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
-            </TouchableOpacity>
+            <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
+            <View key={props.currentLocale} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{localeCodeToLabel(props.currentLocale)}</Text>
+                <TouchableOpacity onPress={props.openLanguageDrawer}>
+                    <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -272,15 +209,6 @@ const LogoItems = (props: { readonly currentRegion: RegionCode }): JSX.Element =
 const buildOnPressForURL = (url: string): () => void => (
     (): void => openURL(url)
 );
-
-const styles = StyleSheet.create({
-    localeListItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-        paddingLeft: 10,
-    },
-});
 
 const Divider = (): JSX.Element => (
     <View style={{ height: 1, backgroundColor: colors.grey }} />

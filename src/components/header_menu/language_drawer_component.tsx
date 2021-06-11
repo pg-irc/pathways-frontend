@@ -1,10 +1,10 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { View, Header, Title, Icon } from 'native-base';
-import { colors, textStyles } from '../../application/styles';
+import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { isAndroid } from '../../application/helpers/is_android';
-import { I18nManager, SectionList, Text, TouchableOpacity, StyleSheet, SectionBase } from 'react-native';
+import { I18nManager, SectionList, Text, TouchableOpacity, SectionBase } from 'react-native';
 import { CloseLanguageDrawerAction } from '../../stores/user_experience/actions';
 import { LocaleCode, localeCodeToLabel, LocaleWithLabel } from '../../application/locales';
 import { RegionCode } from '../../validation/region/types';
@@ -97,7 +97,7 @@ const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation:
 
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
-        <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
+        <TouchableOpacity key={sectionListLocaleItem.item.code} style={applicationStyles.listItem} onPress={sectionListLocaleItem.item.onPress}>
             <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
@@ -105,7 +105,7 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (
-        <View key={section.code} style={styles.localeListItem}>
+        <View key={section.code} style={applicationStyles.listItem}>
             <View style={{ marginLeft: 12, marginRight: 7 }}>
                 <Icon
                     name='check'
@@ -117,15 +117,6 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    localeListItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-        paddingLeft: 10,
-    },
-});
 
 const getViewBackgroundColorForPlatform = (): string => (
     isAndroid() ? colors.teal : colors.white

@@ -516,7 +516,13 @@ export const applicationStyles = StyleSheet.create({
         borderWidth: 2,
         height: 48,
         width: 232,
-    }
+    },
+    listItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingLeft: 10,
+    },
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
