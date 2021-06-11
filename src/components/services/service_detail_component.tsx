@@ -337,7 +337,7 @@ const AlternateName = (props: {readonly alternateName: string, readonly isFeedba
 };
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
-    <Text style={[markdownStyles.body, {paddingTop: 4}]}><Trans>(aka {props.alternateName})</Trans></Text>
+    <Text style={[markdownStyles.body, {paddingTop: 4}]}>(aka {props.alternateName})</Text>
 );
 const Organization = (props: {
     readonly history: History,
