@@ -25,7 +25,7 @@ import { memoryHistory } from '../../application';
 import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { RegionCode } from '../../validation/region/types';
 import { LanguageDrawerConnectedComponent } from '../header_menu/language_drawer_connected_component';
-import { RegionDrawerComponent } from '../header_menu/region_drawer_component';
+import { RegionDrawerConnectedComponent } from '../header_menu/region_drawer_connected_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -117,7 +117,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                     onClose={props.closeRegionDrawer}
                     open={props.isRegionDrawerVisible}
                     content={
-                        <RegionDrawerComponent />
+                        <RegionDrawerConnectedComponent />
                     }
                 >
                     <Drawer

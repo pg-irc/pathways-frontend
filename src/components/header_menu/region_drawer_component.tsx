@@ -6,8 +6,20 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { isAndroid } from '../../application/helpers/is_android';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { Trans } from '@lingui/react';
+import { CloseRegionDrawerAction } from '../../stores/user_experience/actions';
+import { RegionCode } from '../../validation/region/types';
 
-export const RegionDrawerComponent = (): JSX.Element => (
+export interface RegionDrawerProps {
+    readonly currentRegion: RegionCode;
+}
+
+export interface RegionDrawerActions {
+    readonly closeRegionDrawer: () => CloseRegionDrawerAction;
+}
+
+type Props = RegionDrawerProps & RegionDrawerActions;
+
+export const RegionDrawerComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
         <Header
             style={{
@@ -18,7 +30,7 @@ export const RegionDrawerComponent = (): JSX.Element => (
             }}
             androidStatusBarColor={colors.teal}
         >
-            <TouchableOpacity style={{ padding: 15 }} >
+            <TouchableOpacity onPress={props.closeRegionDrawer} style={{ padding: 15 }} >
                 <Icon name={I18nManager.isRTL ? 'arrow-forward' : 'arrow-back'} style={{ color: colors.white }} />
             </TouchableOpacity >
             <Title style={textStyles.headlineH3StyleWhiteCenter}><Trans>SELECT YOUR REGION</Trans></Title>
