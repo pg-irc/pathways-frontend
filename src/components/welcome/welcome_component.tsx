@@ -17,6 +17,7 @@ import * as constants from '../../application/constants';
 import { needsTextDirectionChange } from '../../application/locale_effects';
 import { buildDefaultState, reducer } from './reducer';
 import { SelectRegionLocaleAction } from './actions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
@@ -76,6 +77,10 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         dispatch={dispatch}
                     />
                 </Form>
+                <RegionPickerN
+                    state={selectedRegionState}
+                    dispatch={dispatch}
+                />
                 <View>
                     <StartButton
                         state={selectedRegionState}
@@ -155,4 +160,45 @@ const StartButton = (props: StartButtonProps): JSX.Element => {
         );
     }
     return <EmptyComponent />;
+};
+
+export interface RegionPickerProps {
+    readonly state: RegionLocaleState;
+    readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+}
+
+const RegionPickerN = (props: RegionPickerProps): JSX.Element => {
+    if (props.state.region) {
+        return (<EmptyComponent />);
+    }
+    return (
+        <View style={{width: '100%', alignItems: 'center', paddingTop: 16}}>
+            <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select province</Trans></Text>
+            <RegionButton
+                text={'British Columbia'}
+                setRegion= {(): void => {onRegionPicked(props.dispatch, RegionCode.BC); }}
+            />
+            <RegionButton
+                text={'Manitoba'}
+                setRegion= {(): void => {onRegionPicked(props.dispatch, RegionCode.MB); }}
+            />
+        </View>
+    );
+};
+
+const RegionButton = (props: {text: string, setRegion: () => void}): JSX.Element => {
+    return (
+        <View style={{width: '100%', paddingTop: 16}}>
+            <TouchableOpacity
+                onPress= {props.setRegion}
+                style= {[applicationStyles.tealButton, { marginHorizontal: 32, paddingVertical: 14}]}
+            >
+                <Text style={textStyles.button}>{props.text}</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+const onRegionPicked = (dispatch: Dispatch<SelectRegionLocaleAction>, region: RegionCode): void => {
+    return dispatch({ type: constants.SELECT_REGION, payload: { region } });
 };
