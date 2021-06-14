@@ -491,15 +491,17 @@ export const applicationStyles = StyleSheet.create({
     },
     pickerItem: {
         justifyContent: 'center',
-        marginVertical: 8,
+        marginVertical: 16,
         borderColor: 'transparent',
-        height: 48,
-        width: 232,
     },
     picker: {
         justifyContent: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.grey,
         borderRadius: 50,
+        borderColor: colors.teal,
+        borderWidth: 2,
+        height: 48,
+        width: 232,
     },
 });
 

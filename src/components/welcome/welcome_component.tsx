@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React, { Dispatch, useReducer } from 'react';
 import { Dimensions, Image, View } from 'react-native';
-import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
+import { Text, Form, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
@@ -67,7 +67,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                 <Text style={[textStyles.paragraphStyleBlackCenter, { marginVertical: 20 }]}>
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
-                <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
+                <Form style={{ justifyContent: 'center' }}>
                     {/* <RegionPicker
                         state={selectedRegionState}
                         dispatch={dispatch}
@@ -118,25 +118,29 @@ export interface PickerProps {
 
 const LocalePicker = (props: PickerProps): JSX.Element => {
     const placeholder = 'Select language';
-
+    if (!props.state.region) {
+        return <EmptyComponent />;
+    }
     return (
-        <Item style={applicationStyles.pickerItem}>
-            <Picker
-                mode='dropdown'
-                placeholder={placeholder}
-                selectedValue={props.state.locale}
-                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
-                style={applicationStyles.picker}
-                enabled={!!props.state.region}
-                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-            >
-                <Picker.Item key='' label={placeholder} value={placeholder} />
-                {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
-                    <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
-                ))}
-            </Picker>
-        </Item>
+        <View>
+            <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select language</Trans></Text>
+            <Item style={applicationStyles.pickerItem}>
+                <Picker
+                    mode='dropdown'
+                    placeholder={placeholder}
+                    selectedValue={props.state.locale}
+                    placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                    onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
+                    style={applicationStyles.picker}
+                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                >
+                    <Picker.Item key='' label={placeholder} value={placeholder} />
+                    {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
+                        <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
+                    ))}
+                </Picker>
+            </Item>
+        </View>
     );
 };
 
@@ -146,17 +150,14 @@ export interface StartButtonProps {
 }
 
 const StartButton = (props: StartButtonProps): JSX.Element => {
-    if (props.state) {
+    if (props.state.region && props.state.locale) {
         return (
-            <Button
-                full
-                onPress={(): void => props.onStartButtonPress()}
-                style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
+            <TouchableOpacity
+                onPress= {props.onStartButtonPress}
+                style= {[applicationStyles.tealButton, { paddingHorizontal: 45, paddingVertical: 14, marginTop: 8}]}
             >
-                <Text style={textStyles.button}>
-                    <Trans>Start</Trans>
-                </Text>
-            </Button>
+                <Text style={textStyles.button}><Trans>Start</Trans></Text>
+            </TouchableOpacity>
         );
     }
     return <EmptyComponent />;
