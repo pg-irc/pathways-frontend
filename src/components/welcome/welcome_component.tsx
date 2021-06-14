@@ -68,16 +68,16 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <RegionPicker
+                    {/* <RegionPicker
                         state={selectedRegionState}
                         dispatch={dispatch}
-                    />
+                    /> */}
                     <LocalePicker
                         state={selectedRegionState}
                         dispatch={dispatch}
                     />
                 </Form>
-                <RegionPickerN
+                <RegionSelectView
                     state={selectedRegionState}
                     dispatch={dispatch}
                 />
@@ -95,26 +95,26 @@ export interface PickerProps {
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
 }
 
-const RegionPicker = (props: PickerProps): JSX.Element => {
+// const RegionPicker = (props: PickerProps): JSX.Element => {
 
-    return (
-        <Item style={applicationStyles.pickerItem}>
-            <Picker
-                mode='dropdown'
-                placeholder='Select province'
-                selectedValue={props.state.region}
-                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={(region: RegionCode): void => props.dispatch({ type: constants.SELECT_REGION, payload: { region } })}
-                style={applicationStyles.picker}
-                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-            >
-                <Picker.Item key='' label='Select province' value={false} />
-                <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
-                <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
-            </Picker>
-        </Item >
-    );
-};
+//     return (
+//         <Item style={applicationStyles.pickerItem}>
+//             <Picker
+//                 mode='dropdown'
+//                 placeholder='Select province'
+//                 selectedValue={props.state.region}
+//                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+//                 onValueChange={(region: RegionCode): void => props.dispatch({ type: constants.SELECT_REGION, payload: { region } })}
+//                 style={applicationStyles.picker}
+//                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+//             >
+//                 <Picker.Item key='' label='Select province' value={false} />
+//                 <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
+//                 <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
+//             </Picker>
+//         </Item >
+//     );
+// };
 
 const LocalePicker = (props: PickerProps): JSX.Element => {
     const placeholder = 'Select language';
@@ -162,12 +162,12 @@ const StartButton = (props: StartButtonProps): JSX.Element => {
     return <EmptyComponent />;
 };
 
-export interface RegionPickerProps {
+export interface RegionSelectProps {
     readonly state: RegionLocaleState;
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
 }
 
-const RegionPickerN = (props: RegionPickerProps): JSX.Element => {
+const RegionSelectView = (props: RegionSelectProps): JSX.Element => {
     if (props.state.region) {
         return (<EmptyComponent />);
     }
