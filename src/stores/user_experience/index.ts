@@ -5,6 +5,7 @@ export interface UserExperienceStore {
     readonly bookmarksTab: BookmarksTab;
     readonly organizationTab: number;
     readonly headerMenu: HeaderMenu;
+    readonly regionDrawer: RegionDrawer;
     readonly languageDrawer: LanguageDrawer;
 }
 
@@ -20,6 +21,11 @@ export enum HeaderMenu {
     DisclaimerModalIsOpen,
 }
 
+export enum RegionDrawer {
+    RegionDrawerIsClosed,
+    RegionDrawerIsOpen,
+}
+
 export enum LanguageDrawer {
     LanguageDrawerIsClosed,
     LanguageDrawerIsOpen,
@@ -30,6 +36,7 @@ export const buildDefaultStore = (): UserExperienceStore => ({
     organizationTab: 0,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
     languageDrawer: LanguageDrawer.LanguageDrawerIsClosed,
+    regionDrawer: RegionDrawer.RegionDrawerIsClosed,
 });
 
 export const reducer = (store: UserExperienceStore = buildDefaultStore(), action?: UserExperienceAction): UserExperienceStore => {
@@ -46,6 +53,10 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return { ...store, languageDrawer: LanguageDrawer.LanguageDrawerIsOpen };
         case constants.CLOSE_LANGUAGE_DRAWER:
             return { ...store, languageDrawer: LanguageDrawer.LanguageDrawerIsClosed };
+        case constants.OPEN_REGION_DRAWER:
+            return { ...store, regionDrawer: RegionDrawer.RegionDrawerIsOpen };
+        case constants.CLOSE_REGION_DRAWER:
+            return { ...store, regionDrawer: RegionDrawer.RegionDrawerIsClosed };
         case constants.OPEN_HEADER_MENU:
         case constants.CLOSE_HEADER_MENU:
         case constants.CLOSE_ABOUT_MODAL:

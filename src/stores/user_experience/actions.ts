@@ -7,6 +7,8 @@ export type SaveBookmarksTabAction = Readonly<ReturnType<typeof saveBookmarksTab
 export type SaveOrganizationTabAction = Readonly<ReturnType<typeof saveOrganizationTab>>;
 export type CloseHeaderMenuAction = Readonly<ReturnType<typeof closeHeaderMenu>>;
 export type OpenHeaderMenuAction = Readonly<ReturnType<typeof openHeaderMenu>>;
+export type CloseRegionDrawerAction = Readonly<ReturnType<typeof closeRegionDrawer>>;
+export type OpenRegionDrawerAction = Readonly<ReturnType<typeof openRegionDrawer>>;
 export type CloseLanguageDrawerAction = Readonly<ReturnType<typeof closeLanguageDrawer>>;
 export type OpenLanguageDrawerAction = Readonly<ReturnType<typeof openLanguageDrawer>>;
 export type CloseAboutModalAction = Readonly<ReturnType<typeof closeAboutModal>>;
@@ -20,6 +22,8 @@ export type UserExperienceAction =
     CloseHeaderMenuAction |
     OpenHeaderMenuAction |
     CloseAboutModalAction |
+    CloseRegionDrawerAction |
+    OpenRegionDrawerAction |
     OpenLanguageDrawerAction |
     CloseLanguageDrawerAction |
     OpenAboutModalAction |
@@ -46,6 +50,16 @@ export const closeHeaderMenu = () => (
 // tslint:disable-next-line: typedef
 export const openHeaderMenu = () => (
     helpers.makeAction(constants.OPEN_HEADER_MENU)
+);
+
+// tslint:disable-next-line: typedef
+export const closeRegionDrawer = () => (
+    helpers.makeAction(constants.CLOSE_REGION_DRAWER)
+);
+
+// tslint:disable-next-line: typedef
+export const openRegionDrawer = () => (
+    helpers.makeAction(constants.OPEN_REGION_DRAWER)
 );
 
 // tslint:disable-next-line: typedef
