@@ -11,7 +11,7 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
-import { OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
+import { OpenLanguageDrawerAction, OpenRegionDrawerAction } from '../../stores/user_experience/actions';
 
 type OwnProps = {
     readonly history: History;
@@ -26,6 +26,7 @@ export interface HeaderMenuProps {
 }
 
 export interface HeaderMenuActions {
+    readonly openRegionDrawer: () => OpenRegionDrawerAction;
     readonly openLanguageDrawer: () => OpenLanguageDrawerAction;
 }
 
@@ -46,7 +47,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
-            <RegionSection currentRegion={props.currentRegion} />
+            <RegionSection currentRegion={props.currentRegion} openRegionDrawer={props.openRegionDrawer} />
             <LocaleSection currentLocale={props.currentLocale} openLanguageDrawer={props.openLanguageDrawer} />
             <Divider />
             <AboutSection {...props} />
@@ -80,13 +81,13 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
     </Text>
 );
 
-const RegionSection = (props: { readonly currentRegion: RegionCode }): JSX.Element => {
+const RegionSection = (props: { readonly currentRegion: RegionCode, readonly openRegionDrawer: () => OpenRegionDrawerAction }): JSX.Element => {
     return (
         <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
             <View key={props.currentRegion} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
                 <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{regionCodeToLabel(props.currentRegion)}</Text>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={props.openRegionDrawer}>
                     <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
                 </TouchableOpacity>
             </View>

@@ -4,14 +4,15 @@ import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './heade
 import { Store } from '../../stores';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { pickRegion } from '../../selectors/region/pick_region';
-import { openLanguageDrawer, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
+import { openLanguageDrawer, OpenLanguageDrawerAction, openRegionDrawer, OpenRegionDrawerAction } from '../../stores/user_experience/actions';
 
 const mapStateToProps = (store: Store): HeaderMenuProps => ({
     currentLocale: selectLocale(store),
     currentRegion: pickRegion(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<OpenLanguageDrawerAction>): HeaderMenuActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<OpenLanguageDrawerAction | OpenRegionDrawerAction>): HeaderMenuActions => ({
+    openRegionDrawer: (): OpenRegionDrawerAction => dispatch(openRegionDrawer()),
     openLanguageDrawer: (): OpenLanguageDrawerAction => dispatch(openLanguageDrawer()),
 });
 
