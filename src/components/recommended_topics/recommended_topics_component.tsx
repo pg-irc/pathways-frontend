@@ -14,6 +14,7 @@ import {
     CallToActionPartialSubComponent,
     AlertComponent,
 } from './call_to_action';
+import { ManitobaStartCard } from './manitoba_start_card';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
@@ -73,6 +74,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}
                 hideLinkAlerts={props.hideLinkAlerts} />
+            {props.region == 'mb' && <ManitobaStartCard />}
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :
