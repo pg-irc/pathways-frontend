@@ -133,7 +133,7 @@ const StartButton = (props: StartButtonProps): JSX.Element => {
                 onPress= {props.onStartButtonPress}
                 style= {[applicationStyles.tealButton, { paddingHorizontal: 45, paddingVertical: 14, marginTop: 8}]}
             >
-                <Text style={textStyles.button}><Trans>Start</Trans></Text>
+                <Text style={textStyles.welcomeButton}><Trans>Start</Trans></Text>
             </TouchableOpacity>
         );
     }
@@ -171,7 +171,7 @@ const RegionButton = (props: {text: string, setRegion: () => void}): JSX.Element
                 onPress= {props.setRegion}
                 style= {[applicationStyles.tealButton, {marginHorizontal: 32, paddingVertical: 14}]}
             >
-                <Text style={textStyles.button}>{props.text}</Text>
+                <Text style={textStyles.welcomeButton}>{props.text}</Text>
             </TouchableOpacity>
         </View>
     );

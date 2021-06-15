@@ -297,6 +297,13 @@ export const textStyles = StyleSheet.create({
         letterSpacing: buttonLetterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    welcomeButton: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: colors.white,
+        letterSpacing: buttonLetterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
     contentTitle: {
         fontSize: 22,
         textAlign: 'left',
@@ -491,16 +498,15 @@ export const applicationStyles = StyleSheet.create({
     },
     pickerItem: {
         justifyContent: 'center',
-        marginVertical: 16,
         borderColor: 'transparent',
-        width: 190,
+        width: 195,
     },
     picker: {
         justifyContent: 'center',
         backgroundColor: colors.white,
         borderRadius: 50,
-        height: 48,
-        width: 190,
+        height: 40,
+        width: 195,
     },
     pickerContainer: {
         justifyContent: 'center',
@@ -508,7 +514,7 @@ export const applicationStyles = StyleSheet.create({
         borderColor: colors.teal,
         borderRadius: 50,
         borderWidth: 2,
-        height: 64,
+        height: 48,
         width: 232,
     }
 });
