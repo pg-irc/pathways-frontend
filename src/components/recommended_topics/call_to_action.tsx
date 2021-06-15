@@ -23,105 +23,93 @@ type AlertProps = {
     readonly hideLinkAlerts: () => void;
 };
 
-export const AlertComponent = (props: AlertProps): JSX.Element => {
-    return (
-        <View>
-            <FlatList
-                style={{ paddingTop: 8 }}
-                data={props.alerts}
-                keyExtractor={(alert: Alert): string => alert.id}
-                ListEmptyComponent={EmptyComponent}
-                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item, props)} />
-        </View>
-    );
-};
+export const AlertComponent = (props: AlertProps): JSX.Element => (
+    <View>
+        <FlatList
+            style={{ paddingTop: 8 }}
+            data={props.alerts}
+            keyExtractor={(alert: Alert): string => alert.id}
+            ListEmptyComponent={EmptyComponent}
+            renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item, props)} />
+    </View>
+);
 
-const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
-    return (
-        <View style={[
-            applicationStyles.boxShadowBelow,
-            callToActionStyles.callToActionContainer,
-        ]}>
-            <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-                {alert.heading}
-            </Text>
-            <MarkdownComponent
-                showLinkAlerts={props.showLinkAlerts}
-                hideLinkAlerts={props.hideLinkAlerts}>
-                {alert.content}
-            </MarkdownComponent>
-        </View>
-    );
-};
+const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => (
+    <View style={[
+        applicationStyles.boxShadowBelow,
+        callToActionStyles.callToActionContainer,
+    ]}>
+        <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+            {alert.heading}
+        </Text>
+        <MarkdownComponent
+            showLinkAlerts={props.showLinkAlerts}
+            hideLinkAlerts={props.hideLinkAlerts}>
+            {alert.content}
+        </MarkdownComponent>
+    </View>
+);
 
-export const CallToActionFullComponent = (props: Props): JSX.Element => {
-    return (
-        <View style={[
-            applicationStyles.boxShadowBelow,
-            callToActionStyles.callToActionContainer,
-        ]}>
-            {props.region == 'bc'
-                ?
-                <BCFullComponentContent />
-                :
-                <MBFullComponentContent />
-            }
-            <FullComponentButton {...props} />
-        </View >
-    );
-};
+export const CallToActionFullComponent = (props: Props): JSX.Element => (
+    <View style={[
+        applicationStyles.boxShadowBelow,
+        callToActionStyles.callToActionContainer,
+    ]}>
+        {props.region == 'bc'
+            ? <BCFullComponentContent />
+            : <MBFullComponentContent />
+        }
+        <FullComponentButton {...props} />
+    </View >
+);
 
-const BCFullComponentContent = (): JSX.Element => {
-    return (
-        <View>
-            <View style={callToActionStyles.callToActionContent}>
-                <View style={callToActionStyles.callToActionUpperContent}>
-                    <Text style={[textStyles.headlineH5StyleBlackLeft, callToActionStyles.callToActionTitle]}>
-                        <Trans>GETTING STARTED</Trans>
-                    </Text>
-                    <Text style={textStyles.headlineH2StyleBlackLeft}>
-                        <Trans>Get information based on your needs</Trans>
-                    </Text>
-                </View>
-                <Image
-                    source={I18nManager.isRTL ? advisor_rtl : advisor}
-                    resizeMode='contain'
-                    style={callToActionStyles.advisorImage}
-                />
+const BCFullComponentContent = (): JSX.Element => (
+    <View>
+        <View style={callToActionStyles.callToActionContent}>
+            <View style={callToActionStyles.callToActionUpperContent}>
+                <Text style={[textStyles.headlineH5StyleBlackLeft, callToActionStyles.callToActionTitle]}>
+                    <Trans>GETTING STARTED</Trans>
+                </Text>
+                <Text style={textStyles.headlineH2StyleBlackLeft}>
+                    <Trans>Get information based on your needs</Trans>
+                </Text>
             </View>
-            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
-                <Trans>
-                    Answer a few questions about your situation to get personalized
-                    recommendations of topics and services to help you settle in British Columbia.
-                </Trans>
-            </Text>
+            <Image
+                source={I18nManager.isRTL ? advisor_rtl : advisor}
+                resizeMode='contain'
+                style={callToActionStyles.advisorImage}
+            />
         </View>
-    );
-};
+        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
+            <Trans>
+                Answer a few questions about your situation to get personalized
+                recommendations of topics and services to help you settle in British Columbia.
+            </Trans>
+        </Text>
+    </View>
+);
 
-const MBFullComponentContent = (): JSX.Element => {
-    return (
-        <View>
-            <View style={callToActionStyles.callToActionContent}>
-                <View style={callToActionStyles.callToActionUpperContent}>
-                    <Text style={textStyles.headlineH2StyleBlackLeft}>
-                        <Trans>Get important topics based on your needs</Trans>
-                    </Text>
-                </View>
-                <Image
-                    source={I18nManager.isRTL ? advisor_rtl : advisor}
-                    resizeMode='contain'
-                    style={callToActionStyles.advisorImage}
-                />
+const MBFullComponentContent = (): JSX.Element => (
+    <View>
+        <View style={callToActionStyles.callToActionContent}>
+            <View style={callToActionStyles.callToActionUpperContent}>
+                <Text style={textStyles.headlineH2StyleBlackLeft}>
+                    <Trans>Get important topics based on your needs</Trans>
+                </Text>
             </View>
-            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
-                <Trans>
-                    Answer some questions about your situation
-                </Trans>
-            </Text>
+            <Image
+                source={I18nManager.isRTL ? advisor_rtl : advisor}
+                resizeMode='contain'
+                style={callToActionStyles.advisorImage}
+            />
         </View>
-    );
-};
+        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
+            <Trans>
+                Answer some questions about your situation
+            </Trans>
+        </Text>
+    </View>
+);
 
 const FullComponentButton = (props: Props): JSX.Element => (
     <Button
@@ -178,27 +166,23 @@ export const CallToActionPartialComponent = (props: Props): JSX.Element => {
     );
 };
 
-export const CallToActionPartialSubComponent = (): JSX.Element => {
-    return (
-        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionPartialContent]}>
-            <Trans>
-                Based on your answers, we recommend these topics for you:
-            </Trans>
-        </Text>
-    );
-};
+export const CallToActionPartialSubComponent = (): JSX.Element => (
+    <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionPartialContent]}>
+        <Trans>
+            Based on your answers, we recommend these topics for you:
+        </Trans>
+    </Text>
+);
 
-const buildRecommendationContent = (rightColumnContent: JSX.Element): JSX.Element => {
-    return (
-        <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
-            <Image
-                source={recommendationBubble}
-                resizeMode='contain'
-                style={callToActionStyles.recommendationBubbleImage}
-            />
-            <View style={callToActionStyles.recommendationRightContent}>
-                {rightColumnContent}
-            </View>
+const buildRecommendationContent = (rightColumnContent: JSX.Element): JSX.Element => (
+    <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
+        <Image
+            source={recommendationBubble}
+            resizeMode='contain'
+            style={callToActionStyles.recommendationBubbleImage}
+        />
+        <View style={callToActionStyles.recommendationRightContent}>
+            {rightColumnContent}
         </View>
-    );
-};
+    </View>
+);
