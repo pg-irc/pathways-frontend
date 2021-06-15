@@ -502,6 +502,15 @@ export const applicationStyles = StyleSheet.create({
         height: 48,
         width: 190,
     },
+    pickerContainer: {
+        justifyContent: 'center',
+        marginVertical: 16,
+        borderColor: colors.teal,
+        borderRadius: 50,
+        borderWidth: 2,
+        height: 64,
+        width: 232,
+    }
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.

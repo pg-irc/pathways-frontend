@@ -99,15 +99,7 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
     return (
         <View>
             <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select language</Trans></Text>
-            <View style={{
-                justifyContent: 'center',
-                marginVertical: 16,
-                borderColor: colors.teal,
-                borderRadius: 50,
-                borderWidth: 2,
-                height: 64,
-                width: 232,
-            }}>
+            <View style={applicationStyles.pickerContainer}>
                 <Item style={applicationStyles.pickerItem}>
                     <Picker
                         mode='dropdown'
