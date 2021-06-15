@@ -110,7 +110,7 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
                         placeholder={placeholder}
                         selectedValue={props.state.locale}
                         placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                        onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
+                        onValueChange={(locale: string): void => onLocaleChange(props.dispatch, locale)}
                         style={applicationStyles.picker}
                         iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     >
@@ -123,6 +123,10 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
             </View>
         </View>
     );
+};
+
+const onLocaleChange = (dispatch: Dispatch<SelectRegionLocaleAction>, locale: string): void => {
+    dispatch({ type: constants.SELECT_LOCALE, payload: { locale } });
 };
 
 export interface StartButtonProps {
