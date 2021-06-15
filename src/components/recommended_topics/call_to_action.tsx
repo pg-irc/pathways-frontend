@@ -56,47 +56,23 @@ export const CallToActionFullComponent = (props: Props): JSX.Element => (
         applicationStyles.boxShadowBelow,
         callToActionStyles.callToActionContainer,
     ]}>
-        {props.region === RegionCode.BC
-            ? <BCFullComponentContent />
-            : <MBFullComponentContent />
-        }
+        <FullComponentContent />
         <FullComponentButton {...props} />
     </View >
 );
 
-const BCFullComponentContent = (): JSX.Element => (
+const FullComponentContent = (): JSX.Element => (
     <View>
         <View style={callToActionStyles.callToActionContent}>
-            <View style={callToActionStyles.callToActionUpperContent}>
-                <Text style={[textStyles.headlineH5StyleBlackLeft, callToActionStyles.callToActionTitle]}>
-                    <Trans>GETTING STARTED</Trans>
-                </Text>
-                <Text style={textStyles.headlineH2StyleBlackLeft}>
-                    <Trans>Get information based on your needs</Trans>
-                </Text>
-            </View>
-            <Image
-                source={I18nManager.isRTL ? advisor_rtl : advisor}
-                resizeMode='contain'
-                style={callToActionStyles.advisorImage}
-            />
-        </View>
-        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
-            <Trans>
-                Answer a few questions about your situation to get personalized
-                recommendations of topics and services to help you settle in British Columbia.
-            </Trans>
-        </Text>
-    </View>
-);
-
-const MBFullComponentContent = (): JSX.Element => (
-    <View>
-        <View style={callToActionStyles.callToActionContent}>
-            <View style={callToActionStyles.callToActionUpperContent}>
+            <View style={callToActionStyles.callToActionLeftContent}>
                 <Text style={textStyles.headlineH2StyleBlackLeft}>
                     <Trans>Get important topics based on your needs</Trans>
                 </Text>
+                <Text style={[textStyles.paragraphStyleBrown, { marginTop: 12 }]}>
+                    <Trans>
+                        Answer some questions about your situation
+                    </Trans>
+                </Text>
             </View>
             <Image
                 source={I18nManager.isRTL ? advisor_rtl : advisor}
@@ -104,11 +80,6 @@ const MBFullComponentContent = (): JSX.Element => (
                 style={callToActionStyles.advisorImage}
             />
         </View>
-        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
-            <Trans>
-                Answer some questions about your situation
-            </Trans>
-        </Text>
     </View>
 );
 
@@ -116,7 +87,7 @@ const FullComponentButton = (props: Props): JSX.Element => (
     <Button
         full
         onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
-        style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]}
+        style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { marginTop: 24 }]}
     >
         <Text style={textStyles.tealButton}>
             <Trans>Answer questions</Trans>

@@ -16,9 +16,14 @@ export const ManitobaStartCard = (): JSX.Element => (
             onPress={(): void => openURL('https://manitobastart.com/ ')}
         >
             <View style={callToActionStyles.callToActionContent}>
-                <View style={callToActionStyles.callToActionUpperContent}>
+                <View style={callToActionStyles.callToActionLeftContent}>
                     <Text style={textStyles.headlineH2StyleBlackLeft}>
                         <Trans>Visit Manitoba Start</Trans>
+                    </Text>
+                    <Text style={[textStyles.paragraphStyleBrown, { marginTop: 12 }]}>
+                        <Trans>
+                            Get trusted support from a settlement advisor
+                        </Trans>
                     </Text>
                 </View>
                 <Image
@@ -27,11 +32,6 @@ export const ManitobaStartCard = (): JSX.Element => (
                     style={callToActionStyles.advisorImage}
                 />
             </View>
-            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
-                <Trans>
-                    Get trusted support from a settlement advisor
-                </Trans>
-            </Text>
         </TouchableOpacity >
     </View>
 );
