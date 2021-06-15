@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React, { Dispatch, useReducer } from 'react';
-import { Dimensions, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Text, Form, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
@@ -59,8 +59,9 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     source={welcomeHeader}
                     resizeMode='contain'
                     style={{
-                        width: Dimensions.get('window').width,
-                        height: Dimensions.get('window').width * 34 / 36,
+                        width: '100%',
+                        height: undefined,
+                        aspectRatio: 36 / 34,
                         backgroundColor: '#e1f5ff',
                     }}
                 />
