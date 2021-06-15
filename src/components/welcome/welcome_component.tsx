@@ -99,10 +99,10 @@ export interface PickerProps {
 }
 
 const LocalePicker = (props: PickerProps): JSX.Element => {
-    const placeholder = 'Select language';
     if (!props.visible) {
         return <EmptyComponent />;
     }
+    const placeholder = 'Select language';
     return (
         <View>
             <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select language</Trans></Text>
