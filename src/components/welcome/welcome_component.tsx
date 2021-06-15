@@ -1,13 +1,13 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React, { Dispatch, useReducer } from 'react';
-import { Dimensions, Image, ImageBackground, View } from 'react-native';
-import { Text, Form, Button, Picker, Item, Icon } from 'native-base';
+import { Image, View } from 'react-native';
+import { Text, Form, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
-import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
+import { welcomeHeader } from '../../application/images';
 import { History } from 'history';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RegionCode, RegionLocaleState } from '../../validation/region/types';
@@ -17,6 +17,7 @@ import * as constants from '../../application/constants';
 import { needsTextDirectionChange } from '../../application/locale_effects';
 import { buildDefaultState, reducer } from './reducer';
 import { SelectRegionLocaleAction } from './actions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
@@ -33,8 +34,6 @@ export interface WelcomeActions {
 type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
-    const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-
     const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
         reducer, buildDefaultState(),
     );
@@ -49,136 +48,146 @@ export function WelcomeComponent(props: Props): JSX.Element {
         return goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     };
 
+    const backgroundImageDpDimensions: number = 36 / 34;
+
     return (
-        <ImageBackground
-            source={landingPhoto}
-            resizeMode={'stretch'}
-            style={{
-                width: '100%',
-                height: '100%',
-            }}
-        >
             <View style={{
-                flex: 1,
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
-                padding: 20,
+                flex: 1,
+                flexDirection: 'column',
             }}>
                 <Image
-                    source={arrivalAdvisorLogo}
-                    resizeMode={'contain'}
+                    source={welcomeHeader}
+                    resizeMode='contain'
                     style={{
-                        width: arrivalAdvisorLogoSize,
-                        height: arrivalAdvisorLogoSize,
-                        marginBottom: 20,
+                        width: '100%',
+                        height: undefined,
+                        aspectRatio: backgroundImageDpDimensions,
+                        backgroundColor: '#e1f5ff',
                     }}
                 />
-                <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 20 }]}>
+                <Text style={[textStyles.paragraphStyleBlackCenter, { marginTop: 20, marginBottom: 32 }]}>
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
-                <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <RegionPicker
-                        state={selectedRegionState}
-                        dispatch={dispatch}
-                    />
+                <Form style={{ justifyContent: 'center' }}>
                     <LocalePicker
                         state={selectedRegionState}
                         dispatch={dispatch}
+                        visible={selectedRegionState.region !== undefined}
                     />
                 </Form>
+                <RegionSelectView
+                    dispatch={dispatch}
+                    visible={selectedRegionState.region === undefined}
+                />
                 <View>
                     <StartButton
-                        state={selectedRegionState}
+                        visible={
+                            selectedRegionState.region !== undefined
+                            && selectedRegionState.locale !== undefined}
                         onStartButtonPress={onStartButtonPress} />
                 </View>
             </View>
-            <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
-                <Text style={textStyles.paragraphStyleWhiteleft}>
-                    <Trans>Created by</Trans>
-                </Text>
-                <Image
-                    source={peacegeeksLogo}
-                    resizeMode={'contain'}
-                    style={{
-                        height: 46,
-                        width: 96,
-                        marginTop: 10,
-                        marginBottom: 20,
-                    }}
-                />
-            </View>
-        </ImageBackground>
     );
 }
 
 export interface PickerProps {
     readonly state: RegionLocaleState;
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+    readonly visible: boolean;
 }
 
-const RegionPicker = (props: PickerProps): JSX.Element => {
-
+const LocalePicker = (props: PickerProps): JSX.Element => {
+    if (!props.visible) {
+        return <EmptyComponent />;
+    }
+    const placeholder = 'Select language';
     return (
-        <Item style={applicationStyles.pickerItem}>
-            <Picker
-                mode='dropdown'
-                placeholder='Select province'
-                selectedValue={props.state.region}
-                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={(region: RegionCode): void => props.dispatch({ type: constants.SELECT_REGION, payload: { region } })}
-                style={applicationStyles.picker}
-                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-            >
-                <Picker.Item key='' label='Select province' value={false} />
-                <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
-                <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
-            </Picker>
-        </Item >
+        <View>
+            <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select language</Trans></Text>
+            <View style={applicationStyles.pickerContainer}>
+                <Item style={applicationStyles.pickerItem}>
+                    <Picker
+                        mode='dropdown'
+                        placeholder={placeholder}
+                        selectedValue={props.state.locale}
+                        placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                        onValueChange={(locale: string): void => onLocaleChange(props.dispatch, locale)}
+                        style={applicationStyles.picker}
+                        iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                    >
+                        <Picker.Item key='' label={placeholder} value={placeholder} />
+                        {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
+                            <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
+                        ))}
+                    </Picker>
+                </Item>
+            </View>
+        </View>
     );
 };
 
-const LocalePicker = (props: PickerProps): JSX.Element => {
-    const placeholder = 'Select language';
-
-    return (
-        <Item style={applicationStyles.pickerItem}>
-            <Picker
-                mode='dropdown'
-                placeholder={placeholder}
-                selectedValue={props.state.locale}
-                placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
-                style={applicationStyles.picker}
-                enabled={!!props.state.region}
-                iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-            >
-                <Picker.Item key='' label={placeholder} value={placeholder} />
-                {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
-                    <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
-                ))}
-            </Picker>
-        </Item>
-    );
+const onLocaleChange = (dispatch: Dispatch<SelectRegionLocaleAction>, locale: string): void => {
+    dispatch({ type: constants.SELECT_LOCALE, payload: { locale } });
 };
 
 export interface StartButtonProps {
-    readonly state: RegionLocaleState;
+    readonly visible: boolean;
     readonly onStartButtonPress: () => void;
 }
 
 const StartButton = (props: StartButtonProps): JSX.Element => {
-    if (props.state) {
+    if (props.visible) {
         return (
-            <Button
-                full
-                onPress={(): void => props.onStartButtonPress()}
-                style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
+            <TouchableOpacity
+                onPress= {props.onStartButtonPress}
+                style= {[applicationStyles.tealButton, { paddingHorizontal: 45, paddingVertical: 14, marginTop: 8}]}
             >
-                <Text style={textStyles.button}>
-                    <Trans>Start</Trans>
-                </Text>
-            </Button>
+                <Text style={textStyles.welcomeButton}><Trans>Start</Trans></Text>
+            </TouchableOpacity>
         );
     }
     return <EmptyComponent />;
+};
+
+export interface RegionSelectProps {
+    readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+    readonly visible: boolean;
+}
+
+const RegionSelectView = (props: RegionSelectProps): JSX.Element => {
+    if (!props.visible) {
+        return (<EmptyComponent />);
+    }
+    return (
+        <View style={{width: '100%', alignItems: 'center'}}>
+            <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select province</Trans></Text>
+            <RegionButton
+                text={'British Columbia'}
+                setRegion= {(): void => {onRegionPicked(props.dispatch, RegionCode.BC); }}
+            />
+            <RegionButton
+                text={'Manitoba'}
+                setRegion= {(): void => {onRegionPicked(props.dispatch, RegionCode.MB); }}
+            />
+        </View>
+    );
+};
+
+const RegionButton = (props: {text: string, setRegion: () => void}): JSX.Element => {
+    return (
+        <View style={{width: '100%', marginTop: 16}}>
+            <TouchableOpacity
+                onPress= {props.setRegion}
+                style= {[applicationStyles.tealButton, {marginHorizontal: 32, paddingVertical: 14}]}
+            >
+                <Text style={textStyles.welcomeButton}>{props.text}</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+
+const onRegionPicked = (dispatch: Dispatch<SelectRegionLocaleAction>, region: RegionCode): void => {
+    return dispatch({ type: constants.SELECT_REGION, payload: { region } });
 };

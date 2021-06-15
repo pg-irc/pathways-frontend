@@ -247,11 +247,11 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
-    paragraphStyleWhiteCenter: {
+    paragraphStyleBlackCenter: {
         fontSize: 16,
         lineHeight: 21,
         textAlign: 'center',
-        color: colors.white,
+        color: colors.black,
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
@@ -294,6 +294,13 @@ export const textStyles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         color: colors.teal,
+        letterSpacing: buttonLetterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
+    welcomeButton: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: colors.white,
         letterSpacing: buttonLetterSpacing,
         ...getBoldFontStylesForOS(),
     },
@@ -491,16 +498,25 @@ export const applicationStyles = StyleSheet.create({
     },
     pickerItem: {
         justifyContent: 'center',
-        marginVertical: 8,
         borderColor: 'transparent',
-        height: 48,
-        width: 232,
+        width: 195,
     },
     picker: {
         justifyContent: 'center',
         backgroundColor: colors.white,
         borderRadius: 50,
+        height: 40,
+        width: 195,
     },
+    pickerContainer: {
+        justifyContent: 'center',
+        marginVertical: 16,
+        borderColor: colors.teal,
+        borderRadius: 50,
+        borderWidth: 2,
+        height: 48,
+        width: 232,
+    }
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
