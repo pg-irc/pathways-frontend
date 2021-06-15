@@ -71,15 +71,18 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <LocalePicker
                         state={selectedRegionState}
                         dispatch={dispatch}
+                        visible={selectedRegionState.region !== undefined}
                     />
                 </Form>
                 <RegionSelectView
-                    state={selectedRegionState}
                     dispatch={dispatch}
+                    visible={selectedRegionState.region === undefined}
                 />
                 <View>
                     <StartButton
-                        state={selectedRegionState}
+                        visible={
+                            selectedRegionState.region !== undefined
+                            && selectedRegionState.locale !== undefined}
                         onStartButtonPress={onStartButtonPress} />
                 </View>
             </View>
@@ -89,11 +92,12 @@ export function WelcomeComponent(props: Props): JSX.Element {
 export interface PickerProps {
     readonly state: RegionLocaleState;
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+    readonly visible: boolean;
 }
 
 const LocalePicker = (props: PickerProps): JSX.Element => {
     const placeholder = 'Select language';
-    if (!props.state.region) {
+    if (!props.visible) {
         return <EmptyComponent />;
     }
     return (
@@ -122,12 +126,12 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
 };
 
 export interface StartButtonProps {
-    readonly state: RegionLocaleState;
+    readonly visible: boolean;
     readonly onStartButtonPress: () => void;
 }
 
 const StartButton = (props: StartButtonProps): JSX.Element => {
-    if (props.state.region && props.state.locale) {
+    if (props.visible) {
         return (
             <TouchableOpacity
                 onPress= {props.onStartButtonPress}
@@ -141,12 +145,12 @@ const StartButton = (props: StartButtonProps): JSX.Element => {
 };
 
 export interface RegionSelectProps {
-    readonly state: RegionLocaleState;
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
+    readonly visible: boolean;
 }
 
 const RegionSelectView = (props: RegionSelectProps): JSX.Element => {
-    if (props.state.region) {
+    if (!props.visible) {
         return (<EmptyComponent />);
     }
     return (
