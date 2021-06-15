@@ -493,15 +493,14 @@ export const applicationStyles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 16,
         borderColor: 'transparent',
+        width: 190,
     },
     picker: {
         justifyContent: 'center',
-        backgroundColor: colors.grey,
+        backgroundColor: colors.white,
         borderRadius: 50,
-        borderColor: colors.teal,
-        borderWidth: 2,
         height: 48,
-        width: 232,
+        width: 190,
     },
 });
 

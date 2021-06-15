@@ -64,14 +64,10 @@ export function WelcomeComponent(props: Props): JSX.Element {
                         backgroundColor: '#e1f5ff',
                     }}
                 />
-                <Text style={[textStyles.paragraphStyleBlackCenter, { marginVertical: 20 }]}>
+                <Text style={[textStyles.paragraphStyleBlackCenter, { marginTop: 20, marginBottom: 32 }]}>
                     <Trans>Settling in Canada is now easier.</Trans>
                 </Text>
                 <Form style={{ justifyContent: 'center' }}>
-                    {/* <RegionPicker
-                        state={selectedRegionState}
-                        dispatch={dispatch}
-                    /> */}
                     <LocalePicker
                         state={selectedRegionState}
                         dispatch={dispatch}
@@ -95,27 +91,6 @@ export interface PickerProps {
     readonly dispatch: Dispatch<SelectRegionLocaleAction>;
 }
 
-// const RegionPicker = (props: PickerProps): JSX.Element => {
-
-//     return (
-//         <Item style={applicationStyles.pickerItem}>
-//             <Picker
-//                 mode='dropdown'
-//                 placeholder='Select province'
-//                 selectedValue={props.state.region}
-//                 placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-//                 onValueChange={(region: RegionCode): void => props.dispatch({ type: constants.SELECT_REGION, payload: { region } })}
-//                 style={applicationStyles.picker}
-//                 iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-//             >
-//                 <Picker.Item key='' label='Select province' value={false} />
-//                 <Picker.Item key='bc' label='British Columbia' value={RegionCode.BC} />
-//                 <Picker.Item key='mb' label='Manitoba' value={RegionCode.MB} />
-//             </Picker>
-//         </Item >
-//     );
-// };
-
 const LocalePicker = (props: PickerProps): JSX.Element => {
     const placeholder = 'Select language';
     if (!props.state.region) {
@@ -124,22 +99,32 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
     return (
         <View>
             <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select language</Trans></Text>
-            <Item style={applicationStyles.pickerItem}>
-                <Picker
-                    mode='dropdown'
-                    placeholder={placeholder}
-                    selectedValue={props.state.locale}
-                    placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
-                    onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
-                    style={applicationStyles.picker}
-                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                >
-                    <Picker.Item key='' label={placeholder} value={placeholder} />
-                    {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
-                        <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
-                    ))}
-                </Picker>
-            </Item>
+            <View style={{
+                justifyContent: 'center',
+                marginVertical: 16,
+                borderColor: colors.teal,
+                borderRadius: 50,
+                borderWidth: 2,
+                height: 64,
+                width: 232,
+            }}>
+                <Item style={applicationStyles.pickerItem}>
+                    <Picker
+                        mode='dropdown'
+                        placeholder={placeholder}
+                        selectedValue={props.state.locale}
+                        placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                        onValueChange={(locale: string): void => props.dispatch({ type: constants.SELECT_LOCALE, payload: { locale } })}
+                        style={applicationStyles.picker}
+                        iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                    >
+                        <Picker.Item key='' label={placeholder} value={placeholder} />
+                        {props.state.availableLocales.map((locale: LocaleWithLabel): JSX.Element => (
+                            <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
+                        ))}
+                    </Picker>
+                </Item>
+            </View>
         </View>
     );
 };
@@ -173,7 +158,7 @@ const RegionSelectView = (props: RegionSelectProps): JSX.Element => {
         return (<EmptyComponent />);
     }
     return (
-        <View style={{width: '100%', alignItems: 'center', paddingTop: 16}}>
+        <View style={{width: '100%', alignItems: 'center'}}>
             <Text style={textStyles.headlineH3StyleBlackCenter}><Trans>Select province</Trans></Text>
             <RegionButton
                 text={'British Columbia'}
@@ -189,10 +174,10 @@ const RegionSelectView = (props: RegionSelectProps): JSX.Element => {
 
 const RegionButton = (props: {text: string, setRegion: () => void}): JSX.Element => {
     return (
-        <View style={{width: '100%', paddingTop: 16}}>
+        <View style={{width: '100%', marginTop: 16}}>
             <TouchableOpacity
                 onPress= {props.setRegion}
-                style= {[applicationStyles.tealButton, { marginHorizontal: 32, paddingVertical: 14}]}
+                style= {[applicationStyles.tealButton, {marginHorizontal: 32, paddingVertical: 14}]}
             >
                 <Text style={textStyles.button}>{props.text}</Text>
             </TouchableOpacity>
