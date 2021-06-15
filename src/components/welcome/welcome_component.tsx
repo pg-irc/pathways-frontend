@@ -48,6 +48,8 @@ export function WelcomeComponent(props: Props): JSX.Element {
         return goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     };
 
+    const backgroundImageDpDimensions: number = 36 / 34;
+
     return (
             <View style={{
                 justifyContent: 'flex-start',
@@ -61,7 +63,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     style={{
                         width: '100%',
                         height: undefined,
-                        aspectRatio: 36 / 34,
+                        aspectRatio: backgroundImageDpDimensions,
                         backgroundColor: '#e1f5ff',
                     }}
                 />
