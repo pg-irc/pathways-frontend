@@ -11,10 +11,11 @@ import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
 import { Alert } from '../../validation/content/types';
+import { RegionCode } from '../../validation/region/types';
 
 type Props = {
-    readonly history: History
-    readonly region: String
+    readonly history: History;
+    readonly region: RegionCode;
 };
 
 type AlertProps = {
@@ -55,7 +56,7 @@ export const CallToActionFullComponent = (props: Props): JSX.Element => (
         applicationStyles.boxShadowBelow,
         callToActionStyles.callToActionContainer,
     ]}>
-        {props.region == 'bc'
+        {props.region === RegionCode.BC
             ? <BCFullComponentContent />
             : <MBFullComponentContent />
         }

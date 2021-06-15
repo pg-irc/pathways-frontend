@@ -74,7 +74,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}
                 hideLinkAlerts={props.hideLinkAlerts} />
-            {props.region == 'mb' && <ManitobaStartCard />}
+            {props.region === 'mb' && <ManitobaStartCard />}
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :
