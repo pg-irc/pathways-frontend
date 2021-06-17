@@ -95,13 +95,11 @@ const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation:
 ),
 );
 
-const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
-    return (
-        <TouchableOpacity key={sectionListLocaleItem.item.code} style={applicationStyles.listItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
-        </TouchableOpacity>
-    );
-};
+const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => (
+    <TouchableOpacity key={sectionListLocaleItem.item.code} style={applicationStyles.listItem} onPress={sectionListLocaleItem.item.onPress}>
+        <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
+    </TouchableOpacity>
+);
 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (

@@ -47,8 +47,16 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
-            <RegionSection currentRegion={props.currentRegion} openRegionDrawer={props.openRegionDrawer} />
-            <LocaleSection currentLocale={props.currentLocale} openLanguageDrawer={props.openLanguageDrawer} />
+            <CurrentItem
+                currentCode={props.currentRegion}
+                translatedTitle={<Trans>SELECT YOUR PROVINCE</Trans>}
+                openDrawer={props.openRegionDrawer}
+                getLabelFromCode={regionCodeToLabel} />
+            <CurrentItem
+                currentCode={props.currentLocale}
+                translatedTitle={<Trans>SELECT YOUR LANGUAGE</Trans>}
+                openDrawer={props.openLanguageDrawer}
+                getLabelFromCode={localeCodeToLabel} />
             <Divider />
             <AboutSection {...props} />
             <Divider />
@@ -81,27 +89,18 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
     </Text>
 );
 
-const RegionSection = (props: { readonly currentRegion: RegionCode, readonly openRegionDrawer: () => OpenRegionDrawerAction }): JSX.Element => {
+const CurrentItem = (props: {
+    readonly currentCode: RegionCode | LocaleCode,
+    readonly translatedTitle: JSX.Element,
+    readonly openDrawer: () => OpenRegionDrawerAction | OpenLanguageDrawerAction,
+    readonly getLabelFromCode: (code: string) => string,
+}): JSX.Element => {
     return (
         <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
-            <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
-            <View key={props.currentRegion} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{regionCodeToLabel(props.currentRegion)}</Text>
-                <TouchableOpacity onPress={props.openRegionDrawer}>
-                    <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-};
-
-const LocaleSection = (props: { readonly currentLocale: LocaleCode, readonly openLanguageDrawer: () => OpenLanguageDrawerAction }): JSX.Element => {
-    return (
-        <View style={{ backgroundColor: colors.white, marginHorizontal: 10 }}>
-            <MenuSectionTitle title={<Trans>SELECT YOUR PROVINCE</Trans>} />
-            <View key={props.currentLocale} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{localeCodeToLabel(props.currentLocale)}</Text>
-                <TouchableOpacity onPress={props.openLanguageDrawer}>
+            <MenuSectionTitle title={props.translatedTitle} />
+            <View key={props.currentCode} style={[applicationStyles.listItem, { justifyContent: 'space-between' }]}>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{props.getLabelFromCode(props.currentCode)}</Text>
+                <TouchableOpacity onPress={props.openDrawer}>
                     <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', color: colors.teal }]}><Trans>Change</Trans></Text>
                 </TouchableOpacity>
             </View>

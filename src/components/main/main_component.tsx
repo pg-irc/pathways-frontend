@@ -108,17 +108,13 @@ export const MainComponent = (props: Props): JSX.Element => {
                 side='right'
                 onClose={props.closeLanguageDrawer}
                 open={props.isLanguageDrawerVisible}
-                content={
-                    <LanguageDrawerConnectedComponent />
-                }
+                content={<LanguageDrawerConnectedComponent />}
             >
                 <Drawer
                     side='right'
                     onClose={props.closeRegionDrawer}
                     open={props.isRegionDrawerVisible}
-                    content={
-                        <RegionDrawerConnectedComponent />
-                    }
+                    content={<RegionDrawerConnectedComponent />}
                 >
                     <Drawer
                         side='right'

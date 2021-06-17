@@ -24,8 +24,8 @@ import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_s
 import { close as backOutOfFeedbackScreen, CloseAction, BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
 import { openDiscardChangesModal, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { pickRegion } from '../../selectors/region/pick_region';
-import { selectIsLanguageDrawerVisible } from '../../selectors/user_experience/select_is_language_drawer_visible';
-import { selectIsRegionDrawerVisible } from '../../selectors/user_experience/select_is_region_drawer_visible';
+import { selectIsLanguageDrawerOpen } from '../../selectors/user_experience/select_is_language_drawer_visible';
+import { selectIsRegionDrawerOpen } from '../../selectors/user_experience/select_is_region_drawer_visible';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -44,8 +44,8 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     localeIsSet: selectIsLocaleSet(store),
     showOnboarding: selectShowOnboarding(store),
     isHeaderMenuVisible: selectIsHeaderMenuVisible(store),
-    isRegionDrawerVisible: selectIsRegionDrawerVisible(store),
-    isLanguageDrawerVisible: selectIsLanguageDrawerVisible(store),
+    isRegionDrawerVisible: selectIsRegionDrawerOpen(store),
+    isLanguageDrawerVisible: selectIsLanguageDrawerOpen(store),
     isAboutModalVisible: selectIsAboutModalVisible(store),
     isDisclaimerModalVisible: selectIsDisclaimerModalVisible(store),
     feedbackScreen: selectFeedbackScreen(store),
