@@ -59,9 +59,19 @@ export const LanguageDrawerComponent = (props: Props): JSX.Element => (
             </TouchableOpacity >
             <Title style={textStyles.headlineH3StyleWhiteCenter}><Trans>SELECT YOUR LANGUAGE</Trans></Title>
         </Header>
-        <LocaleSection {...props} />
+        <View padder>
+            <LanguageAvailabilityDisclaimer region={props.currentRegion} />
+            <LocaleSection {...props} />
+        </View>
     </View>
 );
+
+const LanguageAvailabilityDisclaimer = (props: { readonly region: RegionCode }): JSX.Element => {
+    const translatedDisclaimer = props.region === RegionCode.MB ?
+        <Trans>Information about Manitoba is available in the following languages:</Trans> :
+        <Trans>Information about British Columbia is available in the following languages:</Trans>;
+    return <Text style={textStyles.paragraphStyleBrown}>{translatedDisclaimer}</Text>;
+};
 
 const LocaleSection = (props: Props): JSX.Element => {
     const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
