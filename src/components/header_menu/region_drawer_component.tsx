@@ -3,11 +3,13 @@ import React from 'react';
 import { View, Header, Title, Icon, Text } from 'native-base';
 import { applicationStyles, colors, getViewBackgroundColorForPlatform, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { I18nManager, TouchableOpacity } from 'react-native';
+import { Alert, AlertButton, I18nManager, TouchableOpacity } from 'react-native';
 import { Trans } from '@lingui/react';
-import { CloseRegionDrawerAction } from '../../stores/user_experience/actions';
+import { CloseRegionDrawerAction, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
+import * as R from 'ramda';
+import { ReactI18n } from '../../application/locales';
 
 export interface RegionDrawerProps {
     readonly currentRegion: RegionCode;
@@ -74,3 +76,20 @@ const OtherRegion = (props: { readonly region: RegionCode, readonly saveRegion: 
         <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{regionCodeToLabel(props.region)}</Text>
     </TouchableOpacity>
 );
+
+const unsupportedLanguageAlert = (i18n: ReactI18n, openLanguageDrawer: () => OpenLanguageDrawerAction): void => {
+    const _ = i18n._.bind(i18n);
+    const heading = 'Language not available';
+    const message = 'Information about Manitoba is only available in English and French';
+    const cancelOption = 'Cancel';
+    const languageOption = 'Select language';
+    // tslint:disable-next-line: readonly-array
+    const buttons: AlertButton[] = [
+        { text: _(cancelOption), style: 'cancel' },
+        { text: _(languageOption), onPress: (): OpenLanguageDrawerAction => openLanguageDrawer() },
+    ];
+    // tslint:disable-next-line:no-expression-statement
+    Alert.alert(_(heading), _(message),
+        I18nManager.isRTL ? R.reverse(buttons) : buttons,
+    );
+};
