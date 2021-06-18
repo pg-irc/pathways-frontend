@@ -1,9 +1,8 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { View, Header, Title, Icon, Text } from 'native-base';
-import { applicationStyles, colors, textStyles } from '../../application/styles';
+import { applicationStyles, colors, getViewBackgroundColorForPlatform, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { isAndroid } from '../../application/helpers/is_android';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { Trans } from '@lingui/react';
 import { CloseRegionDrawerAction } from '../../stores/user_experience/actions';
@@ -74,8 +73,4 @@ const OtherRegion = (props: { readonly region: RegionCode, readonly saveRegion: 
     <TouchableOpacity key={props.region} style={applicationStyles.listItem} onPress={(): SaveRegionAction => props.saveRegion(props.region)}>
         <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{regionCodeToLabel(props.region)}</Text>
     </TouchableOpacity>
-);
-
-const getViewBackgroundColorForPlatform = (): string => (
-    isAndroid() ? colors.teal : colors.white
 );

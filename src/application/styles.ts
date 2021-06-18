@@ -85,6 +85,10 @@ export const getTextAlignForLanguage = (): TextStyle => (
     { textAlign: I18nManager.isRTL ? 'right' : 'left' }
 );
 
+export const getViewBackgroundColorForPlatform = (): string => (
+    isAndroid() ? colors.teal : colors.white
+);
+
 export const textStyles = StyleSheet.create({
     headline6: {
         fontSize: 16,

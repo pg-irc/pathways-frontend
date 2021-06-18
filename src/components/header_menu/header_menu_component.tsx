@@ -5,11 +5,10 @@ import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleCode, localeCodeToLabel } from '../../application/locales';
 import { Content, View, Icon, Header, Title } from 'native-base';
-import { colors, textStyles, applicationStyles } from '../../application/styles';
+import { colors, textStyles, applicationStyles, getViewBackgroundColorForPlatform } from '../../application/styles';
 import { openURL } from '../link/link_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo, peacegeeksColorLogo, mb211Logo, mbStartLogo, bc211Logo, welcomeBCLogo } from '../../application/images';
-import { isAndroid } from '../../application/helpers/is_android';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
 import { OpenLanguageDrawerAction, OpenRegionDrawerAction } from '../../stores/user_experience/actions';
 
@@ -63,10 +62,6 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
             <LogoSection currentRegion={props.currentRegion} />
         </Content>
     </View>
-);
-
-const getViewBackgroundColorForPlatform = (): string => (
-    isAndroid() ? colors.teal : colors.white
 );
 
 type LocaleListItem = {
