@@ -23,7 +23,9 @@ export const notificationListener = R.curry((history: History, notification: any
 });
 
 // tslint:disable-next-line:no-any
-const getValidRouteFromNotificationPayload = (data: any): string | undefined => {
+const getValidRouteFromNotificationPayload = (notification: any): string | undefined => {
+    // tslint:disable-next-line:no-string-literal
+    const data = notification['notification']['request']['content']['data'];
     const ajv = new Ajv();
     const isValid = ajv.validate(notificationPayloadSchema, data) as boolean;
 
@@ -32,7 +34,7 @@ const getValidRouteFromNotificationPayload = (data: any): string | undefined => 
     }
 
     // tslint:disable-next-line:no-string-literal
-    const url = data['data']['navigateToRoute'];
+    const url = data['navigateToRoute'];
 
     const validTopicUrlRegEx = /^\/task\/[a-z0-9\-]+$/;
     if (url === 'store' || url === 'welcome' || validTopicUrlRegEx.test(url)) {
@@ -45,13 +47,9 @@ const getValidRouteFromNotificationPayload = (data: any): string | undefined => 
 const notificationPayloadSchema = {
     'type': 'object',
     'properties': {
-        'data': {
-            'type': 'object',
-            'properties': {
-                'navigateToRoute': {
-                    'type': 'string',
-                },
-            },
+        'navigateToRoute': {
+            'type': 'string',
         },
     },
+    'required': ['navigateToRoute'],
 };
