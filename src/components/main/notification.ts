@@ -23,9 +23,7 @@ export const notificationListener = R.curry((history: History, notification: any
 });
 
 // tslint:disable-next-line:no-any
-const getValidRouteFromNotificationPayload = (notification: any): string | undefined => {
-    // tslint:disable-next-line:no-string-literal
-    const data = notification['notification']['request']['content']['data'];
+const getValidRouteFromNotificationPayload = (data: any): string | undefined => {
     const ajv = new Ajv();
     const isValid = ajv.validate(notificationPayloadSchema, data) as boolean;
 
@@ -33,8 +31,7 @@ const getValidRouteFromNotificationPayload = (notification: any): string | undef
         return undefined;
     }
 
-    // tslint:disable-next-line:no-string-literal
-    const url = data['navigateToRoute'];
+    const url = data.notification.request.content.data.navigateToRoute;
 
     const validTopicUrlRegEx = /^\/task\/[a-z0-9\-]+$/;
     if (url === 'store' || url === 'welcome' || validTopicUrlRegEx.test(url)) {
@@ -47,9 +44,29 @@ const getValidRouteFromNotificationPayload = (notification: any): string | undef
 const notificationPayloadSchema = {
     'type': 'object',
     'properties': {
-        'navigateToRoute': {
-            'type': 'string',
+        'notification': {
+            'type': 'object',
+            'properties': {
+                'request': {
+                    'type': 'object',
+                    'properties': {
+                        'content': {
+                            'type': 'object',
+                            'properties': {
+                                'data': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'navigateToRoute': {
+                                            'type': 'string',
+                                        },
+                                    },
+                                    'required': ['navigateToRoute'],
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         },
     },
-    'required': ['navigateToRoute'],
 };
