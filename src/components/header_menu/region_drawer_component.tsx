@@ -20,7 +20,7 @@ export interface RegionDrawerProps {
 
 export interface RegionDrawerActions {
     readonly closeRegionDrawer: () => CloseRegionDrawerAction;
-    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
+    readonly saveLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
     readonly saveRegion: (region: RegionCode) => SaveRegionAction;
 }
 
@@ -100,7 +100,7 @@ const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.E
     };
     const onRegionPress = (i18nRenderProp: ReactI18nRenderProp): void => {
         if (props.otherRegion === RegionCode.MB && props.currentLocale !== defaultLocale) {
-            unsupportedLanguageAlert(i18nRenderProp.i18n, props.setLocale);
+            unsupportedLanguageAlert(i18nRenderProp.i18n, props.saveLocale);
         } else {
             props.saveRegion(props.otherRegion);
         }

@@ -17,7 +17,7 @@ const mapStateToProps = (store: Store): RegionDrawerProps => ({
 type Actions = CloseRegionDrawerAction | SaveRegionAction | OpenLanguageDrawerAction | SaveLocaleRequestAction;
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): RegionDrawerActions => ({
     closeRegionDrawer: (): CloseRegionDrawerAction => dispatch(closeRegionDrawer()),
-    setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
+    saveLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
     saveRegion: (regionCode: RegionCode): SaveRegionAction => (
         dispatch(saveRegion(regionCode))
     ),

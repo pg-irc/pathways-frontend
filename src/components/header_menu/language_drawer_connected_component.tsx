@@ -24,7 +24,7 @@ const mapStateToProps = (store: Store): LanguageDrawerProps => ({
 
 type Actions = CloseLanguageDrawerAction | SaveLocaleRequestAction | PushNotificationTokenRequestAction;
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): LanguageDrawerActions => ({
-    setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
+    saveLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
     updateNotificationToken: (): PushNotificationTokenRequestAction => dispatch(pushNotificationTokenRequest()),
     closeLanguageDrawer: (): CloseLanguageDrawerAction => dispatch(closeLanguageDrawer()),
 });

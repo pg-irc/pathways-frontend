@@ -18,7 +18,7 @@ export interface LanguageDrawerProps {
 }
 
 export interface LanguageDrawerActions {
-    readonly setLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
+    readonly saveLocale: (locale: LocaleCode, flipOrientation: boolean) => void;
     readonly updateNotificationToken: () => void;
     readonly closeLanguageDrawer: () => CloseLanguageDrawerAction;
 }
@@ -73,7 +73,7 @@ const LanguageAvailabilityDisclaimer = (props: { readonly region: RegionCode }):
 };
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken, props.closeLanguageDrawer);
+    const localeItemBuilder = createLocaleItem(props.saveLocale, props.updateNotificationToken, props.closeLanguageDrawer);
     const localeSectionData = {
         code: props.currentLocale,
         label: localeCodeToLabel(props.currentLocale),
