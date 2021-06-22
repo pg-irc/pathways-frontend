@@ -73,7 +73,7 @@ const LanguageAvailabilityDisclaimer = (props: { readonly region: RegionCode }):
 };
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken);
+    const localeItemBuilder = createLocaleItem(props.setLocale, props.updateNotificationToken, props.closeLanguageDrawer);
     const localeSectionData = {
         code: props.currentLocale,
         label: localeCodeToLabel(props.currentLocale),
@@ -93,12 +93,14 @@ const LocaleSection = (props: Props): JSX.Element => {
 
 const createLocaleItem = R.curry((setLocale: (code: LocaleCode, flipOrientation: boolean) => void,
     updateToken: () => void,
+    closeLanguageDrawer: () => CloseLanguageDrawerAction,
     locale: LocaleWithLabel): LocaleListItem => (
     {
         ...locale,
         onPress: (): void => {
             setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
             updateToken();
+            closeLanguageDrawer();
         },
     }
 ),
