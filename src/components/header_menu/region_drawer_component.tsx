@@ -9,10 +9,11 @@ import { CloseRegionDrawerAction, OpenLanguageDrawerAction } from '../../stores/
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
 import * as R from 'ramda';
-import { ReactI18n, ReactI18nRenderProp } from '../../application/locales';
+import { LocaleCode, ReactI18n, ReactI18nRenderProp } from '../../application/locales';
 
 export interface RegionDrawerProps {
-    readonly region: RegionCode;
+    readonly currentLocale: LocaleCode;
+    readonly currentRegion: RegionCode;
 }
 
 export interface RegionDrawerActions {
@@ -44,10 +45,10 @@ export const RegionDrawerComponent = (props: Props): JSX.Element => (
 );
 
 const RegionSection = (props: Props): JSX.Element => {
-    const otherRegion = props.region === RegionCode.BC ? RegionCode.MB : RegionCode.BC;
+    const otherRegion = props.currentRegion === RegionCode.BC ? RegionCode.MB : RegionCode.BC;
     return (
         <View>
-            <SelectedRegionItem currentRegion={props.region} />
+            <SelectedRegionItem currentRegion={props.currentRegion} />
             <OtherRegion
                 otherRegion={otherRegion}
                 {...props} />
@@ -74,9 +75,9 @@ const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.E
     const unsupportedLanguageAlert = (i18n: ReactI18n, openLanguageDrawer: () => OpenLanguageDrawerAction): void => {
         const _ = i18n._.bind(i18n);
         const heading = 'Language not available';
-        const message = 'Information about Manitoba is only available in English and French';
+        const message = 'Information about Manitoba is only available in English';
         const cancelOption = 'Cancel';
-        const languageOption = 'Select language';
+        const languageOption = 'Continue';
         // tslint:disable-next-line: readonly-array
         const buttons: AlertButton[] = [
             { text: _(cancelOption), style: 'cancel' },
@@ -87,11 +88,18 @@ const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.E
             I18nManager.isRTL ? R.reverse(buttons) : buttons,
         );
     };
+    const onRegionPress = (i18nRenderProp: ReactI18nRenderProp): void => {
+        if (props.otherRegion === RegionCode.MB && props.currentLocale !== 'en') {
+            unsupportedLanguageAlert(i18nRenderProp.i18n, props.openLanguageDrawer);
+        } else {
+            props.saveRegion(props.otherRegion);
+        }
+    };
 
     return (
         <I18n>
             {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                <TouchableOpacity key={props.otherRegion} style={applicationStyles.listItem} onPress={(): void => unsupportedLanguageAlert(i18nRenderProp.i18n, props.openLanguageDrawer)}>
+                <TouchableOpacity key={props.otherRegion} style={applicationStyles.listItem} onPress={(): void => onRegionPress(i18nRenderProp)}>
                     <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{regionCodeToLabel(props.otherRegion)}</Text>
                 </TouchableOpacity>
             )}
