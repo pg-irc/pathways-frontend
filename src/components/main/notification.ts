@@ -24,7 +24,7 @@ export const notificationListener = R.curry((history: History, notification: any
 
 // tslint:disable-next-line:no-any
 const getValidRouteFromNotificationPayload = (data: any): string | undefined => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(notificationPayloadSchema, data) as boolean;
 
     if (!isValid) {
