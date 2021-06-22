@@ -5,11 +5,13 @@ import { applicationStyles, colors, getViewBackgroundColorForPlatform, textStyle
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { Alert, AlertButton, I18nManager, TouchableOpacity } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
-import { CloseRegionDrawerAction, OpenLanguageDrawerAction } from '../../stores/user_experience/actions';
+import { CloseRegionDrawerAction } from '../../stores/user_experience/actions';
 import { RegionCode, regionCodeToLabel } from '../../validation/region/types';
 import { SaveRegionAction } from '../../stores/user_profile';
 import * as R from 'ramda';
 import { LocaleCode, ReactI18n, ReactI18nRenderProp } from '../../application/locales';
+import { SaveLocaleRequestAction } from '../../stores/locale/actions';
+import { isRTL } from '../../application/locale_effects';
 
 export interface RegionDrawerProps {
     readonly currentLocale: LocaleCode;
@@ -18,7 +20,7 @@ export interface RegionDrawerProps {
 
 export interface RegionDrawerActions {
     readonly closeRegionDrawer: () => CloseRegionDrawerAction;
-    readonly openLanguageDrawer: () => OpenLanguageDrawerAction;
+    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
     readonly saveRegion: (region: RegionCode) => SaveRegionAction;
 }
 
@@ -72,7 +74,15 @@ const SelectedRegionItem = (props: { readonly currentRegion: RegionCode }): JSX.
 );
 
 const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.Element => {
-    const unsupportedLanguageAlert = (i18n: ReactI18n, openLanguageDrawer: () => OpenLanguageDrawerAction): void => {
+    const defaultLocale = 'en';
+    const unsupportedLanguageAlert = (i18n: ReactI18n,
+        setLocale: (locale: LocaleCode, flipOrientation: boolean) => SaveLocaleRequestAction): void => {
+
+        const onContinue = (): void => {
+            setLocale(defaultLocale, I18nManager.isRTL !== isRTL(defaultLocale));
+            props.saveRegion(props.otherRegion);
+        };
+
         const _ = i18n._.bind(i18n);
         const heading = 'Language not available';
         const message = 'Information about Manitoba is only available in English';
@@ -81,7 +91,7 @@ const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.E
         // tslint:disable-next-line: readonly-array
         const buttons: AlertButton[] = [
             { text: _(cancelOption), style: 'cancel' },
-            { text: _(languageOption), onPress: (): OpenLanguageDrawerAction => openLanguageDrawer() },
+            { text: _(languageOption), onPress: (): void => onContinue() },
         ];
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),
@@ -89,11 +99,12 @@ const OtherRegion = (props: Props & { readonly otherRegion: RegionCode }): JSX.E
         );
     };
     const onRegionPress = (i18nRenderProp: ReactI18nRenderProp): void => {
-        if (props.otherRegion === RegionCode.MB && props.currentLocale !== 'en') {
-            unsupportedLanguageAlert(i18nRenderProp.i18n, props.openLanguageDrawer);
+        if (props.otherRegion === RegionCode.MB && props.currentLocale !== defaultLocale) {
+            unsupportedLanguageAlert(i18nRenderProp.i18n, props.setLocale);
         } else {
             props.saveRegion(props.otherRegion);
         }
+        props.closeRegionDrawer();
     };
 
     return (
