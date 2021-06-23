@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { View, Header, Title, Icon } from 'native-base';
-import { colors, textStyles, applicationStyles, getViewBackgroundColorForPlatform } from '../../application/styles';
+import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { I18nManager, SectionList, Text, TouchableOpacity, SectionBase } from 'react-native';
 import { CloseLanguageDrawerAction } from '../../stores/user_experience/actions';
@@ -43,7 +43,7 @@ export interface SectionListItemInfo {
 type Props = LanguageDrawerActions & LanguageDrawerProps;
 
 export const LanguageDrawerComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
         <Header
             style={{
                 backgroundColor: colors.lightTeal,

@@ -18,9 +18,7 @@ type Actions = CloseRegionDrawerAction | SaveRegionAction | OpenLanguageDrawerAc
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): RegionDrawerActions => ({
     closeRegionDrawer: (): CloseRegionDrawerAction => dispatch(closeRegionDrawer()),
     saveLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
-    saveRegion: (regionCode: RegionCode): SaveRegionAction => (
-        dispatch(saveRegion(regionCode))
-    ),
+    saveRegion: (regionCode: RegionCode): SaveRegionAction => (dispatch(saveRegion(regionCode))),
 });
 
 export const RegionDrawerConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(RegionDrawerComponent);

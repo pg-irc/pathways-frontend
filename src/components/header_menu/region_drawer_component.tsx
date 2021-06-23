@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { View, Header, Title, Icon, Text } from 'native-base';
-import { applicationStyles, colors, getViewBackgroundColorForPlatform, textStyles } from '../../application/styles';
+import { applicationStyles, colors, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { Alert, AlertButton, I18nManager, TouchableOpacity } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
@@ -27,7 +27,7 @@ export interface RegionDrawerActions {
 type Props = RegionDrawerProps & RegionDrawerActions;
 
 export const RegionDrawerComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
         <Header
             style={{
                 backgroundColor: colors.lightTeal,
