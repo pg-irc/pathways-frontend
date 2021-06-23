@@ -30,6 +30,7 @@ import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 import { ThankYouMessageComponent } from '../services/thank_you_message_component';
 import { OffsetHook, useOffset } from '../use_offset';
+import { RegionCode } from '../../validation/region/types';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -45,6 +46,7 @@ export interface SearchResultsProps {
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
     readonly isSendingReview: boolean;
+    readonly region: RegionCode;
 }
 
 export interface SearchResultsActions {
@@ -97,7 +99,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     };
 
     if (searchTermIsEmpty(props, onlineStatus)) {
-        return renderEmptyComponent();
+        return renderEmptyComponent(props.region);
     }
 
     if (isSearchErrorType(props, onlineStatus)) {
@@ -125,7 +127,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                             setScrollOffset: setOffset,
                         })}
                         ItemSeparatorComponent={SearchListSeparator}
-                        ListHeaderComponent={<ListHeaderComponent />}
+                        ListHeaderComponent={<ListHeaderComponent region={props.region} />}
                         ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
                     />
                     <ThankYouMessageComponent i18n={i18n} isVisible={props.isSendingReview}/>
@@ -220,7 +222,7 @@ const renderComponentByErrorType = (props: Props, errorType: Errors): JSX.Elemen
     <ErrorScreenSwitcherComponent
         refreshScreen={(): Promise<void> => props.onSearchRequest(props.searchTerm, props.searchLocation)}
         errorType={errorType}
-        header={<ListHeaderComponent />}
+        header={<ListHeaderComponent region={props.region} />}
     />
 );
 
@@ -236,19 +238,21 @@ export const hasNoResultsFromLocationQuery = (latLong?: LatLong): boolean => (
     latLong && latLong.lat === 0 && latLong.lng === 0
 );
 
-const renderEmptyComponent = (): JSX.Element => (
+const renderEmptyComponent = (region: RegionCode): JSX.Element => (
     <EmptySearchComponent
-        header={<ListHeaderComponent />}
+        header={<ListHeaderComponent region={region} />}
     />
 );
 
-const ListHeaderComponent = (): JSX.Element => {
+const ListHeaderComponent = (props: { readonly region: RegionCode }): JSX.Element => {
     const messageText = (
         <>
             <Trans>
                 Search is currently in beta and only available in English. For support in other languages, please
-                </Trans> <Text onPress={(): void => openURL('tel: 211')} style={textStyles.messageLink}>
-                <Trans>call BC211.</Trans></Text>
+            </Trans>
+            <Text onPress={(): void => openURL('tel: 211')} style={textStyles.messageLink}>
+                {' '}<RegionSpecificCallText region={props.region} />
+            </Text>
         </>
     );
     const linkText = <Trans>Give feedback</Trans>;
@@ -264,6 +268,13 @@ const ListHeaderComponent = (): JSX.Element => {
             onLinkPress={onLinkPress}
         />
     );
+};
+
+const RegionSpecificCallText = (props: { readonly region: RegionCode }): JSX.Element => {
+    if (props.region === RegionCode.MB) {
+        return <Trans>call 211 Manitoba.</Trans>;
+    }
+    return <Trans>call BC211.</Trans>;
 };
 
 const renderLoadMoreButton = (searchPage: number, numberOfPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
