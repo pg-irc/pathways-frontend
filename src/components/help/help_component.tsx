@@ -21,6 +21,7 @@ import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { OffsetHook, useOffset } from '../use_offset';
 import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
+import { RegionCode } from '../../validation/region/types';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -28,7 +29,7 @@ interface HelpContact {
     readonly subTitle?: JSX.Element;
 }
 
-const fixture: ReadonlyArray<HelpContact> = [
+const fixtureBC: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Information on emergency services (9-1-1)</Trans>,
         subTitle: (
@@ -63,11 +64,47 @@ const fixture: ReadonlyArray<HelpContact> = [
     },
 ];
 
+const fixtureMB: ReadonlyArray<HelpContact> = [
+    {
+        title: <Trans>Information on emergency services (9-1-1)</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Police, fire and medical emergencies</Trans>
+            </Text>),
+        url: 'https://www.winnipeg.ca/interhom/guide/All/Emergency.stm',
+    },
+    {
+        title: <Trans>Information on Health Links - Info Santé</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Multilingual health information services</Trans>
+            </Text>),
+        url: 'https://misericordia.mb.ca/programs/phcc/health-links-info-sante/',
+    },
+    {
+        title: <Trans>Information on 211 Manitoba</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Services information and referral</Trans>
+            </Text>),
+        url: 'https://mb.211.ca/',
+    },
+    {
+        title: <Trans>Information on helplines</Trans>,
+        url: 'https://mb.211.ca/quick-reference-guide-helplines/',
+    },
+    {
+        title: <Trans>Contact Arrival Advisor team</Trans>,
+        url: 'mailto:info@arrivaladvisor.ca',
+    },
+];
+
 export interface HelpComponentProps {
     readonly topicId: string;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly region: RegionCode;
 }
 
 export interface HelpComponentActions {
@@ -129,7 +166,7 @@ export const HelpComponent = (props: Props): JSX.Element => {
             <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: 10 }]}>
                 <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
             </Text>
-            {mapWithIndex(renderContactComponent, fixture)}
+            {mapWithIndex(renderContactComponent, getRegionFixture(props.region))}
             <View style={{
                 marginTop: 15,
                 marginBottom: 20,
@@ -170,6 +207,13 @@ const onFindSettlementAgencyPress = (props: FindSettlementAgencyButtonProps): vo
         props.dispatchServicesRequest(props.topicId, props.manualUserLocation);
     }
     goToRouteWithParameter(Routes.Services, props.topicId, props.history, props.offset);
+};
+
+const getRegionFixture = (region: RegionCode): ReadonlyArray<HelpContact> => {
+    if (region === RegionCode.MB) {
+        return fixtureMB;
+    }
+    return fixtureBC;
 };
 
 const ClearAppMemoryButton = (props: Props): JSX.Element => {

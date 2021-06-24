@@ -14,9 +14,11 @@ import { memoryHistory } from '../../application';
 import { OffsetHook, useOffset } from '../use_offset';
 import { useScrollViewToOffset } from '../use_scroll_view_to_offset';
 import { ScrollView } from 'react-native-gesture-handler';
+import { RegionCode } from '../../validation/region/types';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
+    readonly region: RegionCode;
 }
 
 export interface ExploreAllActions {
@@ -41,7 +43,7 @@ export const ExploreAllComponent = (props: Props): JSX.Element => {
                 scrollEventThrottle={scrollViewThrottle}
             >
                 <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-                    <Trans>Learn all about B.C.</Trans>
+                    <RegionSpecificTitle region={props.region} />
                 </Text>
                 <View style={styles.buttonsWrapper}>
                     {mapWithIndex((section: ExploreSection, index: number) => (
@@ -88,6 +90,13 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
         </Text>
     </View>
 );
+
+const RegionSpecificTitle = (props: { readonly region: RegionCode }): JSX.Element => {
+    if (props.region === RegionCode.MB) {
+        return <Trans>Learn all about Manitoba</Trans>;
+    }
+    return <Trans>Learn all about B.C.</Trans>;
+};
 
 const styles = StyleSheet.create({
     button: {
