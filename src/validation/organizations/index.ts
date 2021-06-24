@@ -5,7 +5,7 @@ import { organizationArray } from './schema';
 const Ajv = require('ajv');
 
 export const validateOrganizationResponse = (data: ReadonlyArray<any>): ValidationResult<HumanOrganizationData> => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(organizationArray, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };
