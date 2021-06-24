@@ -16,11 +16,11 @@ export interface ExplainFeedbackActions {
     readonly close: () => CloseAction;
 }
 
-export interface ExplainFeedbackComponentProps {
+export interface ExplainFeedbackProps {
     readonly region: RegionCode;
 }
 
-type Props = ExplainFeedbackActions & RouterProps & ExplainFeedbackComponentProps;
+type Props = ExplainFeedbackActions & RouterProps & ExplainFeedbackProps;
 
 export const ExplainFeedbackComponent = (props: Props): JSX.Element => {
     const onClosePress = (): void => {
