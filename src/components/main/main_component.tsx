@@ -9,13 +9,13 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps, goBack, isServiceReviewScreen } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
-import {  LocaleCode } from '../../application/locales';
+import { LocaleCode } from '../../application/locales';
 import { AppModalsComponent } from './app_modals_component';
 import * as Notifications from 'expo-notifications';
 import { notificationListener } from './notification';
 import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
-    OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
+    OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction, CloseLanguageDrawerAction, CloseRegionDrawerAction,
 } from '../../stores/user_experience/actions';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
@@ -24,6 +24,8 @@ import { CloseAction, BackFromContactInformationAction } from '../../stores/feed
 import { memoryHistory } from '../../application';
 import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { RegionCode } from '../../validation/region/types';
+import { LanguageDrawerConnectedComponent } from '../header_menu/language_drawer_connected_component';
+import { RegionDrawerConnectedComponent } from '../header_menu/region_drawer_connected_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -31,6 +33,8 @@ export interface MainComponentActions {
     readonly sendAnalyticsData: (location: Location, locale: LocaleCode) => RouteChangedAction;
     readonly closeHeaderMenu: () => CloseHeaderMenuAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly closeRegionDrawer: () => CloseRegionDrawerAction;
+    readonly closeLanguageDrawer: () => CloseLanguageDrawerAction;
     readonly closeAboutModal: () => CloseAboutModalAction;
     readonly openAboutModal: () => OpenAboutModalAction;
     readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
@@ -46,6 +50,8 @@ interface MainProps {
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
     readonly isHeaderMenuVisible: boolean;
+    readonly isRegionDrawerVisible: boolean;
+    readonly isLanguageDrawerVisible: boolean;
     readonly isAboutModalVisible: boolean;
     readonly isDisclaimerModalVisible: boolean;
     readonly feedbackScreen: FeedbackScreen;
@@ -97,38 +103,52 @@ export const MainComponent = (props: Props): JSX.Element => {
 
     return (
         <Root>
-            <StatusBar style='light'/>
+            <StatusBar style='light' />
             <Drawer
                 side='right'
-                onClose={props.closeHeaderMenu}
-                open={props.isHeaderMenuVisible}
-                content={
-                    <HeaderMenuConnectedComponent
-                        history={memoryHistory}
-                        closeMenu={props.closeHeaderMenu}
-                        openAboutModal={props.openAboutModal}
-                        openDisclaimerModal={props.openDisclaimerModal}
-                    />
-                }
+                onClose={props.closeLanguageDrawer}
+                open={props.isLanguageDrawerVisible}
+                content={<LanguageDrawerConnectedComponent />}
             >
-                <Container>
-                    <ScrollContext.Provider value={scrollAnimationContext}>
-                        <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
-                        <MainPageSwitcherComponent {...props} />
-                        <FooterComponent
-                            history={memoryHistory}
-                            location={props.location}
-                            feedbackScreen={props.feedbackScreen}
-                        />
-                        <AppModalsComponent
-                            isAboutModalVisible={props.isAboutModalVisible}
-                            isDisclaimerModalVisible={props.isDisclaimerModalVisible}
-                            region={props.region}
-                            closeAboutModal={props.closeAboutModal}
-                            closeDisclaimerModal={props.closeDisclaimerModal}
-                        />
-                    </ScrollContext.Provider>
-                </Container>
+                <Drawer
+                    side='right'
+                    onClose={props.closeRegionDrawer}
+                    open={props.isRegionDrawerVisible}
+                    content={<RegionDrawerConnectedComponent />}
+                >
+                    <Drawer
+                        side='right'
+                        onClose={props.closeHeaderMenu}
+                        open={props.isHeaderMenuVisible}
+                        content={
+                            <HeaderMenuConnectedComponent
+                                history={memoryHistory}
+                                closeMenu={props.closeHeaderMenu}
+                                openAboutModal={props.openAboutModal}
+                                openDisclaimerModal={props.openDisclaimerModal}
+                            />
+                        }
+                    >
+                        <Container>
+                            <ScrollContext.Provider value={scrollAnimationContext}>
+                                <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
+                                <MainPageSwitcherComponent {...props} />
+                                <FooterComponent
+                                    history={memoryHistory}
+                                    location={props.location}
+                                    feedbackScreen={props.feedbackScreen}
+                                />
+                                <AppModalsComponent
+                                    isAboutModalVisible={props.isAboutModalVisible}
+                                    isDisclaimerModalVisible={props.isDisclaimerModalVisible}
+                                    region={props.region}
+                                    closeAboutModal={props.closeAboutModal}
+                                    closeDisclaimerModal={props.closeDisclaimerModal}
+                                />
+                            </ScrollContext.Provider>
+                        </Container>
+                    </Drawer>
+                </Drawer>
             </Drawer>
         </Root>
     );

@@ -5,6 +5,8 @@ export interface UserExperienceStore {
     readonly bookmarksTab: BookmarksTab;
     readonly organizationTab: number;
     readonly headerMenu: HeaderMenu;
+    readonly regionDrawer: RegionDrawer;
+    readonly languageDrawer: LanguageDrawer;
 }
 
 export enum BookmarksTab {
@@ -19,10 +21,22 @@ export enum HeaderMenu {
     DisclaimerModalIsOpen,
 }
 
+export enum RegionDrawer {
+    RegionDrawerIsClosed,
+    RegionDrawerIsOpen,
+}
+
+export enum LanguageDrawer {
+    LanguageDrawerIsClosed,
+    LanguageDrawerIsOpen,
+}
+
 export const buildDefaultStore = (): UserExperienceStore => ({
     bookmarksTab: BookmarksTab.Topics,
     organizationTab: 0,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
+    languageDrawer: LanguageDrawer.LanguageDrawerIsClosed,
+    regionDrawer: RegionDrawer.RegionDrawerIsClosed,
 });
 
 export const reducer = (store: UserExperienceStore = buildDefaultStore(), action?: UserExperienceAction): UserExperienceStore => {
@@ -35,6 +49,14 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return updateBookmarksTab(store, action.payload.index);
         case constants.SAVE_ORGANIZATION_TAB:
             return { ...store, organizationTab: action.payload.index };
+        case constants.OPEN_LANGUAGE_DRAWER:
+            return { ...store, languageDrawer: LanguageDrawer.LanguageDrawerIsOpen };
+        case constants.CLOSE_LANGUAGE_DRAWER:
+            return { ...store, languageDrawer: LanguageDrawer.LanguageDrawerIsClosed };
+        case constants.OPEN_REGION_DRAWER:
+            return { ...store, regionDrawer: RegionDrawer.RegionDrawerIsOpen };
+        case constants.CLOSE_REGION_DRAWER:
+            return { ...store, regionDrawer: RegionDrawer.RegionDrawerIsClosed };
         case constants.OPEN_HEADER_MENU:
         case constants.CLOSE_HEADER_MENU:
         case constants.CLOSE_ABOUT_MODAL:
@@ -64,7 +86,7 @@ const updateBookmarksTab = (store: UserExperienceStore, index: number): UserExpe
 const headerMenuReducer = (store: UserExperienceStore, action: UserExperienceAction): UserExperienceStore => {
     switch (action.type) {
         case constants.CLOSE_HEADER_MENU:
-            return({
+            return ({
                 ...store,
                 headerMenu: HeaderMenu.HeaderMenuIsClosed,
             });
