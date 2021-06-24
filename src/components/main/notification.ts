@@ -31,8 +31,7 @@ const getValidRouteFromNotificationPayload = (data: any): string | undefined => 
         return undefined;
     }
 
-    // tslint:disable-next-line:no-string-literal
-    const url = data['data']['navigateToRoute'];
+    const url = data.notification.request.content.data.navigateToRoute;
 
     const validTopicUrlRegEx = /^\/task\/[a-z0-9\-]+$/;
     if (url === 'store' || url === 'welcome' || validTopicUrlRegEx.test(url)) {
@@ -45,11 +44,27 @@ const getValidRouteFromNotificationPayload = (data: any): string | undefined => 
 const notificationPayloadSchema = {
     'type': 'object',
     'properties': {
-        'data': {
+        'notification': {
             'type': 'object',
             'properties': {
-                'navigateToRoute': {
-                    'type': 'string',
+                'request': {
+                    'type': 'object',
+                    'properties': {
+                        'content': {
+                            'type': 'object',
+                            'properties': {
+                                'data': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'navigateToRoute': {
+                                            'type': 'string',
+                                        },
+                                    },
+                                    'required': ['navigateToRoute'],
+                                },
+                            },
+                        },
+                    },
                 },
             },
         },
