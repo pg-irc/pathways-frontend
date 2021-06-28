@@ -13,6 +13,7 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
             return {
                 ...serviceIdentification,
                 name: feedback.name?.value,
+                alternateName: feedback.alternateName?.value,
                 organization: feedback.organization?.value,
                 description: feedback.description?.value,
                 address: feedback.address?.value,

@@ -86,6 +86,7 @@ describe('feedback reducer', () => {
     const someServiceFeedbackData = (): ServiceFeedback => ({
         type: 'service_feedback',
         name: aFeedbackField(),
+        alternateName: aFeedbackField(),
         organization: aFeedbackField(),
         description: aFeedbackField(),
         address: aFeedbackField(),
