@@ -344,22 +344,32 @@ interface AlternateNameProps {
 const AlternateName = (props: AlternateNameProps): JSX.Element => {
     if (props.alternateName) {
         return(
-            <FeedbackComponent
-                setText={props.setFeedbackInputForField('alternateName')}
-                toggleShouldSend={props.toggleShouldSendForField('alternateName')}
-                inputField={props.feedback.alternateName}
-                label={<Trans>Alternate Name</Trans>}
-                body={props.alternateName}
-                isFeedbackInputEnabled={props.isFeedbackInputEnabled}
-                nonFeedbackComponent={<AlternateNameText alternateName={props.alternateName} />}
-            />);
+            <View>
+                <AlternateNameTopMargin isFeedbackInputEnabled={props.isFeedbackInputEnabled} />
+                <FeedbackComponent
+                    setText={props.setFeedbackInputForField('alternateName')}
+                    toggleShouldSend={props.toggleShouldSendForField('alternateName')}
+                    inputField={props.feedback.alternateName}
+                    label={<Trans>Alternate Name</Trans>}
+                    body={props.alternateName}
+                    isFeedbackInputEnabled={props.isFeedbackInputEnabled}
+                    nonFeedbackComponent={<AlternateNameText alternateName={props.alternateName} />}
+                />
+            </View>);
     }
     return <EmptyComponent/>;
 };
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
-    <Text style={[markdownStyles.body, {paddingTop: 4}]}>(aka {props.alternateName})</Text>
+    <Text style={markdownStyles.body}>(aka {props.alternateName})</Text>
 );
+
+const AlternateNameTopMargin = (props: {readonly isFeedbackInputEnabled: boolean}): JSX.Element => {
+    if (props.isFeedbackInputEnabled) {
+        return <EmptyDividerComponent />;
+    }
+    return (<View style={{ marginVertical: 2}}></View>);
+};
 
 const Organization = (props: {
     readonly history: History,
@@ -585,7 +595,7 @@ const SuggestAnUpdateText = (): JSX.Element => (
 );
 
 const EmptyDividerComponent = (): JSX.Element => (
-    <View style={{ marginVertical: 16, marginHorizontal: -20 }}></View>
+    <View style={{ marginVertical: 16}}></View>
 );
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
