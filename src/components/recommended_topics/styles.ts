@@ -11,7 +11,7 @@ interface CallToActionStyles {
     readonly callToActionPartialContent: TextStyle;
     readonly callToActionRightContent: ViewStyle;
     readonly callToActionTitle: TextStyle;
-    readonly callToActionUpperContent: ViewStyle;
+    readonly callToActionLeftContent: ViewStyle;
     readonly recommendationBubbleImage: ImageStyle;
     readonly recommendationIcon: TextStyle;
     readonly recommendationRightContent: ViewStyle;
@@ -35,15 +35,16 @@ const recommendationImageSize = Dimensions.get('screen').width / 9;
 
 const callToActionStyles = StyleSheet.create<CallToActionStyles>({
     advisorImage: {
-        flex: 2,
+        flex: 1,
         width: logoSize,
         height: logoSize,
+        marginLeft: 16,
     },
 
     callToActionContainer: {
         backgroundColor: colors.lightGrey,
         borderRadius: values.lessRoundedBorderRadius,
-        padding: 20,
+        padding: 24,
         marginBottom: 20,
     },
 
@@ -51,11 +52,11 @@ const callToActionStyles = StyleSheet.create<CallToActionStyles>({
         flex: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
     },
 
-    callToActionUpperContent: {
+    callToActionLeftContent: {
         flex: 3,
+        justifyContent: 'center',
     },
 
     callToActionBottomContent: {

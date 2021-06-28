@@ -1,13 +1,14 @@
 {
   "expo": {
     "name": "Arrival Advisor",
-    "version": "1.67.0",
+    "version": "1.69.0",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "primaryColor": "#3A818D",
     "splash": {
-      "backgroundColor": "#000000",
-      "image": "./assets/images/splash_screen.png"
+      "backgroundColor": "#FFFFFF",
+      "image": "./assets/images/splash_screen.png",
+      "resizeMode": "contain"
     },
     "ios": {
       "icon": "./assets/images/phone_icon_ios.png",
@@ -23,7 +24,7 @@
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 167000,
+      "versionCode": 169000,
       "permissions": [
         "ACCESS_FINE_LOCATION"
       ],

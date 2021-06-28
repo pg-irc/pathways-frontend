@@ -15,3 +15,12 @@ export interface RegionLocaleState {
     readonly locale: string;
     readonly availableLocales: ReadonlyArray<LocaleWithLabel>;
 }
+
+export const regionCodeToLabel = (region: RegionCode): string => {
+    switch (region) {
+        case RegionCode.MB:
+            return 'Manitoba';
+        default:
+            return 'British Columbia';
+    }
+};

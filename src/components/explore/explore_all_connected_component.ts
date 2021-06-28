@@ -4,9 +4,11 @@ import { ExploreAllComponent, ExploreAllProps, ExploreAllActions } from './explo
 import { selectExploreSectionList } from '../../selectors/explore/select_explore_section_list';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { Dispatch } from 'redux';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 const mapStateToProps = (store: Store): ExploreAllProps => ({
     sections: selectExploreSectionList(store),
+    region: pickRegion(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<OpenHeaderMenuAction>): ExploreAllActions => ({

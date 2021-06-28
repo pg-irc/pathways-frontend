@@ -1,7 +1,6 @@
 // tslint:disable:no-var-requires
 
-export const landingPhoto = require('../../assets/images/landing_photo.png');
-export const arrivalAdvisorLogo = require('../../assets/images/aa_logo.png');
+export const welcomeHeader = require('../../assets/images/welcome_header.png');
 export const arrivalAdvisorGlyphLogo = require('../../assets/images/aa_logoglyph.png');
 export const advisor = require('../../assets/images/advisor_graphic.png');
 export const advisor_rtl = require('../../assets/images/advisor_graphic_rtl.png');
@@ -18,7 +17,6 @@ export const emptySearch = require('../../assets/images/aa_empty_search.png');
 export const noMatchingSearchResults = require('../../assets/images/aa_no_matching_search_results.png');
 export const invalidSearchLocation = require('../../assets/images/aa_invalid_search_location.png');
 export const emptyBookmarks = require('../../assets/images/aa_empty_bookmarks.png');
-export const peacegeeksLogo = require('../../assets/images/peacegeeks_logo.png');
 export const peacegeeksColorLogo = require('../../assets/images/peacekgeeks_color_logo.png');
 export const mb211Logo = require('../../assets/images/mb_211_logo.png');
 export const mbStartLogo = require('../../assets/images/mb_start_logo.png');

@@ -33,7 +33,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withId(null).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].id should be number');
+            expect(validator.errors).toBe('data/0/id must be number');
         });
     });
 
@@ -44,7 +44,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().buildWithoutService(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0] should have required property \'service\'');
+            expect(validator.errors).toBe('data/0 must have required property \'service\'');
         });
 
         test('service is of type object', () => {
@@ -53,7 +53,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service should be object');
+            expect(validator.errors).toBe('data/0/service must be object');
         });
 
         test('service.id is required', () => {
@@ -62,7 +62,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service should have required property \'id\'');
+            expect(validator.errors).toBe('data/0/service must have required property \'id\'');
         });
 
         test('service.id is of type string', () => {
@@ -71,7 +71,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service.id should be string');
+            expect(validator.errors).toBe('data/0/service/id must be string');
         });
 
         test('service.name is required', () => {
@@ -80,7 +80,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service should have required property \'name\'');
+            expect(validator.errors).toBe('data/0/service must have required property \'name\'');
         });
 
         test('service.name is of type string', () => {
@@ -89,7 +89,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service.name should be string');
+            expect(validator.errors).toBe('data/0/service/name must be string');
         });
 
         test('service.description is required', () => {
@@ -98,7 +98,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service should have required property \'description\'');
+            expect(validator.errors).toBe('data/0/service must have required property \'description\'');
         });
 
         test('service.description is of type string', () => {
@@ -107,7 +107,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service.description should be string');
+            expect(validator.errors).toBe('data/0/service/description must be string');
         });
 
         test('service.website is optional', () => {
@@ -132,7 +132,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service.website should be string');
+            expect(validator.errors).toBe('data/0/service/website must be string');
         });
         test('service.email, if provided, is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withEmail(null).build();
@@ -140,7 +140,7 @@ describe('schema for services_at_location endpoint', () => {
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].service.email should be string');
+            expect(validator.errors).toBe('data/0/service/email must be string');
         });
 
     });
@@ -154,7 +154,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().buildWithoutLocation(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0] should have required property \'location\'');
+                expect(validator.errors).toBe('data/0 must have required property \'location\'');
             });
 
             test('location is of type object', () => {
@@ -163,7 +163,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location should be object');
+                expect(validator.errors).toBe('data/0/location must be object');
             });
         });
 
@@ -183,7 +183,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.latitude should be number');
+                expect(validator.errors).toBe('data/0/location/latitude must be number');
             });
 
         });
@@ -204,7 +204,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.longitude should be number');
+                expect(validator.errors).toBe('data/0/location/longitude must be number');
             });
 
         });
@@ -217,7 +217,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location should have required property \'addresses\'');
+                expect(validator.errors).toBe('data/0/location must have required property \'addresses\'');
             });
 
             test('location.addresses is of type array', () => {
@@ -226,7 +226,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses should be array');
+                expect(validator.errors).toBe('data/0/location/addresses must be array');
             });
 
             test('location.addresses can be empty array', () => {
@@ -243,7 +243,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0] should be object');
+                expect(validator.errors).toBe('data/0/location/addresses/0 must be object');
             });
 
             test('location.addresses item.address_type is required ', () => {
@@ -253,7 +253,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address_type\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0 must have required property \'address_type\'');
             });
 
             test('location.addresses item.address_type is of type string', () => {
@@ -263,7 +263,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address_type should be string');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address_type must be string');
             });
 
             test('location.addresses item.address is required ', () => {
@@ -273,7 +273,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0 must have required property \'address\'');
             });
 
             test('location.addresses item.address.id is required', () => {
@@ -284,7 +284,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'id\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'id\'');
             });
 
             test('location.addresses item.address.id is of type string', () => {
@@ -295,7 +295,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.id should be string');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/id must be string');
             });
 
             test('location.addresses item.address.address is required', () => {
@@ -306,8 +306,8 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'address\'');
-            });
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'address\'');
+            })
 
             test('location.addresses item.address.address is of type string or null', () => {
                 const address = new helpers.AddressJSONBuilder().withAddress(aNumber()).build();
@@ -317,7 +317,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.address should be string,null');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/address must be string,null');
             });
 
             test('location.addresses item.address.city is required', () => {
@@ -328,7 +328,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'city\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'city\'');
             });
 
             test('location.addresses item.address.city is of type string or null', () => {
@@ -339,7 +339,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.city should be string,null');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/city must be string,null');
             });
 
             test('location.addresses item.address.state_province is required', () => {
@@ -350,7 +350,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'state_province\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'state_province\'');
             });
 
             test('location.addresses item.address.state_province is of type string or null', () => {
@@ -361,7 +361,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.state_province should be string,null');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/state_province must be string,null');
             });
 
             test('location.addresses item.address.postal_code is required', () => {
@@ -372,7 +372,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'postal_code\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'postal_code\'');
             });
 
             test('location.addresses item.address.postal_code is of type string or null', () => {
@@ -383,7 +383,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.postal_code should be string,null');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/postal_code must be string,null');
             });
 
             test('location.addresses item.address.country is required', () => {
@@ -394,7 +394,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'country\'');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address must have required property \'country\'');
             });
 
             test('location.addresses item.address.country is of type string', () => {
@@ -405,7 +405,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.country should be string');
+                expect(validator.errors).toBe('data/0/location/addresses/0/address/country must be string');
             });
         });
 
@@ -417,7 +417,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location should have required property \'phone_numbers\'');
+                expect(validator.errors).toBe('data/0/location must have required property \'phone_numbers\'');
             });
 
             test('location.phone_numbers is of type array', () => {
@@ -426,7 +426,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers should be array');
+                expect(validator.errors).toBe('data/0/location/phone_numbers must be array');
             });
 
             test('location.phone_numbers can be empty array', () => {
@@ -447,7 +447,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should be object');
+                expect(validator.errors).toBe('data/0/location/phone_numbers/0 must be object');
             });
 
             test('location.phone_numbers item.phone_number_type is required ', () => {
@@ -457,7 +457,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number_type\'');
+                expect(validator.errors).toBe('data/0/location/phone_numbers/0 must have required property \'phone_number_type\'');
             });
 
             test('location.phone_numbers item.phone_number_type is of type string', () => {
@@ -467,7 +467,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number_type should be string');
+                expect(validator.errors).toBe('data/0/location/phone_numbers/0/phone_number_type must be string');
             });
 
             test('location.phone_numbers item.phone_number is required ', () => {
@@ -477,7 +477,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number\'');
+                expect(validator.errors).toBe('data/0/location/phone_numbers/0 must have required property \'phone_number\'');
             });
 
             test('location.phone_numbers item.phone_number is of type string', () => {
@@ -487,7 +487,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number should be string');
+                expect(validator.errors).toBe('data/0/location/phone_numbers/0/phone_number must be string');
             });
         });
     });

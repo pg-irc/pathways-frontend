@@ -14,6 +14,7 @@ import {
     CallToActionPartialSubComponent,
     AlertComponent,
 } from './call_to_action';
+import { ManitobaStartCard } from '../sponsor_card/manitoba_start_card';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
@@ -23,6 +24,7 @@ import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header
 import { recommendedTopicsStyles } from './styles';
 import { Alert } from '../../validation/content/types';
 import { OffsetHook, useOffset } from '../use_offset';
+import { RegionCode } from '../../validation/region/types';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -30,7 +32,7 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
-    readonly region: string;
+    readonly region: RegionCode;
 }
 
 export interface RecommendedTopicsActions {
@@ -73,6 +75,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}
                 hideLinkAlerts={props.hideLinkAlerts} />
+            {props.region === RegionCode.MB && <ManitobaStartCard />}
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :
@@ -101,5 +104,5 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
 );
 
 const HomeScreenTitle = (props: Props): JSX.Element => (
-    props.region === 'bc' ? <Trans>Start settling in B.C.</Trans> : <Trans>Start settling in Manitoba</Trans>
+    props.region === RegionCode.BC ? <Trans>Start settling in B.C.</Trans> : <Trans>Start settling in Manitoba</Trans>
 );

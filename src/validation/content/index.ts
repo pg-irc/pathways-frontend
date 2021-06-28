@@ -5,7 +5,7 @@ import { alertArray } from './schema';
 const Ajv = require('ajv');
 
 export const validateAlertResponse = (data: ReadonlyArray<any>): ValidationResult<Alert> => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(alertArray, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };
