@@ -94,6 +94,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             bc211ServiceName: humanServiceData.name,
             bc211OrganizationName: humanServiceData.organizationName,
             name: feedback.name.value,
+            alternateName: feedback.alternateName.value,
             organization: feedback.organization.value,
             description: feedback.description.value,
             address: feedback.address.value,
