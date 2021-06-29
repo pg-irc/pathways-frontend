@@ -229,7 +229,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     label={<Trans>Alternate Name</Trans>}
                                     body={props.service.alternateName}
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
-                                    nonFeedbackComponent={<AlternateNameText alternateName={props.service.alternateName} />}
+                                    nonFeedbackComponent={<AlternateName alternateName={props.service.alternateName} />}
                                 />
                                 <EmptyDividerComponent />
                                 <FeedbackComponent
@@ -335,6 +335,13 @@ const Name = (props: NameProps): JSX.Element => (
         <TitleComponent title={props.name} />
     </>
 );
+
+const AlternateName = (props: {readonly alternateName: string}): JSX.Element => {
+    if (!props.alternateName) {
+        return <EmptyComponent />;
+    }
+    return <AlternateNameText alternateName={props.alternateName} />;
+};
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
     <Text style={markdownStyles.body}>(aka {props.alternateName})</Text>
