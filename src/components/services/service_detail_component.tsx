@@ -221,12 +221,15 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
                                     nonFeedbackComponent={<Name name={props.service.name} />}
                                 />
-                                <AlternateName
-                                    toggleShouldSendForField={toggleShouldSendForField}
-                                    setFeedbackInputForField={setTextForField}
+                                <AlternateNameTopMargin isFeedbackInputEnabled={isFeedbackInputEnabled} />
+                                <FeedbackComponent
+                                    setText={setTextForField('alternateName')}
+                                    toggleShouldSend={toggleShouldSendForField('alternateName')}
+                                    inputField={feedbackInput.alternateName}
+                                    label={<Trans>Alternate Name</Trans>}
+                                    body={props.service.alternateName}
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
-                                    feedback={feedbackInput}
-                                    alternateName={props.service.alternateName}
+                                    nonFeedbackComponent={<AlternateNameText alternateName={props.service.alternateName} />}
                                 />
                                 <EmptyDividerComponent />
                                 <FeedbackComponent
@@ -332,33 +335,6 @@ const Name = (props: NameProps): JSX.Element => (
         <TitleComponent title={props.name} />
     </>
 );
-
-interface AlternateNameProps {
-    readonly toggleShouldSendForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
-    readonly setFeedbackInputForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
-    readonly feedback: ServiceFeedback;
-    readonly alternateName: string;
-    readonly isFeedbackInputEnabled: boolean;
-}
-
-const AlternateName = (props: AlternateNameProps): JSX.Element => {
-    if (props.alternateName) {
-        return(
-            <View>
-                <AlternateNameTopMargin isFeedbackInputEnabled={props.isFeedbackInputEnabled} />
-                <FeedbackComponent
-                    setText={props.setFeedbackInputForField('alternateName')}
-                    toggleShouldSend={props.toggleShouldSendForField('alternateName')}
-                    inputField={props.feedback.alternateName}
-                    label={<Trans>Alternate Name</Trans>}
-                    body={props.alternateName}
-                    isFeedbackInputEnabled={props.isFeedbackInputEnabled}
-                    nonFeedbackComponent={<AlternateNameText alternateName={props.alternateName} />}
-                />
-            </View>);
-    }
-    return <EmptyComponent/>;
-};
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
     <Text style={markdownStyles.body}>(aka {props.alternateName})</Text>
