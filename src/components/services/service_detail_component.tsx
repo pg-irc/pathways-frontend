@@ -344,14 +344,14 @@ const AlternateName = (props: {readonly alternateName: string}): JSX.Element => 
 };
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
-    <Text style={markdownStyles.body}>(aka {props.alternateName})</Text>
+    <Text style={[markdownStyles.body, {marginTop: 4}]}>(aka {props.alternateName})</Text>
 );
 
 const AlternateNameTopMargin = (props: {readonly isFeedbackInputEnabled: boolean}): JSX.Element => {
-    if (props.isFeedbackInputEnabled) {
-        return <EmptyDividerComponent />;
+    if (!props.isFeedbackInputEnabled) {
+        return <EmptyComponent />;
     }
-    return (<View style={{ marginVertical: 2}}></View>);
+    return <EmptyDividerComponent />;
 };
 
 const Organization = (props: {
