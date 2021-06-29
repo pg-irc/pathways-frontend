@@ -231,7 +231,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
                                     nonFeedbackComponent={<AlternateName alternateName={props.service.alternateName} />}
                                 />
-                                <EmptyDividerComponent />
+                                <DividerComponentWithoutLine />
                                 <FeedbackComponent
                                     setText={setTextForField('organization')}
                                     toggleShouldSend={toggleShouldSendForField('organization')}
@@ -249,7 +249,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                         />
                                     }
                                 />
-                                <EmptyDividerComponent />
+                                <DividerComponentWithoutLine />
                                 <FeedbackComponent
                                     setText={setTextForField('description')}
                                     toggleShouldSend={toggleShouldSendForField('description')}
@@ -351,7 +351,7 @@ const AlternateNameTopMargin = (props: {readonly isFeedbackInputEnabled: boolean
     if (!props.isFeedbackInputEnabled) {
         return <EmptyComponent />;
     }
-    return <EmptyDividerComponent />;
+    return <DividerComponentWithoutLine />;
 };
 
 const Organization = (props: {
@@ -577,7 +577,7 @@ const SuggestAnUpdateText = (): JSX.Element => (
     </View>
 );
 
-const EmptyDividerComponent = (): JSX.Element => (
+const DividerComponentWithoutLine = (): JSX.Element => (
     <View style={{ marginVertical: 16}}></View>
 );
 
