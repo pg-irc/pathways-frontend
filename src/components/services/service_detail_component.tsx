@@ -344,7 +344,7 @@ const AlternateName = (props: {readonly alternateName: string}): JSX.Element => 
 };
 
 const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
-    <Text style={[markdownStyles.body, {marginTop: 4}]}>(aka {props.alternateName})</Text>
+    <Text style={[markdownStyles.body, {marginTop: 4}]}>(<Trans>aka</Trans> {props.alternateName})</Text>
 );
 
 const AlternateNameTopMargin = (props: {readonly isFeedbackInputEnabled: boolean}): JSX.Element => {
@@ -578,7 +578,7 @@ const SuggestAnUpdateText = (): JSX.Element => (
 );
 
 const DividerComponentWithoutLine = (): JSX.Element => (
-    <View style={{ marginVertical: 16}}></View>
+    <View style={{ marginVertical: 16}}/>
 );
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
