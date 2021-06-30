@@ -6,7 +6,7 @@ import { History, Location } from 'history';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors } from '../../application/styles';
+import { values, textStyles, colors, markdownStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -154,7 +154,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history, offset);
         resetInputs();
         props.chooseExplainFeedback();
-    }
+    };
 
     const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
@@ -221,7 +221,17 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isFeedbackInputEnabled={isFeedbackInputEnabled}
                                     nonFeedbackComponent={<Name name={props.service.name} />}
                                 />
-                                <DividerComponent />
+                                <AlternateNameTopMargin isFeedbackInputEnabled={isFeedbackInputEnabled} />
+                                <FeedbackComponent
+                                    setText={setTextForField('alternateName')}
+                                    toggleShouldSend={toggleShouldSendForField('alternateName')}
+                                    inputField={feedbackInput.alternateName}
+                                    label={<Trans>Alternate Name</Trans>}
+                                    body={props.service.alternateName}
+                                    isFeedbackInputEnabled={isFeedbackInputEnabled}
+                                    nonFeedbackComponent={<AlternateName alternateName={props.service.alternateName} />}
+                                />
+                                <DividerComponentWithoutLine />
                                 <FeedbackComponent
                                     setText={setTextForField('organization')}
                                     toggleShouldSend={toggleShouldSendForField('organization')}
@@ -239,7 +249,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                         />
                                     }
                                 />
-                                <DividerComponent />
+                                <DividerComponentWithoutLine />
                                 <FeedbackComponent
                                     setText={setTextForField('description')}
                                     toggleShouldSend={toggleShouldSendForField('description')}
@@ -325,6 +335,24 @@ const Name = (props: NameProps): JSX.Element => (
         <TitleComponent title={props.name} />
     </>
 );
+
+const AlternateName = (props: {readonly alternateName: string}): JSX.Element => {
+    if (!props.alternateName) {
+        return <EmptyComponent />;
+    }
+    return <AlternateNameText alternateName={props.alternateName} />;
+};
+
+const AlternateNameText = (props: {readonly alternateName: string}): JSX.Element => (
+    <Text style={[markdownStyles.body, {marginTop: 4}]}>(<Trans>aka</Trans> {props.alternateName})</Text>
+);
+
+const AlternateNameTopMargin = (props: {readonly isFeedbackInputEnabled: boolean}): JSX.Element => {
+    if (!props.isFeedbackInputEnabled) {
+        return <EmptyComponent />;
+    }
+    return <DividerComponentWithoutLine />;
+};
 
 const Organization = (props: {
     readonly history: History,
@@ -547,6 +575,10 @@ const SuggestAnUpdateText = (): JSX.Element => (
             <Trans>Suggest an update</Trans>
         </Text>
     </View>
+);
+
+const DividerComponentWithoutLine = (): JSX.Element => (
+    <View style={{ marginVertical: 16}}/>
 );
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (

@@ -109,6 +109,7 @@ export class HumanServiceDataBuilder {
     latitude: number = aNumber();
     longitude: number = aNumber();
     name: string = aString();
+    alternateName: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = [];
     addresses: ReadonlyArray<Address> = [];
@@ -127,6 +128,11 @@ export class HumanServiceDataBuilder {
 
     withName(name: string): HumanServiceDataBuilder {
         this.name = name;
+        return this;
+    }
+
+    withAlternateName(alternateName: string): HumanServiceDataBuilder {
+        this.alternateName = alternateName;
         return this;
     }
 
@@ -195,6 +201,7 @@ export class HumanServiceDataBuilder {
             id: this.id,
             latlong: { lat: this.latitude, lng: this.longitude },
             name: this.name,
+            alternateName: this.alternateName,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
             addresses: this.addresses,

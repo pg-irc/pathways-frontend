@@ -3,6 +3,7 @@ export interface FeedbackContentToPost {
     readonly bc211ServiceName: string;
     readonly bc211OrganizationName: string;
     readonly name?: string;
+    readonly alternateName?: string;
     readonly organization?: string;
     readonly description?: string;
     readonly address?: string;

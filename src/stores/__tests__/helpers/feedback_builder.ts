@@ -6,6 +6,7 @@ const aFeedbackField = (): FeedbackField => ({value: aString(), shouldSend: true
 
 export class ServiceFeedbackBuilder {
     name: FeedbackField = aFeedbackField();
+    alternateName: FeedbackField = aFeedbackField();
     organization: FeedbackField = aFeedbackField();
     description: FeedbackField = aFeedbackField();
     address: FeedbackField = aFeedbackField();
@@ -17,6 +18,7 @@ export class ServiceFeedbackBuilder {
         return {
             type: 'service_feedback',
             name: this.name,
+            alternateName: this.alternateName,
             organization: this.organization,
             description: this.description,
             address: this.address,

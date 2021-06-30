@@ -38,6 +38,7 @@ export interface FeedbackField {
 export interface ServiceFeedback {
     readonly type: 'service_feedback';
     readonly name: FeedbackField;
+    readonly alternateName: FeedbackField;
     readonly organization: FeedbackField;
     readonly description: FeedbackField;
     readonly address: FeedbackField;

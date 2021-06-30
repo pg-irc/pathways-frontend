@@ -24,6 +24,7 @@ export interface HumanServiceData {
     readonly services_at_location_id?: number;
     readonly latlong?: LatLong;
     readonly name: string;
+    readonly alternateName: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
     readonly addresses: ReadonlyArray<Address>;

@@ -24,6 +24,7 @@ export interface AlgoliaLatLong {
 export interface SearchServiceData {
     readonly type: 'SearchServiceData';
     readonly service_name: string;
+    readonly alternate_name: string;
     readonly service_description: string;
     readonly service_id: string;
     readonly organization: OrganizationUnderService;

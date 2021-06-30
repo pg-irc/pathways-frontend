@@ -85,6 +85,7 @@ export const getEmptyServiceFeedback = (): ServiceFeedback => {
     return {
         type: 'service_feedback',
         name: emptyFeedbackField,
+        alternateName: emptyFeedbackField,
         organization: emptyFeedbackField,
         description: emptyFeedbackField,
         address: emptyFeedbackField,

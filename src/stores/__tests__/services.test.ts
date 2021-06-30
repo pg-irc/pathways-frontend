@@ -198,7 +198,7 @@ describe('services reducer', () => {
             };
             const store = reducer(theStore, action);
             const storeService = store.services[aSearchService.id];
-            expect(Object.keys(aSearchService).length).toEqual(13);
+            expect(Object.keys(aSearchService).length).toEqual(14);
             expect(storeService).toEqual(aSearchService);
         });
 

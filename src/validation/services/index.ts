@@ -34,6 +34,7 @@ interface ValidatedAddressWithTypeJSON {
 interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
+    readonly alternate_name: string;
     readonly description: string;
     readonly organization_id: string;
     readonly organization_url: string;
@@ -75,6 +76,7 @@ const buildHumanService = R.curry(
                 lng: data.location.longitude,
             },
             name: data.service.name,
+            alternateName: data.service.alternate_name,
             description: data.service.description,
             phoneNumbers: buildHumanServicePhoneNumbers(data.location.phone_numbers),
             addresses: buildHumanServiceAddresses(data.location.addresses),
