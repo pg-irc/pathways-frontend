@@ -62,7 +62,11 @@ type Props = MainComponentProps & MainComponentActions;
 export const MainComponent = (props: Props): JSX.Element => {
     useHardwareBackButtonPress((): boolean => {
         const shouldNotBubbleUpEvent = true;
-        if (props.isHeaderMenuVisible) {
+        if (props.isRegionDrawerVisible) {
+            props.closeRegionDrawer();
+        } else if (props.isLanguageDrawerVisible) {
+            props.closeLanguageDrawer();
+        } else if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
             backFromFeedbackScreen();
@@ -73,7 +77,7 @@ export const MainComponent = (props: Props): JSX.Element => {
         }
 
         return shouldNotBubbleUpEvent;
-    }, [props.feedbackScreen, props.isHeaderMenuVisible]);
+    }, [props.feedbackScreen, props.isHeaderMenuVisible, props.isLanguageDrawerVisible, props.isRegionDrawerVisible]);
 
     const backFromFeedbackScreen = (): void => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
