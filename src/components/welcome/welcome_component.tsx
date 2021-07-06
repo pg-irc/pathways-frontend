@@ -6,7 +6,7 @@ import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { applicationStyles, colors, textStyles, getBoldFontStylesForOS } from '../../application/styles';
+import { applicationStyles, textStyles } from '../../application/styles';
 import { welcomeHeader } from '../../application/images';
 import { History } from 'history';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -112,7 +112,8 @@ const LocalePicker = (props: PickerProps): JSX.Element => {
                         mode='dropdown'
                         placeholder={placeholder}
                         selectedValue={props.state.locale}
-                        placeholderStyle={[getBoldFontStylesForOS(), { color: colors.teal }]}
+                        placeholderStyle={textStyles.pickerTealText}
+                        textStyle={textStyles.pickerTealText}
                         onValueChange={(locale: string): void => onLocaleChange(props.dispatch, locale)}
                         style={applicationStyles.picker}
                         iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
