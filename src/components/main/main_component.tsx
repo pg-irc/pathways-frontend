@@ -26,6 +26,7 @@ import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { RegionCode } from '../../validation/region/types';
 import { LanguageDrawerConnectedComponent } from '../header_menu/language_drawer_connected_component';
 import { RegionDrawerConnectedComponent } from '../header_menu/region_drawer_connected_component';
+import { BackHandler } from 'react-native';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -72,12 +73,18 @@ export const MainComponent = (props: Props): JSX.Element => {
             backFromFeedbackScreen();
         } else if (isServiceReviewScreen(memoryHistory)) {
             props.openDiscardChangesModal();
+        } else if (isMemoryHistoryEmpty()) {
+            BackHandler.exitApp();
         } else {
             goBack(memoryHistory);
         }
 
         return shouldNotBubbleUpEvent;
     }, [props.feedbackScreen, props.isHeaderMenuVisible, props.isLanguageDrawerVisible, props.isRegionDrawerVisible]);
+
+    const isMemoryHistoryEmpty = (): boolean => (
+        memoryHistory.length === 1
+    );
 
     const backFromFeedbackScreen = (): void => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
