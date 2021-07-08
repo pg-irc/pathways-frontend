@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import { Text, Content, View } from 'native-base';
-import { Image } from 'react-native';
+import { Image, SafeAreaView } from 'react-native';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { Trans } from '@lingui/react';
 import { values, textStyles, colors } from '../../application/styles';
@@ -23,53 +23,54 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     return (
         <Modal isVisible={props.isVisible}>
-            <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
-                <CloseButtonComponent
-                    onPress={props.closeModal}
-                    color={colors.black}
-                    additionalStyle={{ paddingTop: 0, paddingRight: 0 }}
-                />
-                <Content>
-                    <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-                        <Trans>About Arrival Advisor</Trans>
-                    </Text>
-                    <ParagraphComponent>
-                        <Trans>
-                            Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in Canada
-                            find information and services to navigate their settlement journey. Arrival Advisor is offered in multiple languages.
-                        </Trans>
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>
-                            The newcomer topics provided by Arrival Advisor are saved to your phone so you can view them, even without internet.
-                            Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations.
-                            We never save or share your personal data with funders or any third parties.
-
-                        </Trans>
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>
-                            The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations and immigrants and
-                            refugees like you. Arrival Advisor is an open-source project.
-                            You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and&#160;
-                            <Link href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
-                        </Trans>
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>This is Arrival Advisor version:</Trans> {VERSION}
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>Server version:</Trans> {props.serverVersion}
-                    </ParagraphComponent>
-                    <ParagraphComponent>
-                        <Trans>Index:</Trans> {ALGOLIA_SERVICES_INDEX}
-                    </ParagraphComponent>
-                    <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding, paddingBottom: 20}]}>
-                        <Trans>Information in Arrival Advisor</Trans>
-                    </Text>
-                    <RegionSpecificInformation {...props} />
-                </Content>
-            </View>
+            <SafeAreaView style={{ flex: 1 }} >
+                <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
+                    <CloseButtonComponent
+                        onPress={props.closeModal}
+                        color={colors.black}
+                        additionalStyle={{ paddingTop: 0, paddingRight: 0 }}
+                    />
+                    <Content>
+                        <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                            <Trans>About Arrival Advisor</Trans>
+                        </Text>
+                        <ParagraphComponent>
+                            <Trans>
+                                Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in Canada
+                                find information and services to navigate their settlement journey. Arrival Advisor is offered in multiple languages.
+                            </Trans>
+                        </ParagraphComponent>
+                        <ParagraphComponent>
+                            <Trans>
+                                The newcomer topics provided by Arrival Advisor are saved to your phone so you can view them, even without internet.
+                                Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations.
+                                We never save or share your personal data with funders or any third parties.
+                            </Trans>
+                        </ParagraphComponent>
+                        <ParagraphComponent>
+                            <Trans>
+                                The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations and immigrants and
+                                refugees like you. Arrival Advisor is an open-source project.
+                                You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and&#160;
+                                <Link href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
+                            </Trans>
+                        </ParagraphComponent>
+                        <ParagraphComponent>
+                            <Trans>This is Arrival Advisor version:</Trans> {VERSION}
+                        </ParagraphComponent>
+                        <ParagraphComponent>
+                            <Trans>Server version:</Trans> {props.serverVersion}
+                        </ParagraphComponent>
+                        <ParagraphComponent>
+                            <Trans>Index:</Trans> {ALGOLIA_SERVICES_INDEX}
+                        </ParagraphComponent>
+                        <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding, paddingBottom: 20}]}>
+                            <Trans>Information in Arrival Advisor</Trans>
+                        </Text>
+                        <RegionSpecificInformation {...props} />
+                    </Content>
+                </View>
+            </SafeAreaView>
         </Modal>
     );
 };
