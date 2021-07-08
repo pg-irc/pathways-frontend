@@ -21,9 +21,6 @@ type Props = {
 export const AboutComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
-    const appVersion = wrapWithSpace(VERSION);
-    const algoliaIndex = wrapWithSpace(ALGOLIA_SERVICES_INDEX);
-    const serverVersion = wrapWithSpace(props.serverVersion);
     return (
         <Modal isVisible={props.isVisible}>
             <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
@@ -59,16 +56,13 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>
-                        <Trans>This is Arrival Advisor version:</Trans>
-                        {appVersion}
+                        <Trans>This is Arrival Advisor version:</Trans> {VERSION}
                     </ParagraphComponent>
                     <ParagraphComponent>
-                        <Trans>Server version:</Trans>
-                        {serverVersion}
+                        <Trans>Server version:</Trans> {props.serverVersion}
                     </ParagraphComponent>
                     <ParagraphComponent>
-                        <Trans>Index:</Trans>
-                        {algoliaIndex}
+                        <Trans>Index:</Trans> {ALGOLIA_SERVICES_INDEX}
                     </ParagraphComponent>
                     <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding, paddingBottom: 20}]}>
                         <Trans>Information in Arrival Advisor</Trans>
@@ -131,7 +125,3 @@ const MBSpecificInformation = (): JSX.Element => {
         </View>
     );
 };
-
-const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (
-    <Text> {textContent} </Text>
-);
