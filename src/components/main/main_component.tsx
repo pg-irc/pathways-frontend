@@ -26,6 +26,7 @@ import { OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { RegionCode } from '../../validation/region/types';
 import { LanguageDrawerConnectedComponent } from '../header_menu/language_drawer_connected_component';
 import { RegionDrawerConnectedComponent } from '../header_menu/region_drawer_connected_component';
+import { BackHandler } from 'react-native';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -62,18 +63,28 @@ type Props = MainComponentProps & MainComponentActions;
 export const MainComponent = (props: Props): JSX.Element => {
     useHardwareBackButtonPress((): boolean => {
         const shouldNotBubbleUpEvent = true;
-        if (props.isHeaderMenuVisible) {
+        if (props.isRegionDrawerVisible) {
+            props.closeRegionDrawer();
+        } else if (props.isLanguageDrawerVisible) {
+            props.closeLanguageDrawer();
+        } else if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
             backFromFeedbackScreen();
         } else if (isServiceReviewScreen(memoryHistory)) {
             props.openDiscardChangesModal();
+        } else if (isMemoryHistoryEmpty()) {
+            BackHandler.exitApp();
         } else {
             goBack(memoryHistory);
         }
 
         return shouldNotBubbleUpEvent;
-    }, [props.feedbackScreen, props.isHeaderMenuVisible]);
+    }, [props.feedbackScreen, props.isHeaderMenuVisible, props.isLanguageDrawerVisible, props.isRegionDrawerVisible]);
+
+    const isMemoryHistoryEmpty = (): boolean => (
+        memoryHistory.length === 1
+    );
 
     const backFromFeedbackScreen = (): void => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
