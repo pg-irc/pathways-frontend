@@ -370,6 +370,13 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    pickerTealText: {
+        fontSize: 16,
+        lineHeight: 21,
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
