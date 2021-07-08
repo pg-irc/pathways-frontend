@@ -16,12 +16,14 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experien
 import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { selectHelpTopicForRegion } from '../../selectors/topics/select_help_topic_for_region';
+import { pickRegion } from '../../selectors/region/pick_region';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
     topicId: selectHelpTopicForRegion(store),
     history: ownProps.history,
     manualUserLocation: selectManualUserLocation(store),
     customLatLong: selectCustomLatLong(store),
+    region: pickRegion(store),
     }
 );
 

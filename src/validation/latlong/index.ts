@@ -35,7 +35,7 @@ const toValidLatLong = (latitude: number, longitude: number): LatLong => {
 
 // tslint:disable-next-line:no-any
 const getGeoCoderLatLongErrorsIfAny = (hit: any): boolean => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(schema.geoCoderResponse, hit);
     return isValid ? undefined : ajv.errors;
 };

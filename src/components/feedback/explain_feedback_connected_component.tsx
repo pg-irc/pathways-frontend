@@ -4,11 +4,16 @@ import {
     CloseAction,
     close,
 } from '../../stores/feedback';
-import { ExplainFeedbackComponent, ExplainFeedbackActions } from './explain_feedback_component';
-
+import { ExplainFeedbackComponent, ExplainFeedbackActions, ExplainFeedbackProps } from './explain_feedback_component';
+import { pickRegion } from '../../selectors/region/pick_region';
+import { Store } from '../../stores';
 
 const mapDispatchToProps = (dispatch: Dispatch<CloseAction>): ExplainFeedbackActions => ({
     close: (): CloseAction => dispatch(close()),
 });
 
-export const ExplainFeedbackConnectedComponent = connect(null, mapDispatchToProps)(ExplainFeedbackComponent);
+const mapStateToProps = (store: Store): ExplainFeedbackProps => ({
+    region: pickRegion(store),
+});
+
+export const ExplainFeedbackConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExplainFeedbackComponent);

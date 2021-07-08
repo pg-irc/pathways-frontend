@@ -7,7 +7,7 @@ import { Id } from '../../stores/services';
 const Ajv = require('ajv');
 
 export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<ValidatedServiceAtLocationJSON> => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(serviceAtLocationArray, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };

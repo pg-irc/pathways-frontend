@@ -5,7 +5,7 @@ import { userData } from './schema';
 import { PersistedData } from '../../stores/persisted_data';
 
 export const validateUserData = (data: any): ValidationResult<PersistedData> => {
-    const ajv = new Ajv();
+    const ajv = new Ajv({strict: false});
     const isValid = ajv.validate(userData, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };

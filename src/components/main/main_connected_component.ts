@@ -15,6 +15,7 @@ import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 import {
     CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal,
     openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal,
+    CloseLanguageDrawerAction, closeLanguageDrawer, CloseRegionDrawerAction, closeRegionDrawer,
 } from '../../stores/user_experience/actions';
 import { selectIsHeaderMenuVisible } from '../../selectors/user_experience/select_is_header_menu_visible';
 import { selectIsAboutModalVisible } from '../../selectors/user_experience/select_is_about_modal_visible';
@@ -23,6 +24,8 @@ import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_s
 import { close as backOutOfFeedbackScreen, CloseAction, BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
 import { openDiscardChangesModal, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { pickRegion } from '../../selectors/region/pick_region';
+import { selectIsLanguageDrawerOpen } from '../../selectors/user_experience/select_is_language_drawer_visible';
+import { selectIsRegionDrawerOpen } from '../../selectors/user_experience/select_is_region_drawer_visible';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -41,6 +44,8 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     localeIsSet: selectIsLocaleSet(store),
     showOnboarding: selectShowOnboarding(store),
     isHeaderMenuVisible: selectIsHeaderMenuVisible(store),
+    isRegionDrawerVisible: selectIsRegionDrawerOpen(store),
+    isLanguageDrawerVisible: selectIsLanguageDrawerOpen(store),
     isAboutModalVisible: selectIsAboutModalVisible(store),
     isDisclaimerModalVisible: selectIsDisclaimerModalVisible(store),
     feedbackScreen: selectFeedbackScreen(store),
@@ -50,6 +55,8 @@ type Actions =
     RouteChangedAction |
     CloseHeaderMenuAction |
     OpenHeaderMenuAction |
+    CloseRegionDrawerAction |
+    CloseLanguageDrawerAction |
     CloseAboutModalAction |
     OpenAboutModalAction |
     CloseDisclaimerModalAction |
@@ -63,6 +70,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions =
     sendAnalyticsData: (location: Location, locale: LocaleCode): RouteChangedAction => dispatch(routeChanged(location, locale)),
     closeHeaderMenu: (): CloseHeaderMenuAction => dispatch(closeHeaderMenu()),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    closeRegionDrawer: (): CloseRegionDrawerAction => dispatch(closeRegionDrawer()),
+    closeLanguageDrawer: (): CloseLanguageDrawerAction => dispatch(closeLanguageDrawer()),
     closeAboutModal: (): CloseAboutModalAction => dispatch(closeAboutModal()),
     openAboutModal: (): OpenAboutModalAction => dispatch(openAboutModal()),
     closeDisclaimerModal: (): CloseDisclaimerModalAction => dispatch(closeDisclaimerModal()),

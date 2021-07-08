@@ -85,6 +85,10 @@ export const getTextAlignForLanguage = (): TextStyle => (
     { textAlign: I18nManager.isRTL ? 'right' : 'left' }
 );
 
+export const getViewBackgroundColorForPlatform = (): string => (
+    isAndroid() ? colors.teal : colors.white
+);
+
 export const textStyles = StyleSheet.create({
     headline6: {
         fontSize: 16,
@@ -516,7 +520,13 @@ export const applicationStyles = StyleSheet.create({
         borderWidth: 2,
         height: 48,
         width: 232,
-    }
+    },
+    listItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingLeft: 10,
+    },
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
