@@ -227,7 +227,7 @@ const ClearAppMemoryButton = (props: Props): JSX.Element => {
             { text: _(deleteOption), onPress: (): void => {
                 props.clearAllUserState();
                 goToRouteWithoutParameter(Routes.Welcome, props.history);
-            } },
+            }},
         ];
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),
