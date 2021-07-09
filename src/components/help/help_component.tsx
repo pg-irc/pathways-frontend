@@ -172,11 +172,6 @@ export const HelpComponent = (props: Props): JSX.Element => {
                 marginBottom: 20,
             }}>
                 <ClearAppMemoryButton {...props} />
-                <MultiLineButtonComponent onPress={(): void => goToRouteWithoutParameter(Routes.Welcome, props.history)} >
-                    <Text style={textStyles.button}>
-                        Go to Welcome screen
-                    </Text>
-                </MultiLineButtonComponent>
             </View>
         </ScrollView>
     </View>
