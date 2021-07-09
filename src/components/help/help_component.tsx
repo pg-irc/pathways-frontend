@@ -172,11 +172,6 @@ export const HelpComponent = (props: Props): JSX.Element => {
                 marginBottom: 20,
             }}>
                 <ClearAppMemoryButton {...props} />
-                <MultiLineButtonComponent onPress={(): void => goToRouteWithoutParameter(Routes.Welcome, props.history)} >
-                    <Text style={textStyles.button}>
-                        Go to Welcome screen
-                    </Text>
-                </MultiLineButtonComponent>
             </View>
         </ScrollView>
     </View>
@@ -229,7 +224,10 @@ const ClearAppMemoryButton = (props: Props): JSX.Element => {
         // tslint:disable-next-line: readonly-array
         const buttons: AlertButton[] = [
             { text: _(cancelOption), style: 'cancel' },
-            { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
+            { text: _(deleteOption), onPress: (): void => {
+                props.clearAllUserState();
+                goToRouteWithoutParameter(Routes.Welcome, props.history);
+            }},
         ];
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),

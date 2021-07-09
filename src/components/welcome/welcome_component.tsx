@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React, { Dispatch, useReducer } from 'react';
-import { Image, View } from 'react-native';
+import { BackHandler, Image, View } from 'react-native';
 import { Text, Form, Picker, Item, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleCode } from '../../application/locales';
@@ -18,6 +18,7 @@ import { needsTextDirectionChange } from '../../application/locale_effects';
 import { buildDefaultState, reducer } from './reducer';
 import { SelectRegionLocaleAction } from './actions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useHardwareBackButtonPress } from '../main/use_hardware_back_button_press';
 
 export interface WelcomeProps {
     readonly currentLocale: LocaleCode;
@@ -37,6 +38,17 @@ export function WelcomeComponent(props: Props): JSX.Element {
     const [selectedRegionState, dispatch]: readonly [RegionLocaleState, Dispatch<SelectRegionLocaleAction>] = useReducer(
         reducer, buildDefaultState(),
     );
+
+    useHardwareBackButtonPress((): boolean => {
+        const shouldNotBubbleUpEvent = true;
+        if (selectedRegionState.region !== undefined) {
+            onRegionPicked(dispatch, undefined);
+            onLocaleChange(dispatch, undefined);
+        } else {
+            BackHandler.exitApp();
+        }
+        return shouldNotBubbleUpEvent;
+    }, [selectedRegionState]);
 
     const onStartButtonPress = (): void => {
         const flipOrientation = needsTextDirectionChange(selectedRegionState.locale);
