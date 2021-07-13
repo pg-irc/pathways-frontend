@@ -98,6 +98,14 @@ export const MainComponent = (props: Props): JSX.Element => {
         }
     };
 
+    const closeAllDrawers = (): void => {
+        if (props.isLanguageDrawerVisible || props.isRegionDrawerVisible) {
+            props.closeRegionDrawer();
+            props.closeLanguageDrawer();
+            props.closeHeaderMenu();
+        }
+    }
+
     useEffect((): EffectCallback => {
         const unsubscribe = memoryHistory.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
@@ -117,13 +125,13 @@ export const MainComponent = (props: Props): JSX.Element => {
             <StatusBar style='light' />
             <Drawer
                 side='right'
-                onClose={props.closeLanguageDrawer}
+                onClose={closeAllDrawers}
                 open={props.isLanguageDrawerVisible}
                 content={<LanguageDrawerConnectedComponent />}
             >
                 <Drawer
                     side='right'
-                    onClose={props.closeRegionDrawer}
+                    onClose={closeAllDrawers}
                     open={props.isRegionDrawerVisible}
                     content={<RegionDrawerConnectedComponent />}
                 >
