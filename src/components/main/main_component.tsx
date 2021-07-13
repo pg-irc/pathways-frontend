@@ -104,7 +104,7 @@ export const MainComponent = (props: Props): JSX.Element => {
             props.closeLanguageDrawer();
             props.closeHeaderMenu();
         }
-    }
+    };
 
     useEffect((): EffectCallback => {
         const unsubscribe = memoryHistory.listen((location: Location, _: Action): RouteChangedAction =>
