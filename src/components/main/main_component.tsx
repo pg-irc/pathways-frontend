@@ -127,37 +127,39 @@ export const MainComponent = (props: Props): JSX.Element => {
                     open={props.isRegionDrawerVisible}
                     content={<RegionDrawerConnectedComponent />}
                 >
-                    <Drawer
-                        side='right'
-                        onClose={props.closeHeaderMenu}
-                        open={props.isHeaderMenuVisible}
-                        content={
-                            <HeaderMenuConnectedComponent
-                                history={memoryHistory}
-                                closeMenu={props.closeHeaderMenu}
-                                openAboutModal={props.openAboutModal}
-                                openDisclaimerModal={props.openDisclaimerModal}
-                            />
-                        }
-                    >
-                        <Container>
-                            <ScrollContext.Provider value={scrollAnimationContext}>
-                                <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
-                                <MainPageSwitcherComponent {...props} />
-                                <FooterComponent
+                    <Drawer>
+                        <Drawer
+                            side='right'
+                            onClose={props.closeHeaderMenu}
+                            open={props.isHeaderMenuVisible}
+                            content={
+                                <HeaderMenuConnectedComponent
                                     history={memoryHistory}
-                                    location={props.location}
-                                    feedbackScreen={props.feedbackScreen}
+                                    closeMenu={props.closeHeaderMenu}
+                                    openAboutModal={props.openAboutModal}
+                                    openDisclaimerModal={props.openDisclaimerModal}
                                 />
-                                <AppModalsComponent
-                                    isAboutModalVisible={props.isAboutModalVisible}
-                                    isDisclaimerModalVisible={props.isDisclaimerModalVisible}
-                                    region={props.region}
-                                    closeAboutModal={props.closeAboutModal}
-                                    closeDisclaimerModal={props.closeDisclaimerModal}
-                                />
-                            </ScrollContext.Provider>
-                        </Container>
+                            }
+                        >
+                            <Container>
+                                <ScrollContext.Provider value={scrollAnimationContext}>
+                                    <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
+                                    <MainPageSwitcherComponent {...props} />
+                                    <FooterComponent
+                                        history={memoryHistory}
+                                        location={props.location}
+                                        feedbackScreen={props.feedbackScreen}
+                                    />
+                                    <AppModalsComponent
+                                        isAboutModalVisible={props.isAboutModalVisible}
+                                        isDisclaimerModalVisible={props.isDisclaimerModalVisible}
+                                        region={props.region}
+                                        closeAboutModal={props.closeAboutModal}
+                                        closeDisclaimerModal={props.closeDisclaimerModal}
+                                    />
+                                </ScrollContext.Provider>
+                            </Container>
+                        </Drawer>
                     </Drawer>
                 </Drawer>
             </Drawer>
